@@ -51,8 +51,9 @@ class ClientCredentials:
         self.grant_type = grant_type
 
 
-# @app.route('/')
-# def home():
+@app.route('/')
+def home():
+    return render_template('login.html')
 
 
 
