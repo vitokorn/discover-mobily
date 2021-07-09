@@ -1,0 +1,25 @@
+.flex-container{
+    display: flex;
+}
+header{
+    align-items: flex-end;
+}
+.playable {
+    position: relative;
+    cursor: pointer;
+    text-align: center;
+    display: inline-block;
+    margin-bottom: -5px;
+}
+.launchPad-subgrid {
+    display: grid;
+    grid-gap: 3px;
+    grid-template-columns: 140px 140px;
+    grid-template-rows: 24px 24px 24px;
+}
+
+.launchPad-grid {
+    display: grid;
+    grid-column-gap: 28px;
+    grid-template-columns: 280px 280px 140px;
+}
