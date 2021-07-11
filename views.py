@@ -7,9 +7,12 @@ import datetime
 
 import json
 from app import app, db,User
-redirect_uri = 'http://localhost:5000/spotify/callback/'
+# redirect_uri = 'http://localhost:4444/spotify/callback/'
+redirect_uri = 'https://discover-mobily.herokuapp.com/spotify/callback'
 client_id = os.environ.get('client_id')
 client_secret = os.environ.get('client_secret')
+# client_id = 'a9be8e308f094d439c5b58809fd0316f'
+# client_secret = 'aadfe9af67e84469aaada1bfd736b9a6'
 
 class Users:
     def __init__(self,
