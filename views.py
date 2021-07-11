@@ -6,9 +6,7 @@ from sqlalchemy.sql import ClauseElement
 import datetime
 
 import json
-from app import app, db
-from models import User
-
+from app import app, db,User
 redirect_uri = 'http://localhost:5000/spotify/callback/'
 client_id = os.environ.get('client_id')
 client_secret = os.environ.get('client_secret')
