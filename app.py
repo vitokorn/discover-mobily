@@ -4,10 +4,6 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
-from db import SessionLocal
-
-# create a Session
-session = SessionLocal()
 
 
 app = Flask(__name__)
