@@ -1,21 +1,24 @@
 import os
 #POSTGRES https://elements.heroku.com/addons/heroku-postgresql
 import psycopg2
-DATABASE_URL = os.environ.get('DATABASE_URL')
+# DATABASE_URL = os.environ.get('DATABASE_URL')
+from sqlalchemy import create_engine
 
-conn = psycopg2.connect(DATABASE_URL, sslmode='require')
-
+DATABASE_URL = 'postgresql+psycopg2://discovermobily:5r9VsXSH@localhost:5432/discover-mobily'
+engine = create_engine(DATABASE_URL)
+conn = engine.connect()
 
 #ENVIROMENTS VARIABLES
-client_id = os.environ.get("client_id")
-client_secret = os.environ.get("client_secret")
+# client_id = os.environ.get("client_id")
+# client_secret = os.environ.get("client_secret")
 
-# REDIS https://elements.heroku.com/addons/heroku-redis
-from urllib.parse import urlparse
-import redis
 
-url = urlparse(os.environ.get("REDIS_URL"))
-r = redis.Redis(host=url.hostname, port=url.port, username=url.username, password=url.password, ssl=True, ssl_cert_reqs=None)
+# # REDIS https://elements.heroku.com/addons/heroku-redis
+# from urllib.parse import urlparse
+# import redis
+#
+# url = urlparse(os.environ.get("REDIS_URL"))
+# r = redis.Redis(host=url.hostname, port=url.port, username=url.username, password=url.password, ssl=True, ssl_cert_reqs=None)
 
 
 # # RabbitMQ https://elements.heroku.com/addons/cloudamqp
