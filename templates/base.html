@@ -17,7 +17,7 @@
 {#            <li><a href="/library">Library</a></li>#}
         </ul>
     </nav>
-    {% if session['username'] %}
+    {% if fsession['username'] %}
         <div class="dropdown">
         <button class="dropbtn">Hello, {{ fsession['nickname'] }}</button>
             <div class="dropdown-content">
