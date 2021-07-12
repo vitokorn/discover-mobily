@@ -4,5 +4,8 @@
     {% elif session ['nickname'] %}
         <p>Welcome, {{ session['nickname'] }}</p>
         <a href="{{ url_for('logout') }}"><button>Logout</button></a>
+        {% for p in pl %}
+            <p>{{ p }}</p>
+        {% endfor %}
     {% endif %}
 {% endblock %}
