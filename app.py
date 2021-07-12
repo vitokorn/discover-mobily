@@ -3,7 +3,7 @@ import os
 import requests
 import json
 
-from flask import Flask,render_template, redirect, request,session
+from flask import Flask, render_template, redirect, request, session, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from sqlalchemy.sql import ClauseElement
@@ -163,26 +163,44 @@ def refresh():
         return True
 
 
-@app.route('/spotify/playlists/', methods = ['GET'])
-def playlists():
+# @app.route('/spotify/playlists/', methods = ['GET'])
+# def playlists():
+#     user = User.query.filter_by(spotyid = session['username']).first()
+#     offset = 0
+#     url = f'https://api.spotify.com/v1/me/playlists?offset={offset}&limit=50'
+#     # url = f'https://api.spotify.com/v1/users/{spotyid}/playlists?offset=0&limit=50' для других пользователей
+#     # https://api.spotify.com/v1/audio-features
+#     # GET https://api.spotify.com/v1/artists/{id}/top-tracks artist to tracks
+#
+#
+#     access_token = user.access_token
+#     headers = {
+#             'Authorization': f'Bearer {access_token}'
+#         }
+#     all = requests.get(url=url,headers=headers)
+#     if all.status_code == 401:
+#         refresh()
+#     resp = all.json()
+#     return redirect('/library/')
+
+
+@app.route('/spotify/playlists/<playlist_id>', methods = ['GET'])
+def playlists(playlist_id):
     user = User.query.filter_by(spotyid = session['username']).first()
-    offset = 0
-    url = f'https://api.spotify.com/v1/me/playlists?offset={offset}&limit=100'
+    url = f'https://api.spotify.com/v1/playlists/{playlist_id}?fields=name,id,description,images,tracks(items(track(name,preview_url,id,artists,album(artists,id,images))))'
     # url = f'https://api.spotify.com/v1/users/{spotyid}/playlists?offset=0&limit=50' для других пользователей
     # https://api.spotify.com/v1/audio-features
     # GET https://api.spotify.com/v1/artists/{id}/top-tracks artist to tracks
-
-
     access_token = user.access_token
     headers = {
             'Authorization': f'Bearer {access_token}'
         }
     all = requests.get(url=url,headers=headers)
     if all.status_code == 401:
-        refresh()
+        if refresh() is True:
+            all = requests.get(url=url, headers=headers)
     resp = all.json()
-    return redirect('/library/')
-
+    return resp
 
 @app.route('/logout/')
 def logout():
@@ -217,18 +235,4 @@ def get_or_create(session, model, defaults=None, **kwargs):
         else:
             return instance, True
 
-def update_or_create(session, model, defaults=None, **kwargs):
-    defaults = defaults or {}
-    with session.begin_nested():
-        try:
-            obj = session.query(model).with_for_update().filter_by(**kwargs).one()
-        except NoResultFound:
-            params = _extract_model_params(defaults, **kwargs)
-            obj, created = _create_object_from_params(session, model, kwargs, params, lock=True)
-            if created:
-                return obj, created
-        for k, v in defaults.items():
-            setattr(obj, k, v)
-        session.add(obj)
-        session.flush()
-    return obj, False
+
