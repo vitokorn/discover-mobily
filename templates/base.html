@@ -14,8 +14,7 @@
         <ul class="nav_links">
             <li><a href="/">Home</a></li>
             <li><a href="">Search</a></li>
-            <li><a href="/library">Library</a></li>
-            <li><a href="/spotify/playlists/update/">Update Library</a></li>
+{#            <li><a href="/library">Library</a></li>#}
         </ul>
     </nav>
     {% if session['username'] %}
@@ -30,12 +29,8 @@
     <a class="cta" href="/spotify/login/"><button>Login</button></a>
     {% endif %}
 </header>
-      <div class="container">
-      <div class="row">
-              {% block content %}
-              {% endblock %}
-      </div>
-      </div>
+{% block content %}
+{% endblock %}
 {#<script type="text/javascript" src="../static/js/materialize.js"></script>#}
 
 </body>
