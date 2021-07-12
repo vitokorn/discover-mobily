@@ -77,6 +77,7 @@ def pl():
         }
         req = requests.get(url=url,headers=headers)
         if req.status_code == 401:
+            print(req.status_code)
             refresh()
         res = req.json()
 
@@ -145,6 +146,7 @@ def refresh():
                 'client_secret':client_secret}
         req = requests.post(url=url, data=data)
         test = req.json()
+        print(str(test))
         c.access_token = test['access_token']
         db.session.commit()
 
