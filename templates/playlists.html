@@ -2,7 +2,7 @@
     <a href="{{ url_for('pl') }}"><button>Playlists</button></a>
         <div style="column-gap: 16px; column-count: 3;">
         {% for p in pl['items'] %}
-            <div id="{{ p.id }}" onclick="initElement({{ p.id }})">{{ p.name }}</div>
+            <div id="{{ p['id'] }}" onclick="initElement({{ p['id'] }})">{{ p['name'] }}</div>
         {% endfor %}
         </div>
     <script>
