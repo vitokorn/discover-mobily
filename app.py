@@ -32,10 +32,10 @@ app.secret_key = b'\xb9\xb8h\\\x1c\xf9s^\xab\x9b\x9dz\xce\xc7\xcea\xc1\x1a\xca\x
 
 # redirect_uri = 'http://localhost:4444/spotify/callback/'
 redirect_uri = 'https://discover-mobily.herokuapp.com/spotify/callback'
-client_id = os.environ.get('client_id')
-client_secret = os.environ.get('client_secret')
-# client_id = 'a9be8e308f094d439c5b58809fd0316f'
-# client_secret = 'aadfe9af67e84469aaada1bfd736b9a6'
+# client_id = os.environ.get('client_id')
+# client_secret = os.environ.get('client_secret')
+client_id = 'a9be8e308f094d439c5b58809fd0316f'
+client_secret = 'aadfe9af67e84469aaada1bfd736b9a6'
 
 class Users:
     def __init__(self,
@@ -146,10 +146,14 @@ def kod():
 @app.route('/spotify/refresh_token/')
 def refresh():
     current_time = datetime.datetime.utcnow()
+    print('current_time ' + str(current_time))
     one_day = current_time - datetime.timedelta(hours=1)
+    print('one_day ' + str(one_day))
+
     # Invoice.query.filter(Invoice.invoicedate >= date.today())
     url = 'https://accounts.spotify.com/api/token'
     current = User.query.filter(User.date_update >= one_day)
+    print('current ' + str(current))
     for c in current:
         data = {'grant_type': 'refresh_token','refresh_token': c.refresh_token, 'client_id':client_id,
                 'client_secret':client_secret}
