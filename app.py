@@ -66,23 +66,25 @@ class ClientCredentials:
 def home():
     return render_template('login.html')
 
-# @app.route('/pl')
-# def pl():
-#     if session['nickname']:
-#         user = User.query.filter_by(spotyid=session['username']).first()
-#         url = f'https://api.spotify.com/v1/me/playlists?items(name)&limit=100'
-#         access_token = user.access_token
-#         headers = {
-#             'Authorization': f'Bearer {access_token}'
-#         }
-#         req = requests.get(url=url,headers=headers)
-#         res = req.json()
-#
-#
-#         pl = []
-#         for p in res['items']:
-#             pl.append(p['name'])
-#         return render_template('playlists.html',pl=pl)
+@app.route('/pl')
+def pl():
+    if session['nickname']:
+        user = User.query.filter_by(spotyid=session['username']).first()
+        url = f'https://api.spotify.com/v1/me/playlists?items(name)&limit=100'
+        access_token = user.access_token
+        headers = {
+            'Authorization': f'Bearer {access_token}'
+        }
+        req = requests.get(url=url,headers=headers)
+        if req.status_code == 401:
+            refresh()
+        res = req.json()
+
+
+        pl = []
+        for p in res['items']:
+            pl.append(p['name'])
+        return render_template('playlists.html',pl=pl)
 
 
 @app.route('/spotify/login/')
@@ -134,7 +136,7 @@ def kod():
 @app.route('/spotify/refresh_token/')
 def refresh():
     current_time = datetime.datetime.utcnow()
-    one_day = current_time - datetime.timedelta(days=1)
+    one_day = current_time - datetime.timedelta(hours=1)
     # Invoice.query.filter(Invoice.invoicedate >= date.today())
     url = 'https://accounts.spotify.com/api/token'
     current = User.query.filter(User.date_update >= one_day)
