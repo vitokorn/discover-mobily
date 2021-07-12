@@ -4,6 +4,7 @@
     {% elif fsession['nickname'] %}
         <p>Welcome, {{ fsession['nickname'] }}</p>
         <a href="{{ url_for('logout') }}"><button>Logout</button></a>
+        <a href="{{ url_for('pl') }}"><button>Playlists</button></a>
         {% for p in pl %}
             <p>{{ p }}</p>
         {% endfor %}

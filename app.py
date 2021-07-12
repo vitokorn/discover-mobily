@@ -62,8 +62,12 @@ class ClientCredentials:
         self.grant_type = grant_type
 
 
-@app.route('/<pl>/')
-def home(pl=None):
+@app.route('/')
+def home():
+    return render_template('login.html')
+
+@app.route('/pl')
+def pl():
     if fsession['nickname']:
         user = User.query.filter_by(spotyid=fsession['username']).first()
         url = f'https://api.spotify.com/v1/me/playlists?items(name)&limit=100'
@@ -79,8 +83,6 @@ def home(pl=None):
         for p in res['items']:
             pl.append(p['name'])
         return render_template('login.html',pl=pl)
-    else:
-        return render_template('login.html')
 
 
 @app.route('/spotify/login/')
