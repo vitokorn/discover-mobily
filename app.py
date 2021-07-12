@@ -82,6 +82,7 @@ def pl():
             if r is True:
                 req = requests.get(url=url, headers=headers)
                 res = req.json()
+                print('req 85' + str(res))
                 pl = []
                 for p in res['items']:
                     pl.append(p['name'])
