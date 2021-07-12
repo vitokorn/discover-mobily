@@ -70,7 +70,7 @@ def home():
 def pl():
     if session['nickname']:
         user = User.query.filter_by(spotyid=session['username']).first()
-        url = f'https://api.spotify.com/v1/me/playlists?items(name)&limit=50'
+        url = f'https://api.spotify.com/v1/me/playlists?fields=items(name,id)&limit=50'
         access_token = user.access_token
         headers = {
             'Authorization': f'Bearer {access_token}'
@@ -83,9 +83,7 @@ def pl():
                 req = requests.get(url=url, headers=headers)
                 res = req.json()
                 print('req 85' + str(res))
-                pl = []
-                for p in res['items']:
-                    pl.append(p['name'])
+                pl = res['items']
                 return render_template('playlists.html', pl=pl)
             else:
                 print('Error')
@@ -93,9 +91,7 @@ def pl():
         else:
             res = req.json()
             print('req 95' + str(res))
-            pl = []
-            for p in res['items']:
-                pl.append(p['name'])
+            pl = res['items']
             return render_template('playlists.html',pl=pl)
 
 
