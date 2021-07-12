@@ -101,13 +101,13 @@ def kod():
     print(t)
     if re.status_code == 401:
         return render_template('401.html')
-    user,create = get_or_create(db.session,User,spotyid=t['id'],country=t['country'],
+    update_or_create(db.session,User,spotyid=t['id'],country=t['country'],
                                 display_name=t["display_name"],
                                 defaults={'access_token':access_token,'refresh_token':refresh_token})
-    if user:
-        user.access_token = access_token
-        user.refresh_token = refresh_token
-        db.session.commit()
+    # if user:
+    #     user.access_token = access_token
+    #     user.refresh_token = refresh_token
+    #     db.session.commit()
     fsession['username'] = t['id']
     fsession['nickname'] = t["display_name"]
     return redirect('/')
@@ -183,9 +183,24 @@ def get_or_create(session, model, defaults=None, **kwargs):
         else:
             return instance, True
 
+def update_or_create(session, model, defaults=None, **kwargs):
+    defaults = defaults or {}
+    with session.begin_nested():
+        try:
+            obj = session.query(model).with_for_update().filter_by(**kwargs).one()
+        except NoResultFound:
+            params = _extract_model_params(defaults, **kwargs)
+            obj, created = _create_object_from_params(session, model, kwargs, params, lock=True)
+            if created:
+                return obj, created
+        for k, v in defaults.items():
+            setattr(obj, k, v)
+        session.add(obj)
+        session.flush()
+    return obj, False
 
-if __name__ == '__main__':
-    from views import *
-    app.run(debug=True)
+
+
+
 
 
