@@ -1,5 +1,5 @@
 {% block content %}
-    {% if not fsession['nickname'] %}
+    {% if not session['nickname'] %}
     <a href="{{ url_for('authclient') }}"><button>Login</button></a>
     {% elif session['nickname'] %}
         <p>Welcome, {{ session['nickname'] }}</p>
