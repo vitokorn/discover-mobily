@@ -216,9 +216,3 @@ def update_or_create(session, model, defaults=None, **kwargs):
         session.add(obj)
         session.flush()
     return obj, False
-
-
-
-
-
-
