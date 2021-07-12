@@ -82,7 +82,7 @@ def pl():
         pl = []
         for p in res['items']:
             pl.append(p['name'])
-        return render_template('login.html',pl=pl)
+        return render_template('playlists.html',pl=pl)
 
 
 @app.route('/spotify/login/')
