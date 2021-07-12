@@ -1,5 +1,7 @@
 {% block content %}        <a href="{{ url_for('pl') }}"><button>Playlists</button></a>
+        <div style="column-gap: 16px; column-count: 3;">
         {% for p in pl %}
-            <p>{{ p }}</p>
+            <div>{{ p }}</div>
         {% endfor %}
+        </div>
 {% endblock %}
