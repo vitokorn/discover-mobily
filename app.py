@@ -66,23 +66,23 @@ class ClientCredentials:
 def home():
     return render_template('login.html')
 
-@app.route('/pl')
-def pl():
-    if fsession['nickname']:
-        user = User.query.filter_by(spotyid=fsession['username']).first()
-        url = f'https://api.spotify.com/v1/me/playlists?items(name)&limit=100'
-        access_token = user.access_token
-        headers = {
-            'Authorization': f'Bearer {access_token}'
-        }
-        req = requests.get(url=url,headers=headers)
-        res = req.json()
-
-
-        pl = []
-        for p in res['items']:
-            pl.append(p['name'])
-        return render_template('playlists.html',pl=pl)
+# @app.route('/pl')
+# def pl():
+#     if fsession['nickname']:
+#         user = User.query.filter_by(spotyid=fsession['username']).first()
+#         url = f'https://api.spotify.com/v1/me/playlists?items(name)&limit=100'
+#         access_token = user.access_token
+#         headers = {
+#             'Authorization': f'Bearer {access_token}'
+#         }
+#         req = requests.get(url=url,headers=headers)
+#         res = req.json()
+#
+#
+#         pl = []
+#         for p in res['items']:
+#             pl.append(p['name'])
+#         return render_template('playlists.html',pl=pl)
 
 
 @app.route('/spotify/login/')
