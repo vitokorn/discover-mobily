@@ -78,14 +78,20 @@ def pl():
         req = requests.get(url=url,headers=headers)
         if req.status_code == 401:
             print(req.status_code)
-            refresh()
-        res = req.json()
-
-
-        pl = []
-        for p in res['items']:
-            pl.append(p['name'])
-        return render_template('playlists.html',pl=pl)
+            r = refresh()
+            if r is True:
+                req = requests.get(url=url, headers=headers)
+                res = req.json()
+                pl = []
+                for p in res['items']:
+                    pl.append(p['name'])
+                return render_template('playlists.html', pl=pl)
+        else:
+            res = req.json()
+            pl = []
+            for p in res['items']:
+                pl.append(p['name'])
+            return render_template('playlists.html',pl=pl)
 
 
 @app.route('/spotify/login/')
@@ -149,6 +155,7 @@ def refresh():
         print(str(test))
         c.access_token = test['access_token']
         db.session.commit()
+        return True
 
 
 @app.route('/spotify/playlists/', methods = ['GET'])
