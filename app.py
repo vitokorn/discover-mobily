@@ -92,6 +92,7 @@ def pl():
                 raise ValueError
         else:
             res = req.json()
+            print('req 95' + str(res))
             pl = []
             for p in res['items']:
                 pl.append(p['name'])
