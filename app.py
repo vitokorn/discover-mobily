@@ -86,6 +86,9 @@ def pl():
                 for p in res['items']:
                     pl.append(p['name'])
                 return render_template('playlists.html', pl=pl)
+            else:
+                print('Error')
+                raise ValueError
         else:
             res = req.json()
             pl = []
