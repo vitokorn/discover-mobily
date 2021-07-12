@@ -101,9 +101,14 @@ def kod():
     print(t)
     if re.status_code == 401:
         return render_template('401.html')
-    update_or_create(db.session,User,spotyid=t['id'],country=t['country'],
-                                display_name=t["display_name"],
-                                defaults={'access_token':access_token,'refresh_token':refresh_token})
+    # update_or_create(db.session,User,spotyid=t['id'],country=t['country'],
+    #                             display_name=t["display_name"],
+    #                             defaults={'access_token':access_token,'refresh_token':refresh_token})
+    user = User.query.filter_by(spotyid=fsession['username']).first()
+    if user is not None:
+        user.access_token = access_token
+        user.refresh_token = refresh_token
+        db.session.commit()
     # if user:
     #     user.access_token = access_token
     #     user.refresh_token = refresh_token
