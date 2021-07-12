@@ -3,7 +3,7 @@ import os
 import requests
 import json
 
-from flask import Flask,render_template, redirect, request,session as fsession
+from flask import Flask,render_template, redirect, request,session
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from sqlalchemy.sql import ClauseElement
@@ -68,8 +68,8 @@ def home():
 
 # @app.route('/pl')
 # def pl():
-#     if fsession['nickname']:
-#         user = User.query.filter_by(spotyid=fsession['username']).first()
+#     if session['nickname']:
+#         user = User.query.filter_by(spotyid=session['username']).first()
 #         url = f'https://api.spotify.com/v1/me/playlists?items(name)&limit=100'
 #         access_token = user.access_token
 #         headers = {
@@ -126,8 +126,8 @@ def kod():
         user.access_token = access_token
         user.refresh_token = refresh_token
         db.session.commit()
-    fsession['username'] = t['id']
-    fsession['nickname'] = t["display_name"]
+    session['username'] = t['id']
+    session['nickname'] = t["display_name"]
     return redirect('/')
 
 
@@ -149,7 +149,7 @@ def refresh():
 
 @app.route('/spotify/playlists/', methods = ['GET'])
 def playlists():
-    user = User.query.filter_by(spotyid = fsession['username']).first()
+    user = User.query.filter_by(spotyid = session['username']).first()
     offset = 0
     url = f'https://api.spotify.com/v1/me/playlists?offset={offset}&limit=100'
     # url = f'https://api.spotify.com/v1/users/{spotyid}/playlists?offset=0&limit=50' для других пользователей
@@ -170,13 +170,13 @@ def playlists():
 
 @app.route('/logout/')
 def logout():
-    fsession.clear()
+    session.clear()
     return redirect('/')
 
 
 @app.route('/remove_account')
 def removeacc():
-    user = User.query.filter_by(spotyid = fsession['username']).first()
+    user = User.query.filter_by(spotyid = session['username']).first()
     db.session.delete(user)
     db.session.commit()
     return redirect('/')
