@@ -70,7 +70,7 @@ def home():
 def pl():
     if session['nickname']:
         user = User.query.filter_by(spotyid=session['username']).first()
-        url = f'https://api.spotify.com/v1/me/playlists?items(name)&limit=100'
+        url = f'https://api.spotify.com/v1/me/playlists?items(name)&limit=50'
         access_token = user.access_token
         headers = {
             'Authorization': f'Bearer {access_token}'
