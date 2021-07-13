@@ -29,9 +29,13 @@
                       console.log(playtrack)
 
                       document.getElementById('playlist').innerHTML = name + ' ' + description
-                      playtrack.forEach(e => tracks.innerHTML += `<div id=${e['track']['id']}>${e['track']['name']}</div>`)
+                      playtrack.forEach(e => tracks.innerHTML += `<div id=${e['track']['id']} style=${e['track']['album'][0]['url']} onclick="initElement()">${e['track']['name']}<audio preload="none" id="a_${e['track']['id']}" src="${e['track']['preview_url']}"></div>`)
                       ;}
                   }
+          }
+          function playtrack(id) {
+              let audio = document.getElementById('a_' + id)
+              audio.play();
           }
     </script>
 {% endblock %}
