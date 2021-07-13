@@ -4,6 +4,9 @@
             <div id="{{ p['id'] }}" onclick="initElement('{{ p['id'] }}')">{{ p['name'] }}</div>
         {% endfor %}
         </div>
+        <div id="playlist" class="playlist">
+
+        </div>
     <script>
           function initElement(id) {
               console.log(id)
@@ -16,7 +19,11 @@
               xhr.onload = function (){
                   if (xhr.status === 200){
                       let data = JSON.parse(this.response)
-                      console.log(data['description'])
+                      console.log(data)
+                      let name = data['name']
+                      let description = data['description']
+
+                      document.getElementById('playlist').innerHTML = '<div id="name">name</div><div id="description">description</div'
                   }}
           }
     </script>
