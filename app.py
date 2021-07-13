@@ -78,8 +78,11 @@ def pl():
         req = requests.get(url=url,headers=headers)
         if req.status_code == 401:
             print(req.status_code)
-            r = refresh()
+            token,r = refresh()
             if r is True:
+                headers = {
+                    'Authorization': f'Bearer {token}'
+                }
                 req = requests.get(url=url, headers=headers)
                 res = req.json()
                 print('req 85' + str(res))
@@ -160,7 +163,7 @@ def refresh():
         print(str(test))
         c.access_token = test['access_token']
         db.session.commit()
-        return True
+        return test['access_token'], True
 
 
 # @app.route('/spotify/playlists/', methods = ['GET'])
