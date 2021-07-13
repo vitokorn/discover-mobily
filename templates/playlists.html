@@ -1,7 +1,7 @@
 {% block content %}
         <div style="column-gap: 16px; column-count: 3;">
         {% for p in pl %}
-            <div id="{{ p['id'] }}" onclick="initElement('${{ p['id'] }}')">{{ p['name'] }}</div>
+            <div id="{{ p['id'] }}" onclick="initElement('{{ p['id'] }}')">{{ p['name'] }}</div>
         {% endfor %}
         </div>
     <script>
