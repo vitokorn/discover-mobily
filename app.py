@@ -189,6 +189,7 @@ def refresh():
 
 @app.route('/spotify/playlists/<playlist_id>', methods = ['GET'])
 def playlists(playlist_id):
+    print(playlist_id)
     user = User.query.filter_by(spotyid = session['username']).first()
     url = f'https://api.spotify.com/v1/playlists/{playlist_id}?fields=name,id,description,images,tracks(items(track(name,preview_url,id,artists,album(artists,id,images))))'
     # url = f'https://api.spotify.com/v1/users/{spotyid}/playlists?offset=0&limit=50' для других пользователей
