@@ -7,18 +7,18 @@
     <script>
           function initElement(id) {
               console.log(id)
-              let url = '/spotify/playlists/'
-              let params = 'playlist_id=' + id
-              console.log(params)
+              let url = '/spotify/playlists?playlist_id=' + id
+              console.log(url)
               let xhr = new XMLHttpRequest()
-              xhr.open('GET',url?+params)
+              xhr.open('GET',url,true)
               xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
               {#xhr.setRequestHeader('X-CSRFToken',csrftoken)#}
+              xhr.send()
               xhr.onload = function (){
                   if (xhr.status === 200){
                       let data = JSON.parse(this.response)
                       console.log(data)
                   }}
-      }
+          }
     </script>
 {% endblock %}
