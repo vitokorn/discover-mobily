@@ -6,17 +6,19 @@
         </div>
     <script>
           function initElement(id) {
-            url = '/spotify/playlists/'
-            url.searchParams.set('playlist_id',id)
-            let xhr = new XMLHttpRequest()
-            xhr.open('GET',url)
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-            {#xhr.setRequestHeader('X-CSRFToken',csrftoken)#}
-            xhr.onload = function (){
-                if (xhr.status === 200){
-                    let data = JSON.parse(this.response)
-                    console.log(data)
-                }}
+              console.log(id)
+              let url = '/spotify/playlists/'
+              let params = 'playlist_id=' + id
+              console.log(params)
+              let xhr = new XMLHttpRequest()
+              xhr.open('GET',url?+params)
+              xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+              {#xhr.setRequestHeader('X-CSRFToken',csrftoken)#}
+              xhr.onload = function (){
+                  if (xhr.status === 200){
+                      let data = JSON.parse(this.response)
+                      console.log(data)
+                  }}
       }
     </script>
 {% endblock %}
