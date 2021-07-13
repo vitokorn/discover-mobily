@@ -26,6 +26,7 @@
                       let name = data['name']
                       let description = data['description']
                       let playtrack = data['tracks']['items']
+                      console.log(playtrack)
 
                       document.getElementById('playlist').innerHTML = name + ' ' + description
                       playtrack.forEach(e => tracks.innerHTML += `<div id=${e.id}>${e.name}</div>`)
