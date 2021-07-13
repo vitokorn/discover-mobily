@@ -29,7 +29,7 @@
                       console.log(playtrack)
 
                       document.getElementById('playlist').innerHTML = name + ' ' + description
-                      playtrack.forEach(e => tracks.innerHTML += `<div id=${e['track']['id']} style="background-image: url("${e['track']['album']['images'][0]['url']}")" onclick="playtrack('${e['track']['id']}')">${e['track']['name']}<audio type="audio/mpeg" preload="none" id="a_${e['track']['id']}" src="${e['track']['preview_url']}"></div>`)
+                      playtrack.forEach(e => tracks.innerHTML += `<div id=${e['track']['id']} style="background-image: url(${e['track']['album']['images'][0]['url']})" onclick="playtrack('${e['track']['id']}')">${e['track']['name']}<audio type="audio/mpeg" preload="none" id="a_${e['track']['id']}" src="${e['track']['preview_url']}"></div>`)
                       ;}
                   }
           }
