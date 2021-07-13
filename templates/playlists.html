@@ -5,6 +5,8 @@
         {% endfor %}
         </div>
         <div id="playlist" class="playlist">
+        </div>
+        <div id="tracks">
 
         </div>
     <script>
@@ -20,11 +22,15 @@
                   if (xhr.status === 200){
                       let data = JSON.parse(this.response)
                       console.log(data)
+                      let tracks = document.getElementById('tracks')
                       let name = data['name']
                       let description = data['description']
+                      let playtrack = data['tracks']['items']
 
                       document.getElementById('playlist').innerHTML = name + ' ' + description
-                  }}
+                      playtrack.forEach(e => tracks.innerHTML += `<div id=${e.id}>${e.name}</div>`)
+                      ;}
+                  }
           }
     </script>
 {% endblock %}
