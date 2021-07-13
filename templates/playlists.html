@@ -29,7 +29,7 @@
                       console.log(playtrack)
 
                       document.getElementById('playlist').innerHTML = name + ' ' + description
-                      playtrack.forEach(e => tracks.innerHTML += `<div id=${e.id}>${e.name}</div>`)
+                      playtrack.forEach(e => tracks.innerHTML += `<div id=${e['track']['id']}>${e['track']['name']}</div>`)
                       ;}
                   }
           }
