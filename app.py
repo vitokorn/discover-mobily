@@ -8,7 +8,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from sqlalchemy.sql import ClauseElement
 
-app = Flask(__name__,static_folder='discover-mobily/static')
+app = Flask(__name__)
+app._static_folder = 'discover-mobily/static'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://aewxjumzmghuqz:7c3fa637c4eb52b837213b1040c3fb39d14d7522e80697a18aa68e4bfcb18df2@ec2-54-195-76-73.eu-west-1.compute.amazonaws.com:5432/de5nclahn5ni2h'
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://discovermobily:5r9VsXSH@localhost:5432/discover-mobily'
