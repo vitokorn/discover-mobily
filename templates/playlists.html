@@ -37,7 +37,7 @@
                       descriptions.innerText = description
                       playlistdiv.appendChild(descriptions)
                       let cover = document.createElement('div')
-                      cover.innerText = image
+                      cover.style.backgroundImage = url(image)
                       playlistdiv.appendChild(cover)
 
                       playtrack.forEach(e => tracks.innerHTML += `<div class="flex-item" id=${e['track']['id']} style="background-image: url(${e['track']['album']['images'][0]['url']})" onclick="playtrack('${e['track']['id']}')">${e['track']['name']}<audio type="audio/mpeg" preload="none" id="a_${e['track']['id']}" src="${e['track']['preview_url']}"></div>`)
