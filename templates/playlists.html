@@ -45,7 +45,8 @@
                       ;}
                   let zerosrc = document.querySelectorAll('[src=null]')
                   for (let z of zerosrc) {
-                  z.style.opacity = '.5'
+                      let curr = z.id.replace('a_','')
+                      document.getElementById(curr).style.opacity = '.5'
                   }
 
                   }
