@@ -18,9 +18,9 @@
 {#            <li><a href="/library">Library</a></li>#}
         </ul>
     </nav>
-    {% if fsession['username'] %}
+    {% if session['username'] %}
         <div class="dropdown">
-        <button class="dropbtn">Hello, {{ fsession['nickname'] }}</button>
+        <button class="dropbtn">Hello, {{ session['nickname'] }}</button>
             <div class="dropdown-content">
                 <a href="">Account</a>
                 <a href="/spotify/logout/">Logout</a>
