@@ -23,6 +23,7 @@
                       let data = JSON.parse(this.response)
                       console.log(data)
                       let tracks = document.getElementById('tracks')
+                      tracks.innerHTML = ''
                       let name = data['name']
                       let description = data['description']
                       let image = data['images'][0]['url']
