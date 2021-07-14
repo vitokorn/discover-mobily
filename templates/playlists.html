@@ -6,9 +6,9 @@
             <div id="{{ p['id'] }}" onclick="initElement('{{ p['id'] }}')">{{ p['name'] }}</div>
         {% endfor %}
         </div>
-        <div id="playlist" class="container">
+        <div id="playlist" class="row">
         </div>
-        <div id="tracks" class="container">
+        <div id="tracks" class="row">
 
         </div>
     <script>
@@ -36,19 +36,19 @@
                       playlistdiv.innerHTML = ''
                       let names = document.createElement('div')
                       names.innerText = name
-                      names.className = 'row'
+                      names.className = 'col-sm'
                       playlistdiv.appendChild(names)
                       let descriptions = document.createElement('div')
                       descriptions.innerText = description
-                      description.className = 'row'
+                      description.className = 'col-sm'
                       playlistdiv.appendChild(descriptions)
                       let cover = document.createElement('div')
-                      cover.className = 'row'
+                      cover.className = 'col-sm'
                       cover.style.backgroundImage = "url('"+image+"')"
                       cover.style.backgroundRepeat = 'no-repeat'
                       playlistdiv.appendChild(cover)
 
-                      playtrack.forEach(e => tracks.innerHTML += `<div class="flex-item" id=${e['track']['id']} style="background-image: url(${e['track']['album']['images'][0]['url']});background-repeat: 'no-repeat'" onclick="playtrack('${e['track']['id']}')">${e['track']['name']}<audio type="audio/mpeg" preload="none" id="a_${e['track']['id']}" src="${e['track']['preview_url']}"></div>`)
+                      playtrack.forEach(e => tracks.innerHTML += `<div class="col-sm" id=${e['track']['id']} style="background-image: url(${e['track']['album']['images'][0]['url']});background-repeat: 'no-repeat'" onclick="playtrack('${e['track']['id']}')">${e['track']['name']}<audio type="audio/mpeg" preload="none" id="a_${e['track']['id']}" src="${e['track']['preview_url']}"></div>`)
                       ;}
                   let zerosrc = document.querySelectorAll('[src=null]')
                   for (let z of zerosrc) {
