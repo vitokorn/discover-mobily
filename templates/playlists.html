@@ -36,19 +36,19 @@
                       playlistdiv.innerHTML = ''
                       let names = document.createElement('div')
                       names.innerText = name
-                      names.className = 'col-sm'
+                      names.className = 'col-3'
                       playlistdiv.appendChild(names)
                       let descriptions = document.createElement('div')
                       descriptions.innerText = description
-                      description.className = 'col-sm'
+                      description.className = 'col-3'
                       playlistdiv.appendChild(descriptions)
                       let cover = document.createElement('div')
-                      cover.className = 'col-sm'
+                      cover.className = 'col-3'
                       cover.style.backgroundImage = "url('"+image+"')"
                       cover.style.backgroundRepeat = 'no-repeat'
                       playlistdiv.appendChild(cover)
 
-                      playtrack.forEach(e => tracks.innerHTML += `<div class="col-sm" id=${e['track']['id']} style="background-image: url(${e['track']['album']['images'][0]['url']});background-repeat: 'no-repeat'" onclick="playtrack('${e['track']['id']}')">${e['track']['name']}<audio type="audio/mpeg" preload="none" id="a_${e['track']['id']}" src="${e['track']['preview_url']}"></div>`)
+                      playtrack.forEach(e => tracks.innerHTML += `<div class="col-4" id=${e['track']['id']} style="background-image: url(${e['track']['album']['images'][0]['url']});background-repeat: 'no-repeat'" onclick="playtrack('${e['track']['id']}')">${e['track']['name']}<audio type="audio/mpeg" preload="none" id="a_${e['track']['id']}" src="${e['track']['preview_url']}"></div>`)
                       ;}
                   let zerosrc = document.querySelectorAll('[src=null]')
                   for (let z of zerosrc) {
