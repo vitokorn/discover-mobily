@@ -34,6 +34,10 @@
                   }
           }
           function playtrack(id) {
+              let all = document.querySelectorAll('[id^="a_"]');
+              for (let elem of all) {
+                  elem.pause()
+              }
               let audio = document.getElementById('a_' + id)
               audio.play();
           }
