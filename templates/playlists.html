@@ -43,6 +43,11 @@
 
                       playtrack.forEach(e => tracks.innerHTML += `<div class="flex-item" id=${e['track']['id']} style="background-image: url(${e['track']['album']['images'][0]['url']})" onclick="playtrack('${e['track']['id']}')">${e['track']['name']}<audio type="audio/mpeg" preload="none" id="a_${e['track']['id']}" src="${e['track']['preview_url']}"></div>`)
                       ;}
+                  let zerosrc = document.querySelectorAll('[src=null]')
+                  for (let z of zerosrc) {
+                  z.style.opacity = '.5'
+                  }
+
                   }
           }
           function playtrack(id) {
