@@ -974,6 +974,13 @@ header{
     display: inline-block;
     margin-bottom: -5px;
 }
+.itemImg {
+    margin: 0 auto;
+    background-color: #bbb;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position-x: center;
+}
 .launchPad-subgrid {
     display: grid;
     grid-gap: 3px;
