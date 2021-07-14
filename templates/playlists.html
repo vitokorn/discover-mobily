@@ -35,9 +35,11 @@
                       playlistdiv.innerHTML = ''
                       let names = document.createElement('div')
                       names.innerText = name
+                      names.className = 'flex-item'
                       playlistdiv.appendChild(names)
                       let descriptions = document.createElement('div')
                       descriptions.innerText = description
+                      description.className = 'flex-item'
                       playlistdiv.appendChild(descriptions)
                       let cover = document.createElement('div')
                       cover.className = 'flex-item'
