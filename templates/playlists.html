@@ -6,9 +6,9 @@
             <div id="{{ p['id'] }}" onclick="initElement('{{ p['id'] }}')">{{ p['name'] }}</div>
         {% endfor %}
         </div>
-        <div id="playlist" class="flex-container">
+        <div id="playlist" class="container">
         </div>
-        <div id="tracks" class="flex-container">
+        <div id="tracks" class="container">
 
         </div>
     <script>
@@ -36,14 +36,14 @@
                       playlistdiv.innerHTML = ''
                       let names = document.createElement('div')
                       names.innerText = name
-                      names.className = 'flex-item'
+                      names.className = 'row'
                       playlistdiv.appendChild(names)
                       let descriptions = document.createElement('div')
                       descriptions.innerText = description
-                      description.className = 'flex-item'
+                      description.className = 'row'
                       playlistdiv.appendChild(descriptions)
                       let cover = document.createElement('div')
-                      cover.className = 'flex-item'
+                      cover.className = 'row'
                       cover.style.backgroundImage = "url('"+image+"')"
                       cover.style.backgroundRepeat = 'no-repeat'
                       playlistdiv.appendChild(cover)
