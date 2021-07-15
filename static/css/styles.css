@@ -1028,3 +1028,32 @@ header{
 .num2{
   position: absolute;
 }
+.container-start{
+  grid-column-start: 2;
+  overflow: auto;
+}
+.con2{
+    width: 100%;
+    overflow: auto;
+    background-size: cover;
+    display: flex;
+    -moz-box-pack: start;
+    place-content: flex-start;
+    -moz-box-align: stretch;
+    align-items: stretch;
+    flex-flow: row wrap;
+    height: 100%;
+}
+.con3{
+  width: 200px;
+    height: 200px;
+    border: 2px solid white;
+    color: white;
+    display: flex;
+    -moz-box-align: center;
+    align-items: center;
+    -moz-box-pack: center;
+    justify-content: center;
+    font-size: 40px;
+    font-weight: bolder;
+}
