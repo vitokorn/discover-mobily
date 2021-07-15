@@ -11,7 +11,7 @@
 </head>
 <body>
 
-<header class="container" id="navbar">
+<header class="container-fluid" id="navbar">
 {#    <img class="logo" src="/static/logo.webp" style="height: 5%;width: 5%" alt="">#}
     {% if session['username'] %}
         <div class="">Hello, {{ session['nickname'] }}</div>
@@ -23,6 +23,8 @@
         <a class="cta" href="/spotify/login/"><button>Login</button></a>
     {% endif %}
 </header>
+<br>
+<br>
 {% block content %}
 {% endblock %}
 {#<script type="text/javascript" src="../static/js/materialize.js"></script>#}
