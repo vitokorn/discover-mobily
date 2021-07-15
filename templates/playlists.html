@@ -12,16 +12,16 @@
 
         </div>
     <script>
-          function initElement(id) {
-              console.log(id)
-              fetch('https://api.spotify.com/v1/playlists/' + id + '?fields=name,id,description,images,tracks(items(track(name,preview_url,id,artists,album(artists,id,images))))', {
-                  headers: new Headers({
+        function initElement(id) {
+            console.log(id)
+            fetch('https://api.spotify.com/v1/playlists/' + id + '?fields=name,id,description,images,tracks(items(track(name,preview_url,id,artists,album(artists,id,images))))', {
+                headers: new Headers({
                     'Authorization': 'Bearer ' + {{ user.acess_token }}
                   })
                 })
                 .then(response => response.json())
                 .then(data => {
-                  console.log(data)
+                    console.log(data)
                     {#let tracks = document.getElementById('tracks')#}
                     {#  tracks.innerHTML = ''#}
                     {#  let name = data['name']#}
@@ -55,12 +55,12 @@
                     })
                 .catch(error => console.error(error))}
 
-          function playtrack(id) {
-              let all = document.querySelectorAll('[id^="a_"]');
-              for (let elem of all) {
+        function playtrack(id) {
+            let all = document.querySelectorAll('[id^="a_"]');
+            for (let elem of all) {
                   elem.pause()
               }
-              let audio = document.getElementById('a_' + id)
+            let audio = document.getElementById('a_' + id)
               audio.play();
           }
     </script>
