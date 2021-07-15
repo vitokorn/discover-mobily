@@ -52,6 +52,7 @@
                       cover.style.backgroundSize = 'cover'
                       playlistdiv.appendChild(cover)
                       for (const pla of playtrack){
+                          console.log(list(pla['track']['artists']))
                           tracks.innerHTML += `<div class="con3" id=${pla['track']['id']} style="background-image: url(${pla['track']['album']['images'][0]['url']});background-repeat: no-repeat;background-size: cover" onclick="playtrack('${pla['track']['id']}')">${pla['track']['name']}<audio type="audio/mpeg" preload="none" id="a_${pla['track']['id']}" src="${pla['track']['preview_url']}"></div>`
                       }
 
@@ -71,5 +72,12 @@
               let audio = document.getElementById('a_' + id)
               audio.play();
           }
+        function list(artists){
+          const names = artists.map(({ name }) => name);
+          const finalName = names.pop();
+          return names.length
+          ? names.join(', ') + ' & ' + finalName
+          : finalName;
+        }
     </script>
 {% endblock %}
