@@ -43,6 +43,7 @@
                       playlistdiv.appendChild(names)
                       let descriptions = document.createElement('div')
                       descriptions.innerText = description
+                      if (description.length)
                       description.className = 'con3'
                       playlistdiv.appendChild(descriptions)
                       let cover = document.createElement('div')
@@ -52,7 +53,7 @@
                       cover.style.backgroundSize = 'cover'
                       playlistdiv.appendChild(cover)
                       for (const pla of playtrack){
-                          tracks.innerHTML += `<div class="con3" id=${pla['track']['id']} style="background-image: url(${pla['track']['album']['images'][0]['url']});background-repeat: no-repeat;background-size: cover" onclick="playtrack('${pla['track']['id']}')">${list(pla['track']['artists'])} -  ${pla['track']['name']}<audio type="audio/mpeg" preload="none" id="a_${pla['track']['id']}" src="${pla['track']['preview_url']}"></div>`
+                          tracks.innerHTML += `<div class="con3 hvr-outline-out" id=${pla['track']['id']} style="background-image: url(${pla['track']['album']['images'][0]['url']});background-repeat: no-repeat;background-size: cover" onclick="playtrack('${pla['track']['id']}')">${list(pla['track']['artists'])} -  ${pla['track']['name']}<audio type="audio/mpeg" preload="none" id="a_${pla['track']['id']}" src="${pla['track']['preview_url']}"></div>`
                       }
 
                   let zerosrc = document.querySelectorAll('[src=null]')
