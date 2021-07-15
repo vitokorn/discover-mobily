@@ -96,6 +96,8 @@ def pl():
             print('req 95' + str(res))
             pl = res['items']
             return render_template('playlists.html',pl=pl,user=user)
+    else:
+        return redirect(url_for('home'))
 
 
 @app.route('/spotify/login/')
