@@ -14,16 +14,17 @@
     <script>
           function initElement(id) {
               console.log(id)
-              let url = '/spotify/playlists/' + id
-              console.log(url)
-              let xhr = new XMLHttpRequest()
-              xhr.open('GET',url,true)
-              xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-              xhr.send()
-              xhr.onload = function (){
-                  if (xhr.status === 200){
-                      let data = JSON.parse(this.response)
-                      console.log(data)
+
+              fetch('https://api.spotify.com/v1/playlists/' + id + '?fields=name,id,description,images,tracks(items(track(name,preview_url,id,artists,album(artists,id,images))))', {
+                  headers: new Headers({
+                    'Authorization': 'Bearer ' + {{ user.acess_token }}
+                  })
+                })
+                .then(response => response.json())
+                .then(data => {
+                  console.log(data)
+                })
+                .catch(error => console.error(error))
                       let tracks = document.getElementById('tracks')
                       tracks.innerHTML = ''
                       let name = data['name']
@@ -55,9 +56,6 @@
                       let curr = z.id.replace('a_','')
                       document.getElementById(curr).style.opacity = '.5'
                   }
-
-                  }
-          }
           function playtrack(id) {
               let all = document.querySelectorAll('[id^="a_"]');
               for (let elem of all) {
