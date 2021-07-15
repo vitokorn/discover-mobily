@@ -31,6 +31,9 @@
                       let image = data['images'][0]['url']
                       let playtrack = data['tracks']['items']
                       console.log(playtrack)
+                      for (const pla of playtrack){
+                          console.log(pla['track']['id'])
+                      }
 
                       let playlistdiv = document.getElementById('playlist')
                       playlistdiv.innerHTML = ''
