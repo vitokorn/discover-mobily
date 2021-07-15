@@ -31,9 +31,7 @@
                       let image = data['images'][0]['url']
                       let playtrack = data['tracks']['items']
                       console.log(playtrack)
-                      for (const pla of playtrack){
-                          console.log(pla['track']['id'])
-                      }
+
 
                       let playlistdiv = document.getElementById('playlist')
                       playlistdiv.innerHTML = ''
@@ -50,9 +48,10 @@
                       cover.style.backgroundImage = "url('"+image+"')"
                       cover.style.backgroundRepeat = 'no-repeat'
                       playlistdiv.appendChild(cover)
+                      for (const pla of playtrack){
+                          tracks.innerHTML += `<div class="col-3" id=${e['track']['id']} style="background-image: url(${e['track']['album']['images'][0]['url']});background-repeat: no-repeat;background-size: cover" onclick="playtrack('${e['track']['id']}')">${e['track']['name']}<audio type="audio/mpeg" preload="none" id="a_${e['track']['id']}" src="${e['track']['preview_url']}"></div>`
+                      }
 
-                      playtrack.forEach(e => tracks.innerHTML += `<div class="col-3" id=${e['track']['id']} style="background-image: url(${e['track']['album']['images'][0]['url']});background-repeat: no-repeat;background-size: cover" onclick="playtrack('${e['track']['id']}')">${e['track']['name']}<audio type="audio/mpeg" preload="none" id="a_${e['track']['id']}" src="${e['track']['preview_url']}"></div>`)
-                      ;}
                   let zerosrc = document.querySelectorAll('[src=null]')
                   for (let z of zerosrc) {
                       let curr = z.id.replace('a_','')
@@ -60,7 +59,7 @@
                   }
 
                   }
-          }
+          }}
           function playtrack(id) {
               let all = document.querySelectorAll('[id^="a_"]');
               for (let elem of all) {
