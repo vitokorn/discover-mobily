@@ -10,7 +10,7 @@
     <title>{% block title %}{% endblock %} - Discover Mobily</title>
 </head>
 <body>
-<navbar>
+<header id="navbar">
     <img class="logo" src="/static/logo.webp" style="height: 5%;width: 5%" alt="">
     {% if session['username'] %}
         <div class="">Hello, {{ session['nickname'] }}</div>
@@ -21,7 +21,7 @@
     {% else %}
         <a class="cta" href="/spotify/login/"><button>Login</button></a>
     {% endif %}
-</navbar>
+</header>
 {% block content %}
 {% endblock %}
 {#<script type="text/javascript" src="../static/js/materialize.js"></script>#}
