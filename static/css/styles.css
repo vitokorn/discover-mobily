@@ -79,8 +79,8 @@ header{
     height: 100%;
 }
 .con3{
-  width: 105px;
-    height: 105px;
+  width: 200px;
+    height: 200px;
     /*border: 2px solid white;*/
     color: white;
     display: flex;
@@ -90,4 +90,65 @@ header{
     justify-content: center;
     /*font-size: 40px;*/
     font-weight: bolder;
+}
+@media (min-width: 576px) {
+    .con3 {
+        width: 105px;
+        height: 105px;
+        /*border: 2px solid white;*/
+        color: white;
+        display: flex;
+        -moz-box-align: center;
+        align-items: center;
+        -moz-box-pack: center;
+        justify-content: center;
+        /*font-size: 40px;*/
+        font-weight: bolder;
+    }
+}
+@media (min-width: 768px) {
+.con3{
+  width: 130px;
+    height: 130px;
+    /*border: 2px solid white;*/
+    color: white;
+    display: flex;
+    -moz-box-align: center;
+    align-items: center;
+    -moz-box-pack: center;
+    justify-content: center;
+    /*font-size: 40px;*/
+    font-weight: bolder;
+}}
+
+@media (min-width: 992px) {
+.con3{
+  width: 150px;
+    height: 150px;
+    /*border: 2px solid white;*/
+    color: white;
+    display: flex;
+    -moz-box-align: center;
+    align-items: center;
+    -moz-box-pack: center;
+    justify-content: center;
+    /*font-size: 40px;*/
+    font-weight: bolder;
+}
+}
+
+@media (min-width: 1200px) {
+.con3{
+  width: 170px;
+    height: 170px;
+    /*border: 2px solid white;*/
+    color: white;
+    display: flex;
+    -moz-box-align: center;
+    align-items: center;
+    -moz-box-pack: center;
+    justify-content: center;
+    /*font-size: 40px;*/
+    font-weight: bolder;
+}
 }
