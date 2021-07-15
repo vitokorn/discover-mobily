@@ -22,36 +22,36 @@
                 .then(response => response.json())
                 .then(data => {
                   console.log(data)
-                    let tracks = document.getElementById('tracks')
-                      tracks.innerHTML = ''
-                      let name = data['name']
-                      let description = data['description']
-                      let image = data['images'][0]['url']
-                      let playtrack = data['tracks']['items']
-                      console.log(playtrack)
-
-                      let playlistdiv = document.getElementById('playlist')
-                      playlistdiv.innerHTML = ''
-                      let names = document.createElement('div')
-                      names.innerText = name
-                      names.className = 'col-3'
-                      playlistdiv.appendChild(names)
-                      let descriptions = document.createElement('div')
-                      descriptions.innerText = description
-                      description.className = 'col-3'
-                      playlistdiv.appendChild(descriptions)
-                      let cover = document.createElement('div')
-                      cover.className = 'col-3'
-                      cover.style.backgroundImage = "url('"+image+"')"
-                      cover.style.backgroundRepeat = 'no-repeat'
-                      playlistdiv.appendChild(cover)
-
-                      playtrack.forEach(e => tracks.innerHTML += `<div class="col-3" id=${e['track']['id']} style="background-image: url(${e['track']['album']['images'][0]['url']});background-repeat: no-repeat;background-size: cover" onclick="playtrack('${e['track']['id']}')">${e['track']['name']}<audio type="audio/mpeg" preload="none" id="a_${e['track']['id']}" src="${e['track']['preview_url']}"></div>`);
-                      let zerosrc = document.querySelectorAll('[src=null]')
-                      for (let z of zerosrc) {
-                          let curr = z.id.replace('a_','')
-                          document.getElementById(curr).style.opacity = '.5'
-                      }
+                    {#let tracks = document.getElementById('tracks')#}
+                    {#  tracks.innerHTML = ''#}
+                    {#  let name = data['name']#}
+                    {#  let description = data['description']#}
+                    {#  let image = data['images'][0]['url']#}
+                    {#  let playtrack = data['tracks']['items']#}
+                    {#  console.log(playtrack)#}
+                    {##}
+                    {#  let playlistdiv = document.getElementById('playlist')#}
+                    {#  playlistdiv.innerHTML = ''#}
+                    {#  let names = document.createElement('div')#}
+                    {#  names.innerText = name#}
+                    {#  names.className = 'col-3'#}
+                    {#  playlistdiv.appendChild(names)#}
+                    {#  let descriptions = document.createElement('div')#}
+                    {#  descriptions.innerText = description#}
+                    {#  description.className = 'col-3'#}
+                    {#  playlistdiv.appendChild(descriptions)#}
+                    {#  let cover = document.createElement('div')#}
+                    {#  cover.className = 'col-3'#}
+                    {#  cover.style.backgroundImage = "url('"+image+"')"#}
+                    {#  cover.style.backgroundRepeat = 'no-repeat'#}
+                    {#  playlistdiv.appendChild(cover)#}
+                    {##}
+                    {#  playtrack.forEach(e => tracks.innerHTML += `<div class="col-3" id=${e['track']['id']} style="background-image: url(${e['track']['album']['images'][0]['url']});background-repeat: no-repeat;background-size: cover" onclick="playtrack('${e['track']['id']}')">${e['track']['name']}<audio type="audio/mpeg" preload="none" id="a_${e['track']['id']}" src="${e['track']['preview_url']}"></div>`);#}
+                    {#  let zerosrc = document.querySelectorAll('[src=null]')#}
+                    {#  for (let z of zerosrc) {#}
+                    {#      let curr = z.id.replace('a_','')#}
+                    {#      document.getElementById(curr).style.opacity = '.5'#}
+                    {#  }#}
                     })
                 .catch(error => console.error(error))}
 
