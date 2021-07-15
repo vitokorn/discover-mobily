@@ -97,7 +97,7 @@ def pl():
             pl = res['items']
             return render_template('playlists.html',pl=pl,user=user)
     else:
-        return redirect(url_for('home'))
+        return redirect(url_for('authclient'))
 
 
 @app.route('/spotify/login/')
