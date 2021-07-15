@@ -6,9 +6,11 @@
             <div id="{{ p['id'] }}" onclick="initElement('{{ p['id'] }}')">{{ p['name'] }}</div>
         {% endfor %}
         </div>
-        <div id="playlist" class="row">
+    <br>
+    <br>
+        <div id="playlist" class="flex-container">
         </div>
-        <div id="tracks" class="row">
+        <div id="tracks" class="flex-container">
 
         </div>
     <script>
@@ -37,11 +39,11 @@
                       playlistdiv.innerHTML = ''
                       let names = document.createElement('div')
                       names.innerText = name
-                      names.className = 'col-3'
+                      names.className = 'flex-item'
                       playlistdiv.appendChild(names)
                       let descriptions = document.createElement('div')
                       descriptions.innerText = description
-                      description.className = 'col-3'
+                      description.className = 'flex-item'
                       playlistdiv.appendChild(descriptions)
                       let cover = document.createElement('div')
                       cover.className = 'col-3'
@@ -49,7 +51,7 @@
                       cover.style.backgroundRepeat = 'no-repeat'
                       playlistdiv.appendChild(cover)
                       for (const pla of playtrack){
-                          tracks.innerHTML += `<div class="col-3" id=${e['track']['id']} style="background-image: url(${e['track']['album']['images'][0]['url']});background-repeat: no-repeat;background-size: cover" onclick="playtrack('${e['track']['id']}')">${e['track']['name']}<audio type="audio/mpeg" preload="none" id="a_${e['track']['id']}" src="${e['track']['preview_url']}"></div>`
+                          tracks.innerHTML += `<div id="num1" <div class="num2" id=${pla['track']['id']} style="background-image: url(${pla['track']['album']['images'][0]['url']});background-repeat: no-repeat;background-size: cover" onclick="playtrack('${pla['track']['id']}')">${pla['track']['name']}<audio type="audio/mpeg" preload="none" id="a_${pla['track']['id']}" src="${pla['track']['preview_url']}"></div></div>`
                       }
 
                   let zerosrc = document.querySelectorAll('[src=null]')

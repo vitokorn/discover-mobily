@@ -993,3 +993,38 @@ header{
     grid-column-gap: 28px;
     grid-template-columns: 280px 280px 140px;
 }
+
+.flex-container {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-flow: row;
+    justify-content: space-around;
+    line-height:30px;
+}
+.flex-item {
+    /*background: tomato;*/
+    /*margin: 5px;*/
+    /*color: white;*/
+    font-weight: bold;
+    font-size: 1.5em;
+    text-align: center;
+    flex: 1 0 auto;
+    height:auto;
+}
+.flex-item:before {
+    content:'';
+    float:left;
+    padding-top:100%;
+}
+.num1{
+  position: relative
+}
+.num2{
+  position: absolute;
+}
