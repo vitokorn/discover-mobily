@@ -1,16 +1,16 @@
 {% extends 'base.html' %}
 {% block title %}  {% endblock %}
 {% block content %}
-        <div style="column-gap: 16px; column-count: 3;">
+        <div style="column-gap: 16px; column-count: 3;" class="container">
         {% for p in pl %}
             <div id="{{ p['id'] }}" onclick="initElement('{{ p['id'] }}')">{{ p['name'] }}</div>
         {% endfor %}
         </div>
     <br>
     <br>
-        <div id="playlist" class="row con2">
+        <div id="playlist" class="container con2">
         </div>
-        <div id="tracks" class="row con2">
+        <div id="tracks" class="container con2">
 
         </div>
     <script>
