@@ -10,7 +10,8 @@
     <title>{% block title %}{% endblock %} - Discover Mobily</title>
 </head>
 <body>
-<header id="navbar">
+
+<header class="container" id="navbar">
 {#    <img class="logo" src="/static/logo.webp" style="height: 5%;width: 5%" alt="">#}
     {% if session['username'] %}
         <div class="">Hello, {{ session['nickname'] }}</div>
