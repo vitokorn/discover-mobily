@@ -73,9 +73,9 @@
               let audio = document.getElementById('a_' + id)
               console.log('paused' + !audio.paused)
               if (audio.paused){
-                  audio.pause();
-              } else {
                   audio.play();
+              } else {
+                  audio.pause();
               }
           }
         function list(artists){
