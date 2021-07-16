@@ -52,7 +52,7 @@
                       cover.style.backgroundSize = 'cover'
                       playlistdiv.appendChild(cover)
                       for (const pla of playtrack){
-                          tracks.innerHTML += `<div class="con3" id=${pla['track']['id']} style="background-image: url(${pla['track']['album']['images'][0]['url']});background-repeat: no-repeat;background-size: cover" onclick="playtrack('${pla['track']['id']}')"><div class="text"> ${list(pla['track']['artists'])} -  ${pla['track']['name']}</div><audio type="audio/mpeg" preload="none" id="a_${pla['track']['id']}" src="${pla['track']['preview_url']}"></div>`
+                          tracks.innerHTML += `<div class="con3" id=${pla['track']['id']} style="background-image: url(${pla['track']['album']['images'][0]['url']});background-repeat: no-repeat;background-size: cover" onclick="playtrack('${pla['track']['id']}')"><div tabindex="0" class="text"> ${list(pla['track']['artists'])} -  ${pla['track']['name']}</div><audio type="audio/mpeg" preload="none" id="a_${pla['track']['id']}" src="${pla['track']['preview_url']}"></div>`
                       }
 
                   let zerosrc = document.querySelectorAll('[src=null]')
