@@ -225,3 +225,9 @@ header{
     width: 100%;
     height: 100%;
 }
+.text{
+    opacity: 0.5;
+}
+.text:active{
+    opacity: 0;
+}
