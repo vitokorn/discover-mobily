@@ -228,6 +228,6 @@ header{
 .text{
     opacity: 1;
 }
-.text:active{
+.text:focus{
     opacity: 0;
 }
