@@ -43,7 +43,7 @@
                       playlistdiv.appendChild(names)
                       let descriptions = document.createElement('div')
                       descriptions.innerText = description
-                      description.className = 'con3'
+                      descriptions.className = 'con3'
                       playlistdiv.appendChild(descriptions)
                       let cover = document.createElement('div')
                       cover.className = 'con3'
@@ -61,6 +61,8 @@
                       document.getElementById(curr).style.opacity = '.5'
                   }
 
+                  } else if(xhr.status === 401){
+                      url_for('refresh')
                   }
           }}
           function playtrack(id) {
@@ -69,7 +71,11 @@
                   elem.pause()
               }
               let audio = document.getElementById('a_' + id)
-              audio.play();
+              if (!audio.pause()){
+                  audio.pause()
+              } else {
+                  audio.play();
+              }
           }
         function list(artists){
           const names = artists.map(({ name }) => name);
