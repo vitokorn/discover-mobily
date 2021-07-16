@@ -105,7 +105,7 @@ def authclient():
     url = 'https://accounts.spotify.com/authorize'
     params = {'client_id': client_id, 'client_secret': client_secret, 'redirect_uri': redirect_uri,
               'scope': 'user-library-read user-read-private playlist-read-collaborative playlist-read-private '
-                       'playlist-modify-public ugc-image-upload',
+                       'playlist-modify-public user-top-read',
               'response_type': 'code', 'show_dialog': True}
     req = requests.get(url=url, params=params)
     return redirect(req.url)
