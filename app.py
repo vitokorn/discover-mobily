@@ -87,7 +87,7 @@ def pl():
                 res = req.json()
                 print('req 85' + str(res))
                 pl = res['items']
-                return render_template('playlists.html', pl=pl)
+                return render_template('playlists.html', pl=pl,user=user)
             else:
                 print('Error')
                 raise ValueError
