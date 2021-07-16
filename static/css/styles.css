@@ -226,8 +226,8 @@ header{
     height: 100%;
 }
 .text{
-    opacity: 1;
-}
-.text:focus .text:active .text:hover{
     opacity: 0;
+}
+.text:focus, .text:active, .text:hover{
+    opacity: 1;
 }
