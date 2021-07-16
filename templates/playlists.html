@@ -72,10 +72,10 @@
               }
               let audio = document.getElementById('a_' + id)
               console.log('paused' + !audio.paused)
-              if (!audio.paused){
-                  audio.pause()
-              } else {
+              if (audio.paused){
                   audio.play();
+              } else {
+                  audio.pause();
               }
           }
         function list(artists){

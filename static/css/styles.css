@@ -228,6 +228,6 @@ header{
 .text{
     opacity: 1;
 }
-.text:focus{
+.text:focus .text:active .text:hover{
     opacity: 0;
 }
