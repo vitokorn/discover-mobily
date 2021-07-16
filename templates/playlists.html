@@ -8,6 +8,16 @@
         </div>
     <br>
     <br>
+        <a id="topartists">Artists</a>
+        <div id="artists" class="container-fluid con2">
+
+        </div>
+        <a id="toptracks">Top tracks</a>
+        <div id="tracks"></div>
+        <a id="savedalbums">Top tracks</a>
+        <div id="tracks"></div>
+        <a id="savedtracks">Top tracks</a>
+        <div id="tracks"></div>
         <div id="playlist" class="container-fluid con2">
         </div>
         <div id="tracks" class="container-fluid con2">
@@ -56,11 +66,11 @@
                           elem.push(`<div class="con3" id=${pla['track']['id']} style="background-image: url(${pla['track']['album']['images'][0]['url']});background-repeat: no-repeat;background-size: cover" onclick="playtrack('${pla['track']['id']}')"><div tabindex="0" class="text"> ${list(pla['track']['artists'])} -  ${pla['track']['name']}</div><audio type="audio/mpeg" preload="none" id="a_${pla['track']['id']}" src="${pla['track']['preview_url']}"></div>`)
                       }
                       tracks.innerHTML = elem
-                  let zerosrc = document.querySelectorAll('[src=null]')
-                  for (let z of zerosrc) {
-                      let curr = z.id.replace('a_','')
-                      document.getElementById(curr).style.opacity = '.5'
-                  }
+                      let zerosrc = document.querySelectorAll('[src=null]')
+                      for (let z of zerosrc) {
+                          let curr = z.id.replace('a_','')
+                          document.getElementById(curr).style.opacity = '.5'
+                      }
 
                   } else if(xhr.status === 401){
                       url_for('refresh')
@@ -80,6 +90,66 @@
           return names.length
           ? names.join(', ') + ' & ' + finalName
           : finalName;
+        }
+        function topartists() {
+            document.getElementById('topartists').addEventListener('click')
+            let url = 'https://api.spotify.com/v1/me/top/artists?time_range=short_term'
+            console.log(url)
+            let xhr = new XMLHttpRequest()
+            xhr.open('GET',url,true)
+            xhr.setRequestHeader('Authorization', 'Bearer ' + '{{ user.access_token }}');
+            xhr.send()
+            xhr.onload = function (){
+                if (xhr.status === 200){
+                    let data = JSON.parse(this.response)
+                    console.log(data)
+                }
+            }
+        }
+        function toptracks() {
+            document.getElementById('toptracks').addEventListener('click')
+            let url = 'https://api.spotify.com/v1/me/top/tracks?time_range=short_term'
+            console.log(url)
+            let xhr = new XMLHttpRequest()
+            xhr.open('GET',url,true)
+            xhr.setRequestHeader('Authorization', 'Bearer ' + '{{ user.access_token }}');
+            xhr.send()
+            xhr.onload = function (){
+                if (xhr.status === 200){
+                    let data = JSON.parse(this.response)
+                    console.log(data)
+                }
+            }
+        }
+        function savedalbums(){
+            document.getElementById('savedalbums').addEventListener('click')
+            let url = 'https://api.spotify.com/v1/me/albums'
+            console.log(url)
+            let xhr = new XMLHttpRequest()
+            xhr.open('GET',url,true)
+            xhr.setRequestHeader('Authorization', 'Bearer ' + '{{ user.access_token }}');
+            xhr.send()
+            xhr.onload = function (){
+                if (xhr.status === 200){
+                    let data = JSON.parse(this.response)
+                    console.log(data)
+                }
+            }
+        }
+        function savedtracks(){
+            document.getElementById('savedtracks').addEventListener('click')
+            let url = 'https://api.spotify.com/v1/me/tracks'
+            console.log(url)
+            let xhr = new XMLHttpRequest()
+            xhr.open('GET',url,true)
+            xhr.setRequestHeader('Authorization', 'Bearer ' + '{{ user.access_token }}');
+            xhr.send()
+            xhr.onload = function (){
+                if (xhr.status === 200){
+                    let data = JSON.parse(this.response)
+                    console.log(data)
+                }
+            }
         }
     </script>
 {% endblock %}
