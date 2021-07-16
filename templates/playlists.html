@@ -71,10 +71,11 @@
                   elem.pause()
               }
               let audio = document.getElementById('a_' + id)
-              console.log('paused' + !audio.paused)
               if (audio.paused){
+                  console.log('75')
                   audio.play();
-              } else {
+              } else if (!audio.paused) {
+                  console.log('78')
                   audio.pause();
               }
           }
