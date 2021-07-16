@@ -230,5 +230,5 @@ header{
 }
 .text:focus, .text:active, .text:hover,text:focus-within{
     opacity: 1;
-    box-shadow: 3px 3px black, -1em 0 .4em grey;
+    text-shadow: black 0 0 3px;
 }
