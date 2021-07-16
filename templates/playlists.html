@@ -71,13 +71,7 @@
                   elem.pause()
               }
               let audio = document.getElementById('a_' + id)
-              if (!audio.paused){
-                  console.log('75')
-                  audio.play();
-              } else {
-                  console.log('78')
-                  audio.pause();
-              }
+              audio.play();
           }
         function list(artists){
           const names = artists.map(({ name }) => name);
