@@ -258,6 +258,7 @@
             }
         })
         document.getElementById('savedtracks').addEventListener('click', function () {
+            document.getElementById('savedtrack').innerHTML = ''
             sendRequest(0)
         })
           function sendRequest(offset){
@@ -278,9 +279,8 @@
                     }
                     document.getElementById('savedtrack').innerHTML += elem.join(' ')
                     if (items.length > 0){
-                        setTimeout(function() {
-                          sendRequest(offset+50)
-                        }, 1000);
+                        sendRequest(offset+50)
+
 
                     }
                 } else {
