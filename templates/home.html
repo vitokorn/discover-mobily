@@ -1,39 +1,216 @@
 {% extends 'base.html' %}
+{% block title %} Home {% endblock %}
 {% block content %}
-    <div class="launchPad inverted">
-        <div class="launchPad-grid">
-        <div style="grid-column: 1 / 2;">
-            <div class="launchPad-subgrid">
-                <div class="button option view-link active" style="grid-area: 1 / 1 / 2 / 2;">Your Playlists</div>
-                <div class="button option view-link " style="grid-area: 2 / 1 / 3 / 2;">Your Top Tracks</div>
-                <div class="button option view-link " style="grid-area: 3 / 1 / 3 / 2;">Your Top Artists</div>
-                <div class="button option view-link " style="grid-area: 1 / 2 / 2 / 3;">Your Saved Tracks</div>
-                <div class="button option view-link " style="grid-area: 2 / 2 / 3 / 3;">Your Saved Albums</div>
-                <div class="button option view-link " style="grid-area: 3 / 2 / 3 / 3;">Your Followed Artists</div>
-            </div></div>
-        <div style="grid-column: 2 / 3;">
-            <div class="launchPad-subgrid">
-                <div class="button option view-link  disabled-launch-option" tooltip="Follow your Discover Weekly playlist on Spotify to view it here" tooltip-position="right" style="grid-area: 1 / 1 / 2 / 2;">Discover Weekly</div>
-                <div class="button option view-link  disabled-launch-option" tooltip="Follow your Release Radar playlist on Spotify to view it here" tooltip-position="right" style="grid-area: 2 / 1 / 3 / 2;">Release Radar</div>
-                <div class="button option view-link " style="grid-area: 3 / 1 / 4 / 2;">Charts</div><div class="button option view-link " style="grid-area: 1 / 2 / 2 / 3;">Spotify Playlists</div>
-                <div class="button option view-link " style="grid-area: 2 / 2 / 3 / 3;">Genres</div><div class="button option view-link " style="grid-area: 3 / 2 / 4 / 3;">New Releases</div></div></div>
-        <div style="grid-column: 3 / 4;"><div class=""><input class="search-bar" type="text" placeholder="Search" value=""></div>
-            <div class="button option view-link launchPad-random ">Random Artist</div>
-            <div class="button option view-link launchPad-random ">Random Genre</div>
+    <br>
+    <br>
+    <button class="accordion">Playlists</button>
+        <div class="panel">
+        <div id="playlistlist" style="column-gap: 16px; column-count: 3;" class="container">
+        {% for p in pl %}
+            <div id="{{ p['id'] }}" onclick="initElement('{{ p['id'] }}')">{{ p['name'] }}</div>
+        {% endfor %}
         </div>
-    </div>
-    </div>
-    <div class="header flex-container" style="align-items: flex-end">
-        <div class="cover"></div>
-        <div class="flex-grow: 5;"></div>
-        <div class="dropdown">
-            <select style="max-width: 160px;"><option value="">Sort by playlist order</option><option value="artist">Sort by artist</option><option value="album">Sort by album</option><option value="popularity">Sort by popularity (least to most)</option><option value="releaseDate">Sort by release date</option><option value="tempo">Sort slowest to fastest</option><option value="valence">Sort happiest to saddest</option><option value="danceability">Sort by most to least danceable</option><option value="duration">Sort by song length (short to long)</option><option value="acoustic">Sort acoustic to electric</option></select>
+        <div id="playlist" class="container-fluid con2">
         </div>
-    </div>
-    <div class="body">
-        <div class="itemGrid">
+        <div id="tracks" class="container-fluid con2">
 
-            <div class="playable"></div>
         </div>
     </div>
+    <button class="accordion">Artists</button>
+    <div class="panel">
+        <a id="topartists">Artists</a>
+        <div id="artists" class="container-fluid con2">
+        </div>
+    </div>
+    <button class="accordion">Top tracks</button>
+    <div class="panel">
+        <a id="toptracks">Top tracks</a>
+        <div id="toptrack" class="container-fluid con2">
+
+        </div>
+    </div>
+    <button class="accordion">Saved albums</button>
+    <div class="panel">
+        <a id="savedalbums">Saved albums</a>
+        <div id="savedalbum" class="container-fluid con2"></div>
+    </div>
+    <button class="accordion">Saved albums</button>
+    <div class="panel">
+        <a id="savedtracks">Saved tracks</a>
+        <div id="savedtrack" class="container-fluid con2"></div>
+    </div>
+    <script>
+          function initElement(id) {
+              console.log(id)
+              let url = 'https://api.spotify.com/v1/playlists/' + id + '?fields=name,id,description,images,tracks(items(track(name,preview_url,id,artists,album(artists,id,images))))'
+              console.log(url)
+              let xhr = new XMLHttpRequest()
+              xhr.open('GET',url,true)
+              xhr.setRequestHeader('Authorization', 'Bearer ' + '{{ user.access_token }}');
+              xhr.send()
+              xhr.onload = function (){
+                  if (xhr.status === 200){
+                      let data = JSON.parse(this.response)
+                      console.log(data)
+                      let tracks = document.getElementById('tracks')
+                      tracks.innerHTML = ''
+                      let name = data['name']
+                      let description = data['description']
+                      let image = data['images'][0]['url']
+                      let playtrack = data['tracks']['items']
+                      console.log(playtrack)
+
+
+                      let playlistdiv = document.getElementById('playlist')
+                      playlistdiv.innerHTML = ''
+                      let names = document.createElement('div')
+                      names.innerText = name
+                      names.className = 'con3'
+                      playlistdiv.appendChild(names)
+                      let descriptions = document.createElement('div')
+                      descriptions.innerText = description
+                      descriptions.className = 'con3'
+                      playlistdiv.appendChild(descriptions)
+                      let cover = document.createElement('div')
+                      cover.className = 'con3'
+                      cover.style.backgroundImage = "url('"+image+"')"
+                      cover.style.backgroundRepeat = 'no-repeat'
+                      cover.style.backgroundSize = 'cover'
+                      playlistdiv.appendChild(cover)
+                      let elem = []
+                      for (const pla of playtrack){
+                          elem.push(`<div class="con3" id=${pla['track']['id']} style="background-image: url(${pla['track']['album']['images'][0]['url']});background-repeat: no-repeat;background-size: cover" onclick="playtrack('${pla['track']['id']}')"><div tabindex="0" class="text"> ${list(pla['track']['artists'])} -  ${pla['track']['name']}</div><audio type="audio/mpeg" preload="none" id="a_${pla['track']['id']}" src="${pla['track']['preview_url']}"></div>`)
+                      }
+                      tracks.innerHTML = elem.join(' ')
+                      let zerosrc = document.querySelectorAll('[src=null]')
+                      for (let z of zerosrc) {
+                          let curr = z.id.replace('a_','')
+                          document.getElementById(curr).style.opacity = '.5'
+                      }
+
+                  } else if(xhr.status === 401){
+                      url_for('refresh',session['username'])
+                  }
+          }}
+          function playtrack(id) {
+              let all = document.querySelectorAll('[id^="a_"]');
+              for (let elem of all) {
+                  elem.pause()
+              }
+              let audio = document.getElementById('a_' + id)
+              audio.play();
+          }
+        function list(artists){
+          const names = artists.map(({ name }) => name);
+          const finalName = names.pop();
+          return names.length
+          ? names.join(', ') + ' & ' + finalName
+          : finalName;
+        }
+        document.getElementById('topartists').addEventListener('click', function () {
+            let url = 'https://api.spotify.com/v1/me/top/artists?time_range=short_term'
+            console.log(url)
+            let xhr = new XMLHttpRequest()
+            xhr.open('GET',url,true)
+            xhr.setRequestHeader('Authorization', 'Bearer ' + '{{ user.access_token }}');
+            xhr.send()
+            xhr.onload = function (){
+                if (xhr.status === 200){
+                    let data = JSON.parse(this.response)
+                    let artis = document.getElementById('artists')
+                    let items = data['items']
+                    let elem = []
+                      for (const it of items){
+                          elem.push(`<div class="con3" id=${it['id']} style="background-image: url(${it['images'][0]['url']});background-repeat: no-repeat;background-size: cover"><div tabindex="0" class="text">${it['name']}</div></div>`)
+                      }
+                      artis.innerHTML = elem.join(' ')
+                    console.log(data)
+                }
+            }
+        })
+        document.getElementById('toptracks').addEventListener('click', function () {
+            let url = 'https://api.spotify.com/v1/me/top/tracks?time_range=short_term'
+            console.log(url)
+            let xhr = new XMLHttpRequest()
+            xhr.open('GET',url,true)
+            xhr.setRequestHeader('Authorization', 'Bearer ' + '{{ user.access_token }}');
+            xhr.send()
+            xhr.onload = function (){
+                if (xhr.status === 200){
+                    let data = JSON.parse(this.response)
+                    let tracks = document.getElementById('toptrack')
+                      tracks.innerHTML = ''
+                      let playtrack = data['items']
+                      console.log(playtrack)
+                      let elem = []
+                      for (const pla of playtrack){
+                          elem.push(`<div class="con3" id=${pla['id']} style="background-image: url(${pla['album']['images'][0]['url']});background-repeat: no-repeat;background-size: cover" onclick="playtrack('${pla['id']}')"><div tabindex="0" class="text"> ${list(pla['artists'])} -  ${pla['name']}</div><audio type="audio/mpeg" preload="none" id="a_${pla['id']}" src="${pla['preview_url']}"></div>`)
+                      }
+                      tracks.innerHTML = elem.join(' ')
+                      let zerosrc = document.querySelectorAll('[src=null]')
+                      for (let z of zerosrc) {
+                          let curr = z.id.replace('a_','')
+                          document.getElementById(curr).style.opacity = '.5'
+                      }
+                    console.log(data)
+                }
+            }
+        })
+        document.getElementById('savedalbums').addEventListener('click', function () {
+            let url = 'https://api.spotify.com/v1/me/albums'
+            console.log(url)
+            let xhr = new XMLHttpRequest()
+            xhr.open('GET',url,true)
+            xhr.setRequestHeader('Authorization', 'Bearer ' + '{{ user.access_token }}');
+            xhr.send()
+            xhr.onload = function (){
+                if (xhr.status === 200){
+                    let data = JSON.parse(this.response)
+                    let albums = document.getElementById('savedalbum')
+                    albums.innerHTML = ''
+                    let savedalbum = data['items']
+                    console.log(savedalbum)
+                    let elem = []
+                    for (const sa of savedalbum){
+                          elem.push(`<div class="con3" id=${sa['album']['id']} style="background-image: url(${sa['album']['images'][0]['url']});background-repeat: no-repeat;background-size: cover"><div tabindex="0" class="text">${sa['album']['name']}</div></div>`)
+                      }
+                    albums.innerHTML = elem.join(' ')
+                    {#let zerosrc = document.querySelectorAll('[src=null]')#}
+                    {#for (let z of zerosrc) {#}
+                    {#      let curr = z.id.replace('a_','')#}
+                    {#      document.getElementById(curr).style.opacity = '.5'#}
+                    {#  }#}
+                    console.log(data)
+                }
+            }
+        })
+        document.getElementById('savedtracks').addEventListener('click', function () {
+            let url = 'https://api.spotify.com/v1/me/tracks'
+            console.log(url)
+            let xhr = new XMLHttpRequest()
+            xhr.open('GET',url,true)
+            xhr.setRequestHeader('Authorization', 'Bearer ' + '{{ user.access_token }}');
+            xhr.send()
+            xhr.onload = function (){
+                if (xhr.status === 200){
+                    let data = JSON.parse(this.response)
+                    console.log(data)
+                }
+            }
+        })
+          let acc = document.getElementsByClassName("accordion");
+            let i;
+
+            for (i = 0; i < acc.length; i++) {
+              acc[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                let panel = this.nextElementSibling;
+                if (panel.style.display === "block") {
+                  panel.style.display = "none";
+                } else {
+                  panel.style.display = "block";
+                }
+              });
+            }
+    </script>
 {% endblock %}

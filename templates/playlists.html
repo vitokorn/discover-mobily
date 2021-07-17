@@ -5,7 +5,6 @@
     <br>
     <button class="accordion">Playlists</button>
         <div class="panel">
-        <a id="playlists">Playlists</a>
         <div id="playlistlist" style="column-gap: 16px; column-count: 3;" class="container">
         {% for p in pl %}
             <div id="{{ p['id'] }}" onclick="initElement('{{ p['id'] }}')">{{ p['name'] }}</div>

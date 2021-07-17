@@ -87,7 +87,7 @@ def pl():
                 res = req.json()
                 print('req 85' + str(res))
                 pl = res['items']
-                return render_template('playlists.html', pl=pl,user=user)
+                return render_template('home.html', pl=pl,user=user)
             else:
                 print('Error')
                 raise ValueError
@@ -95,7 +95,7 @@ def pl():
             res = req.json()
             print('req 95' + str(res))
             pl = res['items']
-            return render_template('playlists.html',pl=pl,user=user)
+            return render_template('home.html',pl=pl,user=user)
     else:
         return redirect(url_for('authclient'))
 
@@ -146,8 +146,28 @@ def kod():
     return redirect('/')
 
 
+@app.route('/spotify/refresh_token/<username>')
+def refresh(username):
+    current_time = datetime.datetime.utcnow()
+    print('current_time ' + str(current_time))
+    one_day = current_time - datetime.timedelta(hours=1)
+    print('one_day ' + str(one_day))
+
+    # Invoice.query.filter(Invoice.invoicedate >= date.today())
+    url = 'https://accounts.spotify.com/api/token'
+    current = User.query.filter_by(username=username).first()
+    print('current ' + str(current))
+    data = {'grant_type': 'refresh_token','refresh_token': current.refresh_token, 'client_id':client_id,
+                'client_secret':client_secret}
+    req = requests.post(url=url, data=data)
+    res = req.json()
+    print(str(res))
+    current.access_token = res['access_token']
+    db.session.commit()
+    return res['access_token'], True
+
 @app.route('/spotify/refresh_token/')
-def refresh():
+def refreshall():
     current_time = datetime.datetime.utcnow()
     print('current_time ' + str(current_time))
     one_day = current_time - datetime.timedelta(hours=1)

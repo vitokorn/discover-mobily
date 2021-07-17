@@ -25,9 +25,9 @@
 </header>
 <br>
 <br>
-{% block content %}
-{% endblock %}
-{#<script type="text/javascript" src="../static/js/materialize.js"></script>#}
-
+    {% if session['username'] %}
+        {% block content %}
+        {% endblock %}
+    {% endif %}
 </body>
 </html>
