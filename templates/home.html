@@ -278,7 +278,10 @@
                     }
                     document.getElementById('savedtrack').innerHTML += elem.join(' ')
                     if (items.length > 0){
-                        sendRequest(offset+50)
+                        setTimeout(function() {
+                          sendRequest(offset+50)
+                        }, 1000);
+
                     }
                 } else {
                     console.log('xhr status 277 ' + xhr.status)
