@@ -123,6 +123,20 @@
             xhr.onload = function (){
                 if (xhr.status === 200){
                     let data = JSON.parse(this.response)
+                    let tracks = document.getElementById('toptrack')
+                      tracks.innerHTML = ''
+                      let playtrack = data['items']
+                      console.log(playtrack)
+                      let elem = []
+                      for (const pla of playtrack){
+                          elem.push(`<div class="con3" id=${pla['id']} style="background-image: url(${pla['album']['images'][0]['url']});background-repeat: no-repeat;background-size: cover" onclick="playtrack('${pla['id']}')"><div tabindex="0" class="text"> ${list(pla['artists'])} -  ${pla['name']}</div><audio type="audio/mpeg" preload="none" id="a_${pla['id']}" src="${pla['preview_url']}"></div>`)
+                      }
+                      tracks.innerHTML = elem
+                      let zerosrc = document.querySelectorAll('[src=null]')
+                      for (let z of zerosrc) {
+                          let curr = z.id.replace('a_','')
+                          document.getElementById(curr).style.opacity = '.5'
+                      }
                     console.log(data)
                 }
             }
