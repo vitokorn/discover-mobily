@@ -13,7 +13,9 @@
 
         </div>
         <a id="toptracks">Top tracks</a>
-        <div id="toptrack"></div>
+        <div id="toptrack">
+
+        </div>
         <a id="savedalbums">Saved albums</a>
         <div id="savedalbum"></div>
         <a id="savedtracks">Saved tracks</a>
@@ -66,7 +68,7 @@
                       for (const pla of playtrack){
                           elem.push(`<div class="con3" id=${pla['track']['id']} style="background-image: url(${pla['track']['album']['images'][0]['url']});background-repeat: no-repeat;background-size: cover" onclick="playtrack('${pla['track']['id']}')"><div tabindex="0" class="text"> ${list(pla['track']['artists'])} -  ${pla['track']['name']}</div><audio type="audio/mpeg" preload="none" id="a_${pla['track']['id']}" src="${pla['track']['preview_url']}"></div>`)
                       }
-                      tracks.innerHTML = elem
+                      tracks.innerHTML = elem.join(' ')
                       let zerosrc = document.querySelectorAll('[src=null]')
                       for (let z of zerosrc) {
                           let curr = z.id.replace('a_','')
@@ -164,6 +166,7 @@
             xhr.send()
             xhr.onload = function (){
                 if (xhr.status === 200){
+                    let data = JSON.parse(this.response)
                     console.log(data)
                 }
             }
