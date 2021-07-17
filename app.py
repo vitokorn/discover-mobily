@@ -184,7 +184,7 @@ def refresh(username):
 
     # Invoice.query.filter(Invoice.invoicedate >= date.today())
     url = 'https://accounts.spotify.com/api/token'
-    current = User.query.filter_by(username=username).first()
+    current = User.query.filter_by(display_name=username).first()
     print('current ' + str(current))
     data = {'grant_type': 'refresh_token','refresh_token': current.refresh_token, 'client_id':client_id,
                 'client_secret':client_secret}
