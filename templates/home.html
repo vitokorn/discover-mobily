@@ -272,10 +272,10 @@
                         offset += 50
                         let data = JSON.parse(this.response)
                         console.log(data)
-                        let items = data['items']
+                        items = data['items']
                     } else {
                         console.log('xhr status 277 ' + xhr.status)
-                        break
+                        items = false
                     }
                 }
             } while (!items.length)
