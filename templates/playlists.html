@@ -102,6 +102,13 @@
             xhr.onload = function (){
                 if (xhr.status === 200){
                     let data = JSON.parse(this.response)
+                    let artis = document.getElementById('artists')
+                    let items = data['items']
+                    let elem = []
+                      for (const it of items){
+                          elem.push(`<div class="con3" id=${it['id']} style="background-image: url(${it['images'][0]['url']});background-repeat: no-repeat;background-size: cover"><div tabindex="0" class="text">${it['name']}</div></div>`)
+                      }
+                      artis.innerHTML = elem
                     console.log(data)
                 }
             }
@@ -143,7 +150,6 @@
             xhr.send()
             xhr.onload = function (){
                 if (xhr.status === 200){
-                    let data = JSON.parse(this.response)
                     console.log(data)
                 }
             }
