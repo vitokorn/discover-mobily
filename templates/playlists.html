@@ -3,7 +3,7 @@
 {% block content %}
     <br>
     <br>
-    <button class="accordion">Section 1</button>
+    <button class="accordion">Playlists</button>
         <div class="panel">
         <a id="playlists">Playlists</a>
         <div id="playlistlist" style="column-gap: 16px; column-count: 3;" class="container">
@@ -17,19 +17,29 @@
 
         </div>
     </div>
-
+    <button class="accordion">Artists</button>
+    <div class="panel">
         <a id="topartists">Artists</a>
         <div id="artists" class="container-fluid con2">
-
         </div>
+    </div>
+    <button class="accordion">Top tracks</button>
+    <div class="panel">
         <a id="toptracks">Top tracks</a>
         <div id="toptrack" class="container-fluid con2">
 
         </div>
+    </div>
+    <button class="accordion">Saved albums</button>
+    <div class="panel">
         <a id="savedalbums">Saved albums</a>
         <div id="savedalbum" class="container-fluid con2"></div>
+    </div>
+    <button class="accordion">Saved albums</button>
+    <div class="panel">
         <a id="savedtracks">Saved tracks</a>
         <div id="savedtrack" class="container-fluid con2"></div>
+    </div>
     <script>
           function initElement(id) {
               console.log(id)
