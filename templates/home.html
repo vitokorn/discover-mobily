@@ -258,29 +258,28 @@
             }
         })
         document.getElementById('savedtracks').addEventListener('click', function () {
-            let offset = 0
-            let items =false;
-            do {
-                let url = 'https://api.spotify.com/v1/me/tracks?offset=' + offset + '&limit=50'
-                console.log(url)
-                let xhr = new XMLHttpRequest()
-                xhr.open('GET',url,true)
-                xhr.setRequestHeader('Authorization', 'Bearer ' + '{{ user.access_token }}');
-                xhr.send()
-                xhr.onload = function (){
-                    if (xhr.status === 200){
-                        offset += 50
-                        let data = JSON.parse(this.response)
-                        console.log(data)
-                        items = data['items']
-                    } else {
-                        console.log('xhr status 277 ' + xhr.status)
-                        items = false
-                    }
-                }
-            } while (!items.length)
-
+            sendRequest(1)
         })
+          function sendRequest(offset){
+            let url = 'https://api.spotify.com/v1/me/tracks?offset=' + offset + '&limit=50'
+            console.log(url)
+            let xhr = new XMLHttpRequest()
+            xhr.open('GET',url,true)
+            xhr.setRequestHeader('Authorization', 'Bearer ' + '{{ user.access_token }}');
+            xhr.send()
+            xhr.onload = function (){
+                if (xhr.status === 200){
+                    let data = JSON.parse(this.response)
+                    console.log(data)
+                    items = data['items']
+                    if (items.length > 0){
+                        sendRequest(offset+50)
+                    }
+                } else {
+                    console.log('xhr status 277 ' + xhr.status)
+                }
+            }
+          }
           let acc = document.getElementsByClassName("accordion");
             let i;
 
