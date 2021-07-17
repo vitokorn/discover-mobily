@@ -155,6 +155,7 @@
                           elem.push(`<div class="con3" id=${pla['id']} style="background-image: url(${pla['album']['images'][0]['url']});background-repeat: no-repeat;background-size: cover" onclick="playtrack('${pla['id']}')"><div tabindex="0" class="text"> ${list(pla['artists'])} -  ${pla['name']}</div><audio type="audio/mpeg" preload="none" id="a_${pla['id']}" src="${pla['preview_url']}"></div>`)
                       }
                       tracks.innerHTML = elem.join(' ')
+                    document.getElementById('toptrack').style.display = 'block'
                     document.getElementById('toptracks6').style.display = 'none'
                     document.getElementById('toptracksat').style.display = 'none'
                       let zerosrc = document.querySelectorAll('[src=null]')
@@ -185,6 +186,7 @@
                           elem.push(`<div class="con3" id=${pla['id']} style="background-image: url(${pla['album']['images'][0]['url']});background-repeat: no-repeat;background-size: cover" onclick="playtrack('${pla['id']}')"><div tabindex="0" class="text"> ${list(pla['artists'])} -  ${pla['name']}</div><audio type="audio/mpeg" preload="none" id="a_${pla['id']}" src="${pla['preview_url']}"></div>`)
                       }
                       tracks.innerHTML = elem.join(' ')
+                    document.getElementById('toptracks6').style.display = 'block'
                     document.getElementById('toptrack').style.display = 'none'
                     document.getElementById('toptracksat').style.display = 'none'
                       let zerosrc = document.querySelectorAll('[src=null]')
@@ -215,6 +217,7 @@
                           elem.push(`<div class="con3" id=${pla['id']} style="background-image: url(${pla['album']['images'][0]['url']});background-repeat: no-repeat;background-size: cover" onclick="playtrack('${pla['id']}')"><div tabindex="0" class="text"> ${list(pla['artists'])} -  ${pla['name']}</div><audio type="audio/mpeg" preload="none" id="a_${pla['id']}" src="${pla['preview_url']}"></div>`)
                       }
                       tracks.innerHTML = elem.join(' ')
+                    document.getElementById('toptracksat').style.display = 'block'
                     document.getElementById('toptrack').style.display = 'none'
                     document.getElementById('toptracks6').style.display = 'none'
                       let zerosrc = document.querySelectorAll('[src=null]')
