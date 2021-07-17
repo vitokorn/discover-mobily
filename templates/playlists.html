@@ -1,11 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}  {% endblock %}
 {% block content %}
-        <div style="column-gap: 16px; column-count: 3;" class="container">
-        {% for p in pl %}
-            <div id="{{ p['id'] }}" onclick="initElement('{{ p['id'] }}')">{{ p['name'] }}</div>
-        {% endfor %}
-        </div>
     <br>
     <br>
         <a id="topartists">Artists</a>
@@ -21,6 +16,11 @@
         <a id="savedtracks">Saved tracks</a>
         <div id="savedtrack" class="container-fluid con2"></div>
         <a id="playlists">Playlists</a>
+        <div id="playlistlist" style="column-gap: 16px; column-count: 3;" class="container">
+        {% for p in pl %}
+            <div id="{{ p['id'] }}" onclick="initElement('{{ p['id'] }}')">{{ p['name'] }}</div>
+        {% endfor %}
+        </div>
         <div id="playlist" class="container-fluid con2">
         </div>
         <div id="tracks" class="container-fluid con2">
