@@ -3,6 +3,24 @@
 {% block content %}
     <br>
     <br>
+    <div class="option">
+    <input type="checkbox" id="toogle1" class="toogle"/>
+    <label class="title" for="toogle1">Playlists</label>
+        <div class="content">
+        <a id="playlists">Playlists</a>
+        <div id="playlistlist" style="column-gap: 16px; column-count: 3;" class="container">
+        {% for p in pl %}
+            <div id="{{ p['id'] }}" onclick="initElement('{{ p['id'] }}')">{{ p['name'] }}</div>
+        {% endfor %}
+        </div>
+        <div id="playlist" class="container-fluid con2">
+        </div>
+        <div id="tracks" class="container-fluid con2">
+
+        </div>
+    </div>
+    </div>
+
         <a id="topartists">Artists</a>
         <div id="artists" class="container-fluid con2">
 
@@ -15,17 +33,6 @@
         <div id="savedalbum" class="container-fluid con2"></div>
         <a id="savedtracks">Saved tracks</a>
         <div id="savedtrack" class="container-fluid con2"></div>
-        <a id="playlists">Playlists</a>
-        <div id="playlistlist" style="column-gap: 16px; column-count: 3;" class="container">
-        {% for p in pl %}
-            <div id="{{ p['id'] }}" onclick="initElement('{{ p['id'] }}')">{{ p['name'] }}</div>
-        {% endfor %}
-        </div>
-        <div id="playlist" class="container-fluid con2">
-        </div>
-        <div id="tracks" class="container-fluid con2">
-
-        </div>
     <script>
           function initElement(id) {
               console.log(id)
