@@ -74,7 +74,7 @@ def home():
         req = requests.get(url=url,headers=headers)
         if req.status_code == 401:
             print(req.status_code)
-            token,r = refresh()
+            token,r = refresh(session['username'])
             if r is True:
                 headers = {
                     'Authorization': f'Bearer {token}'
