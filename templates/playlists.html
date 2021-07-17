@@ -153,7 +153,7 @@
             xhr.onload = function (){
                 if (xhr.status === 200){
                     let data = JSON.parse(this.response)
-                    let albums = document.getElementById('savedalbums')
+                    let albums = document.getElementById('savedalbum')
                     albums.innerHTML = ''
                     let savedalbum = data['items']
                     console.log(savedalbum)
