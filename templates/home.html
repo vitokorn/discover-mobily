@@ -42,7 +42,7 @@
         <a id="savedalbums">Saved albums</a>
         <div id="savedalbum" class="container-fluid con2"></div>
     </div>
-    <button class="accordion">Saved albums</button>
+    <button class="accordion">Saved tracks</button>
     <div class="panel">
         <a id="savedtracks">Saved tracks</a>
         <div id="savedtrack" class="container-fluid con2"></div>
@@ -258,18 +258,28 @@
             }
         })
         document.getElementById('savedtracks').addEventListener('click', function () {
-            let url = 'https://api.spotify.com/v1/me/tracks'
-            console.log(url)
-            let xhr = new XMLHttpRequest()
-            xhr.open('GET',url,true)
-            xhr.setRequestHeader('Authorization', 'Bearer ' + '{{ user.access_token }}');
-            xhr.send()
-            xhr.onload = function (){
-                if (xhr.status === 200){
-                    let data = JSON.parse(this.response)
-                    console.log(data)
+            let offset = 0
+            let items =false;
+            do {
+                let url = 'https://api.spotify.com/v1/me/tracks?offset=' + offset + '&limit=50'
+                console.log(url)
+                let xhr = new XMLHttpRequest()
+                xhr.open('GET',url,true)
+                xhr.setRequestHeader('Authorization', 'Bearer ' + '{{ user.access_token }}');
+                xhr.send()
+                xhr.onload = function (){
+                    if (xhr.status === 200){
+                        offset += 50
+                        let data = JSON.parse(this.response)
+                        console.log(data)
+                        let items = data['items']
+                    } else {
+                        console.log('xhr status 277 ' + xhr.status)
+                        break
+                    }
                 }
-            }
+            } while (!items.length)
+
         })
           let acc = document.getElementsByClassName("accordion");
             let i;
