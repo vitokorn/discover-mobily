@@ -3,10 +3,8 @@
 {% block content %}
     <br>
     <br>
-    <div class="option">
-    <input type="checkbox" id="toogle1" class="toogle"/>
-    <label class="title" for="toogle1">Playlists</label>
-        <div class="content">
+    <button class="accordion">Section 1</button>
+        <div class="panel">
         <a id="playlists">Playlists</a>
         <div id="playlistlist" style="column-gap: 16px; column-count: 3;" class="container">
         {% for p in pl %}
@@ -18,7 +16,6 @@
         <div id="tracks" class="container-fluid con2">
 
         </div>
-    </div>
     </div>
 
         <a id="topartists">Artists</a>
@@ -192,5 +189,19 @@
                 }
             }
         })
+          let acc = document.getElementsByClassName("accordion");
+            let i;
+
+            for (i = 0; i < acc.length; i++) {
+              acc[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                let panel = this.nextElementSibling;
+                if (panel.style.display === "block") {
+                  panel.style.display = "none";
+                } else {
+                  panel.style.display = "block";
+                }
+              });
+            }
     </script>
 {% endblock %}
