@@ -64,7 +64,36 @@ class ClientCredentials:
 
 @app.route('/')
 def home():
-    return render_template('login.html')
+    if session.get('nickname') is not None:
+        user = User.query.filter_by(spotyid=session['username']).first()
+        url = f'https://api.spotify.com/v1/me/playlists?fields=items(name,id)&limit=50'
+        access_token = user.access_token
+        headers = {
+            'Authorization': f'Bearer {access_token}'
+        }
+        req = requests.get(url=url,headers=headers)
+        if req.status_code == 401:
+            print(req.status_code)
+            token,r = refresh()
+            if r is True:
+                headers = {
+                    'Authorization': f'Bearer {token}'
+                }
+                req = requests.get(url=url, headers=headers)
+                res = req.json()
+                print('req 85' + str(res))
+                pl = res['items']
+                return render_template('home.html', pl=pl,user=user)
+            else:
+                print('Error')
+                raise ValueError
+        else:
+            res = req.json()
+            print('req 95' + str(res))
+            pl = res['items']
+            return render_template('home.html',pl=pl,user=user)
+    else:
+        return redirect(url_for('authclient'))
 
 @app.route('/pl/')
 def pl():
