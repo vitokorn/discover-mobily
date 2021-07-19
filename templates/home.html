@@ -116,13 +116,16 @@
           function playtrack(id) {
               let all = document.querySelectorAll('[id^="a_"]');
               for (let elem of all) {
+                  if (elem.id == 'a_' + id){
+
+                  } else
                   elem.pause()
               }
-              let audio = document.getElementById('a_' + id)
-              if (audio.paused == false){
-                  audio.pause()
+              let audiop = document.getElementById('a_' + id)
+              if (audiop.paused == false){
+                  audiop.pause()
               } else
-                audio.play();
+                audiop.play();
           }
         function list(artists){
           const names = artists.map(({ name }) => name);
