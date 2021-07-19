@@ -216,7 +216,7 @@ header{
 .text{
     opacity: 0;
 }
-.text:focus,.text:hover,.text:focus-within,.con3:not(:focus){
+.text:focus,.text:hover,.text:focus-within,.text:not(:focus){
     opacity: 1;
     text-shadow: black 0 0 3px;
 }
