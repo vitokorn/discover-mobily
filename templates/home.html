@@ -43,14 +43,12 @@
 
     </div>
     </div>
-    <button class="accordion">Saved albums</button>
+    <button class="accordion" onclick="saved_albums()">Saved albums</button>
     <div class="panel">
-        <a id="savedalbums">Saved albums</a>
         <div id="savedalbum" class="container-fluid con2"></div>
     </div>
-    <button class="accordion">Saved tracks</button>
+    <button class="accordion" onclick="savedtracks()">Saved tracks</button>
     <div class="panel">
-        <a id="savedtracks">Saved tracks</a>
         <div id="savedtrack" class="container-fluid con2"></div>
     </div>
     <script>
@@ -148,7 +146,18 @@
                       }
                       artis.innerHTML = elem.join(' ')
                     console.log(data)
+                } else if(xhr.status === 401){
+                      let url = '/spotify/refresh_token/' + session['username']
+                      let xhr = new XMLHttpRequest()
+                      xhr.open('GET',url,true)
+                      xhr.setRequestHeader('Authorization', 'Bearer ' + '{{ user.access_token }}');
+                      xhr.send()
+                      xhr.onload = function (){
+                        if (xhr.status === 200){
+                            topartists()
                 }
+            }
+                  }
             }
         }
           document.getElementById('topartists6').addEventListener('click', function () {
@@ -221,7 +230,18 @@
                           document.getElementById(curr).style.opacity = '.5'
                       }
                     console.log(data)
+                } else if(xhr.status === 401){
+                      let url = '/spotify/refresh_token/' + session['username']
+                      let xhr = new XMLHttpRequest()
+                      xhr.open('GET',url,true)
+                      xhr.setRequestHeader('Authorization', 'Bearer ' + '{{ user.access_token }}');
+                      xhr.send()
+                      xhr.onload = function (){
+                        if (xhr.status === 200){
+                            toptracks()
                 }
+            }
+                  }
             }
         }
           document.getElementById('toptrackssix').addEventListener('click', function () {
@@ -286,7 +306,7 @@
                 }
             }
         })
-        document.getElementById('savedalbums').addEventListener('click', function () {
+        function saved_albums () {
             let url = 'https://api.spotify.com/v1/me/albums'
             console.log(url)
             let xhr = new XMLHttpRequest()
@@ -313,11 +333,11 @@
                     console.log(data)
                 }
             }
-        })
-        document.getElementById('savedtracks').addEventListener('click', function () {
+        }
+        function savedtracks () {
             document.getElementById('savedtrack').innerHTML = ''
             sendRequest(0)
-        })
+        }
           function sendRequest(offset){
             let url = 'https://api.spotify.com/v1/me/tracks?offset=' + offset + '&limit=50'
             console.log(url)
