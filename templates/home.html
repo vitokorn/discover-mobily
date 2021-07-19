@@ -119,7 +119,10 @@
                   elem.pause()
               }
               let audio = document.getElementById('a_' + id)
-              audio.play();
+              if (audio.paused == false){
+                  audio.pause()
+              } else
+                audio.play();
           }
         function list(artists){
           const names = artists.map(({ name }) => name);
