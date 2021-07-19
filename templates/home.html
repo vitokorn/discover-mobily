@@ -16,7 +16,7 @@
 
         </div>
     </div>
-    <button class="accordion">Artists</button>
+    <button class="accordion" onclick="topartists()">Artists</button>
     <div class="panel">
         <a id="topartists">Last month</a>
         <a id="topartists6">Last 6 month</a>
@@ -103,7 +103,16 @@
                       }
 
                   } else if(xhr.status === 401){
-                      url_for('refresh',session['username'])
+                      let url = '/spotify/refresh_token/' + session['username']
+                      let xhr = new XMLHttpRequest()
+                      xhr.open('GET',url,true)
+                      xhr.setRequestHeader('Authorization', 'Bearer ' + '{{ user.access_token }}');
+                      xhr.send()
+                      xhr.onload = function (){
+                        if (xhr.status === 200){
+                            initElement(id)
+                }
+            }
                   }
           }}
           function playtrack(id) {
@@ -121,7 +130,7 @@
           ? names.join(', ') + ' & ' + finalName
           : finalName;
         }
-        document.getElementById('topartists').addEventListener('click', function () {
+        function topartists () {
             let url = 'https://api.spotify.com/v1/me/top/artists?time_range=short_term'
             console.log(url)
             let xhr = new XMLHttpRequest()
@@ -141,7 +150,7 @@
                     console.log(data)
                 }
             }
-        })
+        }
           document.getElementById('topartists6').addEventListener('click', function () {
             let url = 'https://api.spotify.com/v1/me/top/artists?time_range=medium_term'
             console.log(url)
