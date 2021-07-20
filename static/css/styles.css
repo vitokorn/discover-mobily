@@ -82,7 +82,6 @@ header{
   width: 105px;
     height: 105px;
     /*border: 2px solid white;*/
-    color: white;
     display: flex;
     -moz-box-align: center;
     align-items: center;
@@ -90,6 +89,10 @@ header{
     justify-content: center;
     /*font-size: 40px;*/
     font-weight: bolder;
+    color: transparent;
+}
+.con3:hover{
+    color: white;
 }
 @media (min-width: 576px) {
     .con3 {
