@@ -91,7 +91,7 @@ header{
     font-weight: bolder;
     color: transparent;
 }
-.con3:focus,.con3:hover{
+.con3:active,.con3:focus,.con3:hover{
     color: white;
     text-shadow: black 0 0 3px;
 }
@@ -109,7 +109,7 @@ header{
         /*font-size: 40px;*/
         font-weight: bolder;
     }
-    .con3:focus,.con3:hover{
+    .con3:active,.con3:focus,.con3:hover{
         color: white;
         text-shadow: black 0 0 3px;
 }
@@ -127,7 +127,8 @@ header{
     justify-content: center;
     /*font-size: 40px;*/
     font-weight: bolder;
-}.con3:focus,.con3:hover{
+}
+.con3:active,.con3:focus,.con3:hover{
     color: white;
     text-shadow: black 0 0 3px;
 }}
@@ -145,9 +146,10 @@ header{
     justify-content: center;
     /*font-size: 40px;*/
     font-weight: bolder;
-}.con3:focus,.con3:hover{
-    color: white;
-    text-shadow: black 0 0 3px;
+}
+    .con3:active,.con3:focus,.con3:hover{
+        color: white;
+        text-shadow: black 0 0 3px;
 }
 }
 
@@ -165,7 +167,7 @@ header{
     /*font-size: 40px;*/
     font-weight: bolder;
 }
-.con3:focus,.con3:hover{
+.con3:active,.con3:focus,.con3:hover{
     color: white;
     text-shadow: black 0 0 3px;
 }
