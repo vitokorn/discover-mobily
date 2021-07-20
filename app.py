@@ -10,8 +10,9 @@ from sqlalchemy.sql import ClauseElement
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://aewxjumzmghuqz:7c3fa637c4eb52b837213b1040c3fb39d14d7522e80697a18aa68e4bfcb18df2@ec2-54-195-76-73.eu-west-1.compute.amazonaws.com:5432/de5nclahn5ni2h'
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://discovermobily:5r9VsXSH@localhost:5432/discover-mobily'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://aewxjumzmghuqz:7c3fa637c4eb52b837213b1040c3fb39d14d7522e80697a18aa68e4bfcb18df2@ec2-54-195-76-73.eu-west-1.compute.amazonaws.com:5432/de5nclahn5ni2h'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://discovermobily:5r9VsXSH@localhost:5432/discover-mobily'
+app.jinja_env.auto_reload = True
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
@@ -89,11 +90,11 @@ def home():
                 raise ValueError
         else:
             res = req.json()
-            print('req 95' + str(res))
+            # print('req 95' + str(res))
             pl = res['items']
             return render_template('home.html',pl=pl,user=user)
     else:
-        return redirect(url_for('authclient'))
+        return render_template('home.html')
 
 @app.route('/pl/')
 def pl():
