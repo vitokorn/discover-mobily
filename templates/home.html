@@ -91,7 +91,7 @@
                       playlistdiv.appendChild(cover)
                       let elem = []
                       for (const pla of playtrack){
-                          elem.push(`<div class="con3" id=${pla['track']['id']} style="background-image: url(${pla['track']['album']['images'][0]['url']});background-repeat: no-repeat;background-size: cover" onclick="playtrack('${pla['track']['id']}')">${list(pla['track']['artists'])} -  ${pla['track']['name']}<audio type="audio/mpeg" preload="none" id="a_${pla['track']['id']}" src="${pla['track']['preview_url']}"></div>`)
+                          elem.push(`<div class="con3" id=${pla['track']['id']} style="background-image: url(${pla['track']['album']['images'][0]['url']});background-repeat: no-repeat;background-size: cover" onclick="playtrack('${pla['track']['id']}')"><div id="t_${pla['track']['id']}" tabindex="0" class="text"> ${list(pla['track']['artists'])} -  ${pla['track']['name']}</div><audio type="audio/mpeg" preload="none" id="a_${pla['track']['id']}" src="${pla['track']['preview_url']}"></div>`)
                       }
                       tracks.innerHTML = elem.join(' ')
                       let zerosrc = document.querySelectorAll('[src=null]')
