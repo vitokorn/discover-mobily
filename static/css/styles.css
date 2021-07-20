@@ -145,7 +145,7 @@ header{
   width: 170px;
     height: 170px;
     /*border: 2px solid white;*/
-    color: white;
+    color: transparent;
     display: flex;
     -moz-box-align: center;
     align-items: center;
@@ -154,6 +154,9 @@ header{
     /*font-size: 40px;*/
     font-weight: bolder;
 }
+    .con3:hover{
+        color: white;
+    }
 }
 
 .container {
