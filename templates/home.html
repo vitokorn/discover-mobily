@@ -16,7 +16,7 @@
 
         </div>
     </div>
-    <button class="accordion" onclick="topartists()">Your Artists</button>
+    <button class="accordion" id="ta" onclick="topartists()">Your Top Artists</button>
     <div class="panel">
     <div class="info">
         <span id="topartists">Last month</span>
@@ -30,7 +30,7 @@
             <div id="artistsall" class="container-fluid con2">
         </div>
     </div>
-    <button class="accordion" onclick="toptracks()">Your Top tracks</button>
+    <button class="accordion" id="tt" onclick="toptracks()">Your Top tracks</button>
     <div class="panel">
         <a id="toptracks">Last month</a>
         <a id="toptrackssix">Last 6 month</a>
@@ -136,7 +136,13 @@
           ? names.join(', ') + ' & ' + finalName
           : finalName;
         }
+          document.getElementById('topartists').addEventListener('click',function (){
+             document.getElementById('artists').style.display = 'flex'
+             document.getElementById('artists6').style.display = 'none'
+             document.getElementById('artistsall').style.display = 'none'
+         })
         function topartists () {
+            document.getElementById('topartists').classList.toggle("activetab")
             let url = 'https://api.spotify.com/v1/me/top/artists?time_range=short_term'
             console.log(url)
             let xhr = new XMLHttpRequest()
@@ -178,7 +184,7 @@
             xhr.onload = function (){
                 if (xhr.status === 200){
                     let data = JSON.parse(this.response)
-                    let artis = document.getElementById('artists')
+                    let artis = document.getElementById('artists6')
                     let items = data['items']
                     let elem = []
                       for (const it of items){
@@ -186,7 +192,10 @@
                       }
                       artis.innerHTML = elem.join(' ')
                     console.log(data)
-                }
+
+                }                    document.getElementById('artists').style.display = 'none'
+                     document.getElementById('artists6').style.display = 'flex'
+                     document.getElementById('artistsall').style.display = 'none'
             }
         })
           document.getElementById('topartistsall').addEventListener('click', function () {
@@ -199,7 +208,7 @@
             xhr.onload = function (){
                 if (xhr.status === 200){
                     let data = JSON.parse(this.response)
-                    let artis = document.getElementById('artists')
+                    let artis = document.getElementById('artistsall')
                     let items = data['items']
                     let elem = []
                       for (const it of items){
@@ -207,7 +216,10 @@
                       }
                       artis.innerHTML = elem.join(' ')
                     console.log(data)
-                }
+
+                }document.getElementById('artists').style.display = 'none'
+                     document.getElementById('artists6').style.display = 'none'
+                     document.getElementById('artistsall').style.display = 'flex'
             }
         })
           const ta = document.querySelectorAll('[id^=topartists]');
@@ -239,6 +251,7 @@
              });
          }
         function toptracks () {
+            document.getElementById('toptracks').classList.toggle("activetab")
             let url = 'https://api.spotify.com/v1/me/top/tracks?time_range=short_term'
             console.log(url)
             let xhr = new XMLHttpRequest()
@@ -280,6 +293,11 @@
                   }
             }
         }
+         document.getElementById('toptracks').addEventListener('click',function (){
+             document.getElementById('toptrack').style.display = 'flex'
+             document.getElementById('toptrack6').style.display = 'none'
+             document.getElementById('toptrackat').style.display = 'none'
+         })
           document.getElementById('toptrackssix').addEventListener('click', function () {
             let url = 'https://api.spotify.com/v1/me/top/tracks?time_range=medium_term'
             console.log(url)
