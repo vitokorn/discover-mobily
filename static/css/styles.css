@@ -93,6 +93,7 @@ header{
 }
 .con3:focus,.con3:hover{
     color: white;
+    text-shadow: black 0 0 3px;
 }
 @media (min-width: 576px) {
     .con3 {
@@ -109,7 +110,8 @@ header{
         font-weight: bolder;
     }
     .con3:focus,.con3:hover{
-    color: white;
+        color: white;
+        text-shadow: black 0 0 3px;
 }
 }
 @media (min-width: 768px) {
@@ -127,6 +129,7 @@ header{
     font-weight: bolder;
 }.con3:focus,.con3:hover{
     color: white;
+    text-shadow: black 0 0 3px;
 }}
 
 @media (min-width: 992px) {
@@ -144,6 +147,7 @@ header{
     font-weight: bolder;
 }.con3:focus,.con3:hover{
     color: white;
+    text-shadow: black 0 0 3px;
 }
 }
 
@@ -163,6 +167,7 @@ header{
 }
 .con3:focus,.con3:hover{
     color: white;
+    text-shadow: black 0 0 3px;
 }
 }
 
