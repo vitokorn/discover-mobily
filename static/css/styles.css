@@ -91,7 +91,7 @@ header{
     font-weight: bolder;
     color: transparent;
 }
-.con3:hover{
+.con3:focus,.con3:hover{
     color: white;
 }
 @media (min-width: 576px) {
@@ -108,6 +108,9 @@ header{
         /*font-size: 40px;*/
         font-weight: bolder;
     }
+    .con3:focus,.con3:hover{
+    color: white;
+}
 }
 @media (min-width: 768px) {
 .con3{
@@ -122,6 +125,8 @@ header{
     justify-content: center;
     /*font-size: 40px;*/
     font-weight: bolder;
+}.con3:focus,.con3:hover{
+    color: white;
 }}
 
 @media (min-width: 992px) {
@@ -137,6 +142,8 @@ header{
     justify-content: center;
     /*font-size: 40px;*/
     font-weight: bolder;
+}.con3:focus,.con3:hover{
+    color: white;
 }
 }
 
@@ -154,9 +161,9 @@ header{
     /*font-size: 40px;*/
     font-weight: bolder;
 }
-    .con3:hover{
-        color: white;
-    }
+.con3:focus,.con3:hover{
+    color: white;
+}
 }
 
 .container {
