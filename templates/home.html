@@ -7,7 +7,7 @@
         <div class="panel">
         <div id="playlistlist" style="column-gap: 16px; column-count: 3;" class="container">
         {% for p in pl %}
-            <div id="{{ p['id'] }}" onclick="initElement('{{ p['id'] }}')">{{ p['name'] }}</div>
+            <div id="{{ p['id'] }}">{{ p['name'] }}</div>
         {% endfor %}
         </div>
         <div id="playlist" class="container-fluid con2">
@@ -54,7 +54,28 @@
         <div id="savedtrack" class="container-fluid con2"></div>
     </div>
     <script>
-          function initElement(id) {
+            let trlist = document.querySelectorAll("#tracks > div");
+                       for (let i = 0; i < trlist.length; i++) {
+                 trlist[i].addEventListener("click", function() {
+                         if (document.getElementById(trlist[i].id)){
+                             document.getElementById(trlist[i].id).style.display = 'flex'
+                             document.getElementById(trlist[i].id.replace('t_','p_')).style.display = 'flex'
+                         } else {
+                             initElement(id)
+                         }
+                     trlist.forEach(function(ns) {
+                         if (trlist[i] == ns){
+                            console.log('test')
+                         } else{
+                             console.log('69 ' + ns.id)
+                             document.getElementById('t_' + ns.id).style.display = 'none'
+                             document.getElementById(ns.id.replace('t_','p_')).style.display = 'none'
+                             ns.style.display = 'none'
+                         }
+                });
+                 });
+             }
+            function initElement(id) {
               console.log('58 ' + id)
               let url = 'https://api.spotify.com/v1/playlists/' + id + '?fields=name,id,description,images,tracks(items(track(name,preview_url,id,artists,album(artists,id,images))))'
               console.log('60 ' + url)
@@ -67,7 +88,6 @@
                       let data = JSON.parse(this.response)
                       console.log('68 ' + data)
                       let tracks = document.getElementById('tracks')
-                      tracks.innerHTML = ''
                       let name = data['name']
                       let description = data['description']
                       let image = data['images'][0]['url']
@@ -76,26 +96,33 @@
 
 
                       let playlistdiv = document.getElementById('playlist')
-                      playlistdiv.innerHTML = ''
+                      let plid = document.createElement('div')
+                      plid.id = 'p_' + id
+                      plid.className = 'con2'
+                      playlistdiv.appendChild(plid)
                       let names = document.createElement('div')
                       names.innerText = name
-                      names.className = 'con3'
-                      playlistdiv.appendChild(names)
+                      names.className = 'con4'
+                      plid.appendChild(names)
                       let descriptions = document.createElement('div')
                       descriptions.innerText = description
-                      descriptions.className = 'con3'
-                      playlistdiv.appendChild(descriptions)
+                      descriptions.className = 'con4'
+                      plid.appendChild(descriptions)
                       let cover = document.createElement('div')
-                      cover.className = 'con3'
+                      cover.className = 'con4'
                       cover.style.backgroundImage = "url('"+image+"')"
                       cover.style.backgroundRepeat = 'no-repeat'
                       cover.style.backgroundSize = 'cover'
-                      playlistdiv.appendChild(cover)
+                      plid.appendChild(cover)
                       let elem = []
                       for (const pla of playtrack){
                           elem.push(`<div tabindex="0" class="con3" id=${pla['track']['id']} style="background-image: url(${pla['track']['album']['images'][0]['url']});background-repeat: no-repeat;background-size: cover" onclick="playtrack('${pla['track']['id']}')">${list(pla['track']['artists'])} -  ${pla['track']['name']}<audio type="audio/mpeg" preload="none" id="a_${pla['track']['id']}" src="${pla['track']['preview_url']}"></div>`)
                       }
-                      tracks.innerHTML = elem.join(' ')
+                      let trid = document.createElement('div')
+                      trid.id = 't_' + id
+                      trid.className = 'con2'
+                      tracks.appendChild(trid)
+                      trid.innerHTML = elem.join(' ')
                       let zerosrc = document.querySelectorAll('[src=null]')
                       for (let z of zerosrc) {
                           let curr = z.id.replace('a_','')
@@ -234,13 +261,49 @@
           ? names.join(', ') + ' & ' + finalName
           : finalName;
         }
+        let pllist = document.querySelectorAll("#playlistlist > div");
+            for (let i = 0; i < pllist.length; i++) {
+             pllist[i].addEventListener("click", function() {
+                 console.log('262 ' + pllist[i].id)
+                 if (document.getElementById('t_' + pllist[i].id)){
+                        console.log('258')
+                    } else {
+                     console.log(pllist[i].id)
+                        initElement(pllist[i].id)
+                    }
+                 if (pllist[i].classList.contains("activetab")){
+
+                 } else {
+                     pllist[i].classList.toggle("activetab");
+                 }
+                 pllist.forEach(function(ns) {
+                     console.log('279 ' + ns)
+                     if (pllist[i].id == ns.id){
+                        console.log('test')
+                         document.getElementById('t_' + ns.id).style.display = 'flex'
+                         document.getElementById('p_' + ns.id).style.display = 'flex'
+                     } else{
+                         console.log('282 ' + ns.id)
+                         ns.classList.remove('activetab')
+                         if (document.getElementById('t_' + ns.id)){
+                             document.getElementById('t_' + ns.id).style.display = 'none'
+                             document.getElementById('p_' + ns.id).style.display = 'none'
+                         }
+                     }
+            });
+             });
+         }
           document.getElementById('topartists').addEventListener('click',function (){
              document.getElementById('artists').style.display = 'flex'
              document.getElementById('artists6').style.display = 'none'
              document.getElementById('artistsall').style.display = 'none'
          })
         function topartists () {
-            document.getElementById('topartists').classList.toggle("activetab")
+             if (document.getElementById('topartists').classList.contains("activetab")){
+
+             } else{
+                 document.getElementById('topartists').classList.toggle("activetab")
+             }
             let url = 'https://api.spotify.com/v1/me/top/artists?time_range=short_term'
             console.log('165 ' + url)
             let xhr = new XMLHttpRequest()
@@ -254,7 +317,7 @@
                     let items = data['items']
                     let elem = []
                       for (const it of items){
-                          elem.push(`<div class="con3" tabindex="0" id=${it['id']} onclick="playtrackat('${it['id']}','lm')" style="background-image: url(${it['images'][0]['url']});background-repeat: no-repeat;background-size: cover">${it['name']}<audio id="at_${it['id']}">${artisttrack(it['id'],'lm')}</audio></div>`)
+                          elem.push(`<div class="con3" tabindex="0" id=${it['id']} onclick="playtrackat('${it['id']}','lm')" style="background-image: url(${it['images'][1]['url']});background-repeat: no-repeat;background-size: cover">${it['name']}<audio id="at_${it['id']}">${artisttrack(it['id'],'lm')}</audio></div>`)
                       }
                       artis.innerHTML = elem.join(' ')
 
@@ -288,7 +351,7 @@
                     let items = data['items']
                     let elem = []
                       for (const it of items){
-                          elem.push(`<div class="con3" tabindex="0" id=ls_${it['id']} onclick="playtrackat('${it['id']}','ls')" style="background-image: url(${it['images'][0]['url']});background-repeat: no-repeat;background-size: cover">${it['name']}<audio id="ats_${it['id']}">${artisttrack(it['id'],'ls')}</audio></div>`)
+                          elem.push(`<div class="con3" tabindex="0" id=ls_${it['id']} onclick="playtrackat('${it['id']}','ls')" style="background-image: url(${it['images'][1]['url']});background-repeat: no-repeat;background-size: cover">${it['name']}<audio id="ats_${it['id']}">${artisttrack(it['id'],'ls')}</audio></div>`)
                       }
                       artis.innerHTML = elem.join(' ')
                     console.log('219 ' + data)
@@ -312,7 +375,7 @@
                     let items = data['items']
                     let elem = []
                       for (const it of items){
-                          elem.push(`<div class="con3" tabindex="0" id=al_${it['id']} onclick="playtrackat('${it['id']}','al')" style="background-image: url(${it['images'][0]['url']});background-repeat: no-repeat;background-size: cover">${it['name']}<audio id="ata_${it['id']}">${artisttrack(it['id'],'at')}</audio></div>`)
+                          elem.push(`<div class="con3" tabindex="0" id=al_${it['id']} onclick="playtrackat('${it['id']}','al')" style="background-image: url(${it['images'][1]['url']});background-repeat: no-repeat;background-size: cover">${it['name']}<audio id="ata_${it['id']}">${artisttrack(it['id'],'at')}</audio></div>`)
                       }
                       artis.innerHTML = elem.join(' ')
                     console.log('243 ' + data)
@@ -326,7 +389,11 @@
 
          for (let i = 0; i < ta.length; i++) {
              ta[i].addEventListener("click", function() {
-               ta[i].classList.toggle("activetab");
+                 if (ta[i].classList.contains("activetab")){
+
+                 } else {
+                     ta[i].classList.toggle("activetab");
+                 }
                  ta.forEach(function(ns) {
                      if (ta[i] == ns){
                         console.log('test')
@@ -461,7 +528,10 @@
 
          for (let i = 0; i < tt.length; i++) {
              tt[i].addEventListener("click", function() {
-               tt[i].classList.toggle("activetab");
+                                  if (tt[i].classList.contains("activetab")){
+                 } else {
+                     tt[i].classList.toggle("activetab");
+                 }
                  tt.forEach(function(nst) {
                      if (tt[i] == nst){
                         console.log('test')
@@ -488,7 +558,7 @@
                       console.log('325 ' + playtrack)
                       let elem = []
                       for (const pla of playtrack){
-                          elem.push(`<div class="con3" tabindex="0" id=${pla['id']} style="background-image: url(${pla['album']['images'][0]['url']});background-repeat: no-repeat;background-size: cover" onclick="playtrack('${pla['id']}')">${list(pla['artists'])} -  ${pla['name']}<audio type="audio/mpeg" preload="none" id="a_${pla['id']}" src="${pla['preview_url']}"></div>`)
+                          elem.push(`<div class="con3" tabindex="0" id=${pla['id']} style="background-image: url(${pla['album']['images'][1]['url']});background-repeat: no-repeat;background-size: cover" onclick="playtrack('${pla['id']}')">${list(pla['artists'])} -  ${pla['name']}<audio type="audio/mpeg" preload="none" id="a_${pla['id']}" src="${pla['preview_url']}"></div>`)
                       }
                       tracks.innerHTML = elem.join(' ')
                     document.getElementById('toptrack').style.display = 'flex'
@@ -535,7 +605,7 @@
                       console.log('372 ' + playtrack)
                       let elem = []
                       for (const pla of playtrack){
-                          elem.push(`<div class="con3" tabindex="0" id=${pla['id']} style="background-image: url(${pla['album']['images'][0]['url']});background-repeat: no-repeat;background-size: cover" onclick="playtrack('${pla['id']}')"> ${list(pla['artists'])} -  ${pla['name']}<audio type="audio/mpeg" preload="none" id="a_${pla['id']}" src="${pla['preview_url']}"></div>`)
+                          elem.push(`<div class="con3" tabindex="0" id=${pla['id']} style="background-image: url(${pla['album']['images'][1]['url']});background-repeat: no-repeat;background-size: cover" onclick="playtrack('${pla['id']}')"> ${list(pla['artists'])} -  ${pla['name']}<audio type="audio/mpeg" preload="none" id="a_${pla['id']}" src="${pla['preview_url']}"></div>`)
                       }
                       tracks.innerHTML = elem.join(' ')
                     document.getElementById('toptrack6').style.display = 'flex'
@@ -550,7 +620,7 @@
                 }
             }
         })
-                    document.getElementById('toptracksall').addEventListener('click', function () {
+          document.getElementById('toptracksall').addEventListener('click', function () {
             let url = 'https://api.spotify.com/v1/me/top/tracks?time_range=long_term'
             console.log('392 ' + url)
             let xhr = new XMLHttpRequest()
@@ -566,7 +636,7 @@
                       console.log('403' + playtrack)
                       let elem = []
                       for (const pla of playtrack){
-                          elem.push(`<div class="con3" id=${pla['id']} style="background-image: url(${pla['album']['images'][0]['url']});background-repeat: no-repeat;background-size: cover" onclick="playtrack('${pla['id']}')"><div tabindex="0" class="text"> ${list(pla['artists'])} -  ${pla['name']}</div><audio type="audio/mpeg" preload="none" id="a_${pla['id']}" src="${pla['preview_url']}"></div>`)
+                          elem.push(`<div class="con3" id=${pla['id']} style="background-image: url(${pla['album']['images'][1]['url']});background-repeat: no-repeat;background-size: cover" onclick="playtrack('${pla['id']}')"><div tabindex="0" class="text"> ${list(pla['artists'])} -  ${pla['name']}</div><audio type="audio/mpeg" preload="none" id="a_${pla['id']}" src="${pla['preview_url']}"></div>`)
                       }
                       tracks.innerHTML = elem.join(' ')
                     document.getElementById('toptrackat').style.display = 'flex'
@@ -575,6 +645,7 @@
                       let zerosrc = document.querySelectorAll('[src=null]')
                     console.log('413' + zerosrc)
                       for (let z of zerosrc) {
+                          console.log('509 ' + z.id)
                           let curr = z.id.replace('a_','')
                           document.getElementById(curr).style.opacity = '.5'
                       }
@@ -598,7 +669,7 @@
                     console.log('435 ' + savedalbum)
                     let elem = []
                     for (const sa of savedalbum){
-                          elem.push(`<div class="con3" tabindex="0" id=${sa['album']['id']} onclick="playtracksa('${sa['album']['id']}')" style="background-image: url(${sa['album']['images'][0]['url']});background-repeat: no-repeat;background-size: cover">${sa['album']['name']}<audio id="sa_${sa['album']['id']}">${savedalbums(sa['album']['id'])})</audio></div>`)
+                          elem.push(`<div class="con3" tabindex="0" id=${sa['album']['id']} onclick="playtracksa('${sa['album']['id']}')" style="background-image: url(${sa['album']['images'][1]['url']});background-repeat: no-repeat;background-size: cover">${sa['album']['name']}<audio id="sa_${sa['album']['id']}">${savedalbums(sa['album']['id'])})</audio></div>`)
                       }
                     albums.innerHTML = elem.join(' ')
                     {#let zerosrc = document.querySelectorAll('[src=null]')#}
@@ -628,7 +699,7 @@
                     let items = data['items']
                     let elem = []
                     for (const pla of items){
-                        elem.push(`<div class="con3" tabindex="0" id=${pla['track']['id']} style="background-image: url(${pla['track']['album']['images'][0]['url']});background-repeat: no-repeat;background-size: cover" onclick="playtrack('${pla['track']['id']}')">${list(pla['track']['artists'])} -  ${pla['track']['name']}<audio type="audio/mpeg" preload="none" id="a_${pla['track']['id']}" src="${pla['track']['preview_url']}"></div>`)
+                        elem.push(`<div class="con3" tabindex="0" id=${pla['track']['id']} style="background-image: url(${pla['track']['album']['images'][1]['url']});background-repeat: no-repeat;background-size: cover" onclick="playtrack('${pla['track']['id']}')">${list(pla['track']['artists'])} -  ${pla['track']['name']}<audio type="audio/mpeg" preload="none" id="a_${pla['track']['id']}" src="${pla['track']['preview_url']}"></div>`)
                     }
                     document.getElementById('savedtrack').innerHTML += elem.join(' ')
                     if (items.length > 0){

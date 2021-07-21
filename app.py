@@ -96,8 +96,9 @@ def home():
     else:
         return render_template('home.html')
 
-@app.route('/pl/')
-def pl():
+
+@app.route('/pc/')
+def pc():
     if session.get('nickname') is not None:
         user = User.query.filter_by(spotyid=session['username']).first()
         url = f'https://api.spotify.com/v1/me/playlists?fields=items(name,id)&limit=50'
@@ -108,7 +109,7 @@ def pl():
         req = requests.get(url=url,headers=headers)
         if req.status_code == 401:
             print(req.status_code)
-            token,r = refresh()
+            token,r = refresh(session['username'])
             if r is True:
                 headers = {
                     'Authorization': f'Bearer {token}'
@@ -117,17 +118,17 @@ def pl():
                 res = req.json()
                 print('req 85' + str(res))
                 pl = res['items']
-                return render_template('home.html', pl=pl,user=user)
+                return render_template('playlists.html', pl=pl,user=user)
             else:
                 print('Error')
                 raise ValueError
         else:
             res = req.json()
-            print('req 95' + str(res))
+            # print('req 95' + str(res))
             pl = res['items']
-            return render_template('home.html',pl=pl,user=user)
+            return render_template('playlists.html',pl=pl,user=user)
     else:
-        return redirect(url_for('authclient'))
+        return render_template('playlists.html')
 
 
 @app.route('/spotify/login/')
@@ -258,6 +259,7 @@ def playlists(playlist_id):
             all = requests.get(url=url, headers=headers)
     resp = all.json()
     return resp
+
 
 @app.route('/logout/')
 def logout():
