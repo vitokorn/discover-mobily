@@ -280,9 +280,10 @@
                      console.log('279 ' + ns)
                      if (pllist[i].id == ns.id){
                         console.log('test')
+                         if (document.getElementById('t_' + ns.id)){
                          document.getElementById('t_' + ns.id).style.display = 'flex'
                          document.getElementById('p_' + ns.id).style.display = 'flex'
-                     } else{
+                     }} else{
                          console.log('282 ' + ns.id)
                          ns.classList.remove('activetab')
                          if (document.getElementById('t_' + ns.id)){
