@@ -173,6 +173,7 @@ def kod():
         db.session.commit()
     session['username'] = t['id']
     session['nickname'] = t["display_name"]
+    session['country'] = t['country']
     return redirect('/')
 
 
