@@ -55,9 +55,9 @@
     </div>
     <script>
           function initElement(id) {
-              console.log(id)
+              console.log('58 ' + id)
               let url = 'https://api.spotify.com/v1/playlists/' + id + '?fields=name,id,description,images,tracks(items(track(name,preview_url,id,artists,album(artists,id,images))))'
-              console.log(url)
+              console.log('60 ' + url)
               let xhr = new XMLHttpRequest()
               xhr.open('GET',url,true)
               xhr.setRequestHeader('Authorization', 'Bearer ' + '{{ user.access_token }}');
@@ -65,14 +65,14 @@
               xhr.onload = function (){
                   if (xhr.status === 200){
                       let data = JSON.parse(this.response)
-                      console.log(data)
+                      console.log('68 ' + data)
                       let tracks = document.getElementById('tracks')
                       tracks.innerHTML = ''
                       let name = data['name']
                       let description = data['description']
                       let image = data['images'][0]['url']
                       let playtrack = data['tracks']['items']
-                      console.log(playtrack)
+                      console.log('75 ' + playtrack)
 
 
                       let playlistdiv = document.getElementById('playlist')
@@ -103,7 +103,7 @@
                       }
 
                   } else if(xhr.status === 401){
-                      let url = '/spotify/refresh_token/' + session['username']
+                      let url = '/spotify/refresh_token/' + {{ session['username'] }};
                       let xhr = new XMLHttpRequest()
                       xhr.open('GET',url,true)
                       xhr.setRequestHeader('Authorization', 'Bearer ' + '{{ user.access_token }}');
@@ -129,6 +129,63 @@
               } else
                 audiop.play();
           }
+          function playtracksa(id) {
+              let all = document.querySelectorAll('[id^="sa_"]');
+              for (let elem of all) {
+                  if (elem.id == 'sa_' + id){
+
+                  } else
+                  elem.pause()
+              }
+              let audiop = document.getElementById('sa_' + id)
+              if (audiop.paused == false){
+                  audiop.pause()
+              } else
+                audiop.play();
+          }
+          function playtrackat(id,type) {
+              console.log('133 ' + id)
+              if (type == 'lm'){
+              let all = document.querySelectorAll('[id^="at_"]');
+              for (let elem of all) {
+                  if (elem.id == 'at_' + id){
+
+                  } else
+                  elem.pause()
+              }
+              let audiop = document.getElementById('at_' + id)
+              if (audiop.paused == false){
+                  audiop.pause()
+              } else
+                audiop.play();
+          } else if(type == 'ls') {
+                  let all = document.querySelectorAll('[id^="ats_"]');
+                  for (let elem of all) {
+                      if (elem.id == 'at_' + id){
+
+                      } else
+                      elem.pause()
+                  }
+              let audiop = document.getElementById('ats_' + id)
+              if (audiop.paused == false){
+                  audiop.pause()
+              } else
+                audiop.play(); }
+                else if (type == 'ata'){
+                  let all = document.querySelectorAll('[id^="ata_"]');
+                  for (let elem of all) {
+                      if (elem.id == 'at_' + id){
+
+                      } else
+                      elem.pause()
+                  }
+                  let audiop = document.getElementById('ata_' + id)
+                  if (audiop.paused == false){
+                      audiop.pause()
+                  } else
+                    audiop.play();
+                  }
+          }
         function list(artists){
           const names = artists.map(({ name }) => name);
           const finalName = names.pop();
@@ -144,7 +201,7 @@
         function topartists () {
             document.getElementById('topartists').classList.toggle("activetab")
             let url = 'https://api.spotify.com/v1/me/top/artists?time_range=short_term'
-            console.log(url)
+            console.log('165 ' + url)
             let xhr = new XMLHttpRequest()
             xhr.open('GET',url,true)
             xhr.setRequestHeader('Authorization', 'Bearer ' + '{{ user.access_token }}');
@@ -156,18 +213,20 @@
                     let items = data['items']
                     let elem = []
                       for (const it of items){
-                          elem.push(`<div class="con3" tabindex="0" id=${it['id']} style="background-image: url(${it['images'][0]['url']});background-repeat: no-repeat;background-size: cover">${it['name']}</div>`)
+                          elem.push(`<div class="con3" tabindex="0" id=${it['id']} onclick="playtrackat('${it['id']}','lm')" style="background-image: url(${it['images'][0]['url']});background-repeat: no-repeat;background-size: cover">${it['name']}<audio id="at_${it['id']}">${artisttrack(it['id'],'lm')}</audio></div>`)
                       }
                       artis.innerHTML = elem.join(' ')
-                    console.log(data)
+
+                    console.log('178 ' + data)
                 } else if(xhr.status === 401){
-                      let url = '/spotify/refresh_token/' + session['username']
+                      let url = '/spotify/refresh_token/' + {{ session['username'] }};
                       let xhr = new XMLHttpRequest()
                       xhr.open('GET',url,true)
                       xhr.setRequestHeader('Authorization', 'Bearer ' + '{{ user.access_token }}');
                       xhr.send()
                       xhr.onload = function (){
                         if (xhr.status === 200){
+                            console.log('187')
                             topartists()
                 }
             }
@@ -176,7 +235,7 @@
         }
           document.getElementById('topartists6').addEventListener('click', function () {
             let url = 'https://api.spotify.com/v1/me/top/artists?time_range=medium_term'
-            console.log(url)
+            console.log('204 ' + url)
             let xhr = new XMLHttpRequest()
             xhr.open('GET',url,true)
             xhr.setRequestHeader('Authorization', 'Bearer ' + '{{ user.access_token }}');
@@ -188,19 +247,19 @@
                     let items = data['items']
                     let elem = []
                       for (const it of items){
-                          elem.push(`<div class="con3" tabindex="0" id=${it['id']} style="background-image: url(${it['images'][0]['url']});background-repeat: no-repeat;background-size: cover">${it['name']}</div>`)
+                          elem.push(`<div class="con3" tabindex="0" id=ls_${it['id']} onclick="playtrackat('${it['id']}','ls')" style="background-image: url(${it['images'][0]['url']});background-repeat: no-repeat;background-size: cover">${it['name']}<audio id="ats_${it['id']}">${artisttrack(it['id'],'ls')}</audio></div>`)
                       }
                       artis.innerHTML = elem.join(' ')
-                    console.log(data)
+                    console.log('219 ' + data)
 
-                }                    document.getElementById('artists').style.display = 'none'
+                }    document.getElementById('artists').style.display = 'none'
                      document.getElementById('artists6').style.display = 'flex'
                      document.getElementById('artistsall').style.display = 'none'
             }
         })
           document.getElementById('topartistsall').addEventListener('click', function () {
             let url = 'https://api.spotify.com/v1/me/top/artists?time_range=long_term'
-            console.log(url)
+            console.log('228 ' + url)
             let xhr = new XMLHttpRequest()
             xhr.open('GET',url,true)
             xhr.setRequestHeader('Authorization', 'Bearer ' + '{{ user.access_token }}');
@@ -212,10 +271,10 @@
                     let items = data['items']
                     let elem = []
                       for (const it of items){
-                          elem.push(`<div class="con3" id=${it['id']} tabindex="0" style="background-image: url(${it['images'][0]['url']});background-repeat: no-repeat;background-size: cover">${it['name']}</div>`)
+                          elem.push(`<div class="con3" tabindex="0" id=al_${it['id']} onclick="playtrackat('${it['id']}','al')" style="background-image: url(${it['images'][0]['url']});background-repeat: no-repeat;background-size: cover">${it['name']}<audio id="ata_${it['id']}">${artisttrack(it['id'],'at')}</audio></div>`)
                       }
                       artis.innerHTML = elem.join(' ')
-                    console.log(data)
+                    console.log('243 ' + data)
 
                 }document.getElementById('artists').style.display = 'none'
                      document.getElementById('artists6').style.display = 'none'
@@ -236,6 +295,127 @@
             });
              });
          }
+          function artisttrack(id,type){
+              let url = 'https://api.spotify.com/v1/artists/' + id + '/top-tracks?market=' + '{{ session['country'] }}'
+            console.log('267 ' + url)
+            let xhr = new XMLHttpRequest()
+            xhr.open('GET',url,true)
+            xhr.setRequestHeader('Authorization', 'Bearer ' + '{{ user.access_token }}');
+            xhr.send()
+            xhr.onload = function (){
+                if (xhr.status === 200){
+                    let data = JSON.parse(this.response)
+                    let tracks = data['tracks']
+                    let fnn = (tracks.find(e =>e.preview_url))
+                    if (type == 'lm'){
+                        if (fnn != null) {
+                            console.log('270')
+                            {#console.log(document.getElementById('at_' + id))#}
+                            document.getElementById('at_' + id).setAttribute("type","audio/mpeg")
+                            document.getElementById('at_' + id).setAttribute("sid",`${fnn['id']}`)
+                            document.getElementById('at_' + id).setAttribute("src",`${fnn['preview_url']}`)
+                        } else {
+                            console.log(id)
+                            document.getElementById(id).style.opacity = '.5'
+                            document.getElementById('at_' + id).setAttribute("src","null")
+                            document.getElementById(id).removeAttribute('onclick')
+                            document.getElementById('at_' + id).innerText = ''}}
+                    else if (type == 'ls'){
+                        if (fnn != null) {
+                        console.log('270')
+                        {#console.log(document.getElementById('at_' + id))#}
+                        document.getElementById('ats_' + id).setAttribute("type","audio/mpeg")
+                        document.getElementById('ats_' + id).setAttribute("sid",`${fnn['id']}`)
+                        document.getElementById('ats_' + id).setAttribute("src",`${fnn['preview_url']}`)
+                    } else {
+                        console.log(id)
+                        document.getElementById('ls_' + id).style.opacity = '.5'
+                        document.getElementById('ats_' + id).setAttribute("src","null")
+                        document.getElementById('ls_' + id).removeAttribute('onclick')
+                        document.getElementById('ats_' + id).innerText = ''}}
+                    }
+                    else if (type == 'at'){
+                    if (fnn != null) {
+                        console.log('270')
+                        {#console.log(document.getElementById('at_' + id))#}
+                        document.getElementById('ata_' + id).setAttribute("type","audio/mpeg")
+                        document.getElementById('ata_' + id).setAttribute("sid",`${fnn['id']}`)
+                        document.getElementById('ata_' + id).setAttribute("src",`${fnn['preview_url']}`)
+                    } else {
+                        console.log(id)
+                        document.getElementById('at' + id).style.opacity = '.5'
+                        document.getElementById('ata_' + id).setAttribute("src","null")
+                        document.getElementById('at' + id).removeAttribute('onclick')
+                        document.getElementById('ata_' + id).innerText = ''}}
+
+                else if(xhr.status === 401){
+                      let curl = '/spotify/refresh_token/' + {{session['username']}};
+                      let xhr = new XMLHttpRequest()
+                      xhr.open('GET',curl,true)
+                      xhr.setRequestHeader('Authorization', 'Bearer ' + '{{ user.access_token }}');
+                      xhr.send()
+                      xhr.onload = function (){
+                        if (xhr.status === 200){
+                }
+            }
+                  }
+            }
+}
+          function savedalbums(id){
+              let url = 'https://api.spotify.com/v1/albums/' + id + '/tracks?market=' + '{{ session['country'] }}' + '&limit=10'
+            console.log('267 ' + url)
+            let xhr = new XMLHttpRequest()
+            xhr.open('GET',url,true)
+            xhr.setRequestHeader('Authorization', 'Bearer ' + '{{ user.access_token }}');
+            xhr.send()
+            xhr.onload = function (){
+                if (xhr.status === 200){
+                    let data = JSON.parse(this.response)
+                    let items = data['items']
+                    let fnn = (items.find(e =>e.preview_url))
+                        if (fnn != null) {
+                            console.log('270')
+                            {#console.log(document.getElementById('at_' + id))#}
+                            document.getElementById('sa_' + id).setAttribute("type","audio/mpeg")
+                            document.getElementById('sa_' + id).setAttribute("aid",`${fnn['id']}`)
+                            document.getElementById('sa_' + id).setAttribute("src",`${fnn['preview_url']}`)
+                        } else {
+                            console.log(id)
+                            document.getElementById(id).style.opacity = '.5'
+                            document.getElementById('sa_' + id).setAttribute("src","null")
+                            document.getElementById(id).removeAttribute('onclick')
+                            document.getElementById('sa_' + id).innerText = ''}
+
+                    console.log('178 ' + data)
+                } else if(xhr.status === 401){
+                      let url = '/spotify/refresh_token/' + {{ session['username'] }};
+                      let xhr = new XMLHttpRequest()
+                      xhr.open('GET',url,true)
+                      xhr.setRequestHeader('Authorization', 'Bearer ' + '{{ user.access_token }}');
+                      xhr.send()
+                      xhr.onload = function (){
+                        if (xhr.status === 200){
+                            console.log('187')
+                            topartists()
+                }
+            }
+                  }
+                    {#let tracks = data['tracks']#}
+                    {#let fnn = (tracks.find(e =>e.preview_url))#}
+                    {#    if (fnn != null) {#}
+                    {#        console.log('270')#}
+                            {#console.log(document.getElementById('at_' + id))#}
+                    {#        document.getElementById('at_' + id).setAttribute("type","audio/mpeg")#}
+                    {#        document.getElementById('at_' + id).setAttribute("sid",`${fnn['id']}`)#}
+                    {#        document.getElementById('at_' + id).setAttribute("src",`${fnn['preview_url']}`)#}
+                    {#    } else {#}
+                    {#        console.log(id)#}
+                    {#        document.getElementById(id).style.opacity = '.5'#}
+                    {#        document.getElementById('at_' + id).setAttribute("src","null")#}
+                    {#        document.getElementById(id).removeAttribute('onclick')#}
+                    {#        document.getElementById('at_' + id).innerText = ''}#}
+            }
+}
           const tt = document.querySelectorAll('[id^=toptracks]');
 
          for (let i = 0; i < tt.length; i++) {
@@ -253,7 +433,7 @@
         function toptracks () {
             document.getElementById('toptracks').classList.toggle("activetab")
             let url = 'https://api.spotify.com/v1/me/top/tracks?time_range=short_term'
-            console.log(url)
+            console.log('314 ' + url)
             let xhr = new XMLHttpRequest()
             xhr.open('GET',url,true)
             xhr.setRequestHeader('Authorization', 'Bearer ' + '{{ user.access_token }}');
@@ -264,7 +444,7 @@
                     let tracks = document.getElementById('toptrack')
                       tracks.innerHTML = ''
                       let playtrack = data['items']
-                      console.log(playtrack)
+                      console.log('325 ' + playtrack)
                       let elem = []
                       for (const pla of playtrack){
                           elem.push(`<div class="con3" tabindex="0" id=${pla['id']} style="background-image: url(${pla['album']['images'][0]['url']});background-repeat: no-repeat;background-size: cover" onclick="playtrack('${pla['id']}')">${list(pla['artists'])} -  ${pla['name']}<audio type="audio/mpeg" preload="none" id="a_${pla['id']}" src="${pla['preview_url']}"></div>`)
@@ -278,9 +458,9 @@
                           let curr = z.id.replace('a_','')
                           document.getElementById(curr).style.opacity = '.5'
                       }
-                    console.log(data)
+                    console.log('339' + data)
                 } else if(xhr.status === 401){
-                      let url = '/spotify/refresh_token/' + session['username']
+                      let url = '/spotify/refresh_token/' + {{ session['username'] }};
                       let xhr = new XMLHttpRequest()
                       xhr.open('GET',url,true)
                       xhr.setRequestHeader('Authorization', 'Bearer ' + '{{ user.access_token }}');
@@ -300,7 +480,7 @@
          })
           document.getElementById('toptrackssix').addEventListener('click', function () {
             let url = 'https://api.spotify.com/v1/me/top/tracks?time_range=medium_term'
-            console.log(url)
+            console.log('361 ' + url)
             let xhr = new XMLHttpRequest()
             xhr.open('GET',url,true)
             xhr.setRequestHeader('Authorization', 'Bearer ' + '{{ user.access_token }}');
@@ -311,7 +491,7 @@
                     let tracks = document.getElementById('toptrack6')
                       tracks.innerHTML = ''
                       let playtrack = data['items']
-                      console.log(playtrack)
+                      console.log('372 ' + playtrack)
                       let elem = []
                       for (const pla of playtrack){
                           elem.push(`<div class="con3" tabindex="0" id=${pla['id']} style="background-image: url(${pla['album']['images'][0]['url']});background-repeat: no-repeat;background-size: cover" onclick="playtrack('${pla['id']}')"> ${list(pla['artists'])} -  ${pla['name']}<audio type="audio/mpeg" preload="none" id="a_${pla['id']}" src="${pla['preview_url']}"></div>`)
@@ -325,13 +505,13 @@
                           let curr = z.id.replace('a_','')
                           document.getElementById(curr).style.opacity = '.5'
                       }
-                    console.log(data)
+                    console.log('386 ' + data)
                 }
             }
         })
                     document.getElementById('toptracksall').addEventListener('click', function () {
             let url = 'https://api.spotify.com/v1/me/top/tracks?time_range=long_term'
-            console.log(url)
+            console.log('392 ' + url)
             let xhr = new XMLHttpRequest()
             xhr.open('GET',url,true)
             xhr.setRequestHeader('Authorization', 'Bearer ' + '{{ user.access_token }}');
@@ -342,7 +522,7 @@
                     let tracks = document.getElementById('toptrackat')
                       tracks.innerHTML = ''
                       let playtrack = data['items']
-                      console.log(playtrack)
+                      console.log('403' + playtrack)
                       let elem = []
                       for (const pla of playtrack){
                           elem.push(`<div class="con3" id=${pla['id']} style="background-image: url(${pla['album']['images'][0]['url']});background-repeat: no-repeat;background-size: cover" onclick="playtrack('${pla['id']}')"><div tabindex="0" class="text"> ${list(pla['artists'])} -  ${pla['name']}</div><audio type="audio/mpeg" preload="none" id="a_${pla['id']}" src="${pla['preview_url']}"></div>`)
@@ -352,17 +532,18 @@
                     document.getElementById('toptrack').style.display = 'none'
                     document.getElementById('toptrack6').style.display = 'none'
                       let zerosrc = document.querySelectorAll('[src=null]')
+                    console.log('413' + zerosrc)
                       for (let z of zerosrc) {
                           let curr = z.id.replace('a_','')
                           document.getElementById(curr).style.opacity = '.5'
                       }
-                    console.log(data)
+                    console.log('418 ' + data)
                 }
             }
         })
         function saved_albums () {
             let url = 'https://api.spotify.com/v1/me/albums'
-            console.log(url)
+            console.log('424 ' + url)
             let xhr = new XMLHttpRequest()
             xhr.open('GET',url,true)
             xhr.setRequestHeader('Authorization', 'Bearer ' + '{{ user.access_token }}');
@@ -373,10 +554,10 @@
                     let albums = document.getElementById('savedalbum')
                     albums.innerHTML = ''
                     let savedalbum = data['items']
-                    console.log(savedalbum)
+                    console.log('435 ' + savedalbum)
                     let elem = []
                     for (const sa of savedalbum){
-                          elem.push(`<div class="con3" tabindex="0" id=${sa['album']['id']} style="background-image: url(${sa['album']['images'][0]['url']});background-repeat: no-repeat;background-size: cover">${sa['album']['name']}</div>`)
+                          elem.push(`<div class="con3" tabindex="0" id=${sa['album']['id']} onclick="playtracksa('${sa['album']['id']}')" style="background-image: url(${sa['album']['images'][0]['url']});background-repeat: no-repeat;background-size: cover">${sa['album']['name']}<audio id="sa_${sa['album']['id']}">${savedalbums(sa['album']['id'])})</audio></div>`)
                       }
                     albums.innerHTML = elem.join(' ')
                     {#let zerosrc = document.querySelectorAll('[src=null]')#}
@@ -384,7 +565,7 @@
                     {#      let curr = z.id.replace('a_','')#}
                     {#      document.getElementById(curr).style.opacity = '.5'#}
                     {#  }#}
-                    console.log(data)
+                    console.log('446 ' + data)
                 }
             }
         }
@@ -394,7 +575,7 @@
         }
           function sendRequest(offset){
             let url = 'https://api.spotify.com/v1/me/tracks?offset=' + offset + '&limit=50'
-            console.log(url)
+            console.log('456 ' + url)
             let xhr = new XMLHttpRequest()
             xhr.open('GET',url,true)
             xhr.setRequestHeader('Authorization', 'Bearer ' + '{{ user.access_token }}');
@@ -402,7 +583,7 @@
             xhr.onload = function (){
                 if (xhr.status === 200){
                     let data = JSON.parse(this.response)
-                    console.log(data)
+                    console.log('464 ' + data)
                     let items = data['items']
                     let elem = []
                     for (const pla of items){
