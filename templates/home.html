@@ -123,6 +123,23 @@
                   } else
                   elem.pause()
               }
+              let lm = document.querySelectorAll('[id^="at_"]');
+              for (let el of lm) {
+                  el.pause()
+              }
+              let ls = document.querySelectorAll('[id^="ats_"]');
+              for (let el of ls) {
+                  el.pause()
+              }
+              let al = document.querySelectorAll('[id^="ata_"]');
+              for (let el of al) {
+                  el.pause()
+              }
+              let sa = document.querySelectorAll('[id^="sa_"]');
+              for (let el of sa) {
+                  el.pause()
+              }
+
               let audiop = document.getElementById('a_' + id)
               if (audiop.paused == false){
                   audiop.pause()
@@ -130,6 +147,22 @@
                 audiop.play();
           }
           function playtracksa(id) {
+              let rt = document.querySelectorAll('[id^="a_"]');
+              for (let el of rt) {
+                  el.pause()
+              }
+              let lm = document.querySelectorAll('[id^="at_"]');
+              for (let el of lm) {
+                  el.pause()
+              }
+              let ls = document.querySelectorAll('[id^="ats_"]');
+              for (let el of ls) {
+                  el.pause()
+              }
+              let al = document.querySelectorAll('[id^="ata_"]');
+              for (let el of al) {
+                  el.pause()
+              }
               let all = document.querySelectorAll('[id^="sa_"]');
               for (let elem of all) {
                   if (elem.id == 'sa_' + id){
@@ -145,6 +178,14 @@
           }
           function playtrackat(id,type) {
               console.log('133 ' + id)
+              let rt = document.querySelectorAll('[id^="a_"]');
+              for (let elem of rt) {
+                  elem.pause()
+              }
+              let sa = document.querySelectorAll('[id^="sa_"]');
+              for (let elem of sa) {
+                  elem.pause()
+              }
               if (type == 'lm'){
               let all = document.querySelectorAll('[id^="at_"]');
               for (let elem of all) {
