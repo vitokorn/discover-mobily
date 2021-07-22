@@ -2,6 +2,7 @@ import datetime
 import os
 import requests
 import json
+import urllib3
 
 from flask import Flask, render_template, redirect, request, session, jsonify, url_for
 from flask_sqlalchemy import SQLAlchemy
@@ -152,7 +153,7 @@ def kod():
     test = req.json()
     if req.status_code == 401:
         return render_template('401.html')
-    print('155 ' + str(test))
+    print('155' + str(test))
     access_token = test['access_token']
     refresh_token = test['refresh_token']
     url = 'https://api.spotify.com/v1/me'
@@ -160,9 +161,14 @@ def kod():
         'Authorization': f'Bearer {access_token}',
         'scope': 'user-read-private user-read-email'
     }
-    re = requests.get(url=url, headers=headers)
-    t = re.json()
-    # t = json.loads(test2)
+    http = urllib3.PoolManager()
+    re = http.request("GET", url,headers=headers)
+    print('166')
+    print(json.loads(re.data.decode("utf-8")))
+    t = json.loads(re.data.decode("utf-8"))
+    # re = requests.get(url=url, headers=headers)
+    # test2 = re.text
+    # t = json.loads(test2.decode("utf-8"))
     print(t)
     if re.status_code == 401:
         return render_template('401.html')
