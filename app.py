@@ -170,7 +170,7 @@ def kod():
     # test2 = re.text
     # t = json.loads(test2.decode("utf-8"))
     print(t)
-    if re.status_code == 401:
+    if re.status == 401:
         return render_template('401.html')
     user,create = get_or_create(db.session,User,spotyid=t['id'],country=t['country'],
                                 display_name=t["display_name"],
