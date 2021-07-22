@@ -91,11 +91,11 @@ def home():
                 raise ValueError
         else:
             res = req.json()
-            # print('req 95' + str(res))
+            print('req 95' + str(res))
             pl = res['items']
             return render_template('home.html',pl=pl,user=user)
     else:
-        return render_template('home.html')
+        return render_template('403.html')
 
 
 @app.route('/pc/')
