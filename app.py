@@ -33,10 +33,10 @@ app.secret_key = b'\xb9\xb8h\\\x1c\xf9s^\xab\x9b\x9dz\xce\xc7\xcea\xc1\x1a\xca\x
 
 # redirect_uri = 'http://localhost:4444/spotify/callback/'
 redirect_uri = 'https://discover-mobily.herokuapp.com/spotify/callback'
-client_id = os.environ.get('client_id')
-client_secret = os.environ.get('client_secret')
-# client_id = 'a9be8e308f094d439c5b58809fd0316f'
-# client_secret = 'aadfe9af67e84469aaada1bfd736b9a6'
+# client_id = os.environ.get('client_id')
+# client_secret = os.environ.get('client_secret')
+client_id = 'a9be8e308f094d439c5b58809fd0316f'
+client_secret = 'aadfe9af67e84469aaada1bfd736b9a6'
 
 class Users:
     def __init__(self,
@@ -146,7 +146,8 @@ def authclient():
 def kod():
     code = request.args.get('code')
     url = 'https://accounts.spotify.com/api/token'
-    data = {'grant_type': 'authorization_code', 'code': code, 'redirect_uri': redirect_uri}
+    data = {'grant_type': 'authorization_code', 'code': code, 'redirect_uri': redirect_uri,'client_id':client_id,
+            'client_secret':client_secret}
     req = requests.post(url=url, data=data)
     test = req.json()
     if req.status_code == 401:
