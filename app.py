@@ -10,8 +10,8 @@ from sqlalchemy.sql import ClauseElement
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://aewxjumzmghuqz:7c3fa637c4eb52b837213b1040c3fb39d14d7522e80697a18aa68e4bfcb18df2@ec2-54-195-76-73.eu-west-1.compute.amazonaws.com:5432/de5nclahn5ni2h'
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://discovermobily:5r9VsXSH@localhost:5432/discover-mobily'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://aewxjumzmghuqz:7c3fa637c4eb52b837213b1040c3fb39d14d7522e80697a18aa68e4bfcb18df2@ec2-54-195-76-73.eu-west-1.compute.amazonaws.com:5432/de5nclahn5ni2h'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://discovermobily:5r9VsXSH@localhost:5432/discover-mobily'
 app.jinja_env.auto_reload = True
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
@@ -31,12 +31,12 @@ class User(db.Model):
 
 app.secret_key = b'\xb9\xb8h\\\x1c\xf9s^\xab\x9b\x9dz\xce\xc7\xcea\xc1\x1a\xca\xcc\xb8\xc9\xa0l'
 
-# redirect_uri = 'http://localhost:4444/spotify/callback/'
-redirect_uri = 'https://discover-mobily.herokuapp.com/spotify/callback'
-client_id = os.environ.get('client_id')
-client_secret = os.environ.get('client_secret')
-# client_id = 'a9be8e308f094d439c5b58809fd0316f'
-# client_secret = 'aadfe9af67e84469aaada1bfd736b9a6'
+redirect_uri = 'http://localhost:4444/spotify/callback/'
+# redirect_uri = 'https://discover-mobily.herokuapp.com/spotify/callback'
+# client_id = os.environ.get('client_id')
+# client_secret = os.environ.get('client_secret')
+client_id = 'a9be8e308f094d439c5b58809fd0316f'
+client_secret = 'aadfe9af67e84469aaada1bfd736b9a6'
 
 class Users:
     def __init__(self,
@@ -152,6 +152,7 @@ def kod():
     test = req.json()
     if req.status_code == 401:
         return render_template('401.html')
+    print('155' + test)
     access_token = test['access_token']
     refresh_token = test['refresh_token']
     url = 'https://api.spotify.com/v1/me'
