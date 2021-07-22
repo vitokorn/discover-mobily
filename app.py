@@ -34,10 +34,10 @@ app.secret_key = b'\xb9\xb8h\\\x1c\xf9s^\xab\x9b\x9dz\xce\xc7\xcea\xc1\x1a\xca\x
 
 # redirect_uri = 'http://localhost:4444/spotify/callback/'
 redirect_uri = 'https://discover-mobily.herokuapp.com/spotify/callback'
-# client_id = os.environ.get('client_id')
-# client_secret = os.environ.get('client_secret')
-client_id = 'a9be8e308f094d439c5b58809fd0316f'
-client_secret = 'aadfe9af67e84469aaada1bfd736b9a6'
+client_id = os.environ.get('client_id')
+client_secret = os.environ.get('client_secret')
+# client_id = 'a9be8e308f094d439c5b58809fd0316f'
+# client_secret = 'aadfe9af67e84469aaada1bfd736b9a6'
 
 class Users:
     def __init__(self,
@@ -163,16 +163,16 @@ def kod():
     }
     http = urllib3.PoolManager()
     re = http.request("GET", url,headers=headers)
-    print('166')
-    print(re.status)
-    print(json.loads(re.data.decode("utf-8")))
-    t = json.loads(re.data.decode("utf-8"))
+    if re.status == 403:
+        return render_template('403.html')
+
     # re = requests.get(url=url, headers=headers)
     # test2 = re.text
     # t = json.loads(test2.decode("utf-8"))
-    print(t)
     if re.status == 401:
         return render_template('401.html')
+    t = json.loads(re.data)
+    print(t)
     user,create = get_or_create(db.session,User,spotyid=t['id'],country=t['country'],
                                 display_name=t["display_name"],
                                 defaults={'access_token':access_token,'refresh_token':refresh_token})
