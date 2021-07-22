@@ -164,6 +164,7 @@ def kod():
     http = urllib3.PoolManager()
     re = http.request("GET", url,headers=headers)
     print('166')
+    print(re.status)
     print(json.loads(re.data.decode("utf-8")))
     t = json.loads(re.data.decode("utf-8"))
     # re = requests.get(url=url, headers=headers)
