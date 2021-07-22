@@ -161,8 +161,8 @@ def kod():
         'scope': 'user-read-private user-read-email'
     }
     re = requests.get(url=url, headers=headers)
-    test2 = re.content
-    t = json.loads(test2)
+    t = re.json()
+    # t = json.loads(test2)
     print(t)
     if re.status_code == 401:
         return render_template('401.html')
