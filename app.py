@@ -146,9 +146,8 @@ def authclient():
 def kod():
     code = request.args.get('code')
     url = 'https://accounts.spotify.com/api/token'
-    data = {'grant_type': 'authorization_code', 'code': code, 'redirect_uri': redirect_uri,'client_id':client_id,
-            'client_secret':client_secret}
-    req = requests.post(url=url, data=data)
+    data = {'grant_type': 'authorization_code', 'code': code, 'redirect_uri': redirect_uri}
+    req = requests.post(url=url, data=json.dumps(data))
     test = req.json()
     if req.status_code == 401:
         return render_template('401.html')
