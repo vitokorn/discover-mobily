@@ -32,12 +32,18 @@
         <script>
         if (localStorage.getItem("access_token") === null) {
           localStorage.setItem('access_token', `{{ user.access_token }}`)
+        } else if (localStorage.getItem("access_token") != `{{ user.access_token }}`) {
+            localStorage.setItem('access_token', `{{ user.access_token }}`)
         }
         if (localStorage.getItem("username") === null) {
           localStorage.setItem('username', `{{ session['username'] }}`)
+        } else if (localStorage.getItem("username") != `{{ session['username'] }}`) {
+            localStorage.setItem('username', `{{ session['username'] }}`)
         }
         if (localStorage.getItem("country") === null) {
           localStorage.setItem('country', `{{ session['country'] }}`)
+        } else if (localStorage.getItem("country") != `{{ session['country'] }}`) {
+            localStorage.setItem('country', `{{ session['country'] }}`)
         }
         </script>
     {% endif %}
