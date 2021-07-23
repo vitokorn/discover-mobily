@@ -29,9 +29,24 @@
     {% if session['username'] %}
         {% block content %}
         {% endblock %}
+        <script>
+        if (localStorage.getItem("access_token") === null) {
+          localStorage.setItem('access_token', `{{ user.access_token }}`)
+        }
+        if (localStorage.getItem("username") === null) {
+          localStorage.setItem('username', `{{ session['username'] }}`)
+        }
+        if (localStorage.getItem("country") === null) {
+          localStorage.setItem('country', `{{ session['country'] }}`)
+        }
+        </script>
     {% endif %}
 <footer>
     This project was inspired by <a href="https://discoverquickly.com/">Discover Quickly</a>
 </footer>
 </body>
+    {% block javascript %}
+        <script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}">
+        </script>
+    {% endblock %}
 </html>
