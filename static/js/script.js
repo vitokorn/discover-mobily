@@ -185,7 +185,7 @@
                 else if (type == 'ata'){
                   let all = document.querySelectorAll('[id^="ata_"]');
                   for (let elem of all) {
-                      if (elem.id == 'at_' + id){
+                      if (elem.id == 'al_' + id){
 
                       } else
                       elem.pause()
@@ -319,7 +319,7 @@
                     let items = data['items']
                     let elem = []
                       for (const it of items){
-                          elem.push(`<div class="con3" tabindex="0" id=al_${it['id']} onclick="playtrackat('${it['id']}','al')" style="background-image: url(${it['images'][1]['url']});background-repeat: no-repeat;background-size: cover">${it['name']}<audio id="ata_${it['id']}">${artisttrack(it['id'],'at')}</audio></div>`)
+                          elem.push(`<div class="con3" tabindex="0" id=al_${it['id']} onclick="playtrackat('${it['id']}','al')" style="background-image: url(${it['images'][1]['url']});background-repeat: no-repeat;background-size: cover">${it['name']}<audio id="ata_${it['id']}">${artisttrack(it['id'],'al')}</audio></div>`)
                       }
                       artis.innerHTML = elem.join(' ')
                     console.log('243 ' + data)
@@ -373,29 +373,28 @@
                             document.getElementById('at_' + id).innerText = ''}}
                     else if (type == 'ls'){
                         if (fnn != null) {
-                        console.log('270')
+                        console.log('376')
                         document.getElementById('ats_' + id).setAttribute("type","audio/mpeg")
                         document.getElementById('ats_' + id).setAttribute("sid",`${fnn['id']}`)
                         document.getElementById('ats_' + id).setAttribute("src",`${fnn['preview_url']}`)
-                    } else {
+                    } else  {
                         console.log(id)
                         document.getElementById('ls_' + id).style.opacity = '.5'
                         document.getElementById('ats_' + id).setAttribute("src","null")
                         document.getElementById('ls_' + id).removeAttribute('onclick')
                         document.getElementById('ats_' + id).innerText = ''}}
-                    }
-                    else if (type == 'at'){
+                    else if (type == 'al'){
                     if (fnn != null) {
-                        console.log('270')
+                        console.log('389')
                         document.getElementById('ata_' + id).setAttribute("type","audio/mpeg")
                         document.getElementById('ata_' + id).setAttribute("sid",`${fnn['id']}`)
                         document.getElementById('ata_' + id).setAttribute("src",`${fnn['preview_url']}`)
                     } else {
                         console.log(id)
-                        document.getElementById('at' + id).style.opacity = '.5'
+                        document.getElementById('al_' + id).style.opacity = '.5'
                         document.getElementById('ata_' + id).setAttribute("src","null")
-                        document.getElementById('at' + id).removeAttribute('onclick')
-                        document.getElementById('ata_' + id).innerText = ''}}
+                        document.getElementById('al_' + id).removeAttribute('onclick')
+                        document.getElementById('ata_' + id).innerText = ''}}}
 
                 else if(xhr.status === 401){
                       let curl = '/spotify/refresh_token/' + localStorage.getItem('username')
@@ -411,7 +410,7 @@
             }
 }
         function savedalbums(id){
-              let url = 'https://api.spotify.com/v1/albums/' + id + '/tracks?market=' + localStorage.getItem('contry') + '&limit=10'
+              let url = 'https://api.spotify.com/v1/albums/' + id + '/tracks?market=' + localStorage.getItem('country') + '&limit=10'
             console.log('267 ' + url)
             let xhr = new XMLHttpRequest()
             xhr.open('GET',url,true)

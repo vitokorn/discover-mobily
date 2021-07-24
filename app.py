@@ -1,5 +1,5 @@
-import datetime
 import os
+import datetime
 import requests
 import json
 import urllib3
@@ -7,6 +7,7 @@ import urllib3
 from flask import Flask, render_template, redirect, request, session, jsonify, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_babel import Babel,_
 from sqlalchemy.sql import ClauseElement
 
 app = Flask(__name__)
@@ -16,6 +17,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://aewxjumzmghuqz:7c3fa637c4e
 app.jinja_env.auto_reload = True
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+babel = Babel(app)
 
 
 class User(db.Model):
@@ -62,6 +64,11 @@ class ClientCredentials:
         self.client_id = client_id
         self.client_secret = client_secret
         self.grant_type = grant_type
+
+
+@babel.localeselector
+def get_locale():
+    return request.accept_languages.best_match(['en','ru'])
 
 
 @app.route('/')

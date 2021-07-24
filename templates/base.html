@@ -16,13 +16,13 @@
     <h1>Discover Mobily</h1>
 <div class="content">
     {% if session['username'] %}
-        <div class="">Hello, {{ session['nickname'] }}</div>
+        <div class="">{{ _('Hello,') }} {{ session['nickname'] }}</div>
             <div class="dropdown-content">
-                <a href="">Account</a>
-                <a href="/logout/">Logout</a>
+                <a href="">{{ _('Account') }}</a>
+                <a href="/logout/">{{ _('Logout') }}</a>
             </div>
     {% else %}
-        <a class="cta" href="/spotify/login/"><button>Login</button></a>
+        <a class="cta" href="/spotify/login/"><button>{{ _('Login') }}</button></a>
     {% endif %}
 </div>
 </header>
@@ -48,7 +48,7 @@
         </script>
     {% endif %}
 <footer>
-    This project was inspired by <a href="https://discoverquickly.com/">Discover Quickly</a>
+    {{ _('This project was inspired by') }} <a href="https://discoverquickly.com/">Discover Quickly</a>
 </footer>
 </body>
     {% block javascript %}
