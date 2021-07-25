@@ -65,7 +65,7 @@ msgstr "За все время"
 
 #: templates/home.html:33
 msgid "Your Top tracks"
-msgstr "Твои любимые трекм"
+msgstr "Твои любимые треки"
 
 #: templates/home.html:48
 msgid "Your Saved albums"
