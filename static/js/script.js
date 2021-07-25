@@ -62,7 +62,6 @@
                     let refresh = document.createElement('button')
                     refresh.id = 'refresh_' + id
                     refresh.className = 'refresh-end'
-                    refresh.innerText = 'Refresh'
                     refresh.setAttribute("onclick","test('refresh_" + id + "')")
                     plid.appendChild(refresh)
                     let img = document.createElement('img')
