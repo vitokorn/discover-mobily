@@ -39,6 +39,8 @@
                     console.log('75 ' + playtrack)
 
                     let playlistdiv = document.getElementById('playlist')
+                    playlistdiv.innerHTML = ''
+                    tracks.innerHTML = ''
                     let plid = document.createElement('div')
                     plid.id = 'p_' + id
                     plid.className = 'con2'
@@ -57,6 +59,17 @@
                     cover.style.backgroundRepeat = 'no-repeat'
                     cover.style.backgroundSize = 'cover'
                     plid.appendChild(cover)
+                    let refresh = document.createElement('button')
+                    refresh.id = 'refresh_' + id
+                    refresh.className = 'refresh-end'
+                    refresh.innerText = 'Refresh'
+                    refresh.setAttribute("onclick","test('refresh_" + id + "')")
+                    plid.appendChild(refresh)
+                    let img = document.createElement('img')
+                    img.id = 'icon_' + id
+                    img.src = '../static/images/refresh-icon.svg'
+                    img.height = 12
+                    refresh.appendChild(img)
                     let elem = []
                     for (const pla of playtrack){
                         elem.push(`<div tabindex="0" class="con3" id=${pla['track']['id']} style="background-image: url(${pla['track']['album']['images'][0]['url']});background-repeat: no-repeat;background-size: cover" onclick="playtrack('${pla['track']['id']}')">${list(pla['track']['artists'])} -  ${pla['track']['name']}<audio type="audio/mpeg" preload="none" id="a_${pla['track']['id']}" src="${pla['track']['preview_url']}"></div>`)
@@ -85,6 +98,7 @@
                     }
                 }
             }}
+
         function playtrack(id) {
               let all = document.querySelectorAll('[id^="a_"]');
               for (let elem of all) {
@@ -633,6 +647,20 @@
                 }
             }
           }
+         function test(id){
+             let refreshIcon = document.getElementById(id.replace('refresh_','icon_'))
+             let refreshButton = document.getElementById(id)
+             refreshIcon.setAttribute("class", "refresh-start")
+             refreshButton.removeAttribute("class")
+             refreshButton.disabled = true
+             setTimeout(function () {
+                 refreshIcon.addEventListener('animationiteration',function (){
+                     initElement(id.replace('refresh_',''))
+                     refreshButton.setAttribute("class", "refresh-end")
+                     refreshButton.disabled = false
+                 })
+        }, 100)
+         }
         let acc = document.getElementsByClassName("accordion");
             let i;
 
