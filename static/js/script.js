@@ -62,7 +62,7 @@
                     let refresh = document.createElement('button')
                     refresh.id = 'refresh_' + id
                     refresh.className = 'refresh-end'
-                    refresh.setAttribute("onclick","test('refresh_" + id + "')")
+                    refresh.setAttribute("onclick","refr('refresh_" + id + "')")
                     plid.appendChild(refresh)
                     let img = document.createElement('img')
                     img.id = 'icon_' + id
@@ -146,6 +146,14 @@
               for (let el of al) {
                   el.pause()
               }
+              let fw = document.querySelectorAll('[id^="fwa_"]');
+              for (let el of fw) {
+                  el.pause()
+              }
+              let nr = document.querySelectorAll('[id^="nra_"]');
+              for (let el of nr) {
+                  el.pause()
+              }
               let all = document.querySelectorAll('[id^="sa_"]');
               for (let elem of all) {
                   if (elem.id == 'sa_' + id){
@@ -209,6 +217,33 @@
                   } else
                     audiop.play();
                   }
+                else if (type == 'fw'){
+                    let fw = document.querySelectorAll('[id^="fwa_"]');
+                    for (let elem of fw) {
+                        if (elem.id == 'fwa_' + id){
+
+                        } else
+                            elem.pause()
+                    }
+                  let audiop = document.getElementById('fwa_' + id)
+                  if (audiop.paused == false){
+                      audiop.pause()
+                  } else
+                    audiop.play();
+              } else if (type == 'nr'){
+                    let fw = document.querySelectorAll('[id^="nra_"]');
+                    for (let elem of fw) {
+                        if (elem.id == 'nra_' + id){
+
+                        } else
+                            elem.pause()
+                    }
+                  let audiop = document.getElementById('nra_' + id)
+                  if (audiop.paused == false){
+                      audiop.pause()
+                  } else
+                    audiop.play();
+              }
           }
         function list(artists){
           const names = artists.map(({ name }) => name);
@@ -255,14 +290,40 @@
              document.getElementById('artists6').style.display = 'none'
              document.getElementById('artistsall').style.display = 'none'
          })
-        function topartistst () {
-             if (document.getElementById('topartists').classList.contains("activetab")){
+        document.getElementById('ta').addEventListener("click", function () {
+            console.log('294')
+             if (Array.from(ta).find(ta => ta.className === 'activetab') == undefined){
+                 if (document.getElementById('artists').hasChildNodes()==true){
+                     document.getElementById('artists').style.display = 'flex'
+                     document.getElementById('artists6').style.display = 'none'
+                     document.getElementById('artistsall').style.display = 'none'
+                 } else {
+                     topartistst()
+                 }
+             } else {
+                 if (Array.from(ta).find(ta => ta.className === 'activetab').id == 'artists'){
+                     document.getElementById('artists').style.display = 'flex'
+                     document.getElementById('artists6').style.display = 'none'
+                     document.getElementById('artistsall').style.display = 'none'
+                 } else if (Array.from(ta).find(ta => ta.className === 'activetab').id == 'artists6'){
+                     document.getElementById('artists').style.display = 'none'
+                     document.getElementById('artists6').style.display = 'flex'
+                     document.getElementById('artistsall').style.display = 'none'
+                 } else if (Array.from(ta).find(ta => ta.className === 'activetab').id == 'toptrackat'){
+                     document.getElementById('artists').style.display = 'none'
+                     document.getElementById('artists6').style.display = 'none'
+                     document.getElementById('artistsall').style.display = 'flex'
+             }
+
+         }})
+        function topartistst(){
+                if (document.getElementById('topartists').classList.contains("activetab")){
 
              } else{
                  document.getElementById('topartists').classList.toggle("activetab")
              }
-            let url = 'https://api.spotify.com/v1/me/top/artists?time_range=short_term'
-            console.log('165 ' + url)
+                let url = 'https://api.spotify.com/v1/me/top/artists?time_range=short_term'
+            console.log('308 ' + url)
             let xhr = new XMLHttpRequest()
             xhr.open('GET',url,true)
             xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
@@ -294,8 +355,8 @@
                   }
             }
         }
-        document.getElementById('topartists6').addEventListener('click', function () {
-            let url = 'https://api.spotify.com/v1/me/top/artists?time_range=medium_term'
+            function topartistst6(){
+                let url = 'https://api.spotify.com/v1/me/top/artists?time_range=medium_term'
             console.log('204 ' + url)
             let xhr = new XMLHttpRequest()
             xhr.open('GET',url,true)
@@ -317,8 +378,8 @@
                      document.getElementById('artists6').style.display = 'flex'
                      document.getElementById('artistsall').style.display = 'none'
             }
-        })
-        document.getElementById('topartistsall').addEventListener('click', function () {
+            }
+            function topartiststall(){
             let url = 'https://api.spotify.com/v1/me/top/artists?time_range=long_term'
             console.log('228 ' + url)
             let xhr = new XMLHttpRequest()
@@ -340,6 +401,24 @@
                 }document.getElementById('artists').style.display = 'none'
                      document.getElementById('artists6').style.display = 'none'
                      document.getElementById('artistsall').style.display = 'flex'
+            }
+            }
+        document.getElementById('topartists6').addEventListener('click', function () {
+            if (document.getElementById('artists6').hasChildNodes() == true){
+                document.getElementById('artists').style.display = 'none'
+                document.getElementById('artists6').style.display = 'flex'
+                document.getElementById('artistsall').style.display = 'none'
+            } else{
+                topartistst6()
+            }
+        })
+        document.getElementById('topartistsall').addEventListener('click', function () {
+            if (document.getElementById('artistsall').hasChildNodes() == true){
+                document.getElementById('artists').style.display = 'none'
+                document.getElementById('artists6').style.display = 'none'
+                document.getElementById('artistsall').style.display = 'flex'
+            } else{
+                topartiststall()
             }
         })
           const ta = document.querySelectorAll('[id^=topartists]');
@@ -445,7 +524,6 @@
                             document.getElementById('sa_' + id).setAttribute("src","null")
                             document.getElementById(id).removeAttribute('onclick')
                             document.getElementById('sa_' + id).innerText = ''}
-
                     console.log('178 ' + data)
                 } else if(xhr.status === 401){
                       let url = '/spotify/refresh_token/' + localStorage.getItem('username')
@@ -480,8 +558,38 @@
             });
              });
          }
+         document.getElementById('tt').addEventListener("click", function (){
+             console.log('544')
+             if (Array.from(tt).find(tt => tt.className === 'activetab') == undefined){
+                 if (document.getElementById('toptrack').hasChildNodes()==true){
+                     document.getElementById('toptrack').style.display = 'flex'
+                     document.getElementById('toptrack6').style.display = 'none'
+                     document.getElementById('toptrackat').style.display = 'none'
+                 } else {
+                     topttracks()
+                 }
+             } else {
+                 if (Array.from(tt).find(tt => tt.className === 'activetab').id == 'toptrack'){
+                     document.getElementById('toptrack').style.display = 'flex'
+                     document.getElementById('toptrack6').style.display = 'none'
+                     document.getElementById('toptrackat').style.display = 'none'
+                 } else if (Array.from(tt).find(tt => tt.className === 'activetab').id == 'toptrack6'){
+                     document.getElementById('toptrack').style.display = 'none'
+                     document.getElementById('toptrack6').style.display = 'flex'
+                     document.getElementById('toptrackat').style.display = 'none'
+                 } else if (Array.from(tt).find(tt => tt.className === 'activetab').id == 'toptrackat'){
+                     document.getElementById('toptrack').style.display = 'none'
+                     document.getElementById('toptrack6').style.display = 'none'
+                     document.getElementById('toptrackat').style.display = 'flex'
+             }
+
+         }})
         function topttracks () {
-            document.getElementById('toptracks').classList.toggle("activetab")
+             if (document.getElementById('toptracks').classList.contains("activetab")){
+
+             } else{
+                 document.getElementById('toptracks').classList.toggle("activetab")
+             }
             let url = 'https://api.spotify.com/v1/me/top/tracks?time_range=short_term'
             console.log('314 ' + url)
             let xhr = new XMLHttpRequest()
@@ -524,12 +632,26 @@
             }
         }
          document.getElementById('toptracks').addEventListener('click',function (){
-             document.getElementById('toptrack').style.display = 'flex'
-             document.getElementById('toptrack6').style.display = 'none'
-             document.getElementById('toptrackat').style.display = 'none'
+             if (document.getElementById('toptrack').hasChildNodes()== true){
+                 document.getElementById('toptrack').style.display = 'flex'
+                 document.getElementById('toptrack6').style.display = 'none'
+                 document.getElementById('toptrackat').style.display = 'none'
+             } else {
+                 topttracks()
+             }
+
          })
         document.getElementById('toptrackssix').addEventListener('click', function () {
-            let url = 'https://api.spotify.com/v1/me/top/tracks?time_range=medium_term'
+            if (document.getElementById('toptrack6').hasChildNodes()== true){
+             document.getElementById('toptrack').style.display = 'none'
+             document.getElementById('toptrack6').style.display = 'flex'
+             document.getElementById('toptrackat').style.display = 'none'}
+            else {
+                topttracks6()
+            }
+        })
+        function topttracks6(){
+                         let url = 'https://api.spotify.com/v1/me/top/tracks?time_range=medium_term'
             console.log('361 ' + url)
             let xhr = new XMLHttpRequest()
             xhr.open('GET',url,true)
@@ -558,9 +680,9 @@
                     console.log('386 ' + data)
                 }
             }
-        })
-        document.getElementById('toptracksall').addEventListener('click', function () {
-            let url = 'https://api.spotify.com/v1/me/top/tracks?time_range=long_term'
+        }
+         function topttracksall(){
+             let url = 'https://api.spotify.com/v1/me/top/tracks?time_range=long_term'
             console.log('392 ' + url)
             let xhr = new XMLHttpRequest()
             xhr.open('GET',url,true)
@@ -591,6 +713,22 @@
                     console.log('418 ' + data)
                 }
             }
+         }
+        document.getElementById('toptracksall').addEventListener('click', function () {
+            if (document.getElementById('toptrackat').hasChildNodes()== true){
+             document.getElementById('toptrack').style.display = 'none'
+             document.getElementById('toptrack6').style.display = 'none'
+             document.getElementById('toptrackat').style.display = 'flex'
+            } else {
+                topttracksall()
+            }
+        })
+        document.getElementById('sva').addEventListener("click", function (){
+            if (document.getElementById('savedalbum').hasChildNodes()==true){
+                document.getElementById('savedalbum').style.display = 'flex'
+            } else {
+                saved_albums()
+            }
         })
         function saved_albums () {
             let url = 'https://api.spotify.com/v1/me/albums'
@@ -615,6 +753,13 @@
                 }
             }
         }
+         document.getElementById('svt').addEventListener("click", function (){
+            if (document.getElementById('savedtrack').hasChildNodes()==true){
+                document.getElementById('savedtrack').style.display = 'flex'
+            } else {
+                savedtracks()
+            }
+        })
         function savedtracks () {
             document.getElementById('savedtrack').innerHTML = ''
             sendRequest(0)
@@ -646,15 +791,182 @@
                 }
             }
           }
-         function test(id){
+         document.getElementById('followedartists').addEventListener('click', function () {
+             if (document.getElementById('followedartist').hasChildNodes() === true){
+                 document.getElementById('followedartist').style.display = 'flex'
+             } else{
+                 getfollowedartist()
+        }
+             })
+        function getfollowedartist(){
+             let url = 'https://api.spotify.com/v1/me/following?type=artist&limit=50'
+            console.log('228 ' + url)
+            let xhr = new XMLHttpRequest()
+            xhr.open('GET',url,true)
+            xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
+            xhr.send()
+            xhr.onload = function (){
+                if (xhr.status === 200){
+                    let data = JSON.parse(this.response)
+                    let artis = document.getElementById('followedartist')
+                    let items = data['artists']['items']
+                    let elem = []
+                      for (const it of items){
+                          elem.push(`<div class="con3" tabindex="0" id=fw_${it['id']} onclick="playtrackat('${it['id']}','fw')" style="background-image: url(${it['images'][1]['url']});background-repeat: no-repeat;background-size: cover">${it['name']}<audio id="fwa_${it['id']}">${followedartist(it['id'])}</audio></div>`)
+                      }
+                      artis.innerHTML = elem.join(' ')
+                    console.log('243 ' + data)
+
+                }
+            }
+        }
+         function followedartist(id){
+             let url = 'https://api.spotify.com/v1/artists/' + id + '/top-tracks?market=' + localStorage.getItem('country')
+            console.log('712 ' + url)
+            let xhr = new XMLHttpRequest()
+            xhr.open('GET',url,true)
+            xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
+            xhr.send()
+            xhr.onload = function (){
+                if (xhr.status === 200){
+                    let data = JSON.parse(this.response)
+                    let tracks = data['tracks']
+                    let fnn = (tracks.find(e =>e.preview_url))
+                    if (fnn != null) {
+                            console.log('270')
+                            document.getElementById('fwa_' + id).setAttribute("type","audio/mpeg")
+                            document.getElementById('fwa_' + id).setAttribute("sid",`${fnn['id']}`)
+                            document.getElementById('fwa_' + id).setAttribute("src",`${fnn['preview_url']}`)
+                    } else {
+                            console.log(id)
+                            document.getElementById('fw_' + id).style.opacity = '.5'
+                            document.getElementById('fwa_' + id).setAttribute("src","null")
+                            document.getElementById('fw_' + id).removeAttribute('onclick')
+                            document.getElementById('fwa_' + id).innerText = ''}}
+
+                else if(xhr.status === 401){
+                      let curl = '/spotify/refresh_token/' + localStorage.getItem('username')
+                      let xhr = new XMLHttpRequest()
+                      xhr.open('GET',curl,true)
+                      xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
+                      xhr.send()
+                      xhr.onload = function (){
+                        if (xhr.status === 200){
+                            followedartist(id)
+                }
+            }
+                  }
+            }
+}
+         document.getElementById('newreleases').addEventListener('click', function () {
+             if (document.getElementById('newrelease').hasChildNodes() === true){
+                 document.getElementById('newrelease').style.display = 'flex'
+             } else{
+                 document.getElementById('newrelease').innerHTML = ''
+                 getnewrelease(0)
+        }
+             })
+        function getnewrelease(offset){
+             let url = 'https://api.spotify.com/v1/browse/new-releases?limit=20&offset=' + offset
+            console.log('738 ' + url)
+            let xhr = new XMLHttpRequest()
+            xhr.open('GET',url,true)
+            xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
+            xhr.send()
+            xhr.onload = function (){
+                if (xhr.status === 200){
+                    let data = JSON.parse(this.response)
+                    let items = data['albums']['items']
+                    let elem = []
+                      for (const it of items){
+                          elem.push(`${it['id']}`)
+                          // elem.push(`<div class="con3" tabindex="0" id=nr_${it['id']} onclick="playtrackat('${it['id']}','nr')" style="background-image: url(${it['images'][1]['url']});background-repeat: no-repeat;background-size: cover">${it['name']}<audio id="nra_${it['id']}">${newrelease(it['id'])}</audio></div>`)
+                      }
+                      newrelease(elem,offset)
+                      console.log('766 ' + elem)
+                    //   nr.innerHTML = elem.join(' ')
+                    // console.log('753 ' + data)
+
+                }
+            }
+        }
+         function newrelease(elem,offset){
+             let url = 'https://api.spotify.com/v1/albums?ids=' + elem
+             let nr = document.getElementById('newrelease')
+            console.log('712 ' + url)
+            let xhr = new XMLHttpRequest()
+            xhr.open('GET',url,true)
+            xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
+            xhr.send()
+            xhr.onload = function (){
+                if (xhr.status === 200) {
+                    let data = JSON.parse(this.response)
+                    let items = data['albums']
+                    let elitem = []
+                    for (const it of items){
+                        let tracks = it['tracks']['items']
+                        let fnn = (tracks.find(e =>e.preview_url))
+                        if (fnn != null) {
+                            elitem.push(`<div class="con3" tabindex="0" id=nr_${it['id']} onclick="playtrackat('${it['id']}','nr')" style="background-image: url(${it['images'][1]['url']});background-repeat: no-repeat;background-size: cover">${list(it['artists'])} -- ${it['name']}<audio id="nra_${it['id']}" src="${fnn['preview_url']}" type="audio/mpeg"></audio></div>`)
+                    } else {
+                            elitem.push(`<div class="con3" tabindex="0" id=nr_${it['id']} style="opacity: .5;background-image: url(${it['images'][1]['url']});background-repeat: no-repeat;background-size: cover">${list(it['artists'])} -- ${it['name']}<audio id="nra_${it['id']}"></audio></div>`)}
+                      }
+                    nr.innerHTML += elitem.join(' ')
+                    if (items.length > 0){
+                        getnewrelease(offset+20)
+                } else if (offset == 100) {
+                    }
+                }
+
+
+                else if(xhr.status === 401){
+                      let curl = '/spotify/refresh_token/' + localStorage.getItem('username')
+                      let xhr = new XMLHttpRequest()
+                      xhr.open('GET',curl,true)
+                      xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
+                      xhr.send()
+                      xhr.onload = function (){
+                        if (xhr.status === 200){
+                            followedartist(id)
+                }
+            }
+                  }
+            }
+}
+         function refr(id){
              let refreshIcon = document.getElementById(id.replace('refresh_','icon_'))
              let refreshButton = document.getElementById(id)
              refreshIcon.setAttribute("class", "refresh-start")
              refreshButton.removeAttribute("class")
              refreshButton.disabled = true
+             let type = id.replace('refresh_','')
              setTimeout(function () {
                  refreshIcon.addEventListener('animationiteration',function (){
+                     if (type == 'topartist'){
+                        topartistst()
+                     } else if (type == 'topartists6'){
+                        topartistst6()
+                     } else if (type == 'topartistsall'){
+                         topartiststall()
+                     } else if (type == 'toptracks') {
+                         topttracks()
+                     } else if (type == 'toptrackssix'){
+                         topttracks6()
+                     } else if (type == 'toptracksall'){
+                         topttracksall()
+                     } else if (type == 'savedalbum'){
+                         saved_albums()
+                     } else if (type == 'savetrack'){
+                         savedtracks()
+                     } else if (type == 'followedartist'){
+                         getfollowedartist()
+                     }
+                     else if (type == 'newrelease'){
+                         getnewrelease(0)
+                     }
+                     else{
                      initElement(id.replace('refresh_',''))
+                     }
                      refreshButton.setAttribute("class", "refresh-end")
                      refreshButton.disabled = false
                  })

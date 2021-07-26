@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-07-24 10:58+0300\n"
+"POT-Creation-Date: 2021-07-26 11:51+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,11 +29,23 @@ msgstr ""
 msgid "Logout"
 msgstr ""
 
-#: templates/base.html:25
+#: templates/base.html:23
+msgid "PC"
+msgstr ""
+
+#: templates/base.html:26
+msgid "En"
+msgstr ""
+
+#: templates/base.html:27
+msgid "Ru"
+msgstr ""
+
+#: templates/base.html:30
 msgid "Login"
 msgstr ""
 
-#: templates/base.html:51
+#: templates/base.html:56
 msgid "This project was inspired by"
 msgstr ""
 
@@ -71,5 +83,21 @@ msgstr ""
 
 #: templates/home.html:52
 msgid "Your Saved tracks"
+msgstr ""
+
+#: templates/home.html:56
+msgid "Your Followed artists"
+msgstr ""
+
+#: templates/home.html:60
+msgid "Spotify Playlists"
+msgstr ""
+
+#: templates/home.html:64
+msgid "Genres"
+msgstr ""
+
+#: templates/home.html:68
+msgid "New Releases"
 msgstr ""
 

@@ -30,6 +30,7 @@ class User(db.Model):
     access_token = db.Column(db.String)
     refresh_token = db.Column(db.String)
     date_update = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    # lang = db.Column(db.String)
 
 
 app.secret_key = b'\xb9\xb8h\\\x1c\xf9s^\xab\x9b\x9dz\xce\xc7\xcea\xc1\x1a\xca\xcc\xb8\xc9\xa0l'
@@ -68,7 +69,22 @@ class ClientCredentials:
 
 @babel.localeselector
 def get_locale():
-    return request.accept_languages.best_match(['en','ru'])
+    if session.get('lang') is not None:
+        if session['lang'] == 'en':
+            return 'en'
+        elif session['lang'] == 'ru':
+            return 'ru'
+    else:
+        return request.accept_languages.best_match(['en','ru'])
+
+@app.route('/lang/<lang>/')
+def lang(lang):
+    if lang == 'en':
+        session['lang'] = 'en'
+    elif lang == 'ru':
+        session['lang'] = 'ru'
+    return redirect('/')
+
 
 
 @app.route('/')
@@ -144,7 +160,7 @@ def authclient():
     url = 'https://accounts.spotify.com/authorize'
     params = {'client_id': client_id, 'client_secret': client_secret, 'redirect_uri': redirect_uri,
               'scope': 'user-library-read user-read-private playlist-read-collaborative playlist-read-private '
-                       'playlist-modify-public user-top-read',
+                       'playlist-modify-public user-top-read user-follow-read',
               'response_type': 'code', 'show_dialog': True}
     req = requests.get(url=url, params=params)
     return redirect(req.url)
