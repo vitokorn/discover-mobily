@@ -75,9 +75,10 @@ def get_locale():
         elif session['lang'] == 'ru':
             return 'ru'
     else:
-        current = User.query.filter_by(spotyid=session['username']).first()
-        if current.lang is not None:
-            return current.lang
+        if session.get('username') is not None:
+            current = User.query.filter_by(spotyid=session['username']).first()
+            if current.lang is not None:
+                return current.lang
         return request.accept_languages.best_match(['en','ru'])
 
 @app.route('/lang/<lang>/')
