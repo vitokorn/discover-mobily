@@ -30,7 +30,7 @@ class User(db.Model):
     access_token = db.Column(db.String)
     refresh_token = db.Column(db.String)
     date_update = db.Column(db.DateTime, default=datetime.datetime.utcnow)
-    # lang = db.Column(db.String)
+    lang = db.Column(db.String)
 
 
 app.secret_key = b'\xb9\xb8h\\\x1c\xf9s^\xab\x9b\x9dz\xce\xc7\xcea\xc1\x1a\xca\xcc\xb8\xc9\xa0l'
@@ -75,14 +75,21 @@ def get_locale():
         elif session['lang'] == 'ru':
             return 'ru'
     else:
+        current = User.query.filter_by(spotyid=session['username']).first()
+        if current.lang is not None:
+            return current.lang
         return request.accept_languages.best_match(['en','ru'])
 
 @app.route('/lang/<lang>/')
 def lang(lang):
+    current = User.query.filter_by(spotyid=session['username']).first()
     if lang == 'en':
-        session['lang'] = 'en'
+        print('87')
+        current.lang = 'en'
+        db.session.commit()
     elif lang == 'ru':
-        session['lang'] = 'ru'
+        current.lang = 'ru'
+        db.session.commit()
     return redirect('/')
 
 
