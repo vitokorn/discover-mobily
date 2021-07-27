@@ -133,6 +133,7 @@ def home():
 def pc():
     if session.get('nickname') is not None:
         user = User.query.filter_by(spotyid=session['username']).first()
+        session['country'] = user.country
         url = f'https://api.spotify.com/v1/me/playlists?fields=items(name,id)&limit=50'
         access_token = user.access_token
         headers = {

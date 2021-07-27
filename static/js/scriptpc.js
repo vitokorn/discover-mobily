@@ -107,37 +107,6 @@
                 audiop.pause();
           }
         function playtracksa(id) {
-              let rt = document.querySelectorAll('[id^="a_"]');
-              for (let el of rt) {
-                  el.pause()
-              }
-              let lm = document.querySelectorAll('[id^="at_"]');
-              for (let el of lm) {
-                  el.pause()
-              }
-              let ls = document.querySelectorAll('[id^="ats_"]');
-              for (let el of ls) {
-                  el.pause()
-              }
-              let al = document.querySelectorAll('[id^="ata_"]');
-              for (let el of al) {
-                  el.pause()
-              }
-              let fw = document.querySelectorAll('[id^="fwa_"]');
-              for (let el of fw) {
-                  el.pause()
-              }
-              let nr = document.querySelectorAll('[id^="nra_"]');
-              for (let el of nr) {
-                  el.pause()
-              }
-              let all = document.querySelectorAll('[id^="sa_"]');
-              for (let elem of all) {
-                  if (elem.id == 'sa_' + id){
-
-                  } else
-                  elem.pause()
-              }
               let audiop = document.getElementById('sa_' + id)
               if (audiop.paused == false){
                   audiop.pause()
@@ -145,49 +114,19 @@
                 audiop.play();
           }
         function playtrackat(id,type) {
-              console.log('133 ' + id)
-              let rt = document.querySelectorAll('[id^="a_"]');
-              for (let elem of rt) {
-                  elem.pause()
-              }
-              let sa = document.querySelectorAll('[id^="sa_"]');
-              for (let elem of sa) {
-                  elem.pause()
-              }
               if (type == 'lm'){
-              let all = document.querySelectorAll('[id^="at_"]');
-              for (let elem of all) {
-                  if (elem.id == 'at_' + id){
-
-                  } else
-                  elem.pause()
-              }
               let audiop = document.getElementById('at_' + id)
               if (audiop.paused == false){
                   audiop.pause()
               } else
                 audiop.play();
           } else if(type == 'ls') {
-                  let all = document.querySelectorAll('[id^="ats_"]');
-                  for (let elem of all) {
-                      if (elem.id == 'at_' + id){
-
-                      } else
-                      elem.pause()
-                  }
               let audiop = document.getElementById('ats_' + id)
               if (audiop.paused == false){
                   audiop.pause()
               } else
                 audiop.play(); }
                 else if (type == 'ata'){
-                  let all = document.querySelectorAll('[id^="ata_"]');
-                  for (let elem of all) {
-                      if (elem.id == 'al_' + id){
-
-                      } else
-                      elem.pause()
-                  }
                   let audiop = document.getElementById('ata_' + id)
                   if (audiop.paused == false){
                       audiop.pause()
@@ -195,26 +134,12 @@
                     audiop.play();
                   }
                 else if (type == 'fw'){
-                    let fw = document.querySelectorAll('[id^="fwa_"]');
-                    for (let elem of fw) {
-                        if (elem.id == 'fwa_' + id){
-
-                        } else
-                            elem.pause()
-                    }
                   let audiop = document.getElementById('fwa_' + id)
                   if (audiop.paused == false){
                       audiop.pause()
                   } else
                     audiop.play();
               } else if (type == 'nr'){
-                    let fw = document.querySelectorAll('[id^="nra_"]');
-                    for (let elem of fw) {
-                        if (elem.id == 'nra_' + id){
-
-                        } else
-                            elem.pause()
-                    }
                   let audiop = document.getElementById('nra_' + id)
                   if (audiop.paused == false){
                       audiop.pause()
@@ -312,7 +237,7 @@
                     let items = data['items']
                     let elem = []
                       for (const it of items){
-                          elem.push(`<div class="con3" tabindex="0" id=${it['id']} onclick="playtrackat('${it['id']}','lm')" style="background-image: url(${it['images'][1]['url']});background-repeat: no-repeat;background-size: cover">${it['name']}<audio id="at_${it['id']}">${artisttrack(it['id'],'lm')}</audio></div>`)
+                          elem.push(`<div class="con3" tabindex="0" id=${it['id']} onmouseover="playtrackat('${it['id']}','lm')" onmouseleave="playtrackat('${it['id']}','lm')" style="background-image: url(${it['images'][1]['url']});background-repeat: no-repeat;background-size: cover">${it['name']}<audio id="at_${it['id']}">${artisttrack(it['id'],'lm')}</audio></div>`)
                       }
                       artis.innerHTML = elem.join(' ')
 
@@ -346,7 +271,7 @@
                     let items = data['items']
                     let elem = []
                       for (const it of items){
-                          elem.push(`<div class="con3" tabindex="0" id=ls_${it['id']} onclick="playtrackat('${it['id']}','ls')" style="background-image: url(${it['images'][1]['url']});background-repeat: no-repeat;background-size: cover">${it['name']}<audio id="ats_${it['id']}">${artisttrack(it['id'],'ls')}</audio></div>`)
+                          elem.push(`<div class="con3" tabindex="0" id=ls_${it['id']} onmouseover="playtrackat('${it['id']}','ls')" onmouseleave="playtrackat('${it['id']}','ls')" style="background-image: url(${it['images'][1]['url']});background-repeat: no-repeat;background-size: cover">${it['name']}<audio id="ats_${it['id']}">${artisttrack(it['id'],'ls')}</audio></div>`)
                       }
                       artis.innerHTML = elem.join(' ')
                     console.log('219 ' + data)
@@ -370,7 +295,7 @@
                     let items = data['items']
                     let elem = []
                       for (const it of items){
-                          elem.push(`<div class="con3" tabindex="0" id=al_${it['id']} onclick="playtrackat('${it['id']}','al')" style="background-image: url(${it['images'][1]['url']});background-repeat: no-repeat;background-size: cover">${it['name']}<audio id="ata_${it['id']}">${artisttrack(it['id'],'al')}</audio></div>`)
+                          elem.push(`<div class="con3" tabindex="0" id=al_${it['id']} onmouseover="playtrackat('${it['id']}','al')" onmouseleave="playtrackat('${it['id']}','al')" style="background-image: url(${it['images'][1]['url']});background-repeat: no-repeat;background-size: cover">${it['name']}<audio id="ata_${it['id']}">${artisttrack(it['id'],'al')}</audio></div>`)
                       }
                       artis.innerHTML = elem.join(' ')
                     console.log('243 ' + data)
@@ -723,7 +648,7 @@
                     console.log('435 ' + savedalbum)
                     let elem = []
                     for (const sa of savedalbum){
-                          elem.push(`<div class="con3" tabindex="0" id=${sa['album']['id']} onclick="playtracksa('${sa['album']['id']}')" style="background-image: url(${sa['album']['images'][1]['url']});background-repeat: no-repeat;background-size: cover">${sa['album']['name']}<audio id="sa_${sa['album']['id']}">${savedalbums(sa['album']['id'])})</audio></div>`)
+                          elem.push(`<div class="con3" tabindex="0" id=${sa['album']['id']} onmouseover="playtracksa('${sa['album']['id']}')" onmouseleave="playtracksa('${sa['album']['id']}')" style="background-image: url(${sa['album']['images'][1]['url']});background-repeat: no-repeat;background-size: cover">${sa['album']['name']}<audio id="sa_${sa['album']['id']}">${savedalbums(sa['album']['id'])})</audio></div>`)
                       }
                     albums.innerHTML = elem.join(' ')
                     console.log('446 ' + data)
@@ -789,7 +714,7 @@
                     let items = data['artists']['items']
                     let elem = []
                       for (const it of items){
-                          elem.push(`<div class="con3" tabindex="0" id=fw_${it['id']} onclick="playtrackat('${it['id']}','fw')" style="background-image: url(${it['images'][1]['url']});background-repeat: no-repeat;background-size: cover">${it['name']}<audio id="fwa_${it['id']}">${followedartist(it['id'])}</audio></div>`)
+                          elem.push(`<div class="con3" tabindex="0" id=fw_${it['id']} onmouseover="playtrackat('${it['id']}','fw')" onmouseleave="playtrackat('${it['id']}','fw')" style="background-image: url(${it['images'][1]['url']});background-repeat: no-repeat;background-size: cover">${it['name']}<audio id="fwa_${it['id']}">${followedartist(it['id'])}</audio></div>`)
                       }
                       artis.innerHTML = elem.join(' ')
                     console.log('243 ' + data)
@@ -884,7 +809,7 @@
                         let tracks = it['tracks']['items']
                         let fnn = (tracks.find(e =>e.preview_url))
                         if (fnn != null) {
-                            elitem.push(`<div class="con3" tabindex="0" id=nr_${it['id']} onclick="playtrackat('${it['id']}','nr')" style="background-image: url(${it['images'][1]['url']});background-repeat: no-repeat;background-size: cover">${list(it['artists'])} -- ${it['name']}<audio id="nra_${it['id']}" src="${fnn['preview_url']}" type="audio/mpeg"></audio></div>`)
+                            elitem.push(`<div class="con3" tabindex="0" id=nr_${it['id']} onmouseover="playtrackat('${it['id']}','nr')"  onmouseleave="playtrackat('${it['id']}','nr')" style="background-image: url(${it['images'][1]['url']});background-repeat: no-repeat;background-size: cover">${list(it['artists'])} -- ${it['name']}<audio id="nra_${it['id']}" src="${fnn['preview_url']}" type="audio/mpeg"></audio></div>`)
                     } else {
                             elitem.push(`<div class="con3" tabindex="0" id=nr_${it['id']} style="opacity: .5;background-image: url(${it['images'][1]['url']});background-repeat: no-repeat;background-size: cover">${list(it['artists'])} -- ${it['name']}<audio id="nra_${it['id']}"></audio></div>`)}
                       }
