@@ -401,3 +401,7 @@ footer{
         transform: rotate(359deg)
     }
 }
+.hr-line-dashed {
+  border-top: 1px dashed #e7eaec;
+  margin: 20px 0;
+}
