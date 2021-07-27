@@ -150,7 +150,7 @@ def pc():
                 res = req.json()
                 print('req 85' + str(res))
                 pl = res['items']
-                return render_template('playlists.html', pl=pl,user=user)
+                return render_template('pc.html', pl=pl,user=user)
             else:
                 print('Error')
                 raise ValueError
@@ -158,9 +158,9 @@ def pc():
             res = req.json()
             # print('req 95' + str(res))
             pl = res['items']
-            return render_template('playlists.html',pl=pl,user=user)
+            return render_template('pc.html',pl=pl,user=user)
     else:
-        return render_template('playlists.html')
+        return render_template('pc.html')
 
 
 @app.route('/spotify/login/')
