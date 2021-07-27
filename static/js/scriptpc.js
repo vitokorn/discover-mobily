@@ -358,6 +358,7 @@
                             document.getElementById('at_' + id).setAttribute("type","audio/mpeg")
                             document.getElementById('at_' + id).setAttribute("sid",`${fnn['id']}`)
                             document.getElementById('at_' + id).setAttribute("src",`${fnn['preview_url']}`)
+                            document.getElementById(id).innerText += ' ' + `${fnn['name']}`
                         } else {
                             console.log(id)
                             document.getElementById(id).style.opacity = '.5'
