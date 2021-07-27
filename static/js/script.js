@@ -335,7 +335,7 @@
                     let items = data['items']
                     let elem = []
                       for (const it of items){
-                          elem.push(`<div class="con3" tabindex="0" id=${it['id']} onclick="playtrackat('${it['id']}','lm')" style="background-image: url(${it['images'][1]['url']});background-repeat: no-repeat;background-size: cover">${it['name']}<audio id="at_${it['id']}">${artisttrack(it['id'],'lm')}</audio></div>`)
+                          elem.push(`<div class="con3" tabindex="0" id=${it['id']} onclick="playtrackat('${it['id']}','lm')" style="background-image: url(${it['images'][1]['url']});background-repeat: no-repeat;background-size: cover">${list(it['artists'])} -- ${it['name']}<audio id="at_${it['id']}">${artisttrack(it['id'],'lm')}</audio></div>`)
                       }
                       artis.innerHTML = elem.join(' ')
 
@@ -369,7 +369,7 @@
                     let items = data['items']
                     let elem = []
                       for (const it of items){
-                          elem.push(`<div class="con3" tabindex="0" id=ls_${it['id']} onclick="playtrackat('${it['id']}','ls')" style="background-image: url(${it['images'][1]['url']});background-repeat: no-repeat;background-size: cover">${it['name']}<audio id="ats_${it['id']}">${artisttrack(it['id'],'ls')}</audio></div>`)
+                          elem.push(`<div class="con3" tabindex="0" id=ls_${it['id']} onclick="playtrackat('${it['id']}','ls')" style="background-image: url(${it['images'][1]['url']});background-repeat: no-repeat;background-size: cover">${list(it['artists'])} -- ${it['name']}<audio id="ats_${it['id']}">${artisttrack(it['id'],'ls')}</audio></div>`)
                       }
                       artis.innerHTML = elem.join(' ')
                     console.log('219 ' + data)
@@ -393,7 +393,7 @@
                     let items = data['items']
                     let elem = []
                       for (const it of items){
-                          elem.push(`<div class="con3" tabindex="0" id=al_${it['id']} onclick="playtrackat('${it['id']}','al')" style="background-image: url(${it['images'][1]['url']});background-repeat: no-repeat;background-size: cover">${it['name']}<audio id="ata_${it['id']}">${artisttrack(it['id'],'al')}</audio></div>`)
+                          elem.push(`<div class="con3" tabindex="0" id=al_${it['id']} onclick="playtrackat('${it['id']}','al')" style="background-image: url(${it['images'][1]['url']});background-repeat: no-repeat;background-size: cover">${list(it['artists'])} -- ${it['name']}<audio id="ata_${it['id']}">${artisttrack(it['id'],'al')}</audio></div>`)
                       }
                       artis.innerHTML = elem.join(' ')
                     console.log('243 ' + data)
@@ -746,7 +746,7 @@
                     console.log('435 ' + savedalbum)
                     let elem = []
                     for (const sa of savedalbum){
-                          elem.push(`<div class="con3" tabindex="0" id=${sa['album']['id']} onclick="playtracksa('${sa['album']['id']}')" style="background-image: url(${sa['album']['images'][1]['url']});background-repeat: no-repeat;background-size: cover">${sa['album']['name']}<audio id="sa_${sa['album']['id']}">${savedalbums(sa['album']['id'])})</audio></div>`)
+                          elem.push(`<div class="con3" tabindex="0" id=${sa['album']['id']} onclick="playtracksa('${sa['album']['id']}')" style="background-image: url(${sa['album']['images'][1]['url']});background-repeat: no-repeat;background-size: cover">${list(sa['album']['artists'])} -- ${sa['album']['name']}<audio id="sa_${sa['album']['id']}">${savedalbums(sa['album']['id'])})</audio></div>`)
                       }
                     albums.innerHTML = elem.join(' ')
                     console.log('446 ' + data)
@@ -833,10 +833,11 @@
                     let tracks = data['tracks']
                     let fnn = (tracks.find(e =>e.preview_url))
                     if (fnn != null) {
-                            console.log('270')
-                            document.getElementById('fwa_' + id).setAttribute("type","audio/mpeg")
-                            document.getElementById('fwa_' + id).setAttribute("sid",`${fnn['id']}`)
-                            document.getElementById('fwa_' + id).setAttribute("src",`${fnn['preview_url']}`)
+                        console.log('270')
+                        document.getElementById('fwa_' + id).setAttribute("type","audio/mpeg")
+                        document.getElementById('fwa_' + id).setAttribute("sid",`${fnn['id']}`)
+                        document.getElementById('fwa_' + id).setAttribute("src",`${fnn['preview_url']}`)
+                        document.getElementById('fw_' + id).innerText += ' -- ' +  `${fnn['name']}`
                     } else {
                             console.log(id)
                             document.getElementById('fw_' + id).style.opacity = '.5'

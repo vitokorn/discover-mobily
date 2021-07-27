@@ -236,7 +236,7 @@
                     let items = data['items']
                     let elem = []
                       for (const it of items){
-                          elem.push(`<div class="con3" tabindex="0" id=${it['id']} onmouseover="playtrackat('${it['id']}','lm')" onmouseleave="playtrackat('${it['id']}','lm')" style="background-image: url(${it['images'][1]['url']});background-repeat: no-repeat;background-size: cover">${it['name']}<audio id="at_${it['id']}">${artisttrack(it['id'],'lm')}</audio></div>`)
+                          elem.push(`<div class="con3" tabindex="0" id=${it['id']} onmouseover="playtrackat('${it['id']}','lm')" onmouseleave="playtrackat('${it['id']}','lm')" style="background-image: url(${it['images'][1]['url']});background-repeat: no-repeat;background-size: cover">${list(it['artists'])} -- ${it['name']}<audio id="at_${it['id']}">${artisttrack(it['id'],'lm')}</audio></div>`)
                       }
                       artis.innerHTML = elem.join(' ')
 
@@ -741,7 +741,7 @@
                         document.getElementById('fwa_' + id).setAttribute("type","audio/mpeg")
                         document.getElementById('fwa_' + id).setAttribute("sid",`${fnn['id']}`)
                         document.getElementById('fwa_' + id).setAttribute("src",`${fnn['preview_url']}`)
-                        document.getElementById('fw_' + id).innerText += `${fnn['name']}`
+                        document.getElementById('fw_' + id).innerText += ' -- ' +  `${fnn['name']}`
                     } else {
                         console.log(id)
                         document.getElementById('fw_' + id).style.opacity = '.5'
