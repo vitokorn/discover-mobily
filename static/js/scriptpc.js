@@ -236,6 +236,9 @@
                     let items = data['items']
                     let elem = []
                       for (const it of items){
+                          document.getElementById('sa_' + id).setAttribute("type","audio/mpeg")
+                          document.getElementById('sa_' + id).setAttribute("aid",`${fnn['id']}`)
+                          document.getElementById('sa_' + id).setAttribute("src",`${fnn['preview_url']}`)
                           elem.push(`<div class="con3" tabindex="0" id=${it['id']} onmouseover="playtrackat('${it['id']}','lm')" onmouseleave="playtrackat('${it['id']}','lm')" style="background-image: url(${it['images'][1]['url']});background-repeat: no-repeat;background-size: cover">${list(it['artists'])} -- ${it['name']}<audio id="at_${it['id']}">${artisttrack(it['id'],'lm')}</audio></div>`)
                       }
                       artis.innerHTML = elem.join(' ')

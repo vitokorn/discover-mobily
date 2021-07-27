@@ -335,7 +335,7 @@
                     let items = data['items']
                     let elem = []
                       for (const it of items){
-                          elem.push(`<div class="con3" tabindex="0" id=${it['id']} onclick="playtrackat('${it['id']}','lm')" style="background-image: url(${it['images'][1]['url']});background-repeat: no-repeat;background-size: cover">${list(it['artists'])} -- ${it['name']}<audio id="at_${it['id']}">${artisttrack(it['id'],'lm')}</audio></div>`)
+                          elem.push(`<div class="con3" tabindex="0" id=${it['id']} onclick="playtrackat('${it['id']}','lm')" style="background-image: url(${it['images'][1]['url']});background-repeat: no-repeat;background-size: cover">${it['name']}<audio id="at_${it['id']}">${artisttrack(it['id'],'lm')}</audio></div>`)
                       }
                       artis.innerHTML = elem.join(' ')
 
@@ -457,6 +457,8 @@
                             document.getElementById('at_' + id).setAttribute("type","audio/mpeg")
                             document.getElementById('at_' + id).setAttribute("sid",`${fnn['id']}`)
                             document.getElementById('at_' + id).setAttribute("src",`${fnn['preview_url']}`)
+                            document.getElementById(id).innerText += '--' + `${fnn['name']}`
+
                         } else {
                             console.log(id)
                             document.getElementById(id).style.opacity = '.5'
@@ -465,10 +467,11 @@
                             document.getElementById('at_' + id).innerText = ''}}
                     else if (type == 'ls'){
                         if (fnn != null) {
-                        console.log('376')
-                        document.getElementById('ats_' + id).setAttribute("type","audio/mpeg")
-                        document.getElementById('ats_' + id).setAttribute("sid",`${fnn['id']}`)
-                        document.getElementById('ats_' + id).setAttribute("src",`${fnn['preview_url']}`)
+                            console.log('376')
+                            document.getElementById('ats_' + id).setAttribute("type","audio/mpeg")
+                            document.getElementById('ats_' + id).setAttribute("sid",`${fnn['id']}`)
+                            document.getElementById('ats_' + id).setAttribute("src",`${fnn['preview_url']}`)
+                            document.getElementById('ls_' + id).innerText += '--' + `${fnn['name']}`
                     } else  {
                         console.log(id)
                         document.getElementById('ls_' + id).style.opacity = '.5'
@@ -481,6 +484,7 @@
                         document.getElementById('ata_' + id).setAttribute("type","audio/mpeg")
                         document.getElementById('ata_' + id).setAttribute("sid",`${fnn['id']}`)
                         document.getElementById('ata_' + id).setAttribute("src",`${fnn['preview_url']}`)
+                        document.getElementById('al_' + id).innerText += '--' + `${fnn['name']}`
                     } else {
                         console.log(id)
                         document.getElementById('al_' + id).style.opacity = '.5'
