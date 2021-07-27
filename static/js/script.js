@@ -210,6 +210,19 @@
                   } else
                     audiop.play();
           } else if(type == 'ls') {
+                  for (let elem of ato) {
+                      elem.pause()
+                  }
+                  for (let elem of ata) {
+                      elem.pause()
+                  }
+                  for (let elem of fw) {
+                            elem.pause()
+                  }
+
+                  for (let elem of nr) {
+                            elem.pause()
+                  }
                   for (let elem of ats) {
                       if (elem.id == 'at_' + id){
 
@@ -223,6 +236,19 @@
                     audiop.play();
               }
                 else if (type == 'ata'){
+                    for (let elem of ats) {
+                      elem.pause()
+                  }
+                  for (let elem of ato) {
+                      elem.pause()
+                  }
+                  for (let elem of fw) {
+                            elem.pause()
+                  }
+
+                  for (let elem of nr) {
+                            elem.pause()
+                  }
                   for (let elem of ata) {
                       if (elem.id == 'al_' + id){
 
@@ -236,6 +262,19 @@
                     audiop.play();
                   }
                 else if (type == 'fw'){
+                    for (let elem of ats) {
+                      elem.pause()
+                  }
+                  for (let elem of ata) {
+                      elem.pause()
+                  }
+                  for (let elem of ato) {
+                            elem.pause()
+                  }
+
+                  for (let elem of nr) {
+                            elem.pause()
+                  }
                     for (let elem of fw) {
                         if (elem.id == 'fwa_' + id){
 
@@ -248,6 +287,19 @@
                   } else
                     audiop.play();
               } else if (type == 'nr'){
+                    for (let elem of ats) {
+                      elem.pause()
+                  }
+                  for (let elem of ata) {
+                      elem.pause()
+                  }
+                  for (let elem of fw) {
+                            elem.pause()
+                  }
+
+                  for (let elem of ato) {
+                            elem.pause()
+                  }
                     for (let elem of nr) {
                         if (elem.id == 'nra_' + id){
 
