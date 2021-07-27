@@ -177,35 +177,53 @@
               for (let elem of sa) {
                   elem.pause()
               }
-              if (type == 'lm'){
-              let all = document.querySelectorAll('[id^="at_"]');
-              for (let elem of all) {
-                  if (elem.id == 'at_' + id){
+              let ats = document.querySelectorAll('[id^="ats_"]');
+              let ata = document.querySelectorAll('[id^="ata_"]');
+              let fw = document.querySelectorAll('[id^="fwa_"]');
+              let nr = document.querySelectorAll('[id^="nra_"]');
+              let ato = document.querySelectorAll('[id^="at_"]');
 
-                  } else
-                  elem.pause()
-              }
-              let audiop = document.getElementById('at_' + id)
-              if (audiop.paused == false){
-                  audiop.pause()
-              } else
-                audiop.play();
-          } else if(type == 'ls') {
-                  let all = document.querySelectorAll('[id^="ats_"]');
-                  for (let elem of all) {
+              if (type == 'lm'){
+                  for (let elem of ats) {
+                      elem.pause()
+                  }
+                  for (let elem of ata) {
+                      elem.pause()
+                  }
+                  for (let elem of fw) {
+                            elem.pause()
+                  }
+
+                  for (let elem of nr) {
+                            elem.pause()
+                  }
+
+                  for (let elem of ato) {
                       if (elem.id == 'at_' + id){
 
                       } else
                       elem.pause()
                   }
-              let audiop = document.getElementById('ats_' + id)
-              if (audiop.paused == false){
-                  audiop.pause()
-              } else
-                audiop.play(); }
+                  let audiop = document.getElementById('at_' + id)
+                  if (audiop.paused == false){
+                      audiop.pause()
+                  } else
+                    audiop.play();
+          } else if(type == 'ls') {
+                  for (let elem of ats) {
+                      if (elem.id == 'at_' + id){
+
+                      } else
+                      elem.pause()
+                  }
+                  let audiop = document.getElementById('ats_' + id)
+                  if (audiop.paused == false){
+                      audiop.pause()
+                  } else
+                    audiop.play();
+              }
                 else if (type == 'ata'){
-                  let all = document.querySelectorAll('[id^="ata_"]');
-                  for (let elem of all) {
+                  for (let elem of ata) {
                       if (elem.id == 'al_' + id){
 
                       } else
@@ -218,7 +236,6 @@
                     audiop.play();
                   }
                 else if (type == 'fw'){
-                    let fw = document.querySelectorAll('[id^="fwa_"]');
                     for (let elem of fw) {
                         if (elem.id == 'fwa_' + id){
 
@@ -231,8 +248,7 @@
                   } else
                     audiop.play();
               } else if (type == 'nr'){
-                    let fw = document.querySelectorAll('[id^="nra_"]');
-                    for (let elem of fw) {
+                    for (let elem of nr) {
                         if (elem.id == 'nra_' + id){
 
                         } else
