@@ -2,10 +2,11 @@
         for (let i = 0; i < trlist.length; i++) {
             trlist[i].addEventListener("click", function() {
                 if (document.getElementById(trlist[i].id)){
+                    console.log('5 ' + trlist[i].id)
                     document.getElementById(trlist[i].id).style.display = 'flex'
                     document.getElementById(trlist[i].id.replace('t_','p_')).style.display = 'flex'
                 } else {
-                    initElement(id)
+                    initElement(trlist[i].id)
                 }
                 trlist.forEach(function(ns) {
                     if (trlist[i] == ns){
@@ -39,8 +40,6 @@
                     console.log('75 ' + playtrack)
 
                     let playlistdiv = document.getElementById('playlist')
-                    playlistdiv.innerHTML = ''
-                    tracks.innerHTML = ''
                     let plid = document.createElement('div')
                     plid.id = 'p_' + id
                     plid.className = 'con2'
