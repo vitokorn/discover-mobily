@@ -358,7 +358,6 @@
                             document.getElementById('at_' + id).setAttribute("type","audio/mpeg")
                             document.getElementById('at_' + id).setAttribute("sid",`${fnn['id']}`)
                             document.getElementById('at_' + id).setAttribute("src",`${fnn['preview_url']}`)
-                            document.getElementById(id).innerText += '--' + `${fnn['name']}`
                         } else {
                             console.log(id)
                             document.getElementById(id).style.opacity = '.5'
@@ -371,7 +370,6 @@
                             document.getElementById('ats_' + id).setAttribute("type","audio/mpeg")
                             document.getElementById('ats_' + id).setAttribute("sid",`${fnn['id']}`)
                             document.getElementById('ats_' + id).setAttribute("src",`${fnn['preview_url']}`)
-                            document.getElementById('ls_' + id).innerText += '--' + `${fnn['name']}`
                     } else  {
                         console.log(id)
                         document.getElementById('ls_' + id).style.opacity = '.5'
@@ -384,7 +382,6 @@
                         document.getElementById('ata_' + id).setAttribute("type","audio/mpeg")
                         document.getElementById('ata_' + id).setAttribute("sid",`${fnn['id']}`)
                         document.getElementById('ata_' + id).setAttribute("src",`${fnn['preview_url']}`)
-                        document.getElementById('al_' + id).innerText += '--' + `${fnn['name']}`
                     } else {
                         console.log(id)
                         document.getElementById('al_' + id).style.opacity = '.5'
@@ -741,7 +738,6 @@
                         document.getElementById('fwa_' + id).setAttribute("type","audio/mpeg")
                         document.getElementById('fwa_' + id).setAttribute("sid",`${fnn['id']}`)
                         document.getElementById('fwa_' + id).setAttribute("src",`${fnn['preview_url']}`)
-                        document.getElementById('fw_' + id).innerText += ' -- ' +  `${fnn['name']}`
                     } else {
                         console.log(id)
                         document.getElementById('fw_' + id).style.opacity = '.5'
