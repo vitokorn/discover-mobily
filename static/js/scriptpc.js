@@ -866,7 +866,9 @@
                          getnewrelease(0)
                      }
                      else{
-                     initElement(id.replace('refresh_',''))
+                         document.getElementById(id.replace('refresh_','p_')).remove()
+                         document.getElementById(id.replace('refresh_','t_')).remove()
+                        initElement(id.replace('refresh_',''))
                      }
                      refreshButton.setAttribute("class", "refresh-end")
                      refreshButton.disabled = false
