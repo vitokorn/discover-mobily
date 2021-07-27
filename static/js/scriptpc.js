@@ -358,7 +358,7 @@
                             document.getElementById('at_' + id).setAttribute("type","audio/mpeg")
                             document.getElementById('at_' + id).setAttribute("sid",`${fnn['id']}`)
                             document.getElementById('at_' + id).setAttribute("src",`${fnn['preview_url']}`)
-                            document.getElementById(id).innerText += ' ' + `${fnn['name']}`
+                            document.getElementById(id).innerText += '--' + `${fnn['name']}`
                         } else {
                             console.log(id)
                             document.getElementById(id).style.opacity = '.5'
@@ -367,10 +367,11 @@
                             document.getElementById('at_' + id).innerText = ''}}
                     else if (type == 'ls'){
                         if (fnn != null) {
-                        console.log('376')
-                        document.getElementById('ats_' + id).setAttribute("type","audio/mpeg")
-                        document.getElementById('ats_' + id).setAttribute("sid",`${fnn['id']}`)
-                        document.getElementById('ats_' + id).setAttribute("src",`${fnn['preview_url']}`)
+                            console.log('376')
+                            document.getElementById('ats_' + id).setAttribute("type","audio/mpeg")
+                            document.getElementById('ats_' + id).setAttribute("sid",`${fnn['id']}`)
+                            document.getElementById('ats_' + id).setAttribute("src",`${fnn['preview_url']}`)
+                            document.getElementById('ls_' + id).innerText += '--' + `${fnn['name']}`
                     } else  {
                         console.log(id)
                         document.getElementById('ls_' + id).style.opacity = '.5'
@@ -383,6 +384,7 @@
                         document.getElementById('ata_' + id).setAttribute("type","audio/mpeg")
                         document.getElementById('ata_' + id).setAttribute("sid",`${fnn['id']}`)
                         document.getElementById('ata_' + id).setAttribute("src",`${fnn['preview_url']}`)
+                        document.getElementById('al_' + id).innerText += '--' + `${fnn['name']}`
                     } else {
                         console.log(id)
                         document.getElementById('al_' + id).style.opacity = '.5'
@@ -648,7 +650,7 @@
                     console.log('435 ' + savedalbum)
                     let elem = []
                     for (const sa of savedalbum){
-                          elem.push(`<div class="con3" tabindex="0" id=${sa['album']['id']} onmouseover="playtracksa('${sa['album']['id']}')" onmouseleave="playtracksa('${sa['album']['id']}')" style="background-image: url(${sa['album']['images'][1]['url']});background-repeat: no-repeat;background-size: cover">${sa['album']['name']}<audio id="sa_${sa['album']['id']}">${savedalbums(sa['album']['id'])})</audio></div>`)
+                          elem.push(`<div class="con3" tabindex="0" id=${sa['album']['id']} onmouseover="playtracksa('${sa['album']['id']}')" onmouseleave="playtracksa('${sa['album']['id']}')" style="background-image: url(${sa['album']['images'][1]['url']});background-repeat: no-repeat;background-size: cover">${list(sa['album']['artists'])} -- ${sa['album']['name']}<audio id="sa_${sa['album']['id']}">${savedalbums(sa['album']['id'])})</audio></div>`)
                       }
                     albums.innerHTML = elem.join(' ')
                     console.log('446 ' + data)
@@ -735,16 +737,17 @@
                     let tracks = data['tracks']
                     let fnn = (tracks.find(e =>e.preview_url))
                     if (fnn != null) {
-                            console.log('270')
-                            document.getElementById('fwa_' + id).setAttribute("type","audio/mpeg")
-                            document.getElementById('fwa_' + id).setAttribute("sid",`${fnn['id']}`)
-                            document.getElementById('fwa_' + id).setAttribute("src",`${fnn['preview_url']}`)
+                        console.log('270')
+                        document.getElementById('fwa_' + id).setAttribute("type","audio/mpeg")
+                        document.getElementById('fwa_' + id).setAttribute("sid",`${fnn['id']}`)
+                        document.getElementById('fwa_' + id).setAttribute("src",`${fnn['preview_url']}`)
+                        document.getElementById('fw_' + id).innerText += `${fnn['name']}`
                     } else {
-                            console.log(id)
-                            document.getElementById('fw_' + id).style.opacity = '.5'
-                            document.getElementById('fwa_' + id).setAttribute("src","null")
-                            document.getElementById('fw_' + id).removeAttribute('onclick')
-                            document.getElementById('fwa_' + id).innerText = ''}}
+                        console.log(id)
+                        document.getElementById('fw_' + id).style.opacity = '.5'
+                        document.getElementById('fwa_' + id).setAttribute("src","null")
+                        document.getElementById('fw_' + id).removeAttribute('onclick')
+                        document.getElementById('fwa_' + id).innerText = ''}}
 
                 else if(xhr.status === 401){
                       let curl = '/spotify/refresh_token/' + localStorage.getItem('username')
