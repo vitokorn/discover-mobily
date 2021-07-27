@@ -582,7 +582,7 @@
                       console.log('325 ' + playtrack)
                       let elem = []
                       for (const pla of playtrack){
-                          elem.push(`<div class="con3" tabindex="0" id=${pla['id']} style="background-image: url(${pla['album']['images'][1]['url']});background-repeat: no-repeat;background-size: cover" onclick="playtrack('${pla['id']}')">${list(pla['artists'])} -  ${pla['name']}<audio type="audio/mpeg" preload="none" id="a_${pla['id']}" src="${pla['preview_url']}"></div>`)
+                          elem.push(`<div class="con3" tabindex="0" id=${pla['id']} style="background-image: url(${pla['album']['images'][1]['url']});background-repeat: no-repeat;background-size: cover" onmouseover="playtrack('${pla['id']}')" onmouseleave="stoptrack('${pla['id']}')">${list(pla['artists'])} -  ${pla['name']}<audio type="audio/mpeg" preload="none" id="a_${pla['id']}" src="${pla['preview_url']}"></div>`)
                       }
                       tracks.innerHTML = elem.join(' ')
                     document.getElementById('toptrack').style.display = 'flex'
@@ -643,7 +643,7 @@
                       console.log('372 ' + playtrack)
                       let elem = []
                       for (const pla of playtrack){
-                          elem.push(`<div class="con3" tabindex="0" id=${pla['id']} style="background-image: url(${pla['album']['images'][1]['url']});background-repeat: no-repeat;background-size: cover" onclick="playtrack('${pla['id']}')"> ${list(pla['artists'])} -  ${pla['name']}<audio type="audio/mpeg" preload="none" id="a_${pla['id']}" src="${pla['preview_url']}"></div>`)
+                          elem.push(`<div class="con3" tabindex="0" id=${pla['id']} style="background-image: url(${pla['album']['images'][1]['url']});background-repeat: no-repeat;background-size: cover" onmouseover="playtrack('${pla['id']}')" onmouseleave="stoptrack('${pla['id']}')"> ${list(pla['artists'])} -  ${pla['name']}<audio type="audio/mpeg" preload="none" id="a_${pla['id']}" src="${pla['preview_url']}"></div>`)
                       }
                       tracks.innerHTML = elem.join(' ')
                     document.getElementById('toptrack6').style.display = 'flex'
@@ -674,7 +674,7 @@
                       console.log('403' + playtrack)
                       let elem = []
                       for (const pla of playtrack){
-                          elem.push(`<div class="con3" id=${pla['id']} style="background-image: url(${pla['album']['images'][1]['url']});background-repeat: no-repeat;background-size: cover" onclick="playtrack('${pla['id']}')"><div tabindex="0" class="text"> ${list(pla['artists'])} -  ${pla['name']}</div><audio type="audio/mpeg" preload="none" id="a_${pla['id']}" src="${pla['preview_url']}"></div>`)
+                          elem.push(`<div class="con3" id=${pla['id']} style="background-image: url(${pla['album']['images'][1]['url']});background-repeat: no-repeat;background-size: cover" onmouseover="playtrack('${pla['id']}')" onmouseleave="stoptrack('${pla['id']}')"><div tabindex="0" class="text"> ${list(pla['artists'])} -  ${pla['name']}</div><audio type="audio/mpeg" preload="none" id="a_${pla['id']}" src="${pla['preview_url']}"></div>`)
                       }
                       tracks.innerHTML = elem.join(' ')
                     document.getElementById('toptrackat').style.display = 'flex'
@@ -755,7 +755,7 @@
                     let items = data['items']
                     let elem = []
                     for (const pla of items){
-                        elem.push(`<div class="con3" tabindex="0" id=${pla['track']['id']} style="background-image: url(${pla['track']['album']['images'][1]['url']});background-repeat: no-repeat;background-size: cover" onclick="playtrack('${pla['track']['id']}')">${list(pla['track']['artists'])} -  ${pla['track']['name']}<audio type="audio/mpeg" preload="none" id="a_${pla['track']['id']}" src="${pla['track']['preview_url']}"></div>`)
+                        elem.push(`<div class="con3" tabindex="0" id=${pla['track']['id']} style="background-image: url(${pla['track']['album']['images'][1]['url']});background-repeat: no-repeat;background-size: cover" onmouseover="playtrack('${pla['track']['id']}')" onmouseleave=('${pla['track']['id']}')">${list(pla['track']['artists'])} -  ${pla['track']['name']}<audio type="audio/mpeg" preload="none" id="a_${pla['track']['id']}" src="${pla['track']['preview_url']}"></div>`)
                     }
                     document.getElementById('savedtrack').innerHTML += elem.join(' ')
                     if (items.length > 0){
