@@ -94,6 +94,7 @@ header{
 .con3:active,.con3:focus,.con3:hover{
     color: white;
     text-shadow: black 0 0 3px;
+    cursor: pointer;
 }
 @media (min-width: 576px) {
     .con3 {
@@ -112,6 +113,7 @@ header{
     .con3:active,.con3:focus,.con3:hover{
         color: white;
         text-shadow: black 0 0 3px;
+        cursor: pointer;
 }
 }
 @media (min-width: 768px) {
@@ -131,6 +133,7 @@ header{
 .con3:active,.con3:focus,.con3:hover{
     color: white;
     text-shadow: black 0 0 3px;
+    cursor: pointer;
 }}
 
 @media (min-width: 992px) {
@@ -150,6 +153,7 @@ header{
     .con3:active,.con3:focus,.con3:hover{
         color: white;
         text-shadow: black 0 0 3px;
+        cursor: pointer;
 }
 }
 
@@ -170,6 +174,7 @@ header{
 .con3:active,.con3:focus,.con3:hover{
     color: white;
     text-shadow: black 0 0 3px;
+    cursor: pointer;
 }
 }
 
@@ -313,6 +318,7 @@ header{
 .text:focus,.text:hover{
     opacity: 1;
     text-shadow: black 0 0 3px;
+    cursor: pointer;
 }
 
 .accordion {
