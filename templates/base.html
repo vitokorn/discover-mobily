@@ -58,11 +58,11 @@
         if (window.mobileCheck()===false){
             let sc = document.createElement('script')
             sc.src = "{{ url_for('static', filename='js/scriptpc.js') }}"
-            document.head.appendChild(sc)
+            document.body.appendChild(sc)
         } else{
             let sc = document.createElement('script')
             sc.src = "{{ url_for('static', filename='js/script.js') }}"
-            document.head.appendChild(sc)
+            document.body.appendChild(sc)
         }
         </script>
     {% endif %}

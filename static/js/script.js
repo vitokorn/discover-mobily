@@ -19,6 +19,7 @@
                 });
             });
         }
+        let allaudio = document.getElementsByTagName('audio')
         function initElement(id) {
             console.log('58 ' + id)
             let url = 'https://api.spotify.com/v1/playlists/' + id + '?fields=name,id,description,images,tracks(items(track(name,preview_url,id,artists,album(artists,id,images))))'
@@ -69,20 +70,47 @@
                     img.src = '../static/images/refresh-icon.svg'
                     img.height = 12
                     refresh.appendChild(img)
-                    let elem = []
-                    for (const pla of playtrack){
-                        elem.push(`<div tabindex="0" class="con3" id=${pla['track']['id']} style="background-image: url(${pla['track']['album']['images'][0]['url']});background-repeat: no-repeat;background-size: cover" onclick="playtrack('${pla['track']['id']}')">${list(pla['track']['artists'])} -  ${pla['track']['name']}<audio type="audio/mpeg" preload="none" id="a_${pla['track']['id']}" src="${pla['track']['preview_url']}"></div>`)
-                    }
                     let trid = document.createElement('div')
                     trid.id = 't_' + id
                     trid.className = 'con2'
                     tracks.appendChild(trid)
-                    trid.innerHTML = elem.join(' ')
-                    let zerosrc = document.querySelectorAll('[src=null]')
-                    for (let z of zerosrc) {
-                        let curr = z.id.replace('a_','')
-                        document.getElementById(curr).style.opacity = '.5'
+                    for (const pla of playtrack){
+                        let d = document.createElement('div')
+                        d.tabIndex = 0
+                        d.className = 'con3'
+                        d.style.backgroundImage = `url(${pla['track']['album']['images'][0]['url']})`
+                        d.style.backgroundRepeat = 'no-repeat'
+                        d.style.backgroundSize = 'cover'
+                        d.innerText = `${list(pla['track']['artists'])} -  ${pla['track']['name']}`
+                        let a = document.createElement('audio')
+                        a.type = "audio/mpeg"
+                        a.preload = 'none'
+                        if (pla['track']['preview_url'])
+                            a.src = `${pla['track']['preview_url']}`
+                        else{
+                            d.style.opacity = '.5'
+                        }
+                        d.appendChild(a)
+                        d.addEventListener('click',function (e) {
+                            let target = e.target
+                            let audios = target.lastChild
+                            for (let i = 0; i < allaudio.length; i++) {
+                                 if (allaudio[i] == e.target.lastChild){
+
+                                 } else {
+                                     allaudio[i].pause()
+                                 }
+                         }
+
+                            if (audios.paused == false){
+                                audios.pause()
+                            } else{
+                                audios.play()
+                            }
+                            })
+                        trid.appendChild(d)
                     }
+
 
                 } else if(xhr.status === 401){
                     let url = '/spotify/refresh_token/' + localStorage.getItem('username');
@@ -98,221 +126,7 @@
                 }
             }}
 
-        function playtrack(id) {
-              let all = document.querySelectorAll('[id^="a_"]');
-              for (let elem of all) {
-                  if (elem.id == 'a_' + id){
 
-                  } else
-                  elem.pause()
-              }
-              let lm = document.querySelectorAll('[id^="at_"]');
-              for (let el of lm) {
-                  el.pause()
-              }
-              let ls = document.querySelectorAll('[id^="ats_"]');
-              for (let el of ls) {
-                  el.pause()
-              }
-              let al = document.querySelectorAll('[id^="ata_"]');
-              for (let el of al) {
-                  el.pause()
-              }
-              let sa = document.querySelectorAll('[id^="sa_"]');
-              for (let el of sa) {
-                  el.pause()
-              }
-
-              let audiop = document.getElementById('a_' + id)
-              if (audiop.paused == false){
-                  audiop.pause()
-              } else
-                audiop.play();
-          }
-        function playtracksa(id) {
-              let rt = document.querySelectorAll('[id^="a_"]');
-              for (let el of rt) {
-                  el.pause()
-              }
-              let lm = document.querySelectorAll('[id^="at_"]');
-              for (let el of lm) {
-                  el.pause()
-              }
-              let ls = document.querySelectorAll('[id^="ats_"]');
-              for (let el of ls) {
-                  el.pause()
-              }
-              let al = document.querySelectorAll('[id^="ata_"]');
-              for (let el of al) {
-                  el.pause()
-              }
-              let fw = document.querySelectorAll('[id^="fwa_"]');
-              for (let el of fw) {
-                  el.pause()
-              }
-              let nr = document.querySelectorAll('[id^="nra_"]');
-              for (let el of nr) {
-                  el.pause()
-              }
-              let all = document.querySelectorAll('[id^="sa_"]');
-              for (let elem of all) {
-                  if (elem.id == 'sa_' + id){
-
-                  } else
-                  elem.pause()
-              }
-              let audiop = document.getElementById('sa_' + id)
-              if (audiop.paused == false){
-                  audiop.pause()
-              } else
-                audiop.play();
-          }
-        function playtrackat(id,type) {
-              console.log('133 ' + id)
-              let rt = document.querySelectorAll('[id^="a_"]');
-              for (let elem of rt) {
-                  elem.pause()
-              }
-              let sa = document.querySelectorAll('[id^="sa_"]');
-              for (let elem of sa) {
-                  elem.pause()
-              }
-              let ats = document.querySelectorAll('[id^="ats_"]');
-              let ata = document.querySelectorAll('[id^="ata_"]');
-              let fw = document.querySelectorAll('[id^="fwa_"]');
-              let nr = document.querySelectorAll('[id^="nra_"]');
-              let ato = document.querySelectorAll('[id^="at_"]');
-
-              if (type == 'lm'){
-                  for (let elem of ats) {
-                      elem.pause()
-                  }
-                  for (let elem of ata) {
-                      elem.pause()
-                  }
-                  for (let elem of fw) {
-                            elem.pause()
-                  }
-
-                  for (let elem of nr) {
-                            elem.pause()
-                  }
-
-                  for (let elem of ato) {
-                      if (elem.id == 'at_' + id){
-
-                      } else
-                      elem.pause()
-                  }
-                  let audiop = document.getElementById('at_' + id)
-                  if (audiop.paused == false){
-                      audiop.pause()
-                  } else
-                    audiop.play();
-          } else if(type == 'ls') {
-                  for (let elem of ato) {
-                      elem.pause()
-                  }
-                  for (let elem of ata) {
-                      elem.pause()
-                  }
-                  for (let elem of fw) {
-                            elem.pause()
-                  }
-
-                  for (let elem of nr) {
-                            elem.pause()
-                  }
-                  for (let elem of ats) {
-                      if (elem.id == 'at_' + id){
-
-                      } else
-                      elem.pause()
-                  }
-                  let audiop = document.getElementById('ats_' + id)
-                  if (audiop.paused == false){
-                      audiop.pause()
-                  } else
-                    audiop.play();
-              }
-                else if (type == 'ata'){
-                    for (let elem of ats) {
-                      elem.pause()
-                  }
-                  for (let elem of ato) {
-                      elem.pause()
-                  }
-                  for (let elem of fw) {
-                            elem.pause()
-                  }
-
-                  for (let elem of nr) {
-                            elem.pause()
-                  }
-                  for (let elem of ata) {
-                      if (elem.id == 'al_' + id){
-
-                      } else
-                      elem.pause()
-                  }
-                  let audiop = document.getElementById('ata_' + id)
-                  if (audiop.paused == false){
-                      audiop.pause()
-                  } else
-                    audiop.play();
-                  }
-                else if (type == 'fw'){
-                    for (let elem of ats) {
-                      elem.pause()
-                  }
-                  for (let elem of ata) {
-                      elem.pause()
-                  }
-                  for (let elem of ato) {
-                            elem.pause()
-                  }
-
-                  for (let elem of nr) {
-                            elem.pause()
-                  }
-                    for (let elem of fw) {
-                        if (elem.id == 'fwa_' + id){
-
-                        } else
-                            elem.pause()
-                    }
-                  let audiop = document.getElementById('fwa_' + id)
-                  if (audiop.paused == false){
-                      audiop.pause()
-                  } else
-                    audiop.play();
-              } else if (type == 'nr'){
-                    for (let elem of ats) {
-                      elem.pause()
-                  }
-                  for (let elem of ata) {
-                      elem.pause()
-                  }
-                  for (let elem of fw) {
-                            elem.pause()
-                  }
-
-                  for (let elem of ato) {
-                            elem.pause()
-                  }
-                    for (let elem of nr) {
-                        if (elem.id == 'nra_' + id){
-
-                        } else
-                            elem.pause()
-                    }
-                  let audiop = document.getElementById('nra_' + id)
-                  if (audiop.paused == false){
-                      audiop.pause()
-                  } else
-                    audiop.play();
-              }
-          }
         function list(artists){
           const names = artists.map(({ name }) => name);
           const finalName = names.pop();
@@ -401,11 +215,45 @@
                     let data = JSON.parse(this.response)
                     let artis = document.getElementById('artists')
                     let items = data['items']
-                    let elem = []
                       for (const it of items){
-                          elem.push(`<div class="con3" tabindex="0" id=${it['id']} onclick="playtrackat('${it['id']}','lm')" style="background-image: url(${it['images'][1]['url']});background-repeat: no-repeat;background-size: cover">${it['name']}<audio id="at_${it['id']}">${artisttrack(it['id'],'lm')}</audio></div>`)
+                          let d = document.createElement('div')
+                        d.tabIndex = 0
+                        d.className = 'con3'
+                        d.style.backgroundImage = `url(${it['images'][1]['url']})`
+                        d.style.backgroundRepeat = 'no-repeat'
+                        d.style.backgroundSize = 'cover'
+                        d.innerText = `${it['name']}`
+                        let a = document.createElement('audio')
+                        a.type = "audio/mpeg"
+                        a.preload = 'none'
+                        artisttrack(`${it['id']}`,'al',function (e) {
+                            if (e!=null){
+                                a.src = e
+                            } else{
+                                d.style.opacity = '.5'
+                            }
+                            return e
+                        })
+                        d.appendChild(a)
+                        d.addEventListener('click',function (e) {
+                            let target = e.target
+                            let audios = target.lastChild
+                            for (let i = 0; i < allaudio.length; i++) {
+                                 if (allaudio[i] == e.target.lastChild){
+
+                                 } else {
+                                     allaudio[i].pause()
+                                 }
+                         }
+
+                            if (audios.paused == false){
+                                audios.pause()
+                            } else{
+                                audios.play()
+                            }
+                            })
+                        artis.appendChild(d)
                       }
-                      artis.innerHTML = elem.join(' ')
 
                     console.log('178 ' + data)
                 } else if(xhr.status === 401){
@@ -437,10 +285,45 @@
                     let items = data['items']
                     let elem = []
                       for (const it of items){
-                          elem.push(`<div class="con3" tabindex="0" id=ls_${it['id']} onclick="playtrackat('${it['id']}','ls')" style="background-image: url(${it['images'][1]['url']});background-repeat: no-repeat;background-size: cover">${list(it['artists'])} -- ${it['name']}<audio id="ats_${it['id']}">${artisttrack(it['id'],'ls')}</audio></div>`)
+                                                    let d = document.createElement('div')
+                        d.tabIndex = 0
+                        d.className = 'con3'
+                        d.style.backgroundImage = `url(${it['images'][1]['url']})`
+                        d.style.backgroundRepeat = 'no-repeat'
+                        d.style.backgroundSize = 'cover'
+                        d.innerText = `${it['name']}`
+                        let a = document.createElement('audio')
+                        a.type = "audio/mpeg"
+                        a.preload = 'none'
+                        artisttrack(`${it['id']}`,'al',function (e) {
+                            if (e!=null){
+                                a.src = e
+                            } else{
+                                d.style.opacity = '.5'
+                            }
+                            return e
+                        })
+                        d.appendChild(a)
+                        d.addEventListener('click',function (e) {
+                            let target = e.target
+                            let audios = target.lastChild
+                            for (let i = 0; i < allaudio.length; i++) {
+                                 if (allaudio[i] == e.target.lastChild){
+
+                                 } else {
+                                     allaudio[i].pause()
+                                 }
+                         }
+
+                            if (audios.paused == false){
+                                audios.pause()
+                            } else{
+                                audios.play()
+                            }
+                            })
+                        artis.appendChild(d)
                       }
-                      artis.innerHTML = elem.join(' ')
-                    console.log('219 ' + data)
+
 
                 }    document.getElementById('artists').style.display = 'none'
                      document.getElementById('artists6').style.display = 'flex'
@@ -459,12 +342,47 @@
                     let data = JSON.parse(this.response)
                     let artis = document.getElementById('artistsall')
                     let items = data['items']
-                    let elem = []
                       for (const it of items){
-                          elem.push(`<div class="con3" tabindex="0" id=al_${it['id']} onclick="playtrackat('${it['id']}','al')" style="background-image: url(${it['images'][1]['url']});background-repeat: no-repeat;background-size: cover">${list(it['artists'])} -- ${it['name']}<audio id="ata_${it['id']}">${artisttrack(it['id'],'al')}</audio></div>`)
+                          let d = document.createElement('div')
+                        d.tabIndex = 0
+                        d.className = 'con3'
+                        d.style.backgroundImage = `url(${it['images'][1]['url']})`
+                        d.style.backgroundRepeat = 'no-repeat'
+                        d.style.backgroundSize = 'cover'
+                        d.innerText = `${it['name']}`
+                        let a = document.createElement('audio')
+                        a.type = "audio/mpeg"
+                        a.preload = 'none'
+                        artisttrack(`${it['id']}`,'al',function (e) {
+                            if (e!=null){
+                                a.src = e
+                            } else{
+                                d.style.opacity = '.5'
+                            }
+                            return e
+                        })
+                        d.appendChild(a)
+                        d.addEventListener('click',function (e) {
+                            let target = e.target
+                            let audios = target.lastChild
+                            for (let i = 0; i < allaudio.length; i++) {
+                                 if (allaudio[i] == e.target.lastChild){
+
+                                 } else {
+                                     allaudio[i].pause()
+                                 }
+                         }
+
+                            if (audios.paused == false){
+                                audios.pause()
+                            } else{
+                                audios.play()
+                            }
+                            })
+                        artis.appendChild(d)
                       }
-                      artis.innerHTML = elem.join(' ')
-                    console.log('243 ' + data)
+
+
 
                 }document.getElementById('artists').style.display = 'none'
                      document.getElementById('artists6').style.display = 'none'
@@ -507,7 +425,7 @@
             });
              });
          }
-        function artisttrack(id,type){
+        function artisttrack(id,type,callback){
              let url = 'https://api.spotify.com/v1/artists/' + id + '/top-tracks?market=' + localStorage.getItem('country')
             console.log('267 ' + url)
             let xhr = new XMLHttpRequest()
@@ -521,41 +439,23 @@
                     let fnn = (tracks.find(e =>e.preview_url))
                     if (type == 'lm'){
                         if (fnn != null) {
-                            console.log('270')
-                            document.getElementById('at_' + id).setAttribute("type","audio/mpeg")
-                            document.getElementById('at_' + id).setAttribute("sid",`${fnn['id']}`)
-                            document.getElementById('at_' + id).setAttribute("src",`${fnn['preview_url']}`)
-
-                        } else {
-                            console.log(id)
-                            document.getElementById(id).style.opacity = '.5'
-                            document.getElementById('at_' + id).setAttribute("src","null")
-                            document.getElementById(id).removeAttribute('onclick')
-                            document.getElementById('at_' + id).innerText = ''}}
+                            callback(fnn['preview_url'])
+                        } else{
+                            callback(null)
+                        } }
                     else if (type == 'ls'){
                         if (fnn != null) {
-                            console.log('376')
-                            document.getElementById('ats_' + id).setAttribute("type","audio/mpeg")
-                            document.getElementById('ats_' + id).setAttribute("sid",`${fnn['id']}`)
-                            document.getElementById('ats_' + id).setAttribute("src",`${fnn['preview_url']}`)
+                            callback(fnn['preview_url'])
                     } else  {
-                        console.log(id)
-                        document.getElementById('ls_' + id).style.opacity = '.5'
-                        document.getElementById('ats_' + id).setAttribute("src","null")
-                        document.getElementById('ls_' + id).removeAttribute('onclick')
-                        document.getElementById('ats_' + id).innerText = ''}}
+                            callback(null)}
+                        }
                     else if (type == 'al'){
                     if (fnn != null) {
-                        console.log('389')
-                        document.getElementById('ata_' + id).setAttribute("type","audio/mpeg")
-                        document.getElementById('ata_' + id).setAttribute("sid",`${fnn['id']}`)
-                        document.getElementById('ata_' + id).setAttribute("src",`${fnn['preview_url']}`)
+                        callback(fnn['preview_url'])
                     } else {
-                        console.log(id)
-                        document.getElementById('al_' + id).style.opacity = '.5'
-                        document.getElementById('ata_' + id).setAttribute("src","null")
-                        document.getElementById('al_' + id).removeAttribute('onclick')
-                        document.getElementById('ata_' + id).innerText = ''}}}
+                        callback(null)
+                    }
+                        }}
 
                 else if(xhr.status === 401){
                       let curl = '/spotify/refresh_token/' + localStorage.getItem('username')
@@ -570,7 +470,7 @@
                   }
             }
 }
-        function savedalbums(id){
+        function savedalbums(id,callback){
               let url = 'https://api.spotify.com/v1/albums/' + id + '/tracks?market=' + localStorage.getItem('country') + '&limit=10'
             console.log('267 ' + url)
             let xhr = new XMLHttpRequest()
@@ -583,24 +483,17 @@
                     let items = data['items']
                     let fnn = (items.find(e =>e.preview_url))
                         if (fnn != null) {
-                            console.log('270')
-                            document.getElementById('sa_' + id).setAttribute("type","audio/mpeg")
-                            document.getElementById('sa_' + id).setAttribute("aid",`${fnn['id']}`)
-                            document.getElementById('sa_' + id).setAttribute("src",`${fnn['preview_url']}`)
+                            callback(`${fnn['preview_url']}`)
                         } else {
-                            console.log(id)
-                            document.getElementById(id).style.opacity = '.5'
-                            document.getElementById('sa_' + id).setAttribute("src","null")
-                            document.getElementById(id).removeAttribute('onclick')
-                            document.getElementById('sa_' + id).innerText = ''}
-                    console.log('178 ' + data)
-                } else if(xhr.status === 401){
-                      let url = '/spotify/refresh_token/' + localStorage.getItem('username')
-                      let xhr = new XMLHttpRequest()
-                      xhr.open('GET',url,true)
-                      xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
-                      xhr.send()
-                      xhr.onload = function (){
+                            callback(null)
+                        }}
+                else if(xhr.status === 401){
+                    let url = '/spotify/refresh_token/' + localStorage.getItem('username')
+                    let xhr = new XMLHttpRequest()
+                    xhr.open('GET',url,true)
+                    xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
+                    xhr.send()
+                    xhr.onload = function (){
                         if (xhr.status === 200){
                             console.log('187')
                             topartistst()
@@ -672,20 +565,45 @@
                       tracks.innerHTML = ''
                       let playtrack = data['items']
                       console.log('325 ' + playtrack)
-                      let elem = []
                       for (const pla of playtrack){
-                          elem.push(`<div class="con3" tabindex="0" id=${pla['id']} style="background-image: url(${pla['album']['images'][1]['url']});background-repeat: no-repeat;background-size: cover" onclick="playtrack('${pla['id']}')">${list(pla['artists'])} -  ${pla['name']}<audio type="audio/mpeg" preload="none" id="a_${pla['id']}" src="${pla['preview_url']}"></div>`)
+                          let d = document.createElement('div')
+                        d.tabIndex = 0
+                        d.className = 'con3'
+                        d.style.backgroundImage = `url(${pla['album']['images'][0]['url']})`
+                        d.style.backgroundRepeat = 'no-repeat'
+                        d.style.backgroundSize = 'cover'
+                        d.innerText = `${list(pla['artists'])} -  ${pla['name']}`
+                        let a = document.createElement('audio')
+                        a.type = "audio/mpeg"
+                        a.preload = 'none'
+                        if (pla['preview_url'])
+                            a.src = `${pla['preview_url']}`
+                        else{
+                            d.style.opacity = '.5'
+                        }
+                        d.appendChild(a)
+                        d.addEventListener('click',function (e) {
+                            let target = e.target
+                            let audios = target.lastChild
+                            for (let i = 0; i < allaudio.length; i++) {
+                                 if (allaudio[i] == e.target.lastChild){
+
+                                 } else {
+                                     allaudio[i].pause()
+                                 }
+                         }
+
+                            if (audios.paused == false){
+                                audios.pause()
+                            } else{
+                                audios.play()
+                            }
+                            })
+                        tracks.appendChild(d)
                       }
-                      tracks.innerHTML = elem.join(' ')
                     document.getElementById('toptrack').style.display = 'flex'
                     document.getElementById('toptrack6').style.display = 'none'
                     document.getElementById('toptrackat').style.display = 'none'
-                      let zerosrc = document.querySelectorAll('[src=null]')
-                      for (let z of zerosrc) {
-                          let curr = z.id.replace('a_','')
-                          document.getElementById(curr).style.opacity = '.5'
-                      }
-                    console.log('339' + data)
                 } else if(xhr.status === 401){
                       let url = '/spotify/refresh_token/' + localStorage.getItem('username')
                       let xhr = new XMLHttpRequest()
@@ -735,18 +653,44 @@
                       console.log('372 ' + playtrack)
                       let elem = []
                       for (const pla of playtrack){
-                          elem.push(`<div class="con3" tabindex="0" id=${pla['id']} style="background-image: url(${pla['album']['images'][1]['url']});background-repeat: no-repeat;background-size: cover" onclick="playtrack('${pla['id']}')"> ${list(pla['artists'])} -  ${pla['name']}<audio type="audio/mpeg" preload="none" id="a_${pla['id']}" src="${pla['preview_url']}"></div>`)
+                          let d = document.createElement('div')
+                        d.tabIndex = 0
+                        d.className = 'con3'
+                        d.style.backgroundImage = `url(${pla['album']['images'][0]['url']})`
+                        d.style.backgroundRepeat = 'no-repeat'
+                        d.style.backgroundSize = 'cover'
+                        d.innerText = `${list(pla['artists'])} -  ${pla['name']}`
+                        let a = document.createElement('audio')
+                        a.type = "audio/mpeg"
+                        a.preload = 'none'
+                        if (pla['preview_url'])
+                            a.src = `${pla['preview_url']}`
+                        else{
+                            d.style.opacity = '.5'
+                        }
+                        d.appendChild(a)
+                        d.addEventListener('click',function (e) {
+                            let target = e.target
+                            let audios = target.lastChild
+                            for (let i = 0; i < allaudio.length; i++) {
+                                 if (allaudio[i] == e.target.lastChild){
+
+                                 } else {
+                                     allaudio[i].pause()
+                                 }
+                         }
+
+                            if (audios.paused == false){
+                                audios.pause()
+                            } else{
+                                audios.play()
+                            }
+                            })
+                        tracks.appendChild(d)
                       }
-                      tracks.innerHTML = elem.join(' ')
                     document.getElementById('toptrack6').style.display = 'flex'
                     document.getElementById('toptrack').style.display = 'none'
                     document.getElementById('toptrackat').style.display = 'none'
-                      let zerosrc = document.querySelectorAll('[src=null]')
-                      for (let z of zerosrc) {
-                          let curr = z.id.replace('a_','')
-                          document.getElementById(curr).style.opacity = '.5'
-                      }
-                    console.log('386 ' + data)
                 }
             }
         }
@@ -766,20 +710,44 @@
                       console.log('403' + playtrack)
                       let elem = []
                       for (const pla of playtrack){
-                          elem.push(`<div class="con3" id=${pla['id']} style="background-image: url(${pla['album']['images'][1]['url']});background-repeat: no-repeat;background-size: cover" onclick="playtrack('${pla['id']}')"><div tabindex="0" class="text"> ${list(pla['artists'])} -  ${pla['name']}</div><audio type="audio/mpeg" preload="none" id="a_${pla['id']}" src="${pla['preview_url']}"></div>`)
+                          let d = document.createElement('div')
+                        d.tabIndex = 0
+                        d.className = 'con3'
+                        d.style.backgroundImage = `url(${pla['album']['images'][0]['url']})`
+                        d.style.backgroundRepeat = 'no-repeat'
+                        d.style.backgroundSize = 'cover'
+                        d.innerText = `${list(pla['artists'])} -  ${pla['name']}`
+                        let a = document.createElement('audio')
+                        a.type = "audio/mpeg"
+                        a.preload = 'none'
+                        if (pla['preview_url'])
+                            a.src = `${pla['preview_url']}`
+                        else{
+                            d.style.opacity = '.5'
+                        }
+                        d.appendChild(a)
+                        d.addEventListener('click',function (e) {
+                            let target = e.target
+                            let audios = target.lastChild
+                            for (let i = 0; i < allaudio.length; i++) {
+                                 if (allaudio[i] == e.target.lastChild){
+
+                                 } else {
+                                     allaudio[i].pause()
+                                 }
+                         }
+
+                            if (audios.paused == false){
+                                audios.pause()
+                            } else{
+                                audios.play()
+                            }
+                            })
+                        tracks.appendChild(d)
                       }
-                      tracks.innerHTML = elem.join(' ')
                     document.getElementById('toptrackat').style.display = 'flex'
                     document.getElementById('toptrack').style.display = 'none'
                     document.getElementById('toptrack6').style.display = 'none'
-                      let zerosrc = document.querySelectorAll('[src=null]')
-                    console.log('413' + zerosrc)
-                      for (let z of zerosrc) {
-                          console.log('509 ' + z.id)
-                          let curr = z.id.replace('a_','')
-                          document.getElementById(curr).style.opacity = '.5'
-                      }
-                    console.log('418 ' + data)
                 }
             }
          }
@@ -815,9 +783,43 @@
                     console.log('435 ' + savedalbum)
                     let elem = []
                     for (const sa of savedalbum){
-                          elem.push(`<div class="con3" tabindex="0" id=${sa['album']['id']} onclick="playtracksa('${sa['album']['id']}')" style="background-image: url(${sa['album']['images'][1]['url']});background-repeat: no-repeat;background-size: cover">${list(sa['album']['artists'])} -- ${sa['album']['name']}<audio id="sa_${sa['album']['id']}">${savedalbums(sa['album']['id'])})</audio></div>`)
+                                                let d = document.createElement('div')
+                        d.tabIndex = 0
+                        d.className = 'con3'
+                        d.style.backgroundImage = `url(${sa['album']['images'][1]['url']})`
+                        d.style.backgroundRepeat = 'no-repeat'
+                        d.style.backgroundSize = 'cover'
+                        d.innerText = `${list(sa['album']['artists'])} -  ${sa['album']['name']}`
+                        let a = document.createElement('audio')
+                        a.type = "audio/mpeg"
+                        a.preload = 'none'
+                        savedalbums(sa['album']['id'],function (e) {
+                            if (e!=null){
+                                a.src = e
+                            } else{
+                                d.style.opacity = '.5'
+                            }
+                        })
+                        d.appendChild(a)
+                        d.addEventListener('click',function (e) {
+                            let target = e.target
+                            let audios = target.lastChild
+                            for (let i = 0; i < allaudio.length; i++) {
+                                 if (allaudio[i] == e.target.lastChild){
+
+                                 } else {
+                                     allaudio[i].pause()
+                                 }
+                         }
+
+                            if (audios.paused == false){
+                                audios.pause()
+                            } else{
+                                audios.play()
+                            }
+                            })
+                        albums.appendChild(d)
                       }
-                    albums.innerHTML = elem.join(' ')
                     console.log('446 ' + data)
                 }
             }
@@ -845,11 +847,42 @@
                     let data = JSON.parse(this.response)
                     console.log('464 ' + data)
                     let items = data['items']
-                    let elem = []
                     for (const pla of items){
-                        elem.push(`<div class="con3" tabindex="0" id=${pla['track']['id']} style="background-image: url(${pla['track']['album']['images'][1]['url']});background-repeat: no-repeat;background-size: cover" onclick="playtrack('${pla['track']['id']}')">${list(pla['track']['artists'])} -  ${pla['track']['name']}<audio type="audio/mpeg" preload="none" id="a_${pla['track']['id']}" src="${pla['track']['preview_url']}"></div>`)
+                        let d = document.createElement('div')
+                        d.tabIndex = 0
+                        d.className = 'con3'
+                        d.style.backgroundImage = `url(${pla['track']['album']['images'][1]['url']})`
+                        d.style.backgroundRepeat = 'no-repeat'
+                        d.style.backgroundSize = 'cover'
+                        d.innerText = `${list(pla['track']['artists'])} -  ${pla['track']['name']}`
+                        let a = document.createElement('audio')
+                        a.type = "audio/mpeg"
+                        a.preload = 'none'
+                        if (pla['track']['preview_url'])
+                            a.src = `${pla['track']['preview_url']}`
+                        else{
+                            d.style.opacity = '.5'
+                        }
+                        d.appendChild(a)
+                        d.addEventListener('click',function (e) {
+                            let target = e.target
+                            let audios = target.lastChild
+                            for (let i = 0; i < allaudio.length; i++) {
+                                 if (allaudio[i] == e.target.lastChild){
+
+                                 } else {
+                                     allaudio[i].pause()
+                                 }
+                         }
+
+                            if (audios.paused == false){
+                                audios.pause()
+                            } else{
+                                audios.play()
+                            }
+                            })
+                        document.getElementById('savedtrack').appendChild(d)
                     }
-                    document.getElementById('savedtrack').innerHTML += elem.join(' ')
                     if (items.length > 0){
                         sendRequest(offset+50)
 
@@ -881,15 +914,50 @@
                     let items = data['artists']['items']
                     let elem = []
                       for (const it of items){
-                          elem.push(`<div class="con3" tabindex="0" id=fw_${it['id']} onclick="playtrackat('${it['id']}','fw')" style="background-image: url(${it['images'][1]['url']});background-repeat: no-repeat;background-size: cover">${it['name']}<audio id="fwa_${it['id']}">${followedartist(it['id'])}</audio></div>`)
+                                                    let d = document.createElement('div')
+                        d.tabIndex = 0
+                        d.className = 'con3'
+                        d.style.backgroundImage = `url(${it['images'][1]['url']})`
+                        d.style.backgroundRepeat = 'no-repeat'
+                        d.style.backgroundSize = 'cover'
+                        d.innerText = `${it['name']}`
+                        let a = document.createElement('audio')
+                        a.type = "audio/mpeg"
+                        a.preload = 'none'
+                        followedartist(`${it['id']}`,function (e) {
+                            if (e!=null){
+                                a.src = e
+                            } else{
+                                d.style.opacity = '.5'
+                            }
+                        })
+                        d.appendChild(a)
+                        d.addEventListener('click',function (e) {
+                            let target = e.target
+                            let audios = target.lastChild
+                            for (let i = 0; i < allaudio.length; i++) {
+                                 if (allaudio[i] == e.target.lastChild){
+
+                                 } else {
+                                     allaudio[i].pause()
+                                 }
+                         }
+
+                            if (audios.paused == false){
+                                audios.pause()
+                            } else{
+                                audios.play()
+                            }
+                            })
+                          artis.appendChild(d)
+
                       }
-                      artis.innerHTML = elem.join(' ')
                     console.log('243 ' + data)
 
                 }
             }
         }
-         function followedartist(id){
+         function followedartist(id,callback){
              let url = 'https://api.spotify.com/v1/artists/' + id + '/top-tracks?market=' + localStorage.getItem('country')
             console.log('712 ' + url)
             let xhr = new XMLHttpRequest()
@@ -902,16 +970,11 @@
                     let tracks = data['tracks']
                     let fnn = (tracks.find(e =>e.preview_url))
                     if (fnn != null) {
-                        console.log('270')
-                        document.getElementById('fwa_' + id).setAttribute("type","audio/mpeg")
-                        document.getElementById('fwa_' + id).setAttribute("sid",`${fnn['id']}`)
-                        document.getElementById('fwa_' + id).setAttribute("src",`${fnn['preview_url']}`)
+                        callback(`${fnn['preview_url']}`)
                     } else {
-                            console.log(id)
-                            document.getElementById('fw_' + id).style.opacity = '.5'
-                            document.getElementById('fwa_' + id).setAttribute("src","null")
-                            document.getElementById('fw_' + id).removeAttribute('onclick')
-                            document.getElementById('fwa_' + id).innerText = ''}}
+                        callback(null)
+                        }
+                    }
 
                 else if(xhr.status === 401){
                       let curl = '/spotify/refresh_token/' + localStorage.getItem('username')
@@ -971,16 +1034,46 @@
                 if (xhr.status === 200) {
                     let data = JSON.parse(this.response)
                     let items = data['albums']
-                    let elitem = []
                     for (const it of items){
                         let tracks = it['tracks']['items']
                         let fnn = (tracks.find(e =>e.preview_url))
-                        if (fnn != null) {
-                            elitem.push(`<div class="con3" tabindex="0" id=nr_${it['id']} onclick="playtrackat('${it['id']}','nr')" style="background-image: url(${it['images'][1]['url']});background-repeat: no-repeat;background-size: cover">${list(it['artists'])} -- ${it['name']}<audio id="nra_${it['id']}" src="${fnn['preview_url']}" type="audio/mpeg"></audio></div>`)
-                    } else {
-                            elitem.push(`<div class="con3" tabindex="0" id=nr_${it['id']} style="opacity: .5;background-image: url(${it['images'][1]['url']});background-repeat: no-repeat;background-size: cover">${list(it['artists'])} -- ${it['name']}<audio id="nra_${it['id']}"></audio></div>`)}
-                      }
-                    nr.innerHTML += elitem.join(' ')
+                        let d = document.createElement('div')
+                        d.tabIndex = 0
+                        d.className = 'con3'
+                        d.style.backgroundImage = `url(${it['images'][0]['url']})`
+                        d.style.backgroundRepeat = 'no-repeat'
+                        d.style.backgroundSize = 'cover'
+                        let a = document.createElement('audio')
+                        a.type = "audio/mpeg"
+                        a.preload = 'none'
+                        if (fnn && fnn['preview_url']){
+                            a.src = `${fnn['preview_url']}`
+                            d.innerText = `${list(fnn['artists'])} -  ${fnn['name']}`
+                        }
+                        else{
+                            d.style.opacity = '.5'
+                            d.innerText = `${list(it['artists'])} -  ${it['name']}`
+                        }
+                        d.appendChild(a)
+                        d.addEventListener('click',function (e) {
+                            let target = e.target
+                            let audios = target.lastChild
+                            for (let i = 0; i < allaudio.length; i++) {
+                                 if (allaudio[i] == e.target.lastChild){
+
+                                 } else {
+                                     allaudio[i].pause()
+                                 }
+                         }
+
+                            if (audios.paused == false){
+                                audios.pause()
+                            } else{
+                                audios.play()
+                            }
+                            })
+                        nr.appendChild(d)
+                    }
                     if (items.length > 0){
                         getnewrelease(offset+20)
                 } else if (offset == 100) {
@@ -1055,3 +1148,349 @@
                 }
               });
             }
+
+            document.getElementById('srch').addEventListener('input',delay(function (e) {
+                if (document.getElementById('srch').value){
+                    let value = document.getElementById('srch').value
+                    let url = 'https://api.spotify.com/v1/search/?q=' + value + '&type=album,artist,playlist,track&limit=5'
+                    console.log('712 ' + url)
+                    let xhr = new XMLHttpRequest()
+                    xhr.open('GET',url,true)
+                    xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
+                    xhr.send()
+                    xhr.onload = function (){
+                        if (xhr.status === 200){
+                            let songs = document.getElementById('s1')
+                            let arti = document.getElementById('ar1')
+                            let albu = document.getElementById('al1')
+                            let play = document.getElementById('p1')
+                            let data = JSON.parse(this.response)
+                            let albums = data['albums']['items']
+                            let artists = data['artists']['items']
+                            let playlists = data['playlists']['items']
+                            let tracks = data['tracks']['items']
+
+                            console.log(albums)
+                            console.log(artists)
+                            console.log(playlists)
+                            console.log(tracks)
+                            for (const alb of albums){
+                                let main = document.createElement('div')
+                                main.className = 'playable-search'
+                                let d = document.createElement('div')
+                                d.tabIndex = 0
+                                d.className = 'con3'
+                                d.style.backgroundImage = `url(${alb['images'][0]['url']})`
+                                d.style.backgroundRepeat = 'no-repeat'
+                                d.style.backgroundSize = 'cover'
+                                let d1 = document.createElement('div')
+                                d1.className = 'title'
+                                let d2 = document.createElement('div')
+                                d2.textContent = `${alb['name']}`
+                                let a = document.createElement('audio')
+                                a.type = "audio/mpeg"
+                                a.preload = 'none'
+                                albumtracks(`${(alb['href'])}`,function (e) {
+                                    if (e!=null){
+                                        a.src = e
+                                    } else{
+                                        d.style.opacity = '.5'
+                                    }
+                                })
+                                d.appendChild(a)
+                                main.addEventListener('click',function (e) {
+                                let target = e.target
+                                let audios = target.firstChild.lastChild
+                                for (let i = 0; i < allaudio.length; i++) {
+                                     if (allaudio[i] == e.target.firstChild.lastChild){
+
+                                     } else {
+                                         allaudio[i].pause()
+                                     }
+                             }
+
+                                if (audios.paused == false){
+                                    audios.pause()
+                                } else{
+                                    audios.play()
+                                }
+                                })
+                                main.appendChild(d)
+                                d1.appendChild(d2)
+                                main.appendChild(d1)
+                                albu.appendChild(main)
+                            }
+                            for (const art of artists){
+                                let main = document.createElement('div')
+                                main.className = 'playable-search'
+                                let d = document.createElement('div')
+                                d.tabIndex = 0
+                                d.className = 'con3'
+                                if ((art['images']).length != 0){
+                                    d.style.backgroundImage = `url(${art['images'][0]['url']})`
+                                } else {
+                                    d.style.backgroundColor = 'grey'
+                                }
+                                d.style.backgroundRepeat = 'no-repeat'
+                                d.style.backgroundSize = 'cover'
+                                d.style.borderRadius = '50%'
+                                let d1 = document.createElement('div')
+                                d1.className = 'title'
+                                let d2 = document.createElement('div')
+                                d2.textContent = `${art['name']}`
+
+                                let a = document.createElement('audio')
+                                a.type = "audio/mpeg"
+                                a.preload = 'none'
+                                artisttracks(`${(art['href'])}`,function (e) {
+                                    if (e!=null){
+                                        a.src = e
+                                    } else{
+                                        d.style.opacity = '.5'
+                                    }
+                                })
+                                d.appendChild(a)
+                                main.addEventListener('click',function (e) {
+                                let target = e.target
+                                let audios = target.firstChild.lastChild
+                                for (let i = 0; i < allaudio.length; i++) {
+                                     if (allaudio[i] == e.target.firstChild.lastChild){
+
+                                     } else {
+                                         allaudio[i].pause()
+                                     }
+                             }
+
+                                if (audios.paused == false){
+                                    audios.pause()
+                                } else{
+                                    audios.play()
+                                }
+                                })
+                                main.appendChild(d)
+                                d1.appendChild(d2)
+                                main.appendChild(d1)
+                                arti.appendChild(main)
+                            }
+                            for (const pls of playlists){
+                                let main = document.createElement('div')
+                                main.className = 'playable-search'
+                                let d = document.createElement('div')
+                                d.tabIndex = 0
+                                d.className = 'con3'
+                                d.style.backgroundImage = `url(${pls['images'][0]['url']})`
+                                d.style.backgroundRepeat = 'no-repeat'
+                                d.style.backgroundSize = 'cover'
+                                let d1 = document.createElement('div')
+                                d1.className = 'title'
+                                let d2 = document.createElement('div')
+                                d2.textContent = `${pls['name']}`
+                                let a = document.createElement('audio')
+                                a.type = "audio/mpeg"
+                                a.preload = 'none'
+                                pltracks(`${(pls['tracks']['href'])}`,function (e) {
+                                    if (e!=null){
+                                        a.src = e
+                                    } else{
+                                        d.style.opacity = '.5'
+                                    }
+                                })
+                                d.appendChild(a)
+                                main.addEventListener('click',function (e) {
+                                let target = e.target
+                                let audios = target.firstChild.lastChild
+                                for (let i = 0; i < allaudio.length; i++) {
+                                     if (allaudio[i] == e.target.firstChild.lastChild){
+
+                                     } else {
+                                         allaudio[i].pause()
+                                     }
+                             }
+
+                                if (audios.paused == false){
+                                    audios.pause()
+                                } else{
+                                    audios.play()
+                                }
+                                })
+                                main.appendChild(d)
+                                d1.appendChild(d2)
+                                main.appendChild(d1)
+                                play.appendChild(main)
+                            }
+                            for (const pla of tracks){
+                                let main = document.createElement('div')
+                                main.className = 'playable-search'
+                                let d = document.createElement('div')
+                                d.tabIndex = 0
+                                d.className = 'con3'
+                                d.style.backgroundImage = `url(${pla['album']['images'][0]['url']})`
+                                d.style.backgroundRepeat = 'no-repeat'
+                                d.style.backgroundSize = 'cover'
+                                let d1 = document.createElement('div')
+                                d1.className = 'title'
+                                let d2 = document.createElement('div')
+                                d2.textContent = `${list(pla['artists'])} -  ${pla['name']}`
+                                let a = document.createElement('audio')
+                                a.type = "audio/mpeg"
+                                a.preload = 'none'
+                                if (pla['preview_url'])
+                                    a.src = `${pla['preview_url']}`
+                                else{
+                                    d.style.opacity = '.5'
+                                }
+                                d.appendChild(a)
+                                main.addEventListener('click',function (e) {
+                                let target = e.target
+                                let audios = target.firstChild.lastChild
+                                for (let i = 0; i < allaudio.length; i++) {
+                                     if (allaudio[i] == e.target.firstChild.lastChild){
+
+                                     } else {
+                                         allaudio[i].pause()
+                                     }
+                             }
+
+                                if (audios.paused == false){
+                                    audios.pause()
+                                } else{
+                                    audios.play()
+                                }
+                                })
+                                main.appendChild(d)
+                                d1.appendChild(d2)
+                                main.appendChild(d1)
+                                songs.appendChild(main)
+                                }
+                        }
+
+
+                        else if(xhr.status === 401){
+                              let curl = '/spotify/refresh_token/' + localStorage.getItem('username')
+                              let xhr = new XMLHttpRequest()
+                              xhr.open('GET',curl,true)
+                              xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
+                              xhr.send()
+                              xhr.onload = function (){
+                                if (xhr.status === 200){
+                                    console.log('errr')
+                        }
+                    }
+                          }
+                    }
+                }
+            }, 1000));
+
+            function delay(callback, ms) {
+              var timer = 0;
+              return function() {
+                var context = this, args = arguments;
+                clearTimeout(timer);
+                timer = setTimeout(function () {
+                  callback.apply(context, args);
+                }, ms || 0);
+              }}
+
+            function pltracks(href,callback) {
+                let url = href
+                console.log('994' + url)
+                let xhr = new XMLHttpRequest()
+                xhr.open('GET',url,true)
+                xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
+                xhr.send()
+                xhr.onload = function (){
+                    if (xhr.status === 200) {
+                        let data = JSON.parse(this.response)
+                        let playtrack = data['items']
+                        if (playtrack[0]['track']["preview_url"]){
+                            callback(playtrack[0]['track']["preview_url"])
+                        }
+                         else {
+                             callback(null)
+                         }
+                    }
+
+
+
+                    else if(xhr.status === 401){
+                              let curl = '/spotify/refresh_token/' + localStorage.getItem('username')
+                              let xhr = new XMLHttpRequest()
+                              xhr.open('GET',curl,true)
+                              xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
+                              xhr.send()
+                              xhr.onload = function (){
+                                if (xhr.status === 200){
+                                    console.log('967 errr')
+                        }
+                    }
+                          }
+                    }
+
+        }
+        function albumtracks(href,callback) {
+                let url = href + '/tracks'
+                let xhr = new XMLHttpRequest()
+                xhr.open('GET',url,true)
+                xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
+                xhr.send()
+                xhr.onload = function (){
+                    if (xhr.status === 200){
+                        let data = JSON.parse(this.response)
+                        let items = data['items']
+                        let fnn = (items.find(e =>e.preview_url))
+                        if (fnn != null) {
+                            callback(`${fnn['preview_url']}`)
+                        } else {
+                            callback(null)
+                        }
+                    }
+
+
+                    else if(xhr.status === 401){
+                              let curl = '/spotify/refresh_token/' + localStorage.getItem('username')
+                              let xhr = new XMLHttpRequest()
+                              xhr.open('GET',curl,true)
+                              xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
+                              xhr.send()
+                              xhr.onload = function (){
+                                if (xhr.status === 200){
+                                    console.log('1001 errr')
+                        }
+                    }
+                          }
+                    }
+
+        }
+        function artisttracks(href,callback) {
+                let url = href + '/top-tracks?market=' + localStorage.getItem('country')
+                let xhr = new XMLHttpRequest()
+                xhr.open('GET',url,true)
+                xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
+                xhr.send()
+                xhr.onload = function (){
+                    if (xhr.status === 200){
+                        let data = JSON.parse(this.response)
+                        console.log('1061' + data)
+                        let items = data['tracks']
+                        let fnn = (items.find(e =>e.preview_url))
+                        if (fnn != null) {
+                            callback(`${fnn['preview_url']}`)
+                        } else {
+                            callback(null)
+                        }
+                    }
+                    else if(xhr.status === 401){
+                              let curl = '/spotify/refresh_token/' + localStorage.getItem('username')
+                              let xhr = new XMLHttpRequest()
+                              xhr.open('GET',curl,true)
+                              xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
+                              xhr.send()
+                              xhr.onload = function (){
+                                if (xhr.status === 200){
+                                    console.log('1001 errr')
+                        }
+                    }
+                          }
+                    }
+
+        }

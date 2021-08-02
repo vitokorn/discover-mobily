@@ -71,6 +71,27 @@
         <button id="refresh_newrelease" class="refresh-end" onclick="refr('refresh_newrelease')"><img id="icon_newrelease" height="12" src="../static/images/refresh-icon.svg"></button>
         <div id="newrelease" class="container-fluid con2"></div>
     </div>
+    <label>
+        <input id="srch" type="search">
+    </label>
+    <div id="search" class="search">
+    <div style="grid-area: 1 / 1 / 2 / 2;">
+        <h4>Songs</h4>
+        <div id="s1"></div>
+    </div>
+    <div style="grid-area: 1 / 2 / 2 / 3;">
+        <h4>Artists</h4>
+        <div id="ar1"></div>
+    </div>
+    <div style="grid-area: 2 / 1 / 3 / 2;">
+        <h4>Albums</h4>
+        <div id="al1"></div>
+    </div>
+    <div style="grid-area: 2 / 2 / 3 / 3;">
+        <h4>Playlists</h4>
+        <div id="p1"></div>
+    </div>
+    </div>
 {% endblock %}
 {% block javascript %}
 

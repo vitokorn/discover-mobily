@@ -410,3 +410,22 @@ footer{
 .hr-line-dashed {
   border-top: 1px dotted #e7eaec;
 }
+
+.search{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    row-gap: 16px;
+}
+.playable-search{
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+.playable-search:hover {
+    opacity: .85;
+}
+.title{
+    position: relative;
+    left: 3%;
+}
