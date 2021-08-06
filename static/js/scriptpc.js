@@ -22,7 +22,7 @@
         }
         function initElement(id) {
             console.log('58 ' + id)
-            let url = 'https://api.spotify.com/v1/playlists/' + id + '?fields=name,id,description,images,tracks(items(track(name,preview_url,id,artists,album(artists,id,images))))'
+            let url = 'https://api.spotify.com/v1/playlists/' + id + '?fields=name,id,description,images,tracks(items(track(name,preview_url,id,artists,album(album_type,artists,id,images,name))))'
             console.log('60 ' + url)
             let xhr = new XMLHttpRequest()
             xhr.open('GET',url,true)
@@ -31,7 +31,7 @@
             xhr.onload = function (){
                 if (xhr.status === 200){
                     let data = JSON.parse(this.response)
-                    console.log('68 ' + data)
+                    console.log('68 ' + JSON.stringify(this.response))
                     let tracks = document.getElementById('tracks')
                     let name = data['name']
                     let description = data['description']
@@ -72,6 +72,7 @@
                     trid.className = 'con2'
                     tracks.appendChild(trid)
                     for (const pla of playtrack){
+                        console.log('75 ' + pla)
                         let d = document.createElement('div')
                         d.tabIndex = 0
                         d.className = 'con3'
@@ -98,6 +99,60 @@
                                 let audios = target.lastChild
                                 audios.pause()
                             })
+                        d.addEventListener('click',function () {
+                            let info = document.createElement('div')
+                            info.style.display = 'flex'
+                            let playable = document.createElement('div')
+                            playable.className = 'con3'
+                            playable.style.backgroundImage = `url(${pla['track']['album']['images'][0]['url']})`
+                            playable.style.backgroundRepeat = 'no-repeat'
+                            playable.style.backgroundSize = 'cover'
+                            playable.innerText = `${list(pla['track']['artists'])} -  ${pla['track']['name']}`
+                            playable.addEventListener('mouseover',function (e) {
+                            let target = e.target
+                            let audios = target.lastChild
+                            audios.play()
+                            })
+                            playable.addEventListener('mouseleave',function (e) {
+                                    let target = e.target
+                                    let audios = target.lastChild
+                                    audios.pause()
+                                })
+                            let trackinfo = document.createElement('div')
+                            trackinfo.style.flexGrow = 5
+                            trackinfo.innerText = `${pla['track']['name']}`
+                            let tracktype = document.createElement('div')
+                            tracktype.innerText = 'From the ' + `${pla['track']['album']['album_type']}` + ' ' + `${pla['track']['album']['name']}`
+                            let trackartist = document.createElement('div')
+                            trackartist.innerText = 'By ' + `${list(pla['track']['artists'])}`
+                            let recomend = document.createElement('span')
+                            recomend.innerText = 'Recomended songs based on this'
+                            recomend.style.color = '#f037a5'
+                            recomend.addEventListener('click',function () {
+                                let url = 'https://api.spotify.com/v1/audio-features?ids=' + `${pla['track']['id']}` + '&limit=100&offset=0&market=' + localStorage.getItem('country')
+                                let xhr = new XMLHttpRequest()
+                                xhr.open('GET',url,true)
+                                xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
+                                xhr.send()
+                                xhr.onload = function (){
+                                if (xhr.status === 200){
+                                    let data = JSON.parse(xhr.response)
+                                    console.log('140 ' +  JSON.stringify(xhr.response))
+                                }
+                            }
+                            })
+                            let artistcirle = document.createElement('div')
+                            for (const ar of pla['track']['artists']){
+                                artistcirle.innerText += ar.name + ' '
+                            }
+                            info.appendChild(playable)
+                            info.appendChild(trackinfo)
+                            info.appendChild(artistcirle)
+                            trackinfo.appendChild(tracktype)
+                            trackinfo.appendChild(trackartist)
+                            trackinfo.appendChild(recomend)
+                            tracks.appendChild(info)
+                        })
                         trid.appendChild(d)
                     }
 
@@ -1075,6 +1130,10 @@
                             let arti = document.getElementById('ar1')
                             let albu = document.getElementById('al1')
                             let play = document.getElementById('p1')
+                            songs.innerHTML = ''
+                            arti.innerHTML = ''
+                            albu.innerHTML = ''
+                            play.innerHTML = ''
                             let data = JSON.parse(this.response)
                             let albums = data['albums']['items']
                             let artists = data['artists']['items']
@@ -1261,6 +1320,7 @@
                     }
                           }
                     }
+                    document.getElementById('search').style.visibility = 'unset'
                 }
             }, 1000));
 

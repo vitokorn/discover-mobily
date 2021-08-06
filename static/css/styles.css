@@ -68,7 +68,6 @@ header{
 }
 .con2{
     width: 100%;
-    overflow: auto;
     background-size: cover;
     display: flex;
     -moz-box-pack: start;

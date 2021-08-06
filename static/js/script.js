@@ -1169,7 +1169,10 @@
                             let artists = data['artists']['items']
                             let playlists = data['playlists']['items']
                             let tracks = data['tracks']['items']
-
+                            songs.innerHTML = ''
+                            arti.innerHTML = ''
+                            albu.innerHTML = ''
+                            play.innerHTML = ''
                             console.log(albums)
                             console.log(artists)
                             console.log(playlists)

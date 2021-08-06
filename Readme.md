@@ -56,7 +56,7 @@ requests
 | New Releases | &#9745;     | &#9745;|
 | Genres          | &#9745;     | &#9744;|
 | Spotify Playlists | &#9745;   | &#9744;|
-| Search          | &#9745;     | &#9744;|
+| Search          | &#9745;     | &#9745;|
 | Charts          | &#9745;     | &#9744;|
 | Random Artist   | &#9745;     | &#9744;|
 | Random Genre   | &#9745;     | &#9744;|
