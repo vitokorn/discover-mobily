@@ -100,61 +100,10 @@
                                 audios.pause()
                             })
                         d.addEventListener('click',function () {
-                            let info = document.createElement('div')
-                            info.style.display = 'flex'
-                            let playable = document.createElement('div')
-                            playable.className = 'con3'
-                            playable.style.backgroundImage = `url(${pla['track']['album']['images'][0]['url']})`
-                            playable.style.backgroundRepeat = 'no-repeat'
-                            playable.style.backgroundSize = 'cover'
-                            playable.innerText = `${list(pla['track']['artists'])} -  ${pla['track']['name']}`
-                            playable.addEventListener('mouseover',function (e) {
-                            let target = e.target
-                            let audios = target.lastChild
-                            audios.play()
-                            })
-                            playable.addEventListener('mouseleave',function (e) {
-                                    let target = e.target
-                                    let audios = target.lastChild
-                                    audios.pause()
-                                })
-                            let trackinfo = document.createElement('div')
-                            trackinfo.style.flexGrow = 5
-                            trackinfo.innerText = `${pla['track']['name']}`
-                            let tracktype = document.createElement('div')
-                            tracktype.innerText = 'From the ' + `${pla['track']['album']['album_type']}` + ' ' + `${pla['track']['album']['name']}`
-                            let trackartist = document.createElement('div')
-                            trackartist.innerText = 'By ' + `${list(pla['track']['artists'])}`
-                            let recomend = document.createElement('span')
-                            recomend.innerText = 'Recomended songs based on this'
-                            recomend.style.color = '#f037a5'
-                            recomend.addEventListener('click',function () {
-                                let url = 'https://api.spotify.com/v1/audio-features?ids=' + `${pla['track']['id']}` + '&limit=100&offset=0&market=' + localStorage.getItem('country')
-                                let xhr = new XMLHttpRequest()
-                                xhr.open('GET',url,true)
-                                xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
-                                xhr.send()
-                                xhr.onload = function (){
-                                if (xhr.status === 200){
-                                    let data = JSON.parse(xhr.response)
-                                    console.log('140 ' +  JSON.stringify(xhr.response))
-                                }
-                            }
-                            })
-                            let artistcirle = document.createElement('div')
-                            for (const ar of pla['track']['artists']){
-                                artistcirle.innerText += ar.name + ' '
-                            }
-                            info.appendChild(playable)
-                            info.appendChild(trackinfo)
-                            info.appendChild(artistcirle)
-                            trackinfo.appendChild(tracktype)
-                            trackinfo.appendChild(trackartist)
-                            trackinfo.appendChild(recomend)
-                            tracks.appendChild(info)
+                            deeper(pla,tracks,'playlist')
                         })
                         trid.appendChild(d)
-                    }
+}
 
                 } else if(xhr.status === 401){
                     let url = '/spotify/refresh_token/' + localStorage.getItem('username');
@@ -287,6 +236,9 @@
                                 let audios = target.lastChild
                                 audios.pause()
                             })
+                          d.addEventListener('click',function () {
+                              deep_artist(artis,it)
+                          })
                         artis.appendChild(d)
                       }
 
@@ -610,6 +562,9 @@
                                 let audios = target.lastChild
                                 audios.pause()
                             })
+                        d.addEventListener('click',function () {
+                            deeper(pla,tracks,'tt')
+                        })
                         tracks.appendChild(d)
                       }
                     document.getElementById('toptrack').style.display = 'flex'
@@ -777,7 +732,6 @@
                     albums.innerHTML = ''
                     let savedalbum = data['items']
                     console.log('435 ' + savedalbum)
-                    let elem = []
                     for (const sa of savedalbum){
                         let d = document.createElement('div')
                         d.tabIndex = 0
@@ -807,6 +761,9 @@
                                     let audios = target.lastChild
                                     audios.pause()
                                 })
+                        d.addEventListener('click',function () {
+                            deeper(sa,albums,'album')
+                        })
                         albums.appendChild(d)
                       }
                 }
@@ -862,6 +819,9 @@
                                     let audios = target.lastChild
                                     audios.pause()
                                 })
+                        d.addEventListener('click',function () {
+                            deeper(pla,document.getElementById('savedtrack'),'playlist')
+                        })
                         document.getElementById('savedtrack').appendChild(d)
                     }
                     if (items.length > 0){
@@ -922,6 +882,9 @@
                                     let audios = target.lastChild
                                     audios.pause()
                                 })
+                          d.addEventListener('click',function () {
+                              deep_artist(artis,it)
+                          })
                           artis.appendChild(d)
                       }
 
@@ -1035,6 +998,9 @@
                             let audios = target.lastChild
                             audios.pause()
                                 })
+                        d.addEventListener('click',function () {
+                            deeper(it,nr,'nr')
+                        })
                         nr.appendChild(d)
                     }
                     if (items.length > 0){
@@ -1437,3 +1403,658 @@
                     }
 
         }
+function deeper(pla,tracks,type) {
+                if (document.getElementById('rectrack')) {
+                    document.getElementById('rectrack').remove()
+                    if (document.getElementById('recartist')){
+                        document.getElementById('recartist').remove()
+                    }
+                }
+                if (type=='playlist'){
+                    let info = document.createElement('div')
+                            info.style.display = 'flex'
+                            info.id = 'rectrack'
+                            let playable = document.createElement('div')
+                            playable.className = 'con3'
+                            playable.style.backgroundImage = `url(${pla['track']['album']['images'][0]['url']})`
+                            playable.style.backgroundRepeat = 'no-repeat'
+                            playable.style.backgroundSize = 'cover'
+                            playable.innerText = `${list(pla['track']['artists'])} -  ${pla['track']['name']}`
+                            let playaudio = document.createElement('audio')
+                            if (pla['track']['preview_url'])
+                            playaudio.src = `${pla['track']['preview_url']}`
+                            else{
+                                playable.style.opacity = '.5'
+                            }
+                            playable.addEventListener('mouseover',function (e) {
+                            let target = e.target
+                            let audios = target.lastChild
+                            audios.play()
+                            })
+                            playable.addEventListener('mouseleave',function (e) {
+                                    let target = e.target
+                                    let audios = target.lastChild
+                                    audios.pause()
+                                })
+                            let trackinfo = document.createElement('div')
+                            trackinfo.style.flexGrow = 5
+                            trackinfo.innerText = `${pla['track']['name']}`
+                            let tracktype = document.createElement('div')
+                            tracktype.innerText = 'From the ' + `${pla['track']['album']['album_type']}` + ' ' + `${pla['track']['album']['name']}`
+                            let trackartist = document.createElement('div')
+                            trackartist.innerText = 'By ' + `${list(pla['track']['artists'])}`
+                            let recomend = document.createElement('span')
+                            recomend.innerText = 'Recomended songs based on this'
+                            recomend.style.color = '#f037a5'
+                            recomend.addEventListener('click',function () {
+                                if (document.getElementById('rec_' + pla['track']['id'])){
+                                    document.getElementById('rec_' + pla['track']['id']).style.display = 'flex'
+                                } else{
+                                    let url = 'https://api.spotify.com/v1/recommendations?seed_tracks=' + `${pla['track']['id']}` + '&limit=50&offset=0&market=' + localStorage.getItem('country')
+                                let xhr = new XMLHttpRequest()
+                                xhr.open('GET',url,true)
+                                xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
+                                xhr.send()
+                                xhr.onload = function (){
+                                if (xhr.status === 200){
+                                    let data = JSON.parse(xhr.response)
+                                    let rstracks = data['tracks']
+                                    let rc = document.createElement('div')
+                                    rc.className = 'con2'
+                                    rc.id = 'rec_' + pla['track']['id']
+                                    for (const rst of rstracks) {
+                                        let rd = document.createElement('div')
+                                        rd.tabIndex = 0
+                                        rd.className = 'con3'
+                                        rd.style.backgroundImage = `url(${rst['album']['images'][0]['url']})`
+                                        rd.style.backgroundRepeat = 'no-repeat'
+                                        rd.style.backgroundSize = 'cover'
+                                        rd.innerText = `${list(rst['artists'])} -  ${rst['name']}`
+                                        let ra = document.createElement('audio')
+                                        ra.type = "audio/mpeg"
+                                        ra.preload = 'none'
+                                        if (rst['preview_url'])
+                                            ra.src = `${rst['preview_url']}`
+                                        else {
+                                            rd.style.opacity = '.5'
+                                        }
+                                        rd.appendChild(a)
+                                        rd.addEventListener('mouseover', function (e) {
+                                            let target = e.target
+                                            let audios = target.lastChild
+                                            audios.play()
+                                        })
+                                        rd.addEventListener('mouseleave', function (e) {
+                                            let target = e.target
+                                            let audios = target.lastChild
+                                            audios.pause()
+                                        })
+                                        rd.appendChild(ra)
+                                        rc.appendChild(rd)
+                                    tracks.appendChild(rc)
+                                    }
+                                }}
+                                }
+                            })
+                            let artistcirle = document.createElement('div')
+                            for (const ar of pla['track']['artists']){
+                                let artst = document.createElement('div')
+                                artst.innerText =  ar['name']
+                                artst.addEventListener('click',function () {
+                                    deep_artist(tracks,ar)
+                                })
+                                artistcirle.appendChild(artst)
+                            }
+                            playable.appendChild(playaudio)
+                            info.appendChild(playable)
+                            info.appendChild(trackinfo)
+                            info.appendChild(artistcirle)
+                            trackinfo.appendChild(tracktype)
+                            trackinfo.appendChild(trackartist)
+                            trackinfo.appendChild(recomend)
+                            tracks.appendChild(info)
+                } else if (type == 'tt'){
+                    console.log('1496 pla ' + pla)
+let info = document.createElement('div')
+                            info.style.display = 'flex'
+                    info.id = 'rectrack'
+                            let playable = document.createElement('div')
+                            playable.className = 'con3'
+                            playable.style.backgroundImage = `url(${pla['album']['images'][0]['url']})`
+                            playable.style.backgroundRepeat = 'no-repeat'
+                            playable.style.backgroundSize = 'cover'
+                            playable.innerText = `${list(pla['artists'])} -  ${pla['name']}`
+                            let playaudio = document.createElement('audio')
+                            if (pla['preview_url'])
+                            playaudio.src = `${pla['preview_url']}`
+                            else{
+                                playable.style.opacity = '.5'
+                            }
+                            playable.addEventListener('mouseover',function (e) {
+                            let target = e.target
+                            let audios = target.lastChild
+                            audios.play()
+                            })
+                            playable.addEventListener('mouseleave',function (e) {
+                                    let target = e.target
+                                    let audios = target.lastChild
+                                    audios.pause()
+                                })
+                            let trackinfo = document.createElement('div')
+                            trackinfo.style.flexGrow = 5
+                            trackinfo.innerText = `${pla['name']}`
+                            let tracktype = document.createElement('div')
+                            tracktype.innerText = 'From the ' + `${pla['album']['album_type']}` + ' ' + `${pla['album']['name']}`
+                            let trackartist = document.createElement('div')
+                            trackartist.innerText = 'By ' + `${list(pla['artists'])}`
+                            let recomend = document.createElement('span')
+                            recomend.innerText = 'Recomended songs based on this'
+                            recomend.style.color = '#f037a5'
+                            recomend.addEventListener('click',function () {
+                                if (document.getElementById('rec_' + pla['id'])){
+                                    document.getElementById('rec_' + pla['id']).style.display = 'flex'
+                                } else{
+                                    let url = 'https://api.spotify.com/v1/recommendations?seed_tracks=' + `${pla['id']}` + '&limit=50&offset=0&market=' + localStorage.getItem('country')
+                                let xhr = new XMLHttpRequest()
+                                xhr.open('GET',url,true)
+                                xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
+                                xhr.send()
+                                xhr.onload = function (){
+                                if (xhr.status === 200){
+                                    let data = JSON.parse(xhr.response)
+                                    let rstracks = data['tracks']
+                                    let rc = document.createElement('div')
+                                    rc.className = 'con2'
+                                    rc.id = 'rec_' + pla['id']
+                                    for (const rst of rstracks) {
+                                        let rd = document.createElement('div')
+                                        rd.tabIndex = 0
+                                        rd.className = 'con3'
+                                        rd.style.backgroundImage = `url(${rst['album']['images'][0]['url']})`
+                                        rd.style.backgroundRepeat = 'no-repeat'
+                                        rd.style.backgroundSize = 'cover'
+                                        rd.innerText = `${list(rst['artists'])} -  ${rst['name']}`
+                                        let ra = document.createElement('audio')
+                                        ra.type = "audio/mpeg"
+                                        ra.preload = 'none'
+                                        if (rst['preview_url'])
+                                            ra.src = `${rst['preview_url']}`
+                                        else {
+                                            rd.style.opacity = '.5'
+                                        }
+                                        rd.appendChild(a)
+                                        rd.addEventListener('mouseover', function (e) {
+                                            let target = e.target
+                                            let audios = target.lastChild
+                                            audios.play()
+                                        })
+                                        rd.addEventListener('mouseleave', function (e) {
+                                            let target = e.target
+                                            let audios = target.lastChild
+                                            audios.pause()
+                                        })
+                                        rd.appendChild(ra)
+                                        rc.appendChild(rd)
+                                    tracks.appendChild(rc)
+                                    }
+                                }}
+                                }
+                            })
+                            let artistcirle = document.createElement('div')
+                            for (const ar of pla['artists']){
+                                let artst = document.createElement('div')
+                                artst.innerText =  ar['name']
+                                artst.addEventListener('click',function () {
+                                    deep_artist(tracks,ar)
+                                })
+                                artistcirle.appendChild(artst)
+                            }
+                            playable.appendChild(playaudio)
+                            info.appendChild(playable)
+                            info.appendChild(trackinfo)
+                            info.appendChild(artistcirle)
+                            trackinfo.appendChild(tracktype)
+                            trackinfo.appendChild(trackartist)
+                            trackinfo.appendChild(recomend)
+                            tracks.appendChild(info)
+                } else if (type == 'nr') {
+                    let info = document.createElement('div')
+                            info.style.display = 'flex'
+                    info.id = 'rectrack'
+                            let playable = document.createElement('div')
+                            playable.className = 'con3'
+                            playable.style.backgroundImage = `url(${pla['images'][0]['url']})`
+                            playable.style.backgroundRepeat = 'no-repeat'
+                            playable.style.backgroundSize = 'cover'
+                            playable.innerText = `${list(pla['artists'])} -  ${pla['name']}`
+                            let playaudio = document.createElement('audio')
+                            if (pla['preview_url'])
+                            playaudio.src = `${pla['preview_url']}`
+                            else{
+                                playable.style.opacity = '.5'
+                            }
+                            playable.addEventListener('mouseover',function (e) {
+                            let target = e.target
+                            let audios = target.lastChild
+                            audios.play()
+                            })
+                            playable.addEventListener('mouseleave',function (e) {
+                                    let target = e.target
+                                    let audios = target.lastChild
+                                    audios.pause()
+                                })
+                            let trackinfo = document.createElement('div')
+                            trackinfo.style.flexGrow = 5
+                            trackinfo.innerText = `${pla['name']}`
+                            let tracktype = document.createElement('div')
+                            tracktype.innerText = 'From the ' + `${pla['album_type']}` + ' ' + `${pla['name']}`
+                            let trackartist = document.createElement('div')
+                            trackartist.innerText = 'By ' + `${list(pla['artists'])}`
+                            let recomend = document.createElement('span')
+                            recomend.innerText = 'Recomended songs based on this'
+                            recomend.style.color = '#f037a5'
+                            recomend.addEventListener('click',function () {
+                                if (document.getElementById('rec_' + pla['id'])){
+                                    document.getElementById('rec_' + pla['id']).style.display = 'flex'
+                                } else{
+                                    let url = 'https://api.spotify.com/v1/recommendations?seed_tracks=' + `${pla['id']}` + '&limit=50&offset=0&market=' + localStorage.getItem('country')
+                                let xhr = new XMLHttpRequest()
+                                xhr.open('GET',url,true)
+                                xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
+                                xhr.send()
+                                xhr.onload = function (){
+                                if (xhr.status === 200){
+                                    let data = JSON.parse(xhr.response)
+                                    let rstracks = data['tracks']
+                                    let rc = document.createElement('div')
+                                    rc.className = 'con2'
+                                    rc.id = 'rec_' + pla['id']
+                                    for (const rst of rstracks) {
+                                        let rd = document.createElement('div')
+                                        rd.tabIndex = 0
+                                        rd.className = 'con3'
+                                        rd.style.backgroundImage = `url(${rst['album']['images'][0]['url']})`
+                                        rd.style.backgroundRepeat = 'no-repeat'
+                                        rd.style.backgroundSize = 'cover'
+                                        rd.innerText = `${list(rst['artists'])} -  ${rst['name']}`
+                                        let ra = document.createElement('audio')
+                                        ra.type = "audio/mpeg"
+                                        ra.preload = 'none'
+                                        if (rst['preview_url'])
+                                            ra.src = `${rst['preview_url']}`
+                                        else {
+                                            rd.style.opacity = '.5'
+                                        }
+                                        rd.appendChild(a)
+                                        rd.addEventListener('mouseover', function (e) {
+                                            let target = e.target
+                                            let audios = target.lastChild
+                                            audios.play()
+                                        })
+                                        rd.addEventListener('mouseleave', function (e) {
+                                            let target = e.target
+                                            let audios = target.lastChild
+                                            audios.pause()
+                                        })
+                                        rd.appendChild(ra)
+                                        rc.appendChild(rd)
+                                    tracks.appendChild(rc)
+                                    }
+                                }}
+                                }
+                            })
+                            let artistcirle = document.createElement('div')
+                            for (const ar of pla['artists']){
+                                let artst = document.createElement('div')
+                                artst.innerText =  ar['name']
+                                artst.addEventListener('click',function () {
+                                    deep_artist(tracks,ar)
+                                })
+                                artistcirle.appendChild(artst)
+                            }
+                            playable.appendChild(playaudio)
+                            info.appendChild(playable)
+                            info.appendChild(trackinfo)
+                            info.appendChild(artistcirle)
+                            trackinfo.appendChild(tracktype)
+                            trackinfo.appendChild(trackartist)
+                            trackinfo.appendChild(recomend)
+                            tracks.appendChild(info)
+                }
+}
+function deep_artist(tracks,ar) {
+                if (document.getElementById('recartist') !== null){
+                    document.getElementById('recartist').remove()
+                }
+const ab = document.createElement('div')
+
+                                    ab.style.display = 'grid'
+                                    ab.style.gridGap = '16px'
+                                    ab.id = 'recartist'
+                                    let arurl = 'https://api.spotify.com/v1/artists/' + ar['id']
+                                    let arxhr = new XMLHttpRequest()
+                                    arxhr.open('GET',arurl,true)
+                                    arxhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
+                                    arxhr.send()
+                                    arxhr.onload = function (){
+                                        if (arxhr.status === 200){
+                                            let data = JSON.parse(arxhr.response)
+                                            console.log('202' + data)
+                                            let dv = document.createElement('div')
+                                            dv.className = 'con3'
+                                            dv.style.gridColumn = '1 / 3'
+                                            dv.id = ar['id']
+                                            dv.style.backgroundImage = `url(${data['images'][0]['url']})`
+                                            dv.style.backgroundRepeat = 'no-repeat'
+                                            dv.style.backgroundSize = 'cover'
+                                            dv.addEventListener('mouseover',function (e) {
+                                            let target = e.target
+                                            let audios = target.lastChild
+                                            audios.play()
+                                            })
+                                            dv.addEventListener('mouseleave',function (e) {
+                                                    let target = e.target
+                                                    let audios = target.lastChild
+                                                    audios.pause()
+                                                })
+                                            let artinfo = document.createElement('div')
+                                            artinfo.style.gridColumn = '3 / 8'
+                                            artinfo.innerText = data['name']
+                                            let af = document.createElement('div')
+                                            af.innerText = data['followers']['total'] + ' followers'
+                                            let ag = document.createElement('div')
+                                            ag.innerText = data['genres']
+                                            let arr = document.createElement('div')
+                                            arr.innerText = 'Recomended songs based on this'
+                                            arr.style.color = '#f037a5'
+                                            arr.addEventListener('click',function () {
+                                                if (document.getElementById('recart_' + data['id'])){
+                                                    document.getElementById('recart_' + data['id']).style.display = 'flex'
+                                                } else{
+                                                    let url = 'https://api.spotify.com/v1/recommendations?seed_artists=' + data['id'] + '&limit=50&offset=0&market=' + localStorage.getItem('country')
+                                                let xhr = new XMLHttpRequest()
+                                                xhr.open('GET',url,true)
+                                                xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
+                                                xhr.send()
+                                                xhr.onload = function (){
+                                                if (xhr.status === 200){
+                                                    let data = JSON.parse(xhr.response)
+                                                    let rstracks = data['tracks']
+                                                    let rc = document.createElement('div')
+                                                    rc.className = 'con2'
+                                                    console.log('232' + ar['id'])
+                                                    rc.id = 'recart_' + ar['id']
+                                                    for (const rst of rstracks) {
+                                                        let rd = document.createElement('div')
+                                                        rd.tabIndex = 0
+                                                        rd.style.display = 'inline-block'
+                                                        rd.style.backgroundImage = `url(${rst['album']['images'][0]['url']})`
+                                                        rd.style.backgroundRepeat = 'no-repeat'
+                                                        rd.style.backgroundSize = 'cover'
+                                                        rd.innerText = `${list(rst['artists'])} -  ${rst['name']}`
+                                                        let ra = document.createElement('audio')
+                                                        ra.type = "audio/mpeg"
+                                                        ra.preload = 'none'
+                                                        if (rst['preview_url'])
+                                                            ra.src = `${rst['preview_url']}`
+                                                        else {
+                                                            rd.style.opacity = '.5'
+                                                        }
+                                                        rd.appendChild(a)
+                                                        rd.addEventListener('mouseover', function (e) {
+                                                            let target = e.target
+                                                            let audios = target.lastChild
+                                                            audios.play()
+                                                        })
+                                                        rd.addEventListener('mouseleave', function (e) {
+                                                            let target = e.target
+                                                            let audios = target.lastChild
+                                                            audios.pause()
+                                                        })
+                                                        rd.appendChild(ra)
+                                                        rc.appendChild(rd)
+                                                    tracks.appendChild(rc)
+                                    }
+                                }}
+                                }
+                            })
+                                            ab.appendChild(dv)
+                                            artinfo.appendChild(af)
+                                            artinfo.appendChild(ag)
+                                            artinfo.appendChild(arr)
+                                            ab.appendChild(artinfo)
+                                            console.log(JSON.stringify('204 ' + data['images'][0]['url']))
+                                        }
+                                    }
+                                    const grid = document.createElement('div')
+                                    grid.style.gridColumn = '1/8'
+                                    let url = 'https://api.spotify.com/v1/artists/' + ar['id'] + '/top-tracks?limit=10&market=' + localStorage.getItem('country')
+                                    let xhr = new XMLHttpRequest()
+                                    xhr.open('GET',url,true)
+                                    xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
+                                    xhr.send()
+                                    xhr.onload = function (){
+                                        if (xhr.status === 200){
+                                            let data = JSON.parse(xhr.response)
+                                            let tt = document.createElement('audio')
+                                            tt.src = data['tracks'][0]['preview_url']
+                                            document.getElementById(ar['id']).appendChild(tt)
+                                            let name = document.createElement('div')
+                                            name.innerText = 'Top tracks'
+                                            let con = document.createElement('div')
+                                            // con.style.display = 'flex'
+                                            con.className = 'col2'
+                                            grid.appendChild(name)
+                                            for (const topt of data['tracks']){
+                                                let d = document.createElement('div')
+                                                d.tabIndex = 0
+                                                d.className = 'con3'
+                                                d.style.backgroundImage = `url(${topt['album']['images'][0]['url']})`
+                                                d.style.backgroundRepeat = 'no-repeat'
+                                                d.style.backgroundSize = 'cover'
+                                                d.innerText = `${list(topt['artists'])} -  ${topt['name']}`
+                                                let a = document.createElement('audio')
+                                                a.type = "audio/mpeg"
+                                                a.preload = 'none'
+                                                if (topt['preview_url'])
+                                                    a.src = `${topt['preview_url']}`
+                                                else{
+                                                    d.style.opacity = '.5'
+                                                }
+                                                d.appendChild(a)
+                                                d.addEventListener('mouseover',function (e) {
+                                                    let target = e.target
+                                                    let audios = target.lastChild
+                                                    audios.play()
+                                                    })
+                                                d.addEventListener('mouseleave',function (e) {
+                                                        let target = e.target
+                                                        let audios = target.lastChild
+                                                        audios.pause()
+                                                    })
+                                                con.appendChild(d)
+                                                grid.appendChild(con)
+                                                ab.appendChild(grid)
+                                            }
+                                        }
+                                    }
+                                    let aurl = 'https://api.spotify.com/v1/artists/' + ar['id'] + '/albums?include_groups=album&limit=10'
+                                    let axhr = new XMLHttpRequest()
+                                    axhr.open('GET',aurl,true)
+                                    axhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
+                                    axhr.send()
+                                    axhr.onload = function (){
+                                        if (axhr.status === 200){
+                                            let data = JSON.parse(axhr.response)
+                                            let nme = document.createElement('div')
+                                            nme.innerText = 'Albums'
+                                            let con = document.createElement('div')
+                                            // con.style.display = 'flex'
+                                            con.className = 'col2'
+                                            grid.appendChild(nme)
+                                            for (const albus of data['items']){
+                                                console.log('346 ' + albus['id'])
+                                                let d = document.createElement('div')
+                                                d.tabIndex = 0
+                                                d.className = 'con3'
+                                                d.style.backgroundImage = `url(${albus['images'][0]['url']})`
+                                                d.style.backgroundRepeat = 'no-repeat'
+                                                d.style.backgroundSize = 'cover'
+                                                d.innerText = `${list(albus['artists'])} -  ${albus['name']}`
+                                                let a = document.createElement('audio')
+                                                a.type = "audio/mpeg"
+                                                a.preload = 'none'
+                                                albumtracks(`${(albus['href'])}`,function (e) {
+                                                    if (e!=null){
+                                                        a.src = e
+                                                    } else{
+                                                        d.style.opacity = '.5'
+                                                    }
+                                                })
+                                                d.appendChild(a)
+                                                d.addEventListener('mouseover',function (e) {
+                                                    let target = e.target
+                                                    let audios = target.lastChild
+                                                    audios.play()
+                                                    })
+                                                d.addEventListener('mouseleave',function (e) {
+                                                        let target = e.target
+                                                        let audios = target.lastChild
+                                                        audios.pause()
+                                                    })
+                                                con.appendChild(d)
+                                                grid.appendChild(con)
+                                                ab.appendChild(grid)
+                                            }
+
+
+                                            console.log(JSON.stringify(axhr.response))
+                                        }
+                                    }
+                                    let turl = 'https://api.spotify.com/v1/artists/' + ar['id'] + '/albums?include_groups=single,compilation'
+                                    let txhr = new XMLHttpRequest()
+                                    txhr.open('GET',turl,true)
+                                    txhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
+                                    txhr.send()
+                                    txhr.onload = function (){
+                                        if (txhr.status === 200){
+                                            let data = JSON.parse(txhr.response)
+                                            let nm = document.createElement('div')
+                                            nm.innerText = 'single'
+                                            let con = document.createElement('div')
+                                            // con.style.display = 'flex'
+                                            con.className = 'col2'
+                                            grid.appendChild(nm)
+                                            for (const sing of data['items']){
+                                                console.log('397 ' + sing['id'])
+                                                let d = document.createElement('div')
+                                                d.tabIndex = 0
+                                                d.className = 'con3'
+                                                d.style.backgroundImage = `url(${sing['images'][0]['url']})`
+                                                d.style.backgroundRepeat = 'no-repeat'
+                                                d.style.backgroundSize = 'cover'
+                                                d.innerText = `${list(sing['artists'])} -  ${sing['name']}`
+                                                let a = document.createElement('audio')
+                                                a.type = "audio/mpeg"
+                                                a.preload = 'none'
+                                                albumtracks(`${(sing['href'])}`,function (e) {
+                                                    if (e!=null){
+                                                        a.src = e
+                                                    } else{
+                                                        d.style.opacity = '.5'
+                                                    }
+                                                })
+                                                d.appendChild(a)
+                                                d.addEventListener('mouseover',function (e) {
+                                                    let target = e.target
+                                                    let audios = target.lastChild
+                                                    audios.play()
+                                                    })
+                                                d.addEventListener('mouseleave',function (e) {
+                                                        let target = e.target
+                                                        let audios = target.lastChild
+                                                        audios.pause()
+                                                    })
+                                                con.appendChild(d)
+                                                grid.appendChild(con)
+                                                ab.appendChild(grid)
+                                            }
+
+                                            console.log(JSON.stringify(txhr.response))
+                                        }
+                                    }
+                                    let aourl = 'https://api.spotify.com/v1/artists/' + ar['id'] + '/albums?include_groups=appears_on'
+                                    let aoxhr = new XMLHttpRequest()
+                                    aoxhr.open('GET',aourl,true)
+                                    aoxhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
+                                    aoxhr.send()
+                                    aoxhr.onload = function (){
+                                        if (aoxhr.status === 200){
+                                            let data = JSON.parse(aoxhr.response)
+                                            let name = document.createElement('div')
+                                            name.innerText = 'appears on'
+                                            let con = document.createElement('div')
+                                            // con.style.display = 'flex'
+                                            con.className = 'col2'
+                                            grid.appendChild(name)
+                                            for (const appear of data['items']){
+                                                console.log('441 ' + appear['id'])
+                                                let d = document.createElement('div')
+                                                d.tabIndex = 0
+                                                d.className = 'con3'
+                                                d.style.backgroundImage = `url(${appear['images'][0]['url']})`
+                                                d.style.backgroundRepeat = 'no-repeat'
+                                                d.style.backgroundSize = 'cover'
+                                                d.innerText = `${list(appear['artists'])} -  ${appear['name']}`
+                                                let a = document.createElement('audio')
+                                                a.type = "audio/mpeg"
+                                                a.preload = 'none'
+                                                albumtracks(`${(appear['href'])}`,function (e) {
+                                                    if (e!=null){
+                                                        a.src = e
+                                                    } else{
+                                                        d.style.opacity = '.5'
+                                                    }
+                                                })
+                                                d.appendChild(a)
+                                                d.addEventListener('mouseover',function (e) {
+                                                    let target = e.target
+                                                    let audios = target.lastChild
+                                                    audios.play()
+                                                    })
+                                                d.addEventListener('mouseleave',function (e) {
+                                                        let target = e.target
+                                                        let audios = target.lastChild
+                                                        audios.pause()
+                                                    })
+                                                con.appendChild(d)
+                                                grid.appendChild(con)
+                                                ab.appendChild(grid)
+                                            }
+                                            console.log(JSON.stringify(aoxhr.response))
+                                        }
+                                    }
+                                    let rurl = 'https://api.spotify.com/v1/artists/' + ar['id'] + '/related-artists'
+                                    let rxhr = new XMLHttpRequest()
+                                    rxhr.open('GET',rurl,true)
+                                    rxhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
+                                    rxhr.send()
+                                    rxhr.onload = function (){
+                                        if (rxhr.status === 200){
+                                            let data = JSON.parse(rxhr.response)
+                                            console.log(JSON.stringify(rxhr.response))
+                                        }
+                                    }
+                                    let thurl = 'https://api.spotify.com/v1/search?q="this is ' + ar['name'] + '"&type=playlist&limit=50&offset=0&market=' + localStorage.getItem('country')
+                                    let thxhr = new XMLHttpRequest()
+                                    thxhr.open('GET',thurl,true)
+                                    thxhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
+                                    thxhr.send()
+                                    thxhr.onload = function (){
+                                        if (thxhr.status === 200){
+                                            let data = JSON.parse(thxhr.response)
+                                            console.log(JSON.stringify(thxhr.response))
+                                        }
+                                    }
+                                    tracks.appendChild(ab)
+}
