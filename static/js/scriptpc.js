@@ -230,7 +230,7 @@
                         let a = document.createElement('audio')
                         a.type = "audio/mpeg"
                         a.preload = 'none'
-                        artisttrack(`${it['id']}`,'al',function (e) {
+                        artisttrack(`${it['id']}`,function (e) {
                             if (e!=null){
                                 a.src = e
                             } else{
@@ -294,7 +294,7 @@
                         let a = document.createElement('audio')
                         a.type = "audio/mpeg"
                         a.preload = 'none'
-                        artisttrack(`${it['id']}`,'al',function (e) {
+                        artisttrack(`${it['id']}`,function (e) {
                             if (e!=null){
                                 a.src = e
                             } else{
@@ -348,7 +348,7 @@
                         let a = document.createElement('audio')
                         a.type = "audio/mpeg"
                         a.preload = 'none'
-                        artisttrack(`${it['id']}`,'al',function (e) {
+                        artisttrack(`${it['id']}`,function (e) {
                             if (e!=null){
                                 a.src = e
                             } else{
@@ -414,7 +414,7 @@
             });
              });
          }
-        function artisttrack(id,type,callback){
+        function artisttrack(id,callback){
              let url = 'https://api.spotify.com/v1/artists/' + id + '/top-tracks?market=' + localStorage.getItem('country')
             console.log('267 ' + url)
             let xhr = new XMLHttpRequest()
@@ -426,25 +426,13 @@
                     let data = JSON.parse(this.response)
                     let tracks = data['tracks']
                     let fnn = (tracks.find(e =>e.preview_url))
-                    if (type == 'lm'){
                         if (fnn != null) {
                             callback(fnn['preview_url'])
                         } else{
                             callback(null)
-                        } }
-                    else if (type == 'ls'){
-                        if (fnn != null) {
-                            callback(fnn['preview_url'])
-                    } else  {
-                            callback(null)}
                         }
-                    else if (type == 'al'){
-                    if (fnn != null) {
-                        callback(fnn['preview_url'])
-                    } else {
-                        callback(null)
-                    }
-                        }}
+
+                        }
 
                 else if(xhr.status === 401){
                       let curl = '/spotify/refresh_token/' + localStorage.getItem('username')
@@ -1867,7 +1855,8 @@ function deep_artist(tracks,ar) {
                     document.getElementById('recartist').remove()
                 }
 const ab = document.createElement('div')
-
+                                            let artinfo = document.createElement('div')
+                                            artinfo.style.gridColumn = '3 / 8'
                                     ab.style.display = 'grid'
                                     ab.style.gridGap = '16px'
                                     ab.id = 'recartist'
@@ -1897,8 +1886,7 @@ const ab = document.createElement('div')
                                                     let audios = target.lastChild
                                                     audios.pause()
                                                 })
-                                            let artinfo = document.createElement('div')
-                                            artinfo.style.gridColumn = '3 / 8'
+
                                             artinfo.innerText = data['name']
                                             let af = document.createElement('div')
                                             af.innerText = data['followers']['total'] + ' followers'
@@ -1968,6 +1956,21 @@ const ab = document.createElement('div')
                                     }
                                     const grid = document.createElement('div')
                                     grid.style.gridColumn = '1/8'
+    let name = document.createElement('div')
+    name.innerText = 'Top tracks'
+    grid.appendChild(name)
+    let nme = document.createElement('div')
+    nme.innerText = 'Albums'
+    grid.appendChild(nme)
+        let nm = document.createElement('div')
+    nm.innerText = 'single'
+    grid.appendChild(nm)
+    let ne = document.createElement('div')
+    ne.innerText = 'appears on'
+    grid.appendChild(ne)
+    let area = document.createElement('div')
+    area.style.gridArea = '1 / 8 / 3 / 10'
+    area.innerText = 'Related Artists'
                                     let url = 'https://api.spotify.com/v1/artists/' + ar['id'] + '/top-tracks?limit=10&market=' + localStorage.getItem('country')
                                     let xhr = new XMLHttpRequest()
                                     xhr.open('GET',url,true)
@@ -1979,13 +1982,12 @@ const ab = document.createElement('div')
                                             let tt = document.createElement('audio')
                                             tt.src = data['tracks'][0]['preview_url']
                                             document.getElementById(ar['id']).appendChild(tt)
-                                            let name = document.createElement('div')
-                                            name.innerText = 'Top tracks'
+
                                             let con = document.createElement('div')
                                             // con.style.display = 'flex'
                                             con.className = 'col2'
-                                            grid.appendChild(name)
-                                            for (const topt of data['tracks']){
+
+                                            for (const topt of data['tracks']) {
                                                 let d = document.createElement('div')
                                                 d.tabIndex = 0
                                                 d.className = 'con3'
@@ -1998,22 +2000,23 @@ const ab = document.createElement('div')
                                                 a.preload = 'none'
                                                 if (topt['preview_url'])
                                                     a.src = `${topt['preview_url']}`
-                                                else{
+                                                else {
                                                     d.style.opacity = '.5'
                                                 }
                                                 d.appendChild(a)
-                                                d.addEventListener('mouseover',function (e) {
+                                                d.addEventListener('mouseover', function (e) {
                                                     let target = e.target
                                                     let audios = target.lastChild
                                                     audios.play()
-                                                    })
-                                                d.addEventListener('mouseleave',function (e) {
-                                                        let target = e.target
-                                                        let audios = target.lastChild
-                                                        audios.pause()
-                                                    })
+                                                })
+                                                d.addEventListener('mouseleave', function (e) {
+                                                    let target = e.target
+                                                    let audios = target.lastChild
+                                                    audios.pause()
+                                                })
                                                 con.appendChild(d)
-                                                grid.appendChild(con)
+                                                name.after(name, con)
+                                                // grid.appendChild(con)
                                                 ab.appendChild(grid)
                                             }
                                         }
@@ -2026,12 +2029,13 @@ const ab = document.createElement('div')
                                     axhr.onload = function (){
                                         if (axhr.status === 200){
                                             let data = JSON.parse(axhr.response)
-                                            let nme = document.createElement('div')
-                                            nme.innerText = 'Albums'
-                                            let con = document.createElement('div')
+                                            if (data['items'].length == 0){
+                                                nme.remove()
+                                            } else {
+                                                let con = document.createElement('div')
                                             // con.style.display = 'flex'
                                             con.className = 'col2'
-                                            grid.appendChild(nme)
+
                                             for (const albus of data['items']){
                                                 console.log('346 ' + albus['id'])
                                                 let d = document.createElement('div')
@@ -2063,9 +2067,12 @@ const ab = document.createElement('div')
                                                         audios.pause()
                                                     })
                                                 con.appendChild(d)
-                                                grid.appendChild(con)
+                                                nme.after(nme,con)
+                                                // grid.appendChild(con)
                                                 ab.appendChild(grid)
                                             }
+                                            }
+
 
 
                                             console.log(JSON.stringify(axhr.response))
@@ -2079,13 +2086,14 @@ const ab = document.createElement('div')
                                     txhr.onload = function (){
                                         if (txhr.status === 200){
                                             let data = JSON.parse(txhr.response)
-                                            let nm = document.createElement('div')
-                                            nm.innerText = 'single'
+                                             if (data['items'].length == 0){
+                                                nm.remove()
+                                            } else {
                                             let con = document.createElement('div')
                                             // con.style.display = 'flex'
                                             con.className = 'col2'
-                                            grid.appendChild(nm)
-                                            for (const sing of data['items']){
+
+                                            for (const sing of data['items']) {
                                                 console.log('397 ' + sing['id'])
                                                 let d = document.createElement('div')
                                                 d.tabIndex = 0
@@ -2097,27 +2105,29 @@ const ab = document.createElement('div')
                                                 let a = document.createElement('audio')
                                                 a.type = "audio/mpeg"
                                                 a.preload = 'none'
-                                                albumtracks(`${(sing['href'])}`,function (e) {
-                                                    if (e!=null){
+                                                albumtracks(`${(sing['href'])}`, function (e) {
+                                                    if (e != null) {
                                                         a.src = e
-                                                    } else{
+                                                    } else {
                                                         d.style.opacity = '.5'
                                                     }
                                                 })
                                                 d.appendChild(a)
-                                                d.addEventListener('mouseover',function (e) {
+                                                d.addEventListener('mouseover', function (e) {
                                                     let target = e.target
                                                     let audios = target.lastChild
                                                     audios.play()
-                                                    })
-                                                d.addEventListener('mouseleave',function (e) {
-                                                        let target = e.target
-                                                        let audios = target.lastChild
-                                                        audios.pause()
-                                                    })
+                                                })
+                                                d.addEventListener('mouseleave', function (e) {
+                                                    let target = e.target
+                                                    let audios = target.lastChild
+                                                    audios.pause()
+                                                })
                                                 con.appendChild(d)
-                                                grid.appendChild(con)
+                                                nm.after(nm, con)
+                                                // grid.appendChild(con)
                                                 ab.appendChild(grid)
+                                            }
                                             }
 
                                             console.log(JSON.stringify(txhr.response))
@@ -2131,12 +2141,13 @@ const ab = document.createElement('div')
                                     aoxhr.onload = function (){
                                         if (aoxhr.status === 200){
                                             let data = JSON.parse(aoxhr.response)
-                                            let name = document.createElement('div')
-                                            name.innerText = 'appears on'
+                                             if (data['items'].length == 0){
+                                                 ne.remove()
+                                                                                        } else {
                                             let con = document.createElement('div')
                                             // con.style.display = 'flex'
                                             con.className = 'col2'
-                                            grid.appendChild(name)
+
                                             for (const appear of data['items']){
                                                 console.log('441 ' + appear['id'])
                                                 let d = document.createElement('div')
@@ -2168,8 +2179,10 @@ const ab = document.createElement('div')
                                                         audios.pause()
                                                     })
                                                 con.appendChild(d)
-                                                grid.appendChild(con)
+                                                ne.after(ne,con)
+                                                // grid.appendChild(con)
                                                 ab.appendChild(grid)
+                                            }
                                             }
                                             console.log(JSON.stringify(aoxhr.response))
                                         }
@@ -2182,8 +2195,44 @@ const ab = document.createElement('div')
                                     rxhr.onload = function (){
                                         if (rxhr.status === 200){
                                             let data = JSON.parse(rxhr.response)
+                                            let con = document.createElement('div')
+                                            con.className = 'col2'
+                                            for (const ra of data['artists']){
+                                            let d = document.createElement('div')
+                                                d.tabIndex = 0
+                                                d.className = 'img-xs'
+                                                d.style.backgroundImage = `url(${ra['images'][0]['url']})`
+                                                d.style.backgroundRepeat = 'no-repeat'
+                                                d.style.backgroundSize = 'cover'
+                                                // d.innerText = `${ra['name']}`
+                                                let a = document.createElement('audio')
+                                                a.type = "audio/mpeg"
+                                                a.preload = 'none'
+                                                artisttrack(`${ra['id']}`,function (e) {
+                                                    if (e!=null){
+                                                        a.src = e
+                                                    } else{
+                                                        d.style.opacity = '.5'
+                                                    }
+                                                    return e
+                                                })
+                                                d.appendChild(a)
+                                                d.addEventListener('mouseover',function (e) {
+                                                    let target = e.target
+                                                    let audios = target.lastChild
+                                                    audios.play()
+                                                    })
+                                                d.addEventListener('mouseleave',function (e) {
+                                                        let target = e.target
+                                                        let audios = target.lastChild
+                                                        audios.pause()
+                                                    })
+                                                con.appendChild(d)
+                                                area.appendChild(con)
+                                                // grid.appendChild(con)
+                                                ab.appendChild(area)
                                             console.log(JSON.stringify(rxhr.response))
-                                        }
+                                        } }
                                     }
                                     let thurl = 'https://api.spotify.com/v1/search?q="this is ' + ar['name'] + '"&type=playlist&limit=50&offset=0&market=' + localStorage.getItem('country')
                                     let thxhr = new XMLHttpRequest()
@@ -2193,6 +2242,7 @@ const ab = document.createElement('div')
                                     thxhr.onload = function (){
                                         if (thxhr.status === 200){
                                             let data = JSON.parse(thxhr.response)
+
                                             console.log(JSON.stringify(thxhr.response))
                                         }
                                     }
