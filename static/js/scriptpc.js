@@ -153,9 +153,22 @@
                          if (document.getElementById('t_' + ns.id)){
                              document.getElementById('t_' + ns.id).style.display = 'none'
                              document.getElementById('p_' + ns.id).style.display = 'none'
+                             document.getElementById('rectrack').remove()
+                             document.getElementById('recartist').remove()
+                             // let rec = document.getElementById('tracks').childNodes
+                             // rec.forEach(function (item) {
+                             //
+                             //         if (item.nodeName == '#text'){
+                             //
+                             //         }
+                             //         else
+                             //            item.style.display = 'none'
+                             //
+                             // })
                          }
                      }
             });
+                 // document.getElementById('t_' + pllist[i].id).style.display = 'flex'
              });
          }
           document.getElementById('topartists').addEventListener('click',function (){
@@ -300,6 +313,9 @@
                                 let audios = target.lastChild
                                 audios.pause()
                             })
+                          d.addEventListener('click',function () {
+                              deep_artist(artis,it)
+                          })
                         artis.appendChild(d)
                       }
                     console.log('219 ' + data)
@@ -351,6 +367,9 @@
                                 let audios = target.lastChild
                                 audios.pause()
                             })
+                          d.addEventListener('click',function () {
+                              deep_artist(artis,it)
+                          })
                         artis.appendChild(d)
                       }
 
@@ -473,6 +492,34 @@
 
             }
 }
+         function albumstracks(id,callback){
+              let url = 'https://api.spotify.com/v1/albums/' + id + '/tracks?market=' + localStorage.getItem('country') + '&limit=10'
+            console.log('267 ' + url)
+            let xhr = new XMLHttpRequest()
+            xhr.open('GET',url,true)
+            xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
+            xhr.send()
+            xhr.onload = function (){
+                if (xhr.status === 200){
+                    let data = JSON.parse(this.response)
+                    let items = data['items']
+                            callback(items)
+}
+                else if(xhr.status === 401){
+                    let url = '/spotify/refresh_token/' + localStorage.getItem('username')
+                    let xhr = new XMLHttpRequest()
+                    xhr.open('GET',url,true)
+                    xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
+                    xhr.send()
+                    xhr.onload = function (){
+                        if (xhr.status === 200){
+                            console.log('187')
+                            topartistst()
+                }
+            }
+                  }
+
+            }}
           const tt = document.querySelectorAll('[id^=toptracks]');
 
          for (let i = 0; i < tt.length; i++) {
@@ -645,6 +692,9 @@
                                 let audios = target.lastChild
                                 audios.pause()
                             })
+                          d.addEventListener('click',function (){
+                              deeper(pla,tracks,'tt')
+                          })
                         tracks.appendChild(d)
                       }
                     document.getElementById('toptrack6').style.display = 'flex'
@@ -694,6 +744,9 @@
                                     let audios = target.lastChild
                                     audios.pause()
                                 })
+                          d.addEventListener('click',function (){
+                              deeper(pla,tracks,'tt')
+                          })
                           tracks.appendChild(d)
                       }
                     document.getElementById('toptrackat').style.display = 'flex'
@@ -762,7 +815,54 @@
                                     audios.pause()
                                 })
                         d.addEventListener('click',function () {
-                            deeper(sa,albums,'album')
+                            albumstracks(sa['album']['id'],function (e){
+                                let cover = document.createElement('div')
+                                cover.className = 'con3'
+                                cover.style.backgroundImage = `url(${sa['album']['images'][1]['url']})`
+                                cover.style.backgroundRepeat = 'no-repeat'
+                                cover.style.backgroundSize = 'cover'
+                                let albname = document.createElement('div')
+                                albname.innerText = `${sa['album']['name']}`
+                                let grid = document.createElement('div')
+                                for (let el of e){
+                                    if (e!=null){
+                                        let td = document.createElement('div')
+                                        td.className = 'img-xs'
+                                        td.style.backgroundImage = `url(${sa['album']['images'][1]['url']})`
+                                        td.style.backgroundRepeat = 'no-repeat'
+                                        td.style.backgroundSize = 'cover'
+                                        let ta = document.createElement('audio')
+                                        ta.type = "audio/mpeg"
+                                        ta.preload = 'none'
+                                        if (el.preview_url){
+                                            ta.src = el.preview_url
+                                        } else {
+                                            td.style.opacity = '.5'
+                                        }
+                                        td.addEventListener('mouseover',function (e) {
+                                let target = e.target
+                                let audios = target.lastChild
+                                audios.play()
+                                })
+                        td.addEventListener('mouseleave',function (e) {
+                                    let target = e.target
+                                    let audios = target.lastChild
+                                    audios.pause()
+                                })
+td.appendChild(ta)
+                                        grid.appendChild(cover)
+                                        grid.appendChild(albname)
+                                        grid.appendChild(td)
+                                        if (albums.nextElementSibling){
+                                            albums.nextElementSibling.remove()
+                                        }
+                                        albums.after(albums,grid)
+
+                            }
+                                }
+
+
+                        })
                         })
                         albums.appendChild(d)
                       }
@@ -1144,6 +1244,16 @@
                                             let audios = target.firstChild.lastChild
                                             audios.pause()
                                         })
+                                d.addEventListener('mouseover',function (e) {
+                                    let target = e.target
+                                    let audios = target.lastChild
+                                    audios.play()
+                                    })
+                                d.addEventListener('mouseleave',function (e) {
+                                        let target = e.target
+                                        let audios = target.lastChild
+                                        audios.pause()
+                                    })
                                 main.appendChild(d)
                                 d1.appendChild(d2)
                                 main.appendChild(d1)
@@ -1189,6 +1299,16 @@
                                             let audios = target.firstChild.lastChild
                                             audios.pause()
                                         })
+                                d.addEventListener('mouseover',function (e) {
+                                    let target = e.target
+                                    let audios = target.lastChild
+                                    audios.play()
+                                    })
+                                d.addEventListener('mouseleave',function (e) {
+                                        let target = e.target
+                                        let audios = target.lastChild
+                                        audios.pause()
+                                    })
                                 main.appendChild(d)
                                 d1.appendChild(d2)
                                 main.appendChild(d1)
@@ -1228,6 +1348,16 @@
                                             let audios = target.firstChild.lastChild
                                             audios.pause()
                                         })
+                                d.addEventListener('mouseover',function (e) {
+                                    let target = e.target
+                                    let audios = target.lastChild
+                                    audios.play()
+                                    })
+                                d.addEventListener('mouseleave',function (e) {
+                                        let target = e.target
+                                        let audios = target.lastChild
+                                        audios.pause()
+                                    })
                                 main.appendChild(d)
                                 d1.appendChild(d2)
                                 main.appendChild(d1)
@@ -1263,6 +1393,16 @@
                                 main.addEventListener('mouseleave',function (e) {
                                         let target = e.target
                                         let audios = target.firstChild.lastChild
+                                        audios.pause()
+                                    })
+                                d.addEventListener('mouseover',function (e) {
+                                    let target = e.target
+                                    let audios = target.lastChild
+                                    audios.play()
+                                    })
+                                d.addEventListener('mouseleave',function (e) {
+                                        let target = e.target
+                                        let audios = target.lastChild
                                         audios.pause()
                                     })
                                 main.appendChild(d)

@@ -101,10 +101,14 @@ header{
     display: flex;
     -moz-box-pack: start;
     place-content: flex-start;
-    -moz-box-align: stretch;
+    -moz-box-align: stretch;.panel
     align-items: stretch;
     flex-flow: row wrap;
     /*height: 100%;*/
+}
+.img-xs{
+    width: 36px;
+    height: 36px;
 }
 @media (min-width: 576px) {
     .con3 {
@@ -352,7 +356,7 @@ header{
 .panel {
   padding: 0 18px;
   display: none;
-  background-color: black;
+  /*background-color: black;*/
   overflow: hidden;
 }
 

@@ -7,8 +7,7 @@
         <div class="panel">
         <div id="playlistlist" style="column-gap: 16px; column-count: 3;" class="container">
         {% for p in pl %}
-            <div id="{{ p['id'] }}">{{ p['name'] }}</div>
-            <div class="hr-line-dashed"></div>
+            <div id="{{ p['id'] }}" class="hr-line-dashed">{{ p['name'] }}</div>
         {% endfor %}
         </div>
         <div id="playlist" class="container-fluid con2">
