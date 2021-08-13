@@ -110,6 +110,18 @@ header{
     width: 36px;
     height: 36px;
 }
+.trackList {
+    height: 250px;
+    position: relative;
+    overflow: auto;
+    width: 200px;
+}
+.trackTitle{
+    left: 50px;
+position: relative;
+    font-size: small;
+    width: 100px;
+}
 @media (min-width: 576px) {
     .con3 {
         width: 105px;

@@ -805,14 +805,36 @@
                                 })
                         d.addEventListener('click',function () {
                             albumstracks(sa['album']['id'],function (e){
+                                let con = document.createElement('div')
+                                con.style.display = 'block'
+                                con.innerText = 'Tracks'
+                                con.className = 'trackList'
                                 let cover = document.createElement('div')
                                 cover.className = 'con3'
                                 cover.style.backgroundImage = `url(${sa['album']['images'][1]['url']})`
                                 cover.style.backgroundRepeat = 'no-repeat'
                                 cover.style.backgroundSize = 'cover'
+                                let coveraudio = document.createElement('audio')
+                                cover.addEventListener('mouseover',function (e) {
+                                let target = e.target
+                                let audios = target.lastChild
+                                audios.play()
+                                })
+                        cover.addEventListener('mouseleave',function (e) {
+                                    let target = e.target
+                                    let audios = target.lastChild
+                                    audios.pause()
+                                })
+                                let cr = document.createElement('div')
+                                cr.style.display = 'block'
                                 let albname = document.createElement('div')
                                 albname.innerText = `${sa['album']['name']}`
+                                let arbrelase = document.createElement('div')
+                                arbrelase.innerText = `${sa['album']['release_date']}`
+                                let albart = document.createElement('div')
+                                albart.innerText = `Album by ${list(sa['album']['artists'])}`
                                 let grid = document.createElement('div')
+                                grid.className = 'con2'
                                 for (let el of e){
                                     if (e!=null){
                                         let td = document.createElement('div')
@@ -820,11 +842,15 @@
                                         td.style.backgroundImage = `url(${sa['album']['images'][1]['url']})`
                                         td.style.backgroundRepeat = 'no-repeat'
                                         td.style.backgroundSize = 'cover'
+                                        let tt = document.createElement('div')
+                                        tt.innerText = `${el['name']}`
+                                        tt.className = 'trackTitle'
                                         let ta = document.createElement('audio')
                                         ta.type = "audio/mpeg"
                                         ta.preload = 'none'
                                         if (el.preview_url){
                                             ta.src = el.preview_url
+                                            coveraudio.src = el.preview_url
                                         } else {
                                             td.style.opacity = '.5'
                                         }
@@ -838,10 +864,19 @@
                                     let audios = target.lastChild
                                     audios.pause()
                                 })
-td.appendChild(ta)
+                                        td.addEventListener('click',function () {
+                                            deeperalbum(sa,grid,el)
+                                        })
+                                        td.appendChild(tt)
+                                        td.appendChild(ta)
+                                        cover.appendChild(coveraudio)
                                         grid.appendChild(cover)
-                                        grid.appendChild(albname)
-                                        grid.appendChild(td)
+                                        cr.appendChild(albname)
+                                        cr.appendChild(arbrelase)
+                                        cr.appendChild(albart)
+                                        grid.appendChild(cr)
+                                        con.appendChild(td)
+                                        grid.appendChild(con)
                                         if (albums.nextElementSibling){
                                             albums.nextElementSibling.remove()
                                         }
@@ -1107,7 +1142,7 @@ td.appendChild(ta)
                       xhr.send()
                       xhr.onload = function (){
                         if (xhr.status === 200){
-                            followedartist(id)
+                            newrelease(elem,offset)
                 }
             }
                   }
@@ -1215,10 +1250,11 @@ td.appendChild(ta)
                                 let a = document.createElement('audio')
                                 a.type = "audio/mpeg"
                                 a.preload = 'none'
-                                albumtracks(`${(alb['href'])}`,function (e) {
-                                    if (e!=null){
-                                        a.src = e
-                                    } else{
+                                albumtracks(`${(alb['href'])}`,function (items) {
+let fnn = (items.find(e =>e.preview_url))
+                                    if (fnn != null) {
+                                        a.src = fnn.preview_url
+                                    } else {
                                         d.style.opacity = '.5'
                                     }
                                 })
@@ -1475,12 +1511,7 @@ td.appendChild(ta)
                     if (xhr.status === 200){
                         let data = JSON.parse(this.response)
                         let items = data['items']
-                        let fnn = (items.find(e =>e.preview_url))
-                        if (fnn != null) {
-                            callback(`${fnn['preview_url']}`)
-                        } else {
-                            callback(null)
-                        }
+                        callback(items)
                     }
 
 
@@ -1533,12 +1564,6 @@ td.appendChild(ta)
 
         }
 function deeper(pla,tracks,type) {
-                if (document.getElementById('rectrack')) {
-                    document.getElementById('rectrack').remove()
-                    if (document.getElementById('recartist')){
-                        document.getElementById('recartist').remove()
-                    }
-                }
                 if (type=='playlist'){
                     let info = document.createElement('div')
                             info.style.display = 'flex'
@@ -1607,7 +1632,7 @@ function deeper(pla,tracks,type) {
                                         else {
                                             rd.style.opacity = '.5'
                                         }
-                                        rd.appendChild(a)
+                                        rd.appendChild(ra)
                                         rd.addEventListener('mouseover', function (e) {
                                             let target = e.target
                                             let audios = target.lastChild
@@ -1632,6 +1657,10 @@ function deeper(pla,tracks,type) {
                                 artst.addEventListener('click',function () {
                                     deep_artist(tracks,ar)
                                 })
+                                // if (pla['track']['artists'][0]['name'] == ar['name']){
+                                //     artst.click()
+                                // }
+
                                 artistcirle.appendChild(artst)
                             }
                             playable.appendChild(playaudio)
@@ -1712,7 +1741,7 @@ let info = document.createElement('div')
                                         else {
                                             rd.style.opacity = '.5'
                                         }
-                                        rd.appendChild(a)
+                                        rd.appendChild(ra)
                                         rd.addEventListener('mouseover', function (e) {
                                             let target = e.target
                                             let audios = target.lastChild
@@ -1816,7 +1845,7 @@ let info = document.createElement('div')
                                         else {
                                             rd.style.opacity = '.5'
                                         }
-                                        rd.appendChild(a)
+                                        rd.appendChild(ra)
                                         rd.addEventListener('mouseover', function (e) {
                                             let target = e.target
                                             let audios = target.lastChild
@@ -1854,10 +1883,142 @@ let info = document.createElement('div')
                     info.scrollIntoView()
                 }
 }
+function deeperalbum(pla,tracks,el) {
+let info = document.createElement('div')
+                            info.style.display = 'flex'
+                    info.id = 'rectrack'
+                            let playable = document.createElement('div')
+                            playable.className = 'con3'
+    if (pla['album']){
+        playable.style.backgroundImage = `url(${pla['album']['images'][0]['url']})`
+    } else{
+        playable.style.backgroundImage = `url(${pla['images'][0]['url']})`
+    }
+                            playable.style.backgroundRepeat = 'no-repeat'
+                            playable.style.backgroundSize = 'cover'
+        if (pla['album']){
+        playable.innerText = `${list(pla['album']['artists'])}`
+    } else{
+        playable.innerText = `${list(pla['artists'])}`
+    }
+                            let playaudio = document.createElement('audio')
+                            if (el['preview_url'])
+                            playaudio.src = `${el['preview_url']}`
+                            else{
+                                playable.style.opacity = '.5'
+                            }
+                            playable.addEventListener('mouseover',function (e) {
+                            let target = e.target
+                            let audios = target.lastChild
+                            audios.play()
+                            })
+                            playable.addEventListener('mouseleave',function (e) {
+                                    let target = e.target
+                                    let audios = target.lastChild
+                                    audios.pause()
+                                })
+                            let trackinfo = document.createElement('div')
+                            trackinfo.style.flexGrow = 5
+                            trackinfo.innerText = `${el['name']}`
+                            let tracktype = document.createElement('div')
+            if (pla['album']){
+        tracktype.innerText = 'From the ' + `${pla['album']['album_type']}` + ' ' + `${pla['album']['name']}`
+    } else{
+        tracktype.innerText = 'From the ' + `${pla['album_type']}` + ' ' + `${pla['name']}`
+    }
+
+                            let trackartist = document.createElement('div')
+                if (pla['album']){
+                            trackartist.innerText = 'By ' + `${list(pla['album']['artists'])}`
+    } else{
+                            trackartist.innerText = 'By ' + `${list(pla['artists'])}`
+    }
+
+                            let recomend = document.createElement('span')
+                            recomend.innerText = 'Recomended songs based on this'
+                            recomend.style.color = '#f037a5'
+                            recomend.addEventListener('click',function () {
+                                if (document.getElementById('rec_' + pla['id'])){
+                                    document.getElementById('rec_' + pla['id']).style.display = 'flex'
+                                } else{
+                                    let url = 'https://api.spotify.com/v1/recommendations?seed_tracks=' + `${pla['id']}` + '&limit=50&offset=0&market=' + localStorage.getItem('country')
+                                let xhr = new XMLHttpRequest()
+                                xhr.open('GET',url,true)
+                                xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
+                                xhr.send()
+                                xhr.onload = function (){
+                                if (xhr.status === 200){
+                                    let data = JSON.parse(xhr.response)
+                                    let rstracks = data['tracks']
+                                    let rc = document.createElement('div')
+                                    rc.className = 'con2'
+                                    rc.id = 'rec_' + pla['id']
+                                    for (const rst of rstracks) {
+                                        let rd = document.createElement('div')
+                                        rd.tabIndex = 0
+                                        rd.className = 'con3'
+                                        rd.style.backgroundImage = `url(${rst['album']['images'][0]['url']})`
+                                        rd.style.backgroundRepeat = 'no-repeat'
+                                        rd.style.backgroundSize = 'cover'
+                                        rd.innerText = `${list(rst['artists'])} -  ${rst['name']}`
+                                        let ra = document.createElement('audio')
+                                        ra.type = "audio/mpeg"
+                                        ra.preload = 'none'
+                                        if (rst['preview_url'])
+                                            ra.src = `${rst['preview_url']}`
+                                        else {
+                                            rd.style.opacity = '.5'
+                                        }
+                                        rd.appendChild(ra)
+                                        rd.addEventListener('mouseover', function (e) {
+                                            let target = e.target
+                                            let audios = target.lastChild
+                                            audios.play()
+                                        })
+                                        rd.addEventListener('mouseleave', function (e) {
+                                            let target = e.target
+                                            let audios = target.lastChild
+                                            audios.pause()
+                                        })
+                                        rd.appendChild(ra)
+                                        rc.appendChild(rd)
+                                    tracks.appendChild(rc)
+                                    }
+                                }}
+                                }
+                            })
+                            let artistcirle = document.createElement('div')
+    if (pla['artist']){
+                                    for (const ar of pla['album']['artists']){
+                                let artst = document.createElement('div')
+                                artst.innerText =  ar['name']
+                                artst.addEventListener('click',function () {
+                                    deep_artist(tracks,ar)
+                                })
+                                artistcirle.appendChild(artst)
+                            }
+    } else {
+                                    for (const ar of pla['artists']){
+                                let artst = document.createElement('div')
+                                artst.innerText =  ar['name']
+                                artst.addEventListener('click',function () {
+                                    deep_artist(tracks,ar)
+                                })
+                                artistcirle.appendChild(artst)
+                            }
+    }
+
+                            playable.appendChild(playaudio)
+                            info.appendChild(playable)
+                            info.appendChild(trackinfo)
+                            info.appendChild(artistcirle)
+                            trackinfo.appendChild(tracktype)
+                            trackinfo.appendChild(trackartist)
+                            trackinfo.appendChild(recomend)
+                            tracks.after(tracks,info)
+
+}
 function deep_artist(tracks,ar) {
-                if (document.getElementById('recartist') !== null){
-                    document.getElementById('recartist').remove()
-                }
 const ab = document.createElement('div')
                                             let artinfo = document.createElement('div')
                                             artinfo.style.gridColumn = '3 / 8'
@@ -1933,7 +2094,7 @@ const ab = document.createElement('div')
                                                         else {
                                                             rd.style.opacity = '.5'
                                                         }
-                                                        rd.appendChild(a)
+                                                        rd.appendChild(ra)
                                                         rd.addEventListener('mouseover', function (e) {
                                                             let target = e.target
                                                             let audios = target.lastChild
@@ -2019,6 +2180,9 @@ const ab = document.createElement('div')
                                                     let audios = target.lastChild
                                                     audios.pause()
                                                 })
+                                                d.addEventListener('click',function () {
+                                                    deeper(topt,tracks,'tt')
+                                                })
                                                 con.appendChild(d)
                                                 name.after(name, con)
                                                 // grid.appendChild(con)
@@ -2053,13 +2217,17 @@ const ab = document.createElement('div')
                                                 let a = document.createElement('audio')
                                                 a.type = "audio/mpeg"
                                                 a.preload = 'none'
-                                                albumtracks(`${(albus['href'])}`,function (e) {
-                                                    if (e!=null){
-                                                        a.src = e
-                                                    } else{
-                                                        d.style.opacity = '.5'
-                                                    }
+                                                albumtracks(`${(albus['href'])}`,function (items) {
+let fnn = (items.find(e =>e.preview_url))
+                                    if (fnn != null) {
+                                        a.src = fnn.preview_url
+                                    } else {
+                                        d.style.opacity = '.5'
+                                    }
+                                            d.addEventListener('click',function () {
+                                                    deeperalbum(albus,tracks,fnn)
                                                 })
+                                })
                                                 d.appendChild(a)
                                                 d.addEventListener('mouseover',function (e) {
                                                     let target = e.target
@@ -2110,13 +2278,17 @@ const ab = document.createElement('div')
                                                 let a = document.createElement('audio')
                                                 a.type = "audio/mpeg"
                                                 a.preload = 'none'
-                                                albumtracks(`${(sing['href'])}`, function (e) {
-                                                    if (e != null) {
-                                                        a.src = e
-                                                    } else {
-                                                        d.style.opacity = '.5'
-                                                    }
+                                                albumtracks(`${(sing['href'])}`, function (items) {
+let fnn = (items.find(e =>e.preview_url))
+                                    if (fnn != null) {
+                                        a.src = fnn.preview_url
+                                    } else {
+                                        d.style.opacity = '.5'
+                                    }
+                                            d.addEventListener('click',function () {
+                                                    deeper(sing,tracks,'nr')
                                                 })
+                                })
                                                 d.appendChild(a)
                                                 d.addEventListener('mouseover', function (e) {
                                                     let target = e.target
@@ -2165,13 +2337,17 @@ const ab = document.createElement('div')
                                                 let a = document.createElement('audio')
                                                 a.type = "audio/mpeg"
                                                 a.preload = 'none'
-                                                albumtracks(`${(appear['href'])}`,function (e) {
-                                                    if (e!=null){
-                                                        a.src = e
-                                                    } else{
-                                                        d.style.opacity = '.5'
-                                                    }
+                                                albumtracks(`${(appear['href'])}`,function (items) {
+                                                    d.addEventListener('click',function () {
+                                                    deeper(appear,tracks,'nr')
                                                 })
+                                    let fnn = (items.find(e =>e.preview_url))
+                                    if (fnn != null) {
+                                        a.src = fnn.preview_url
+                                    } else {
+                                        d.style.opacity = '.5'
+                                    }
+                                })
                                                 d.appendChild(a)
                                                 d.addEventListener('mouseover',function (e) {
                                                     let target = e.target
@@ -2183,6 +2359,9 @@ const ab = document.createElement('div')
                                                         let audios = target.lastChild
                                                         audios.pause()
                                                     })
+                                                d.addEventListener('click',function () {
+                                                    deeperalbum(tracks,appear)
+                                                })
                                                 con.appendChild(d)
                                                 ne.after(ne,con)
                                                 // grid.appendChild(con)
@@ -2232,6 +2411,11 @@ const ab = document.createElement('div')
                                                         let audios = target.lastChild
                                                         audios.pause()
                                                     })
+                                                d.addEventListener('click',function () {
+                                                    deep_artist(tracks,ra)
+                                                })
+
+
                                                 con.appendChild(d)
                                                 area.appendChild(con)
                                                 // grid.appendChild(con)
