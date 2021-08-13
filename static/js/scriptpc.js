@@ -103,6 +103,7 @@
                             deeper(pla,tracks,'playlist')
                         })
                         trid.appendChild(d)
+                        plid.scrollIntoView()
 }
 
                 } else if(xhr.status === 401){
@@ -1641,6 +1642,7 @@ function deeper(pla,tracks,type) {
                             trackinfo.appendChild(trackartist)
                             trackinfo.appendChild(recomend)
                             tracks.appendChild(info)
+                    info.scrollIntoView()
                 } else if (type == 'tt'){
                     console.log('1496 pla ' + pla)
 let info = document.createElement('div')
@@ -1745,6 +1747,7 @@ let info = document.createElement('div')
                             trackinfo.appendChild(trackartist)
                             trackinfo.appendChild(recomend)
                             tracks.appendChild(info)
+                    info.scrollIntoView()
                 } else if (type == 'nr') {
                     let info = document.createElement('div')
                             info.style.display = 'flex'
@@ -1848,6 +1851,7 @@ let info = document.createElement('div')
                             trackinfo.appendChild(trackartist)
                             trackinfo.appendChild(recomend)
                             tracks.appendChild(info)
+                    info.scrollIntoView()
                 }
 }
 function deep_artist(tracks,ar) {
@@ -1860,6 +1864,7 @@ const ab = document.createElement('div')
                                     ab.style.display = 'grid'
                                     ab.style.gridGap = '16px'
                                     ab.id = 'recartist'
+
                                     let arurl = 'https://api.spotify.com/v1/artists/' + ar['id']
                                     let arxhr = new XMLHttpRequest()
                                     arxhr.open('GET',arurl,true)
@@ -2247,4 +2252,5 @@ const ab = document.createElement('div')
                                         }
                                     }
                                     tracks.appendChild(ab)
+    ab.scrollIntoView()
 }
