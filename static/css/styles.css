@@ -66,6 +66,18 @@ header{
   grid-column-start: 2;
   overflow: auto;
 }
+.col{
+  width: 105px;
+    height: 105px;
+    /*border: 2px solid white;*/
+    display: flex;
+    -moz-box-align: center;
+    align-items: center;
+    -moz-box-pack: center;
+    justify-content: center;
+    /*font-size: 40px;*/
+    font-weight: bolder;
+}
 .con2{
     width: 100%;
     background-size: cover;

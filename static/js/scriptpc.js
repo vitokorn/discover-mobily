@@ -101,6 +101,9 @@
                   audios.pause()
                 })
                 d.addEventListener('click', function() {
+                  // if (trid.nextElementSibling != null && trid.nextElementSibling.className == 'rectrack'){
+                  //
+                  // } else
                   deeper(pla, tracks, 'playlist')
                 })
                 trid.appendChild(d)
