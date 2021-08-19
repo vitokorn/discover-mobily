@@ -77,7 +77,6 @@
               tracks.appendChild(trid)
               let i = 0
               for (const pla of playtrack) {
-                let cont = document.createElement('div')
                 let d = document.createElement('div')
                 d.setAttribute('data-target',i++)
                 d.tabIndex = 0
@@ -148,6 +147,26 @@
 
                 trid.appendChild(d)
               }
+
+              let tracksid = document.querySelectorAll("#t_" + id + ">div[class=con3]")
+        for (let i = 0; i < tracksid.length; i++) {
+          tracksid[i].addEventListener("click", function() {
+            console.log('262 ' + tracksid[i].id)
+            if (tracksid[i].classList.contains("con3active")) {
+
+            } else {
+              tracksid[i].classList.toggle("con3active");
+            }
+            tracksid.forEach(function(ns) {
+              // console.log('279 ' + ns)
+              if (tracksid[i].getAttribute("data-target") == ns.getAttribute("data-target")) {
+              } else {
+                // console.log('282 ' + ns.id)
+                ns.classList.remove('con3active')
+              }
+            });
+          });
+        }
 
 
             } else if (xhr.status === 401) {
@@ -270,7 +289,7 @@
                 let a = document.createElement('audio')
                 a.type = "audio/mpeg"
                 a.preload = 'none'
-                artisttrack(`${it['id']}`, 'al', function(e) {
+                artisttrack(`${it['id']}`, function(e) {
                   if (e != null) {
                     a.src = e
                   } else {
@@ -478,7 +497,7 @@
           });
         }
 
-        function artisttrack(id, type, callback) {
+        function artisttrack(id, callback) {
           let url = 'https://api.spotify.com/v1/artists/' + id + '/top-tracks?market=' + localStorage.getItem('country')
           console.log('267 ' + url)
           let xhr = new XMLHttpRequest()
@@ -490,25 +509,12 @@
               let data = JSON.parse(this.response)
               let tracks = data['tracks']
               let fnn = (tracks.find(e => e.preview_url))
-              if (type == 'lm') {
-                if (fnn != null) {
-                  callback(fnn['preview_url'])
-                } else {
-                  callback(null)
-                }
-              } else if (type == 'ls') {
-                if (fnn != null) {
-                  callback(fnn['preview_url'])
-                } else {
-                  callback(null)
-                }
-              } else if (type == 'al') {
-                if (fnn != null) {
-                  callback(fnn['preview_url'])
-                } else {
-                  callback(null)
-                }
+              if (fnn != null) {
+                callback(fnn['preview_url'])
+              } else {
+                callback(null)
               }
+
             } else if (xhr.status === 401) {
               let curl = '/spotify/refresh_token/' + localStorage.getItem('username')
               let xhr = new XMLHttpRequest()
@@ -1248,9 +1254,10 @@
                   let a = document.createElement('audio')
                   a.type = "audio/mpeg"
                   a.preload = 'none'
-                  albumtracks(`${(alb['href'])}`, function(e) {
-                    if (e != null) {
-                      a.src = e
+                  albumtracks(`${(alb['href'])}`, function(items) {
+                    let fnn = (items.find(e => e.preview_url))
+                    if (fnn != null) {
+                      a.src = fnn.preview_url
                     } else {
                       d.style.opacity = '.5'
                     }
@@ -1490,12 +1497,7 @@
             if (xhr.status === 200) {
               let data = JSON.parse(this.response)
               let items = data['items']
-              let fnn = (items.find(e => e.preview_url))
-              if (fnn != null) {
-                callback(`${fnn['preview_url']}`)
-              } else {
-                callback(null)
-              }
+              callback(items)
             } else if (xhr.status === 401) {
               let curl = '/spotify/refresh_token/' + localStorage.getItem('username')
               let xhr = new XMLHttpRequest()
@@ -1611,9 +1613,11 @@ function deeper(pla, tracks, type,trid,id,tid) {
                     let rc = document.createElement('div')
                     rc.className = 'con2'
                     rc.id = 'rec_' + pla['track']['id']
+                    let i = 0
                     for (const rst of rstracks) {
                       let rd = document.createElement('div')
                       rd.tabIndex = 0
+                      rd.setAttribute('data-target',i++)
                       rd.className = 'con3'
                       rd.style.backgroundImage = `url(${rst['album']['images'][0]['url']})`
                       rd.style.backgroundRepeat = 'no-repeat'
@@ -1629,6 +1633,28 @@ function deeper(pla, tracks, type,trid,id,tid) {
                       }
                       rd.appendChild(ra)
                       rd.addEventListener('click', function(e) {
+                        let tracksid = document.querySelectorAll("#rec_" + pla['track']['id'] + ">div[class=con3]")
+                        for (let i = 0; i < tracksid.length; i++) {
+                          tracksid[i].addEventListener("click", function() {
+                            console.log('1636 ' + tracksid[i].id)
+                            if (tracksid[i].classList.contains("con3active")) {
+
+                            } else {
+                              tracksid[i].classList.toggle("con3active");
+                            }
+                            tracksid.forEach(function(ns) {
+                              // console.log('279 ' + ns)
+                              if (tracksid[i].getAttribute("data-target") == ns.getAttribute("data-target")) {
+                                if (!tracksid[i].classList.contains("con3active")) {
+                                  tracksid[i].classList.toggle = 'con3active'
+                                }
+                              } else {
+                                // console.log('282 ' + ns.id)
+                                ns.classList.remove('con3active')
+                              }
+                            });
+                          });
+                        }
                   let target = e.target
                   let audios = target.lastChild
                   for (let i = 0; i < allaudio.length; i++) {
@@ -2260,12 +2286,13 @@ function deeper(pla, tracks, type,trid,id,tid) {
 
               let con = document.createElement('div')
               // con.style.display = 'flex'
-              con.className = 'col2'
-
+              con.className = 'att col2'
+              let i = 0
               for (const topt of data['tracks']) {
                 let d = document.createElement('div')
                 d.tabIndex = 0
                 d.className = 'con3'
+                d.setAttribute('data-target',i++)
                 d.style.backgroundImage = `url(${topt['album']['images'][0]['url']})`
                 d.style.backgroundRepeat = 'no-repeat'
                 d.style.backgroundSize = 'cover'
@@ -2280,6 +2307,28 @@ function deeper(pla, tracks, type,trid,id,tid) {
                 }
                 d.appendChild(a)
                 d.addEventListener('click', function(e) {
+                  let tracksid = document.querySelectorAll(".att >div")
+                        for (let i = 0; i < tracksid.length; i++) {
+                          tracksid[i].addEventListener("click", function() {
+                            console.log('1636 ' + tracksid[i].id)
+                            if (tracksid[i].classList.contains("con3active")) {
+
+                            } else {
+                              tracksid[i].classList.toggle("con3active");
+                            }
+                            tracksid.forEach(function(ns) {
+                              // console.log('279 ' + ns)
+                              if (tracksid[i].getAttribute("data-target") == ns.getAttribute("data-target")) {
+                                if (!tracksid[i].classList.contains("con3active")) {
+                                  tracksid[i].classList.toggle = 'con3active'
+                                }
+                              } else {
+                                // console.log('282 ' + ns.id)
+                                ns.classList.remove('con3active')
+                              }
+                            });
+                          });
+                        }
                         let target = e.target
                         let audios = target.lastChild
                         for (let i = 0; i < allaudio.length; i++) {
@@ -2571,6 +2620,6 @@ function deeper(pla, tracks, type,trid,id,tid) {
               console.log(JSON.stringify(thxhr.response))
             }
           }
-          info.after(info,ab)
+          tracks.after(tracks,ab)
           ab.scrollIntoView()
         }

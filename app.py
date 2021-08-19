@@ -158,6 +158,40 @@ def mobile():
     else:
         return render_template('mobile.html')
 
+@app.route('/ql/')
+def ql():
+    if session.get('nickname') is not None:
+        user = User.query.filter_by(spotyid=session['username']).first()
+        session['country'] = user.country
+        url = f'https://api.spotify.com/v1/me/playlists?fields=items(name,id)&limit=50'
+        access_token = user.access_token
+        headers = {
+            'Authorization': f'Bearer {access_token}'
+        }
+        req = requests.get(url=url,headers=headers)
+        if req.status_code == 401:
+            print(req.status_code)
+            token,r = refresh(session['username'])
+            if r is True:
+                headers = {
+                    'Authorization': f'Bearer {token}'
+                }
+                req = requests.get(url=url, headers=headers)
+                res = req.json()
+                print('req 85' + str(res))
+                pl = res['items']
+                return render_template('ql.html', pl=pl,user=user)
+            else:
+                print('Error')
+                raise ValueError
+        else:
+            res = req.json()
+            # print('req 95' + str(res))
+            pl = res['items']
+            return render_template('ql.html',pl=pl,user=user)
+    else:
+        return render_template('ql.html')
+
 
 @app.route('/spotify/login/')
 def authclient():

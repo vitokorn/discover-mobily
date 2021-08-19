@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% block title %} {{ _('Home') }} {% endblock %}
+{% block content %}
+    <br>
+    <br>
+    <button class="accordion">{{ _('Your Playlists') }}</button>
+        <div class="panel">
+        <div id="playlistlist" style="column-gap: 16px; column-count: 3;" class="container">
+        {% for p in pl %}
+            <div class="hr-line-dashed" id="{{ p['id'] }}">{{ p['name'] }}</div>
+        {% endfor %}
+        </div>
+        <div id="playlist" class="container-fluid con2">
+        </div>
+        <div id="tracks" class="container-fluid con2">
+
+        </div>
+    </div>
+    <button class="accordion" id="ta">{{ _('Your Top Artists') }}</button>
+    <div class="panel">
+    <div class="info">
+        <span id="topartists">{{ _('Last month') }}</span>
+        <button id="refresh_topartists" class="refresh-end" onclick="refr('refresh_topartists')"><img id="icon_topartists" height="12" src="../static/images/refresh-icon.svg"></button>
+        <span id="topartists6">{{ _('Last 6 month') }}</span>
+        <button id="refresh_topartists6" class="refresh-end" onclick="refr('refresh_topartists6')"><img id="icon_topartists6" height="12" src="../static/images/refresh-icon.svg"></button>
+        <span id="topartistsall">{{ _('All time') }}</span>
+        <button id="refresh_topartistsall" class="refresh-end" onclick="refr('refresh_topartistsall')"><img id="icon_topartistsall" height="12" src="../static/images/refresh-icon.svg"></button>
+    </div>
+        <div id="artists" class="container-fluid con2"></div>
+        <div id="artists6" class="container-fluid con2"></div>
+        <div id="artistsall" class="container-fluid con2"></div>
+    </div>
+    <button class="accordion" id="tt">{{ _('Your Top tracks') }}</button>
+    <div class="panel">
+        <span id="toptracks">{{ _('Last month') }}</span>
+        <button id="refresh_toptracks" class="refresh-end" onclick="refr('refresh_toptracks')"><img id="icon_toptracks" height="12" src="../static/images/refresh-icon.svg"></button>
+        <span id="toptrackssix">{{ _('Last 6 month') }}</span>
+        <button id="refresh_toptrackssix" class="refresh-end" onclick="refr('refresh_toptrackssix')"><img id="icon_toptrackssix" height="12" src="../static/images/refresh-icon.svg"></button>
+        <span id="toptracksall">{{ _('All time') }}</span>
+        <button id="refresh_toptracksall" class="refresh-end" onclick="refr('refresh_toptracksall')"><img id="icon_toptracksall" height="12" src="../static/images/refresh-icon.svg"></button>
+        <div id="toptrack" class="container-fluid con2"></div>
+        <div id="toptrack6" class="container-fluid con2"></div>
+    <div id="toptrackat" class="container-fluid con2"></div>
+    </div>
+    <button id="sva" class="accordion">{{ _('Your Saved albums') }}</button>
+    <div class="panel">
+        <button id="refresh_savedalbum" class="refresh-end" onclick="refr('refresh_savedalbum')"><img id="icon_savedalbum" height="12" src="../static/images/refresh-icon.svg"></button>
+        <div id="savedalbum" class="container-fluid con2"></div>
+    </div>
+    <button id="svt" class="accordion">{{ _('Your Saved tracks') }}</button>
+    <div class="panel">
+        <button id="refresh_savedtrack" class="refresh-end" onclick="refr('refresh_savedtrack')"><img id="icon_savedtrack" height="12" src="../static/images/refresh-icon.svg"></button>
+        <div id="savedtrack" class="container-fluid con2"></div>
+    </div>
+    <button id="followedartists" class="accordion">{{ _('Your Followed artists') }}</button>
+    <div class="panel">
+        <button id="refresh_followedartist" class="refresh-end" onclick="refr('refresh_followedartist')"><img id="icon_followedartist" height="12" src="../static/images/refresh-icon.svg"></button>
+        <div id="followedartist" class="container-fluid con2"></div>
+    </div>
+{#    <button class="accordion" onclick="spotifyplaylists()">{{ _('Spotify Playlists') }}</button>#}
+{#    <div class="panel">#}
+{#        <div id="spotplaylist" class="container-fluid con2"></div>#}
+{#    </div>#}
+{#    <button class="accordion" onclick="genres()">{{ _('Genres') }}</button>#}
+{#    <div class="panel">#}
+{#        <div id="genre" class="container-fluid con2"></div>#}
+{#    </div>#}
+    <button id="newreleases" class="accordion">{{ _('New Releases') }}</button>
+    <div class="panel">
+        <button id="refresh_newrelease" class="refresh-end" onclick="refr('refresh_newrelease')"><img id="icon_newrelease" height="12" src="../static/images/refresh-icon.svg"></button>
+        <div id="newrelease" class="container-fluid con2"></div>
+    </div>
+        <label>
+        <input id="srch" type="search">
+    </label>
+    <div id="search" class="search">
+    <div style="grid-area: 1 / 1 / 2 / 2;">
+        <h4>Songs</h4>
+        <div id="s1"></div>
+    </div>
+    <div style="grid-area: 1 / 2 / 2 / 3;">
+        <h4>Artists</h4>
+        <div id="ar1"></div>
+    </div>
+    <div style="grid-area: 2 / 1 / 3 / 2;">
+        <h4>Albums</h4>
+        <div id="al1"></div>
+    </div>
+    <div style="grid-area: 2 / 2 / 3 / 3;">
+        <h4>Playlists</h4>
+        <div id="p1"></div>
+    </div>
+    </div>
+{% endblock %}
+{% block javascript %}
+    <script type="text/javascript" src="{{ url_for('static', filename='js/scriptql.js') }}">
+        </script>
+{% endblock %}

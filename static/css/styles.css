@@ -102,7 +102,7 @@ header{
     font-weight: bolder;
     color: transparent;
 }
-.con3:active,.con3:focus,.con3:hover{
+.con3:hover{
     color: white;
     text-shadow: black 0 0 3px;
     cursor: pointer;
@@ -148,7 +148,7 @@ position: relative;
         /*font-size: 40px;*/
         font-weight: bolder;
     }
-    .con3:active,.con3:focus,.con3:hover{
+    .con3:hover{
         color: white;
         text-shadow: black 0 0 3px;
         cursor: pointer;
@@ -168,7 +168,7 @@ position: relative;
     /*font-size: 40px;*/
     font-weight: bolder;
 }
-.con3:active,.con3:focus,.con3:hover{
+.con3:hover{
     color: white;
     text-shadow: black 0 0 3px;
     cursor: pointer;
@@ -189,7 +189,7 @@ position: relative;
     /*font-size: 40px;*/
     font-weight: bolder;
 }
-    .con3:active,.con3:focus,.con3:hover{
+    .con3:hover{
         color: white;
         text-shadow: black 0 0 3px;
         cursor: pointer;
@@ -210,13 +210,22 @@ position: relative;
     /*font-size: 40px;*/
     font-weight: bolder;
 }
-.con3:active,.con3:focus,.con3:hover{
+.con3:hover{
     color: white;
     text-shadow: black 0 0 3px;
     cursor: pointer;
 }
 }
-
+    .con3active {
+        color: white;
+        text-shadow: black 0 0 3px;
+        cursor: pointer;
+    }
+@media (max-width: 576px) {
+    h1 {
+        font-size: 1.5em;
+    }
+}
 .con4{
   width: 105px;
     height: 105px;
@@ -448,6 +457,7 @@ footer{
 }
 .hr-line-dashed {
   border-top: 1px dotted #e7eaec;
+    cursor:pointer;
 }
 
 .search{
