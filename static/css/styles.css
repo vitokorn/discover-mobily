@@ -88,6 +88,7 @@ header{
     align-items: stretch;
     flex-flow: row wrap;
     height: 100%;
+    margin-bottom: 12px;
 }
 .con3{
   width: 105px;

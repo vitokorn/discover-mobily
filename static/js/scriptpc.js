@@ -50,7 +50,10 @@
               plid.appendChild(names)
               let descriptions = document.createElement('div')
               descriptions.innerText = description
-              descriptions.className = 'con4'
+              descriptions.style.width = '60%'
+              descriptions.style.display = 'flex'
+              descriptions.style.alignItems = 'center'
+              // descriptions.className = 'con4'
               plid.appendChild(descriptions)
               let cover = document.createElement('div')
               cover.className = 'con4'
@@ -1581,6 +1584,9 @@
           if (type == 'playlist') {
             let info = document.createElement('div')
             info.style.display = 'flex'
+            info.style.width = '100%'
+            info.style.marginTop = '12px'
+          info.style.marginBottom = '6px'
             info.className = 'rectrack'
             let playable = document.createElement('div')
             playable.className = 'con3'
@@ -1605,8 +1611,8 @@
               audios.pause()
             })
             let trackinfo = document.createElement('div')
-            trackinfo.style.flexGrow = 5
             trackinfo.innerText = `${pla['track']['name']}`
+            trackinfo.style.width = '60%'
             let tracktype = document.createElement('div')
             tracktype.innerText = 'From the ' + `${pla['track']['album']['album_type']}` + ' ' + `${pla['track']['album']['name']}`
             let trackartist = document.createElement('div')
@@ -1692,6 +1698,9 @@
             let info = document.createElement('div')
             info.style.display = 'flex'
             info.className = 'rectrack'
+            info.style.width = '100%'
+            info.style.marginTop = '12px'
+          info.style.marginBottom = '6px'
             let playable = document.createElement('div')
             playable.className = 'con3'
             playable.style.backgroundImage = `url(${pla['album']['images'][0]['url']})`
@@ -1715,7 +1724,7 @@
               audios.pause()
             })
             let trackinfo = document.createElement('div')
-            trackinfo.style.flexGrow = 5
+            trackinfo.style.width = '60%'
             trackinfo.innerText = `${pla['name']}`
             let tracktype = document.createElement('div')
             tracktype.innerText = 'From the ' + `${pla['album']['album_type']}` + ' ' + `${pla['album']['name']}`
@@ -1797,6 +1806,9 @@
             let info = document.createElement('div')
             info.style.display = 'flex'
             info.className = 'rectrack'
+            info.style.width = '100%'
+                      info.style.marginTop = '12px'
+          info.style.marginBottom = '6px'
             let playable = document.createElement('div')
             playable.className = 'con3'
             playable.style.backgroundImage = `url(${pla['images'][0]['url']})`
@@ -1820,7 +1832,7 @@
               audios.pause()
             })
             let trackinfo = document.createElement('div')
-            trackinfo.style.flexGrow = 5
+            trackinfo.style.width = '60%'
             trackinfo.innerText = `${pla['name']}`
             let tracktype = document.createElement('div')
             tracktype.innerText = 'From the ' + `${pla['album_type']}` + ' ' + `${pla['name']}`
@@ -1904,6 +1916,9 @@
         function deeperalbum(pla, tracks, el) {
           let info = document.createElement('div')
           info.style.display = 'flex'
+          info.style.width = '100%'
+          info.style.marginTop = '12px'
+          info.style.marginBottom = '6px'
           info.className = 'rectrack'
           let playable = document.createElement('div')
           playable.className = 'con3'
@@ -1936,7 +1951,7 @@
             audios.pause()
           })
           let trackinfo = document.createElement('div')
-          trackinfo.style.flexGrow = 5
+          trackinfo.style.width = '60%'
           trackinfo.innerText = `${el['name']}`
           let tracktype = document.createElement('div')
           if (pla['album']) {

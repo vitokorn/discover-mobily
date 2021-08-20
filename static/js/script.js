@@ -53,7 +53,10 @@
               plid.appendChild(names)
               let descriptions = document.createElement('div')
               descriptions.innerText = description
-              descriptions.className = 'con4'
+              descriptions.style.width = '60%'
+              descriptions.style.display = 'flex'
+              descriptions.style.alignItems = 'center'
+              // descriptions.className = 'con4'
               plid.appendChild(descriptions)
               let cover = document.createElement('div')
               cover.className = 'con4'
@@ -316,6 +319,9 @@
                   }
                   let info = document.createElement('div')
                   info.style.display = 'flex'
+                  info.style.width = '100%'
+                  info.style.marginTop = '12px'
+                  info.style.marginBottom = '6px'
                   info.className = 'rectrack'
                   deep_artist(artis, it,info)
                 })
@@ -1553,8 +1559,11 @@ function deeper(pla, tracks, type,trid,id,tid) {
           block.style.width = '100%'
           if (type == 'playlist') {
             let info = document.createElement('div')
+            info.style.width = '100%'
             block.id = 'expand' + tid
             info.style.display = 'flex'
+            info.style.marginTop = '12px'
+            info.style.marginBottom = '6px'
             info.className = 'rectrack'
             let playable = document.createElement('div')
             playable.className = 'con3'
@@ -1586,8 +1595,7 @@ function deeper(pla, tracks, type,trid,id,tid) {
                   }
             })
             let trackinfo = document.createElement('div')
-            trackinfo.style.flexGrow = 5
-            trackinfo.className = 'col'
+            trackinfo.style.width = '60%'
             trackinfo.innerText = `${pla['track']['name']}`
             let tracktype = document.createElement('div')
             tracktype.style.color = 'white'
@@ -1684,6 +1692,7 @@ function deeper(pla, tracks, type,trid,id,tid) {
             for (const ar of pla['track']['artists']) {
               let artst = document.createElement('div')
               artst.innerText = ar['name']
+              artst.style.cursor = 'pointer'
               artst.addEventListener('click', function() {
                 deep_artist(tracks, ar,info)
               })
@@ -1780,6 +1789,9 @@ function deeper(pla, tracks, type,trid,id,tid) {
             console.log('1496 pla ' + pla)
             let info = document.createElement('div')
             info.style.display = 'flex'
+            info.style.width = '100%'
+            info.style.marginTop = '12px'
+            info.style.marginBottom = '6px'
             info.className = 'rectrack'
             let playable = document.createElement('div')
             playable.className = 'con3'
@@ -1804,7 +1816,7 @@ function deeper(pla, tracks, type,trid,id,tid) {
               audios.pause()
             })
             let trackinfo = document.createElement('div')
-            trackinfo.style.flexGrow = 5
+            trackinfo.style.width = '60%'
             trackinfo.innerText = `${pla['name']}`
             let tracktype = document.createElement('div')
             tracktype.innerText = 'From the ' + `${pla['album']['album_type']}` + ' ' + `${pla['album']['name']}`
@@ -1892,6 +1904,9 @@ function deeper(pla, tracks, type,trid,id,tid) {
           } else if (type == 'nr') {
             let info = document.createElement('div')
             info.style.display = 'flex'
+            info.style.width = '100%'
+            info.style.marginTop = '12px'
+            info.style.marginBottom = '6px'
             info.className = 'rectrack'
             let playable = document.createElement('div')
             playable.className = 'con3'
@@ -1916,7 +1931,7 @@ function deeper(pla, tracks, type,trid,id,tid) {
               audios.pause()
             })
             let trackinfo = document.createElement('div')
-            trackinfo.style.flexGrow = 5
+            trackinfo.style.width = '60%'
             trackinfo.innerText = `${pla['name']}`
             let tracktype = document.createElement('div')
             tracktype.innerText = 'From the ' + `${pla['album_type']}` + ' ' + `${pla['name']}`
@@ -2007,6 +2022,9 @@ function deeper(pla, tracks, type,trid,id,tid) {
         function deeperalbum(pla, tracks, el) {
           let info = document.createElement('div')
           info.style.display = 'flex'
+          info.style.width = '100%'
+          info.style.marginTop = '12px'
+          info.style.marginBottom = '6px'
           info.className = 'rectrack'
           let playable = document.createElement('div')
           playable.className = 'con3'
@@ -2039,7 +2057,7 @@ function deeper(pla, tracks, type,trid,id,tid) {
             audios.pause()
           })
           let trackinfo = document.createElement('div')
-          trackinfo.style.flexGrow = 5
+          trackinfo.style.width = '60%'
           trackinfo.innerText = `${el['name']}`
           let tracktype = document.createElement('div')
           if (pla['album']) {
@@ -2585,17 +2603,22 @@ function deeper(pla, tracks, type,trid,id,tid) {
                   return e
                 })
                 d.appendChild(a)
-                d.addEventListener('mouseover', function(e) {
+                d.addEventListener('click', function(e) {
                   let target = e.target
                   let audios = target.lastChild
-                  audios.play()
-                })
-                d.addEventListener('mouseleave', function(e) {
-                  let target = e.target
-                  let audios = target.lastChild
-                  audios.pause()
-                })
-                d.addEventListener('click', function() {
+                  for (let i = 0; i < allaudio.length; i++) {
+                    if (allaudio[i] == e.target.lastChild) {
+
+                    } else {
+                      allaudio[i].pause()
+                    }
+                  }
+
+                  if (audios.paused == false) {
+                    audios.pause()
+                  } else {
+                    audios.play()
+                  }
                   deep_artist(tracks, ra,info)
                 })
 
@@ -2620,6 +2643,6 @@ function deeper(pla, tracks, type,trid,id,tid) {
               console.log(JSON.stringify(thxhr.response))
             }
           }
-          tracks.after(tracks,ab)
+          info.after(info,ab)
           ab.scrollIntoView()
         }

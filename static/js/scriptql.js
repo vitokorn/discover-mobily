@@ -52,7 +52,10 @@
                     plid.appendChild(names)
                     let descriptions = document.createElement('div')
                     descriptions.innerText = description
-                    descriptions.className = 'con4'
+                    descriptions.style.width = '60%'
+                    descriptions.style.display = 'flex'
+                    descriptions.style.alignItems = 'center'
+              // descriptions.className = 'con4'
                     plid.appendChild(descriptions)
                     let cover = document.createElement('div')
                     cover.className = 'con4'
