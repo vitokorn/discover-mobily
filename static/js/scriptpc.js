@@ -1612,7 +1612,7 @@
             })
             let trackinfo = document.createElement('div')
             trackinfo.innerText = `${pla['track']['name']}`
-            trackinfo.style.width = '60%'
+            trackinfo.style.width = '50%'
             let tracktype = document.createElement('div')
             tracktype.innerText = 'From the ' + `${pla['track']['album']['album_type']}` + ' ' + `${pla['track']['album']['name']}`
             let trackartist = document.createElement('div')
@@ -1724,7 +1724,7 @@
               audios.pause()
             })
             let trackinfo = document.createElement('div')
-            trackinfo.style.width = '60%'
+            trackinfo.style.width = '50%'
             trackinfo.innerText = `${pla['name']}`
             let tracktype = document.createElement('div')
             tracktype.innerText = 'From the ' + `${pla['album']['album_type']}` + ' ' + `${pla['album']['name']}`
@@ -1832,7 +1832,7 @@
               audios.pause()
             })
             let trackinfo = document.createElement('div')
-            trackinfo.style.width = '60%'
+            trackinfo.style.width = '50%'
             trackinfo.innerText = `${pla['name']}`
             let tracktype = document.createElement('div')
             tracktype.innerText = 'From the ' + `${pla['album_type']}` + ' ' + `${pla['name']}`
@@ -1951,7 +1951,7 @@
             audios.pause()
           })
           let trackinfo = document.createElement('div')
-          trackinfo.style.width = '60%'
+          trackinfo.style.width = '50%'
           trackinfo.innerText = `${el['name']}`
           let tracktype = document.createElement('div')
           if (pla['album']) {

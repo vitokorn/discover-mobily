@@ -1595,7 +1595,7 @@ function deeper(pla, tracks, type,trid,id,tid) {
                   }
             })
             let trackinfo = document.createElement('div')
-            trackinfo.style.width = '60%'
+            trackinfo.style.width = '50%'
             trackinfo.innerText = `${pla['track']['name']}`
             let tracktype = document.createElement('div')
             tracktype.style.color = 'white'
@@ -1816,7 +1816,7 @@ function deeper(pla, tracks, type,trid,id,tid) {
               audios.pause()
             })
             let trackinfo = document.createElement('div')
-            trackinfo.style.width = '60%'
+            trackinfo.style.width = '50%'
             trackinfo.innerText = `${pla['name']}`
             let tracktype = document.createElement('div')
             tracktype.innerText = 'From the ' + `${pla['album']['album_type']}` + ' ' + `${pla['album']['name']}`
@@ -1931,7 +1931,7 @@ function deeper(pla, tracks, type,trid,id,tid) {
               audios.pause()
             })
             let trackinfo = document.createElement('div')
-            trackinfo.style.width = '60%'
+            trackinfo.style.width = '50%'
             trackinfo.innerText = `${pla['name']}`
             let tracktype = document.createElement('div')
             tracktype.innerText = 'From the ' + `${pla['album_type']}` + ' ' + `${pla['name']}`
@@ -2057,7 +2057,7 @@ function deeper(pla, tracks, type,trid,id,tid) {
             audios.pause()
           })
           let trackinfo = document.createElement('div')
-          trackinfo.style.width = '60%'
+          trackinfo.style.width = '50%'
           trackinfo.innerText = `${el['name']}`
           let tracktype = document.createElement('div')
           if (pla['album']) {

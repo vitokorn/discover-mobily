@@ -88,7 +88,7 @@ header{
     align-items: stretch;
     flex-flow: row wrap;
     height: 100%;
-    margin-bottom: 12px;
+    margin-bottom: 6px;
 }
 .con3{
   width: 105px;
@@ -134,6 +134,23 @@ header{
 position: relative;
     font-size: small;
     width: 100px;
+}
+@media (max-width: 576px) {
+    .con3 {
+        width: 105px;
+        height: 105px;
+        /*border: 2px solid white;*/
+        color: transparent;
+        display: flex;
+        -moz-box-align: center;
+        align-items: center;
+        -moz-box-pack: center;
+        justify-content: center;
+        font-size: 0.7em;
+        /*font-size: 40px;*/
+        font-weight: bolder;
+    }
+
 }
 @media (min-width: 576px) {
     .con3 {
