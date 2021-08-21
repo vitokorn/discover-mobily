@@ -23,7 +23,7 @@
 
         function initElement(id) {
           console.log('58 ' + id)
-          let url = 'https://api.spotify.com/v1/playlists/' + id + '?fields=name,id,description,images,tracks(items(track(name,preview_url,id,artists,album(artists,id,images))))'
+          let url = 'https://api.spotify.com/v1/playlists/' + id + '?fields=name,id,description,images,tracks(items(track(name,preview_url,id,artists,album(album_type,artists,id,images,name))))'
           console.log('60 ' + url)
           let xhr = new XMLHttpRequest()
           xhr.open('GET', url, true)
@@ -1596,6 +1596,7 @@ function deeper(pla, tracks, type,trid,id,tid) {
             })
             let trackinfo = document.createElement('div')
             trackinfo.style.width = '50%'
+            trackinfo.style.marginLeft = '10px'
             trackinfo.innerText = `${pla['track']['name']}`
             let tracktype = document.createElement('div')
             tracktype.style.color = 'white'
@@ -1817,6 +1818,7 @@ function deeper(pla, tracks, type,trid,id,tid) {
             })
             let trackinfo = document.createElement('div')
             trackinfo.style.width = '50%'
+            trackinfo.style.marginLeft = '10px'
             trackinfo.innerText = `${pla['name']}`
             let tracktype = document.createElement('div')
             tracktype.innerText = 'From the ' + `${pla['album']['album_type']}` + ' ' + `${pla['album']['name']}`
@@ -1932,6 +1934,7 @@ function deeper(pla, tracks, type,trid,id,tid) {
             })
             let trackinfo = document.createElement('div')
             trackinfo.style.width = '50%'
+            trackinfo.style.marginLeft = '10px'
             trackinfo.innerText = `${pla['name']}`
             let tracktype = document.createElement('div')
             tracktype.innerText = 'From the ' + `${pla['album_type']}` + ' ' + `${pla['name']}`
@@ -2058,6 +2061,7 @@ function deeper(pla, tracks, type,trid,id,tid) {
           })
           let trackinfo = document.createElement('div')
           trackinfo.style.width = '50%'
+          trackinfo.style.marginLeft = '10px'
           trackinfo.innerText = `${el['name']}`
           let tracktype = document.createElement('div')
           if (pla['album']) {

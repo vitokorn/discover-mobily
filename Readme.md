@@ -54,17 +54,17 @@ requests
 | Your Saved Albums | &#9745;     | &#9745;|
 | Your Followed Artists | &#9745; | &#9745;|
 | New Releases | &#9745;     | &#9745;|
-| Genres          | &#9745;     | &#9744;|
 | Spotify Playlists | &#9745;   | &#9744;|
 | Search          | &#9745;     | &#9745;|
 | Charts          | &#9745;     | &#9744;|
-| Random Artist   | &#9745;     | &#9744;|
-| Random Genre   | &#9745;     | &#9744;|
 | Hover to listen | &#9745;     | &#9745;|
 | Click to deeper |  &#9745;    | &#9745;|
 | Save            | &#9745;     | &#9744;|
 | Open in Spotify | &#9745;     | &#9744;|
 | Mobile version  | &#9744;     | &#9745;|
+| Genres          | &#9745;     |Will not be realized|
+| Random Artist   | &#9745;     | Will not be realized|
+| Random Genre   | &#9745;     | Will not be realized|
 
 
 
