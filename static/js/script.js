@@ -192,6 +192,7 @@
           const names = artists.map(({
             name
           }) => name);
+          console.log('195 ' + names)
           const finalName = names.pop();
           return names.length ?
             names.join(', ') + ' & ' + finalName :
@@ -1602,7 +1603,58 @@ function deeper(pla, tracks, type,trid,id,tid) {
             tracktype.style.color = 'white'
             tracktype.innerText = 'From the ' + `${pla['track']['album']['album_type']}` + ' ' + `${pla['track']['album']['name']}`
             let trackartist = document.createElement('div')
-            trackartist.innerText = 'By ' + `${list(pla['track']['artists'])}`
+            // let arrr = []
+            let pta = pla['track']['artists']
+            for (const ar of pla['track']['artists']) {
+              let last = pta[pta.length - 1]
+              let first = pta[0]
+              let second = pta[1]
+              console.log('1610 ' + last)
+              if (first['name'] == last['name']){
+                let artst = document.createElement('div')
+              artst.innerText = ar['name']
+              artst.style.cursor = 'pointer'
+              artst.addEventListener('click', function() {
+                deep_artist(tracks, ar,info)
+              })
+                trackartist.appendChild(artst)
+              } else if (second['name'] == last['name']) {
+              if (ar['name'] == last['name']) {
+                let artst = document.createElement('div')
+              artst.innerText = ' & ' + ar['name']
+              artst.style.cursor = 'pointer'
+              artst.addEventListener('click', function() {
+                deep_artist(tracks, ar,info)
+              })
+                trackartist.appendChild(artst)
+              } else {
+              let artst = document.createElement('div')
+              artst.innerText = ar['name']
+              artst.style.cursor = 'pointer'
+              artst.addEventListener('click', function() {
+                deep_artist(tracks, ar,info)
+              })
+                trackartist.appendChild(artst)
+}} else {
+                              if (ar['name'] == last['name']) {
+                let artst = document.createElement('div')
+              artst.innerText = ' & ' + ar['name']
+              artst.style.cursor = 'pointer'
+              artst.addEventListener('click', function() {
+                deep_artist(tracks, ar,info)
+              })
+                trackartist.appendChild(artst)
+              } else {
+              let artst = document.createElement('div')
+              artst.innerText = ar['name'] + ', '
+              artst.style.cursor = 'pointer'
+              artst.addEventListener('click', function() {
+                deep_artist(tracks, ar,info)
+              })
+                trackartist.appendChild(artst)}
+              }
+            }
+            // trackartist.innerText = 'By ' + `${list2(arrr)}`
             let recomend = document.createElement('span')
             recomend.innerText = 'Recomended songs based on this'
             recomend.style.color = '#f037a5'
@@ -1689,24 +1741,24 @@ function deeper(pla, tracks, type,trid,id,tid) {
                 }
               }
             })
-            let artistcirle = document.createElement('div')
-            for (const ar of pla['track']['artists']) {
-              let artst = document.createElement('div')
-              artst.innerText = ar['name']
-              artst.style.cursor = 'pointer'
-              artst.addEventListener('click', function() {
-                deep_artist(tracks, ar,info)
-              })
-              // if (pla['track']['artists'][0]['name'] == ar['name']){
-              //     artst.click()
-              // }
-
-              artistcirle.appendChild(artst)
-            }
+            // let artistcirle = document.createElement('div')
+            // for (const ar of pla['track']['artists']) {
+            //   let artst = document.createElement('div')
+            //   artst.innerText = ar['name']
+            //   artst.style.cursor = 'pointer'
+            //   artst.addEventListener('click', function() {
+            //     deep_artist(tracks, ar,info)
+            //   })
+            //   // if (pla['track']['artists'][0]['name'] == ar['name']){
+            //   //     artst.click()
+            //   // }
+            //
+            //   artistcirle.appendChild(artst)
+            // }
             playable.appendChild(playaudio)
             info.appendChild(playable)
             info.appendChild(trackinfo)
-            info.appendChild(artistcirle)
+            // info.appendChild(artistcirle)
             trackinfo.appendChild(tracktype)
             trackinfo.appendChild(trackartist)
             trackinfo.appendChild(recomend)
@@ -1823,7 +1875,57 @@ function deeper(pla, tracks, type,trid,id,tid) {
             let tracktype = document.createElement('div')
             tracktype.innerText = 'From the ' + `${pla['album']['album_type']}` + ' ' + `${pla['album']['name']}`
             let trackartist = document.createElement('div')
-            trackartist.innerText = 'By ' + `${list(pla['artists'])}`
+            // trackartist.innerText = 'By ' + `${list(pla['artists'])}`
+            let pta = pla['artists']
+            for (const ar of pla['artists']) {
+              let last = pta[pta.length - 1]
+              let first = pta[0]
+              let second = pta[1]
+              console.log('1610 ' + last)
+              if (first['name'] == last['name']){
+                let artst = document.createElement('div')
+              artst.innerText = ar['name']
+              artst.style.cursor = 'pointer'
+              artst.addEventListener('click', function() {
+                deep_artist(tracks, ar,info)
+              })
+                trackartist.appendChild(artst)
+              } else if (second['name'] == last['name']) {
+              if (ar['name'] == last['name']) {
+                let artst = document.createElement('div')
+              artst.innerText = ' & ' + ar['name']
+              artst.style.cursor = 'pointer'
+              artst.addEventListener('click', function() {
+                deep_artist(tracks, ar,info)
+              })
+                trackartist.appendChild(artst)
+              } else {
+              let artst = document.createElement('div')
+              artst.innerText = ar['name']
+              artst.style.cursor = 'pointer'
+              artst.addEventListener('click', function() {
+                deep_artist(tracks, ar,info)
+              })
+                trackartist.appendChild(artst)
+}} else {
+                              if (ar['name'] == last['name']) {
+                let artst = document.createElement('div')
+              artst.innerText = ' & ' + ar['name']
+              artst.style.cursor = 'pointer'
+              artst.addEventListener('click', function() {
+                deep_artist(tracks, ar,info)
+              })
+                trackartist.appendChild(artst)
+              } else {
+              let artst = document.createElement('div')
+              artst.innerText = ar['name'] + ', '
+              artst.style.cursor = 'pointer'
+              artst.addEventListener('click', function() {
+                deep_artist(tracks, ar,info)
+              })
+                trackartist.appendChild(artst)}
+              }
+            }
             let recomend = document.createElement('span')
             recomend.innerText = 'Recomended songs based on this'
             recomend.style.color = '#f037a5'
@@ -1939,7 +2041,57 @@ function deeper(pla, tracks, type,trid,id,tid) {
             let tracktype = document.createElement('div')
             tracktype.innerText = 'From the ' + `${pla['album_type']}` + ' ' + `${pla['name']}`
             let trackartist = document.createElement('div')
-            trackartist.innerText = 'By ' + `${list(pla['artists'])}`
+            // trackartist.innerText = 'By ' + `${list(pla['artists'])}`
+                        let pta = pla['artists']
+            for (const ar of pla['track']['artists']) {
+              let last = pta[pta.length - 1]
+              let first = pta[0]
+              let second = pta[1]
+              console.log('1610 ' + last)
+              if (first['name'] == last['name']){
+                let artst = document.createElement('div')
+              artst.innerText = ar['name']
+              artst.style.cursor = 'pointer'
+              artst.addEventListener('click', function() {
+                deep_artist(tracks, ar,info)
+              })
+                trackartist.appendChild(artst)
+              } else if (second['name'] == last['name']) {
+              if (ar['name'] == last['name']) {
+                let artst = document.createElement('div')
+              artst.innerText = ' & ' + ar['name']
+              artst.style.cursor = 'pointer'
+              artst.addEventListener('click', function() {
+                deep_artist(tracks, ar,info)
+              })
+                trackartist.appendChild(artst)
+              } else {
+              let artst = document.createElement('div')
+              artst.innerText = ar['name']
+              artst.style.cursor = 'pointer'
+              artst.addEventListener('click', function() {
+                deep_artist(tracks, ar,info)
+              })
+                trackartist.appendChild(artst)
+}} else {
+                              if (ar['name'] == last['name']) {
+                let artst = document.createElement('div')
+              artst.innerText = ' & ' + ar['name']
+              artst.style.cursor = 'pointer'
+              artst.addEventListener('click', function() {
+                deep_artist(tracks, ar,info)
+              })
+                trackartist.appendChild(artst)
+              } else {
+              let artst = document.createElement('div')
+              artst.innerText = ar['name'] + ', '
+              artst.style.cursor = 'pointer'
+              artst.addEventListener('click', function() {
+                deep_artist(tracks, ar,info)
+              })
+                trackartist.appendChild(artst)}
+              }
+            }
             let recomend = document.createElement('span')
             recomend.innerText = 'Recomended songs based on this'
             recomend.style.color = '#f037a5'
@@ -2072,9 +2224,109 @@ function deeper(pla, tracks, type,trid,id,tid) {
 
           let trackartist = document.createElement('div')
           if (pla['album']) {
-            trackartist.innerText = 'By ' + `${list(pla['album']['artists'])}`
+            // trackartist.innerText = 'By ' + `${list(pla['album']['artists'])}`
+            let pta = pla['album']['artists']
+            for (const ar of pla['album']['artists']) {
+              let last = pta[pta.length - 1]
+              let first = pta[0]
+              let second = pta[1]
+              console.log('1610 ' + last)
+              if (first['name'] == last['name']){
+                let artst = document.createElement('div')
+              artst.innerText = ar['name']
+              artst.style.cursor = 'pointer'
+              artst.addEventListener('click', function() {
+                deep_artist(tracks, ar,info)
+              })
+                trackartist.appendChild(artst)
+              } else if (second['name'] == last['name']) {
+              if (ar['name'] == last['name']) {
+                let artst = document.createElement('div')
+              artst.innerText = ' & ' + ar['name']
+              artst.style.cursor = 'pointer'
+              artst.addEventListener('click', function() {
+                deep_artist(tracks, ar,info)
+              })
+                trackartist.appendChild(artst)
+              } else {
+              let artst = document.createElement('div')
+              artst.innerText = ar['name']
+              artst.style.cursor = 'pointer'
+              artst.addEventListener('click', function() {
+                deep_artist(tracks, ar,info)
+              })
+                trackartist.appendChild(artst)
+}} else {
+                              if (ar['name'] == last['name']) {
+                let artst = document.createElement('div')
+              artst.innerText = ' & ' + ar['name']
+              artst.style.cursor = 'pointer'
+              artst.addEventListener('click', function() {
+                deep_artist(tracks, ar,info)
+              })
+                trackartist.appendChild(artst)
+              } else {
+              let artst = document.createElement('div')
+              artst.innerText = ar['name'] + ', '
+              artst.style.cursor = 'pointer'
+              artst.addEventListener('click', function() {
+                deep_artist(tracks, ar,info)
+              })
+                trackartist.appendChild(artst)}
+              }
+            }
           } else {
-            trackartist.innerText = 'By ' + `${list(pla['artists'])}`
+            // trackartist.innerText = 'By ' + `${list(pla['artists'])}`
+            let pta = pla['artists']
+            for (const ar of pla['artists']) {
+              let last = pta[pta.length - 1]
+              let first = pta[0]
+              let second = pta[1]
+              console.log('1610 ' + last)
+              if (first['name'] == last['name']){
+                let artst = document.createElement('div')
+              artst.innerText = ar['name']
+              artst.style.cursor = 'pointer'
+              artst.addEventListener('click', function() {
+                deep_artist(tracks, ar,info)
+              })
+                trackartist.appendChild(artst)
+              } else if (second['name'] == last['name']) {
+              if (ar['name'] == last['name']) {
+                let artst = document.createElement('div')
+              artst.innerText = ' & ' + ar['name']
+              artst.style.cursor = 'pointer'
+              artst.addEventListener('click', function() {
+                deep_artist(tracks, ar,info)
+              })
+                trackartist.appendChild(artst)
+              } else {
+              let artst = document.createElement('div')
+              artst.innerText = ar['name']
+              artst.style.cursor = 'pointer'
+              artst.addEventListener('click', function() {
+                deep_artist(tracks, ar,info)
+              })
+                trackartist.appendChild(artst)
+}} else {
+                              if (ar['name'] == last['name']) {
+                let artst = document.createElement('div')
+              artst.innerText = ' & ' + ar['name']
+              artst.style.cursor = 'pointer'
+              artst.addEventListener('click', function() {
+                deep_artist(tracks, ar,info)
+              })
+                trackartist.appendChild(artst)
+              } else {
+              let artst = document.createElement('div')
+              artst.innerText = ar['name'] + ', '
+              artst.style.cursor = 'pointer'
+              artst.addEventListener('click', function() {
+                deep_artist(tracks, ar,info)
+              })
+                trackartist.appendChild(artst)}
+              }
+            }
           }
 
           let recomend = document.createElement('span')
