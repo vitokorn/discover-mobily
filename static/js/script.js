@@ -23,7 +23,7 @@
 
         function initElement(id) {
           console.log('58 ' + id)
-          let url = 'https://api.spotify.com/v1/playlists/' + id + '?fields=name,id,description,images,tracks(items(track(name,preview_url,id,artists,album(album_type,artists,id,images,name))))'
+          let url = 'https://api.spotify.com/v1/playlists/' + id + '?fields=name,id,external_urls,description,images,tracks(items(track(name,preview_url,external_urls,id,artists,album(album_type,artists,id,images,name))))'
           console.log('60 ' + url)
           let xhr = new XMLHttpRequest()
           xhr.open('GET', url, true)
@@ -49,6 +49,16 @@
               playlistdiv.appendChild(plid)
               let names = document.createElement('div')
               names.innerText = name
+
+                          let dvv = document.createElement('div')
+let openinspotify = document.createElement('a')
+            openinspotify.href = data['external_urls']['spotify']
+            openinspotify.target = '_blank'
+            let btn = document.createElement('button')
+            btn.className = 'button'
+            btn.innerText = 'Open is Spotify'
+            openinspotify.appendChild(btn)
+              dvv.appendChild(openinspotify)
               names.className = 'con4'
               plid.appendChild(names)
               let descriptions = document.createElement('div')
@@ -56,6 +66,7 @@
               descriptions.style.width = '60%'
               descriptions.style.display = 'flex'
               descriptions.style.alignItems = 'center'
+              descriptions.appendChild(dvv)
               // descriptions.className = 'con4'
               plid.appendChild(descriptions)
               let cover = document.createElement('div')
@@ -323,7 +334,7 @@
                   info.style.width = '100%'
                   info.style.marginTop = '12px'
                   info.style.marginBottom = '6px'
-                  info.className = 'rectrack'
+                  info.className = 'recartist'
                   deep_artist(artis, it,info)
                 })
                 artis.appendChild(d)
@@ -370,7 +381,7 @@
                 let a = document.createElement('audio')
                 a.type = "audio/mpeg"
                 a.preload = 'none'
-                artisttrack(`${it['id']}`, 'al', function(e) {
+                artisttrack(`${it['id']}`, function(e) {
                   if (e != null) {
                     a.src = e
                   } else {
@@ -430,7 +441,7 @@
                 let a = document.createElement('audio')
                 a.type = "audio/mpeg"
                 a.preload = 'none'
-                artisttrack(`${it['id']}`, 'al', function(e) {
+                artisttrack(`${it['id']}`, function(e) {
                   if (e != null) {
                     a.src = e
                   } else {
@@ -753,6 +764,7 @@
                   } else {
                     audios.play()
                   }
+                  deeper(pla, tracks, 'tt')
                 })
                 tracks.appendChild(d)
               }
@@ -811,6 +823,7 @@
                   } else {
                     audios.play()
                   }
+                  deeper(pla, tracks, 'tt')
                 })
                 tracks.appendChild(d)
               }
@@ -952,6 +965,7 @@
                   } else {
                     audios.play()
                   }
+                  deeper(pla, document.getElementById('savedtrack'), 'playlist')
                 })
                 document.getElementById('savedtrack').appendChild(d)
               }
@@ -1021,6 +1035,13 @@
                   } else {
                     audios.play()
                   }
+                  let info = document.createElement('div')
+                  info.style.width = '100%'
+                  info.style.display = 'flex'
+                  info.style.marginTop = '12px'
+                  info.style.marginBottom = '6px'
+                  info.className = 'recartist'
+                  deep_artist(artis, it,info)
                 })
                 artis.appendChild(d)
 
@@ -1605,6 +1626,15 @@ function deeper(pla, tracks, type,trid,id,tid) {
             let trackartist = document.createElement('div')
             trackartist.innerText = 'By '
             trackartist.style.display = 'flex'
+            let dv = document.createElement('div')
+            let openinspotify = document.createElement('a')
+            openinspotify.href = pla['track']['external_urls']['spotify']
+            openinspotify.target = '_blank'
+            let btn = document.createElement('button')
+            btn.className = 'button'
+            btn.innerText = 'Open is Spotify'
+            openinspotify.appendChild(btn)
+            dv.appendChild(openinspotify)
             // let arrr = []
             let pta = pla['track']['artists']
             for (const ar of pla['track']['artists']) {
@@ -1624,17 +1654,23 @@ function deeper(pla, tracks, type,trid,id,tid) {
                 trackartist.appendChild(artst)
               } else if (second['name'] == last['name']) {
               if (ar['name'] == last['name']) {
+                let amper = document.createElement('div')
+                amper.innerText = ' & '
+
                 let artst = document.createElement('div')
-              artst.innerText = ' & ' + ar['name']
+              artst.innerText = ar['name']
+                artst.style.marginLeft = '4px'
               artst.style.cursor = 'pointer'
-                artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
                 deep_artist(tracks, ar,info)
               })
+                trackartist.appendChild(amper)
                 trackartist.appendChild(artst)
               } else {
               let artst = document.createElement('div')
               artst.innerText = ar['name']
+                artst.style.marginLeft = '4px'
+                artst.style.marginRight = '4px'
               artst.style.cursor = 'pointer'
               artst.addEventListener('click', function() {
                 deep_artist(tracks, ar,info)
@@ -1642,19 +1678,23 @@ function deeper(pla, tracks, type,trid,id,tid) {
                 trackartist.appendChild(artst)
 }} else {
                               if (ar['name'] == last['name']) {
+                                let amper = document.createElement('div')
+                amper.innerText = ' & '
                 let artst = document.createElement('div')
-              artst.innerText = ' & ' + ar['name']
+              artst.innerText = ar['name']
               artst.style.cursor = 'pointer'
                                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
                 deep_artist(tracks, ar,info)
               })
+                                trackartist.appendChild(amper)
                 trackartist.appendChild(artst)
               } else if (ar['name'] == prelast['name']) {
                 let artst = document.createElement('div')
               artst.innerText = ar['name']
               artst.style.cursor = 'pointer'
                                 artst.style.marginLeft = '3px'
+                                artst.style.marginRight = '4px'
               artst.addEventListener('click', function() {
                 deep_artist(tracks, ar,info)
               })
@@ -1664,7 +1704,8 @@ function deeper(pla, tracks, type,trid,id,tid) {
               let artst = document.createElement('div')
               artst.innerText = ar['name'] + ', '
               artst.style.cursor = 'pointer'
-                                artst.style.marginLeft = '3px'
+                                artst.style.marginLeft = '4px'
+                artst.style.marginRight = '4px'
               artst.addEventListener('click', function() {
                 deep_artist(tracks, ar,info)
               })
@@ -1779,6 +1820,7 @@ function deeper(pla, tracks, type,trid,id,tid) {
             trackinfo.appendChild(tracktype)
             trackinfo.appendChild(trackartist)
             trackinfo.appendChild(recomend)
+            trackinfo.appendChild(dv)
             block.appendChild(info)
 
             let containerWidth = trid.offsetWidth;
@@ -1875,16 +1917,23 @@ function deeper(pla, tracks, type,trid,id,tid) {
             else {
               playable.style.opacity = '.5'
             }
-            playable.addEventListener('mouseover', function(e) {
-              let target = e.target
-              let audios = target.lastChild
-              audios.play()
-            })
-            playable.addEventListener('mouseleave', function(e) {
-              let target = e.target
-              let audios = target.lastChild
-              audios.pause()
-            })
+            playable.addEventListener('click', function(e) {
+                    let target = e.target
+                    let audios = target.firstChild.lastChild
+                    for (let i = 0; i < allaudio.length; i++) {
+                      if (allaudio[i] == e.target.firstChild.lastChild) {
+
+                      } else {
+                        allaudio[i].pause()
+                      }
+                    }
+
+                    if (audios.paused == false) {
+                      audios.pause()
+                    } else {
+                      audios.play()
+                    }
+                  })
             let trackinfo = document.createElement('div')
             trackinfo.style.width = '50%'
             trackinfo.style.marginLeft = '10px'
@@ -1913,31 +1962,39 @@ function deeper(pla, tracks, type,trid,id,tid) {
                 trackartist.appendChild(artst)
               } else if (second['name'] == last['name']) {
               if (ar['name'] == last['name']) {
+                let amper = document.createElement('div')
+                amper.innerText = ' & '
                 let artst = document.createElement('div')
-              artst.innerText = ' & ' + ar['name']
-              artst.style.cursor = 'pointer'
-                artst.style.marginLeft = '3px'
-              artst.addEventListener('click', function() {
-                deep_artist(tracks, ar,info)
-              })
-                trackartist.appendChild(artst)
-              } else {
-              let artst = document.createElement('div')
               artst.innerText = ar['name']
               artst.style.cursor = 'pointer'
                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
                 deep_artist(tracks, ar,info)
               })
+                trackartist.appendChild(amper)
                 trackartist.appendChild(artst)
-}} else {
-                              if (ar['name'] == last['name']) {
-                let artst = document.createElement('div')
-              artst.innerText = ' & ' + ar['name']
+              } else {
+              let artst = document.createElement('div')
+              artst.innerText = ar['name']
               artst.style.cursor = 'pointer'
+                artst.style.marginLeft = '4px'
+                artst.style.marginRight = '4px'
               artst.addEventListener('click', function() {
                 deep_artist(tracks, ar,info)
               })
+                trackartist.appendChild(artst)
+}} else {
+                              if (ar['name'] == last['name']) {
+                                let amper = document.createElement('div')
+                amper.innerText = ' & '
+                let artst = document.createElement('div')
+              artst.innerText = ar['name']
+              artst.style.cursor = 'pointer'
+                                artst.style.marginLeft = '3px'
+              artst.addEventListener('click', function() {
+                deep_artist(tracks, ar,info)
+              })
+                                trackartist.appendChild(amper)
                 trackartist.appendChild(artst)
               } else if (ar['name'] == prelast['name']) {
                 let artst = document.createElement('div')
@@ -1959,6 +2016,15 @@ function deeper(pla, tracks, type,trid,id,tid) {
                 trackartist.appendChild(artst)}
               }
             }
+                                    let dvv = document.createElement('div')
+            let openinspotify = document.createElement('a')
+            openinspotify.href = pla['external_urls']['spotify']
+            openinspotify.target = '_blank'
+            let btn = document.createElement('button')
+            btn.className = 'button'
+            btn.innerText = 'Open is Spotify'
+            openinspotify.appendChild(btn)
+            dvv.appendChild(openinspotify)
             let recomend = document.createElement('span')
             recomend.innerText = 'Recomended songs'
             recomend.style.color = '#f037a5'
@@ -2036,6 +2102,7 @@ function deeper(pla, tracks, type,trid,id,tid) {
             trackinfo.appendChild(tracktype)
             trackinfo.appendChild(trackartist)
             trackinfo.appendChild(recomend)
+            trackinfo.appendChild(dvv)
             tracks.appendChild(info)
             info.scrollIntoView()
           } else if (type == 'nr') {
@@ -2057,16 +2124,23 @@ function deeper(pla, tracks, type,trid,id,tid) {
             else {
               playable.style.opacity = '.5'
             }
-            playable.addEventListener('mouseover', function(e) {
-              let target = e.target
-              let audios = target.lastChild
-              audios.play()
-            })
-            playable.addEventListener('mouseleave', function(e) {
-              let target = e.target
-              let audios = target.lastChild
-              audios.pause()
-            })
+            playable.addEventListener('click', function(e) {
+                  let target = e.target
+                  let audios = target.lastChild
+                  for (let i = 0; i < allaudio.length; i++) {
+                    if (allaudio[i] == e.target.lastChild) {
+
+                    } else {
+                      allaudio[i].pause()
+                    }
+                  }
+
+                  if (audios.paused == false) {
+                    audios.pause()
+                  } else {
+                    audios.play()
+                  }
+                })
             let trackinfo = document.createElement('div')
             trackinfo.style.width = '50%'
             trackinfo.style.marginLeft = '10px'
@@ -2095,38 +2169,46 @@ function deeper(pla, tracks, type,trid,id,tid) {
                 trackartist.appendChild(artst)
               } else if (second['name'] == last['name']) {
               if (ar['name'] == last['name']) {
+                let amper = document.createElement('div')
+                amper.innerText = ' & '
                 let artst = document.createElement('div')
-              artst.innerText = ' & ' + ar['name']
+              artst.innerText = ar['name']
               artst.style.cursor = 'pointer'
                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
                 deep_artist(tracks, ar,info)
               })
+                trackartist.appendChild(amper)
                 trackartist.appendChild(artst)
               } else {
               let artst = document.createElement('div')
               artst.innerText = ar['name']
               artst.style.cursor = 'pointer'
-                artst.style.marginLeft = '3px'
+                artst.style.marginLeft = '4px'
+                artst.style.marginRight = '4px'
               artst.addEventListener('click', function() {
                 deep_artist(tracks, ar,info)
               })
                 trackartist.appendChild(artst)
 }} else {
                               if (ar['name'] == last['name']) {
+                                let amper = document.createElement('div')
+                amper.innerText = ' & '
                 let artst = document.createElement('div')
-              artst.innerText = ' & ' + ar['name']
+              artst.innerText = ar['name']
               artst.style.cursor = 'pointer'
                                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
                 deep_artist(tracks, ar,info)
               })
+                                trackartist.appendChild(amper)
                 trackartist.appendChild(artst)
               } else if (ar['name'] == prelast['name']) {
                 let artst = document.createElement('div')
               artst.innerText = ar['name']
               artst.style.cursor = 'pointer'
                                 artst.style.marginLeft = '3px'
+                                artst.style.marginRight = '4px'
               artst.addEventListener('click', function() {
                 deep_artist(tracks, ar,info)
               })
@@ -2142,6 +2224,15 @@ function deeper(pla, tracks, type,trid,id,tid) {
                 trackartist.appendChild(artst)}
               }
             }
+            let dvv = document.createElement('div')
+            let openinspotify = document.createElement('a')
+            openinspotify.href = pla['external_urls']['spotify']
+            openinspotify.target = '_blank'
+            let btn = document.createElement('button')
+            btn.className = 'button'
+            btn.innerText = 'Open is Spotify'
+            openinspotify.appendChild(btn)
+            dvv.appendChild(openinspotify)
             let recomend = document.createElement('span')
             recomend.innerText = 'Recomended songs'
             recomend.style.color = '#f037a5'
@@ -2219,6 +2310,7 @@ function deeper(pla, tracks, type,trid,id,tid) {
             trackinfo.appendChild(tracktype)
             trackinfo.appendChild(trackartist)
             trackinfo.appendChild(recomend)
+            trackinfo.appendChild(dvv)
             tracks.appendChild(info)
             info.scrollIntoView()
           }
@@ -2251,16 +2343,23 @@ function deeper(pla, tracks, type,trid,id,tid) {
           else {
             playable.style.opacity = '.5'
           }
-          playable.addEventListener('mouseover', function(e) {
-            let target = e.target
-            let audios = target.lastChild
-            audios.play()
-          })
-          playable.addEventListener('mouseleave', function(e) {
-            let target = e.target
-            let audios = target.lastChild
-            audios.pause()
-          })
+          playable.addEventListener('click', function(e) {
+                    let target = e.target
+                    let audios = target.firstChild.lastChild
+                    for (let i = 0; i < allaudio.length; i++) {
+                      if (allaudio[i] == e.target.firstChild.lastChild) {
+
+                      } else {
+                        allaudio[i].pause()
+                      }
+                    }
+
+                    if (audios.paused == false) {
+                      audios.pause()
+                    } else {
+                      audios.play()
+                    }
+                  })
           let trackinfo = document.createElement('div')
           trackinfo.style.width = '50%'
           trackinfo.style.marginLeft = '10px'
@@ -2294,6 +2393,8 @@ function deeper(pla, tracks, type,trid,id,tid) {
                 trackartist.appendChild(artst)
               } else if (second['name'] == last['name']) {
               if (ar['name'] == last['name']) {
+                let amper = document.createElement('div')
+                amper.innerText = ' & '
                 let artst = document.createElement('div')
               artst.innerText = ' & ' + ar['name']
               artst.style.cursor = 'pointer'
@@ -2301,18 +2402,22 @@ function deeper(pla, tracks, type,trid,id,tid) {
               artst.addEventListener('click', function() {
                 deep_artist(tracks, ar,info)
               })
+                trackartist.appendChild(amper)
                 trackartist.appendChild(artst)
               } else {
               let artst = document.createElement('div')
               artst.innerText = ar['name']
               artst.style.cursor = 'pointer'
-                artst.style.marginLeft = '3px'
+                artst.style.marginLeft = '4px'
+                artst.style.marginRight = '4px'
               artst.addEventListener('click', function() {
                 deep_artist(tracks, ar,info)
               })
                 trackartist.appendChild(artst)
 }} else {
                               if (ar['name'] == last['name']) {
+                                let amper = document.createElement('div')
+                amper.innerText = ' & '
                 let artst = document.createElement('div')
               artst.innerText = ' & ' + ar['name']
               artst.style.cursor = 'pointer'
@@ -2320,12 +2425,14 @@ function deeper(pla, tracks, type,trid,id,tid) {
               artst.addEventListener('click', function() {
                 deep_artist(tracks, ar,info)
               })
+                                trackartist.appendChild(amper)
                 trackartist.appendChild(artst)
               } else if (ar['name'] == prelast['name']) {
                 let artst = document.createElement('div')
               artst.innerText = ar['name']
               artst.style.cursor = 'pointer'
                                 artst.style.marginLeft = '3px'
+                                artst.style.marginRight = '4px'
               artst.addEventListener('click', function() {
                 deep_artist(tracks, ar,info)
               })
@@ -2361,6 +2468,8 @@ function deeper(pla, tracks, type,trid,id,tid) {
                 trackartist.appendChild(artst)
               } else if (second['name'] == last['name']) {
               if (ar['name'] == last['name']) {
+                let amper = document.createElement('div')
+                amper.innerText = ' & '
                 let artst = document.createElement('div')
               artst.innerText = ' & ' + ar['name']
               artst.style.cursor = 'pointer'
@@ -2368,18 +2477,22 @@ function deeper(pla, tracks, type,trid,id,tid) {
               artst.addEventListener('click', function() {
                 deep_artist(tracks, ar,info)
               })
+                trackartist.appendChild(amper)
                 trackartist.appendChild(artst)
               } else {
               let artst = document.createElement('div')
               artst.innerText = ar['name']
               artst.style.cursor = 'pointer'
-                artst.style.marginLeft = '3px'
+                artst.style.marginLeft = '4px'
+                artst.style.marginRight = '4px'
               artst.addEventListener('click', function() {
                 deep_artist(tracks, ar,info)
               })
                 trackartist.appendChild(artst)
 }} else {
                               if (ar['name'] == last['name']) {
+                                let amper = document.createElement('div')
+                amper.innerText = ' & '
                 let artst = document.createElement('div')
               artst.innerText = ' & ' + ar['name']
               artst.style.cursor = 'pointer'
@@ -2387,12 +2500,14 @@ function deeper(pla, tracks, type,trid,id,tid) {
               artst.addEventListener('click', function() {
                 deep_artist(tracks, ar,info)
               })
+                                trackartist.appendChild(amper)
                 trackartist.appendChild(artst)
               } else if (ar['name'] == prelast['name']) {
                 let artst = document.createElement('div')
               artst.innerText = ar['name']
               artst.style.cursor = 'pointer'
                                 artst.style.marginLeft = '3px'
+                                artst.style.marginRight = '4px'
               artst.addEventListener('click', function() {
                 deep_artist(tracks, ar,info)
               })
@@ -2446,16 +2561,23 @@ function deeper(pla, tracks, type,trid,id,tid) {
                       rd.style.opacity = '.5'
                     }
                     rd.appendChild(ra)
-                    rd.addEventListener('mouseover', function(e) {
-                      let target = e.target
-                      let audios = target.lastChild
-                      audios.play()
-                    })
-                    rd.addEventListener('mouseleave', function(e) {
-                      let target = e.target
-                      let audios = target.lastChild
+                    rd.addEventListener('click', function(e) {
+                    let target = e.target
+                    let audios = target.firstChild.lastChild
+                    for (let i = 0; i < allaudio.length; i++) {
+                      if (allaudio[i] == e.target.firstChild.lastChild) {
+
+                      } else {
+                        allaudio[i].pause()
+                      }
+                    }
+
+                    if (audios.paused == false) {
                       audios.pause()
-                    })
+                    } else {
+                      audios.play()
+                    }
+                  })
                     rd.appendChild(ra)
                     rc.appendChild(rd)
                     tracks.appendChild(rc)
@@ -2602,10 +2724,20 @@ function deeper(pla, tracks, type,trid,id,tid) {
                   }
 
               })
+              let dvv = document.createElement('div')
+            let openinspotify = document.createElement('a')
+            openinspotify.href = ar['external_urls']['spotify']
+            openinspotify.target = '_blank'
+            let btn = document.createElement('button')
+            btn.className = 'button'
+            btn.innerText = 'Open is Spotify'
+            openinspotify.appendChild(btn)
+            dvv.appendChild(openinspotify)
               ab.appendChild(dv)
               artinfo.appendChild(af)
               artinfo.appendChild(ag)
               artinfo.appendChild(arr)
+              artinfo.appendChild(dvv)
               ab.appendChild(artinfo)
               console.log(JSON.stringify('204 ' + data['images'][0]['url']))
             }
@@ -2980,6 +3112,7 @@ function deeper(pla, tracks, type,trid,id,tid) {
               console.log(JSON.stringify(thxhr.response))
             }
           }
+          tracks.after(tracks,info)
           info.after(info,ab)
           ab.scrollIntoView()
         }

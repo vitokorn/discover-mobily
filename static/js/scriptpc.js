@@ -23,7 +23,7 @@
 
         function initElement(id) {
           console.log('58 ' + id)
-          let url = 'https://api.spotify.com/v1/playlists/' + id + '?fields=name,id,description,images,tracks(items(track(name,preview_url,id,artists,album(album_type,artists,id,images,name))))'
+          let url = 'https://api.spotify.com/v1/playlists/' + id + '?fields=name,id,external_urls,description,images,tracks(items(track(name,preview_url,external_urls,id,artists,album(album_type,artists,id,images,name))))'
           console.log('60 ' + url)
           let xhr = new XMLHttpRequest()
           xhr.open('GET', url, true)
@@ -48,11 +48,22 @@
               names.innerText = name
               names.className = 'con4'
               plid.appendChild(names)
+
+              let dvv = document.createElement('div')
+            let openinspotify = document.createElement('a')
+            openinspotify.href = data['external_urls']['spotify']
+            openinspotify.target = '_blank'
+            let btn = document.createElement('button')
+            btn.className = 'button'
+            btn.innerText = 'Open is Spotify'
+            openinspotify.appendChild(btn)
+              dvv.appendChild(openinspotify)
               let descriptions = document.createElement('div')
               descriptions.innerText = description
               descriptions.style.width = '60%'
               descriptions.style.display = 'flex'
               descriptions.style.alignItems = 'center'
+              descriptions.appendChild(dvv)
               // descriptions.className = 'con4'
               plid.appendChild(descriptions)
               let cover = document.createElement('div')
@@ -1617,6 +1628,15 @@
             tracktype.innerText = 'From the ' + `${pla['track']['album']['album_type']}` + ' ' + `${pla['track']['album']['name']}`
             let trackartist = document.createElement('div')
             trackartist.innerText = 'By ' + `${list(pla['track']['artists'])}`
+            let dvv = document.createElement('div')
+            let openinspotify = document.createElement('a')
+            openinspotify.href = pla['track']['external_urls']['spotify']
+            openinspotify.target = '_blank'
+            let btn = document.createElement('button')
+            btn.className = 'button'
+            btn.innerText = 'Open is Spotify'
+            openinspotify.appendChild(btn)
+            dvv.appendChild(openinspotify)
             let recomend = document.createElement('span')
             recomend.innerText = 'Recomended songs based on this'
             recomend.style.color = '#f037a5'
@@ -1691,6 +1711,7 @@
             trackinfo.appendChild(tracktype)
             trackinfo.appendChild(trackartist)
             trackinfo.appendChild(recomend)
+            trackinfo.appendChild(dvv)
             tracks.appendChild(info)
             info.scrollIntoView()
           } else if (type == 'tt') {
@@ -1730,6 +1751,17 @@
             tracktype.innerText = 'From the ' + `${pla['album']['album_type']}` + ' ' + `${pla['album']['name']}`
             let trackartist = document.createElement('div')
             trackartist.innerText = 'By ' + `${list(pla['artists'])}`
+
+                        let dvv = document.createElement('div')
+            let openinspotify = document.createElement('a')
+            openinspotify.href = pla['external_urls']['spotify']
+            openinspotify.target = '_blank'
+            let btn = document.createElement('button')
+            btn.className = 'button'
+            btn.innerText = 'Open is Spotify'
+            openinspotify.appendChild(btn)
+            dvv.appendChild(openinspotify)
+
             let recomend = document.createElement('span')
             recomend.innerText = 'Recomended songs based on this'
             recomend.style.color = '#f037a5'
@@ -1800,6 +1832,7 @@
             trackinfo.appendChild(tracktype)
             trackinfo.appendChild(trackartist)
             trackinfo.appendChild(recomend)
+            trackinfo.appendChild(dvv)
             tracks.appendChild(info)
             info.scrollIntoView()
           } else if (type == 'nr') {
@@ -1838,6 +1871,16 @@
             tracktype.innerText = 'From the ' + `${pla['album_type']}` + ' ' + `${pla['name']}`
             let trackartist = document.createElement('div')
             trackartist.innerText = 'By ' + `${list(pla['artists'])}`
+
+            let dvv = document.createElement('div')
+            let openinspotify = document.createElement('a')
+            openinspotify.href = pla['external_urls']['spotify']
+            openinspotify.target = '_blank'
+            let btn = document.createElement('button')
+            btn.className = 'button'
+            btn.innerText = 'Open is Spotify'
+            openinspotify.appendChild(btn)
+            dvv.appendChild(openinspotify)
             let recomend = document.createElement('span')
             recomend.innerText = 'Recomended songs based on this'
             recomend.style.color = '#f037a5'
@@ -1908,6 +1951,7 @@
             trackinfo.appendChild(tracktype)
             trackinfo.appendChild(trackartist)
             trackinfo.appendChild(recomend)
+            trackinfo.appendChild(dvv)
             tracks.appendChild(info)
             info.scrollIntoView()
           }
@@ -2146,10 +2190,20 @@
                   }
 
               })
+                            let dvv = document.createElement('div')
+            let openinspotify = document.createElement('a')
+            openinspotify.href = ar['external_urls']['spotify']
+            openinspotify.target = '_blank'
+            let btn = document.createElement('button')
+            btn.className = 'button'
+            btn.innerText = 'Open is Spotify'
+            openinspotify.appendChild(btn)
+            dvv.appendChild(openinspotify)
               ab.appendChild(dv)
               artinfo.appendChild(af)
               artinfo.appendChild(ag)
               artinfo.appendChild(arr)
+              artinfo.appendChild(dvv)
               ab.appendChild(artinfo)
               console.log(JSON.stringify('204 ' + data['images'][0]['url']))
             }

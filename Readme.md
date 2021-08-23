@@ -60,7 +60,7 @@ requests
 | Hover to listen | &#9745;     | &#9745;|
 | Click to deeper |  &#9745;    | &#9745;|
 | Save            | &#9745;     | &#9744;|
-| Open in Spotify | &#9745;     | &#9744;|
+| Open in Spotify | &#9745;     | &#9745;|
 | Mobile version  | &#9744;     | &#9745;|
 | Genres          | &#9745;     |Will not be realized|
 | Random Artist   | &#9745;     | Will not be realized|
