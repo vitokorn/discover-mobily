@@ -1746,6 +1746,7 @@ function deeper(pla, tracks, type,trid,id,tid) {
             trackinfo.innerText = `${pla['track']['name']}`
             let tracktype = document.createElement('div')
             tracktype.style.color = 'white'
+            tracktype.style.display = 'flex'
             tracktype.innerText = 'From the ' + `${pla['track']['album']['album_type']}`
             let alb = document.createElement('div')
             alb.innerText = `${pla['track']['album']['name']}`
@@ -2760,7 +2761,7 @@ tracktype.appendChild(alb)
           info.style.width = '100%'
           info.style.marginTop = '12px'
           info.style.marginBottom = '6px'
-          info.className = 'rectrack'
+          info.className = 'con2'
           let playable = document.createElement('div')
           playable.className = 'con3'
           if (pla['album']) {
