@@ -133,7 +133,7 @@ header{
     left: 50px;
 position: relative;
     font-size: small;
-    width: 100px;
+    width: 150px;
 }
 @media (max-width: 576px) {
     .con3 {
@@ -149,6 +149,9 @@ position: relative;
         font-size: 0.7em;
         /*font-size: 40px;*/
         font-weight: bolder;
+    }
+    .rectrack{
+        font-size: 0.9em;
     }
 
 }
@@ -326,6 +329,10 @@ position: relative;
   margin-left: auto;
 }
 
+.pl{
+    column-gap: 16px; column-count: 2;margin-bottom: 12px
+}
+
 @media (min-width: 576px) {
   .container {
     max-width: 540px;
@@ -336,18 +343,27 @@ position: relative;
   .container {
     max-width: 720px;
   }
+    .pl{
+        column-gap: 16px; column-count: 3;margin-bottom: 12px
+    }
 }
 
 @media (min-width: 992px) {
   .container {
     max-width: 960px;
   }
+        .pl{
+        column-gap: 16px; column-count: 3;margin-bottom: 12px
+    }
 }
 
 @media (min-width: 1200px) {
   .container {
     max-width: 1140px;
   }
+        .pl{
+        column-gap: 16px; column-count: 3;margin-bottom: 12px
+    }
 }
 
 .container-fluid {
@@ -505,7 +521,7 @@ footer{
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  /*font-size: 16px;*/
+  font-size: 0.8em;
   margin: 4px 2px;
   transition-duration: 0.4s;
   cursor: pointer;
