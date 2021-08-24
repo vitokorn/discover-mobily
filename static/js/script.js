@@ -2752,7 +2752,6 @@ tracktype.appendChild(alb)
             trackinfo.appendChild(recomend)
             trackinfo.appendChild(dvv)
             tracks.after(tracks,info)
-            info.scrollIntoView()
           }
 
         function deeperalbum(pla, tracks, el,e) {
@@ -2999,11 +2998,11 @@ tracktype.appendChild(alb)
                         } else {
                           td.style.opacity = '.5'
                         }
-                        td.addEventListener('click', function() {
+                        td.addEventListener('click', function(e) {
                                               let target = e.target
-                    let audios = target.firstChild.lastChild
+                    let audios = target.lastChild
                     for (let i = 0; i < allaudio.length; i++) {
-                      if (allaudio[i] == e.target.firstChild.lastChild) {
+                      if (allaudio[i] == e.target.lastChild) {
 
                       } else {
                         allaudio[i].pause()
@@ -3100,7 +3099,6 @@ tracktype.appendChild(alb)
           trackinfo.appendChild(trackartist)
           trackinfo.appendChild(recomend)
           tracks.after(tracks, info)
-          info.scrollIntoView()
         }
 
         function deep_artist(tracks, ar,info) {
