@@ -2476,7 +2476,7 @@ let by = document.createElement('div')
           info.style.width = '100%'
           info.style.marginTop = '12px'
           info.style.marginBottom = '6px'
-          info.className = 'rectrack'
+          info.className = 'con2'
           let playable = document.createElement('div')
           playable.className = 'con3'
           if (pla['album']) {
