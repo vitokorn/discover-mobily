@@ -989,6 +989,9 @@ let openinspotify = document.createElement('a')
                         }
                         td.addEventListener('click', function(e) {
                           deeperalbumtracks(el, grid, sa)
+                                                  if (grid.nextElementSibling) {
+                          grid.nextElementSibling.remove()
+                        }
                                             let target = e.target
                           let audios = target.lastChild
                           for (let i = 0; i < allaudio.length; i++) {
@@ -2469,7 +2472,7 @@ tracktype.appendChild(alb)
         function deeperalbumtracks(pla,tracks,images) {
             let info = document.createElement('div')
             info.style.display = 'flex'
-            info.className = 'rectrack'
+            info.className = 'recalbum'
             info.style.width = '100%'
                       info.style.marginTop = '12px'
           info.style.marginBottom = '6px'
@@ -2739,11 +2742,15 @@ tracktype.appendChild(alb)
                       rd.appendChild(ra)
                       rc.appendChild(rd)
                       tracks.appendChild(rc)
+
                     }
                   }
                 }
               }
             })
+          if (info.nextElementSibling) {
+            info.nextElementSibling.remove()
+          }
             playable.appendChild(playaudio)
             info.appendChild(playable)
             info.appendChild(trackinfo)
@@ -2760,7 +2767,6 @@ tracktype.appendChild(alb)
           info.style.width = '100%'
           info.style.marginTop = '12px'
           info.style.marginBottom = '6px'
-          info.className = 'con2'
           let playable = document.createElement('div')
           playable.className = 'con3'
           if (pla['album']) {
@@ -2820,7 +2826,6 @@ tracktype.appendChild(alb)
           con.className = 'trackList'
 
           let trackartist = document.createElement('div')
-          trackartist.innerText = 'By '
           let by = document.createElement('div')
             by.innerText = 'By '
             trackartist.appendChild(by)
@@ -3014,16 +3019,17 @@ tracktype.appendChild(alb)
                     } else {
                       audios.play()
                     }
-
+if (info.nextElementSibling) {
+                          info.nextElementSibling.remove()
+                        }
                           deeperalbumtracks(l,info,pla)
+
                         })
                         td.appendChild(tt)
                         td.appendChild(ta)
                         con.appendChild(td)
                         grid.appendChild(con)
-                        if (info.nextElementSibling) {
-                          info.nextElementSibling.remove()
-                        }
+
 
                       }
                     }
