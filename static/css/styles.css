@@ -530,3 +530,9 @@ footer{
   background-color: #4CAF50;
   color: white;
 }
+.artist-cirle{
+    width: 46px;
+    height: 46px;
+    margin: 4px;
+    border-radius: 50%;
+}

@@ -150,7 +150,7 @@ let openinspotify = document.createElement('a')
 
 
                     }
-                      deeper(pla, d, 'playlist',trid,id,`${pla['track']['id']}`)
+                      deeper(pla, d, 'playlist',trid,id)
                     }
 
 
@@ -1698,7 +1698,7 @@ let openinspotify = document.createElement('a')
           }
 
         }
-function deeper(pla, tracks, type,trid,id,tid) {
+function deeper(pla, tracks, type,trid,id) {
           let block = document.createElement('div')
   block.className = 'expanded'
           block.style.display = 'block'
@@ -1706,7 +1706,7 @@ function deeper(pla, tracks, type,trid,id,tid) {
           if (type == 'playlist') {
             let info = document.createElement('div')
             info.style.width = '100%'
-            block.id = 'expand' + tid
+            block.id = 'expand' + pla['track']['id']
             info.style.display = 'flex'
             info.style.marginTop = '12px'
             info.style.marginBottom = '6px'

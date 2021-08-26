@@ -118,8 +118,42 @@
                   // if (trid.nextElementSibling != null && trid.nextElementSibling.className == 'rectrack'){
                   //
                   // } else
-                  deeper(pla, tracks, 'playlist')
+                                    if (document.getElementById('expand' + `${pla['track']['id']}`)!= null){
+                    document.getElementById('expand' + `${pla['track']['id']}`).style.display = 'block'
+                    let allTracks = document.querySelectorAll('[id^=expand]');
+                    if (allTracks != null) {
+                      for (let i = 0; i < allTracks.length; i++) {
+                        if (document.getElementById('expand' + `${pla['track']['id']}`) !=null && allTracks[i].id == document.getElementById('expand' + `${pla['track']['id']}`).id){
+
+                        } else{
+                          allTracks[i].style.display = 'none'
+                        }
+                    }
+                    }
+
+                  }
+                  else {
+                    let allTracks = document.querySelectorAll('[id^=expand]');
+                    if (allTracks != null) {
+                      for (let i = 0; i < allTracks.length; i++) {
+                        if (document.getElementById('expand' + `${pla['track']['id']}`) !=null && allTracks[i].id == document.getElementById('expand' + `${pla['track']['id']}`).id){
+
+                        } else{
+                          allTracks[i].style.display = 'none'
+                        }
+
+
+                    }
+                      deeper(pla, tracks, 'playlist')
+                    }
+
+
+                  }
+
+                  // insertAfterf(tracks[tar])
                 })
+
+
                 trid.appendChild(d)
                             window.scrollTo({
               top:findPos(plid),
@@ -1601,6 +1635,7 @@
           block.style.display = 'block'
           block.style.width = '100%'
           if (type == 'playlist') {
+            block.id = 'expand' + pla['track']['id']
             let info = document.createElement('div')
             info.style.display = 'flex'
             info.style.width = '100%'
@@ -1649,6 +1684,7 @@
             openinspotify.appendChild(btn)
             dvv.appendChild(openinspotify)
 
+            let exa = document.querySelectorAll('[id^=expanda]');
             let pta = pla['track']['artists']
             for (const ar of pla['track']['artists']) {
               let last = pta[pta.length - 1]
@@ -1662,7 +1698,24 @@
               artst.style.cursor = 'pointer'
                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(block, ar,info)
+
+
+                    if (exa != null) {
+                      console.log('1704')
+                      for (let i = 0; i < exa.length; i++) {
+                        if (document.getElementById('expanda' + `${ar['id']}`) !=null && exa[i].id == document.getElementById('expanda' + `${ar['id']}`).id){
+
+                        } else{
+                          exa[i].style.display = 'none'
+                        }
+
+
+                    }
+
+                    }
+                    if (document.getElementById('expanda' + `${ar['id']}`) ==null)
+                        deep_artist(block, ar,info)
+
               })
                 trackartist.appendChild(artst)
               } else if (second['name'] == last['name']) {
@@ -1675,7 +1728,21 @@
                 artst.style.marginLeft = '4px'
               artst.style.cursor = 'pointer'
               artst.addEventListener('click', function() {
-                deep_artist(block, ar,info)
+                    if (exa != null) {
+                      console.log('1732')
+                      for (let i = 0; i < exa.length; i++) {
+                        if (document.getElementById('expanda' + `${ar['id']}`) !=null && exa[i].id == document.getElementById('expanda' + `${ar['id']}`).id){
+
+                        } else{
+                          exa[i].style.display = 'none'
+                        }
+
+
+                    }
+
+                    }
+                    if (document.getElementById('expanda' + `${ar['id']}`) ==null)
+                        deep_artist(block, ar,info)
               })
                 trackartist.appendChild(amper)
                 trackartist.appendChild(artst)
@@ -1686,7 +1753,21 @@
                 artst.style.marginRight = '4px'
               artst.style.cursor = 'pointer'
               artst.addEventListener('click', function() {
-                deep_artist(block, ar,info)
+                    if (exa != null) {
+                      console.log('1756')
+                      for (let i = 0; i < exa.length; i++) {
+                        if (document.getElementById('expanda' + `${ar['id']}`) !=null && exa[i].id == document.getElementById('expanda' + `${ar['id']}`).id){
+
+                        } else{
+                          exa[i].style.display = 'none'
+                        }
+
+
+                    }
+
+                    }
+                    if (document.getElementById('expanda' + `${ar['id']}`) ==null)
+                        deep_artist(block, ar,info)
               })
                 trackartist.appendChild(artst)
 }} else {
@@ -1698,7 +1779,21 @@
               artst.style.cursor = 'pointer'
                                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(block, ar,info)
+                console.log('1779')
+                    if (exa != null) {
+                      for (let i = 0; i < exa.length; i++) {
+                        if (document.getElementById('expanda' + `${ar['id']}`) !=null && exa[i].id == document.getElementById('expanda' + `${ar['id']}`).id){
+
+                        } else{
+                          exa[i].style.display = 'none'
+                        }
+
+
+                    }
+
+                    }
+                    if (document.getElementById('expanda' + `${ar['id']}`) ==null)
+                        deep_artist(block, ar,info)
               })
                                 trackartist.appendChild(amper)
                 trackartist.appendChild(artst)
@@ -1709,7 +1804,22 @@
                                 artst.style.marginLeft = '3px'
                                 artst.style.marginRight = '4px'
               artst.addEventListener('click', function() {
-                deep_artist(block, ar,info)
+                    if (exa != null) {
+                      console.log('1805')
+                      for (let i = 0; i < exa.length; i++) {
+
+                        if (document.getElementById('expanda' + `${ar['id']}`) !=null && exa[i].id == document.getElementById('expanda' + `${ar['id']}`).id){
+
+                        } else{
+                          exa[i].style.display = 'none'
+                        }
+
+
+                    }
+
+                    }
+                    if (document.getElementById('expanda' + `${ar['id']}`) ==null)
+                        deep_artist(block, ar,info)
               })
                 trackartist.appendChild(artst)
               }
@@ -1720,7 +1830,22 @@
                                 artst.style.marginLeft = '4px'
                 artst.style.marginRight = '4px'
               artst.addEventListener('click', function() {
-                deep_artist(block, ar,info)
+                    if (exa != null) {
+                      console.log(1832)
+                      for (let i = 0; i < exa.length; i++) {
+                        if (document.getElementById('expanda' + `${ar['id']}`) !=null && exa[i].id == document.getElementById('expanda' + `${ar['id']}`).id){
+
+                        }
+                        else{
+                          exa[i].style.display = 'none'
+                        }
+
+
+                    }
+
+                    }
+                    if (document.getElementById('expanda' + `${ar['id']}`) ==null)
+                        deep_artist(block, ar,info)
               })
                 trackartist.appendChild(artst)}
               }
@@ -1782,14 +1907,46 @@
             let artistcirle = document.createElement('div')
             for (const ar of pla['track']['artists']) {
               let artst = document.createElement('div')
-              artst.innerText = ar['name']
+              artst.className = 'artist-cirle'
+              let artname = document.createElement('div')
+              artname.style.float = 'left'
+              artname.innerText = ar['name']
+              artname.style.marginLeft = '50px'
+              artist(ar['id'],function(e) {
+                    if (e != null) {
+                      artst.style.backgroundImage = `url(${e['images'][0]['url']})`
+                      artst.style.backgroundRepeat = 'no-repeat'
+                      artst.style.backgroundSize = 'cover'
+                    }
+                  })
+              let a = document.createElement('audio')
+                a.type = "audio/mpeg"
+                a.preload = 'none'
+                artisttrack(`${ar['id']}`, function(e) {
+                  if (e != null) {
+                    a.src = e
+                  } else {
+                    artst.style.opacity = '.5'
+                  }
+                })
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar)
+                deep_artist(tracks, ar,info)
               })
+              artst.addEventListener('mouseover', function(e) {
+                        let target = e.target
+                        let audios = target.firstChild
+                        audios.play()
+                      })
+              artst.addEventListener('mouseleave', function(e) {
+                        let target = e.target
+                        let audios = target.firstChild
+                        audios.pause()
+                      })
               // if (pla['track']['artists'][0]['name'] == ar['name']){
               //     artst.click()
               // }
-
+              artst.appendChild(a)
+              artst.appendChild(artname)
               artistcirle.appendChild(artst)
             }
             playable.appendChild(playaudio)
@@ -1985,10 +2142,46 @@
             let artistcirle = document.createElement('div')
             for (const ar of pla['artists']) {
               let artst = document.createElement('div')
-              artst.innerText = ar['name']
+              artst.className = 'artist-cirle'
+              let artname = document.createElement('div')
+              artname.style.float = 'left'
+              artname.innerText = ar['name']
+              artname.style.marginLeft = '50px'
+              artist(ar['id'],function(e) {
+                    if (e != null) {
+                      artst.style.backgroundImage = `url(${e['images'][0]['url']})`
+                      artst.style.backgroundRepeat = 'no-repeat'
+                      artst.style.backgroundSize = 'cover'
+                    }
+                  })
+              let a = document.createElement('audio')
+                a.type = "audio/mpeg"
+                a.preload = 'none'
+                artisttrack(`${ar['id']}`, function(e) {
+                  if (e != null) {
+                    a.src = e
+                  } else {
+                    artst.style.opacity = '.5'
+                  }
+                })
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar)
+                deep_artist(tracks, ar,info)
               })
+              artst.addEventListener('mouseover', function(e) {
+                        let target = e.target
+                        let audios = target.firstChild
+                        audios.play()
+                      })
+              artst.addEventListener('mouseleave', function(e) {
+                        let target = e.target
+                        let audios = target.firstChild
+                        audios.pause()
+                      })
+              // if (pla['track']['artists'][0]['name'] == ar['name']){
+              //     artst.click()
+              // }
+              artst.appendChild(a)
+              artst.appendChild(artname)
               artistcirle.appendChild(artst)
             }
             playable.appendChild(playaudio)
@@ -2182,10 +2375,46 @@ let by = document.createElement('div')
             let artistcirle = document.createElement('div')
             for (const ar of pla['artists']) {
               let artst = document.createElement('div')
-              artst.innerText = ar['name']
+              artst.className = 'artist-cirle'
+              let artname = document.createElement('div')
+              artname.style.float = 'left'
+              artname.innerText = ar['name']
+              artname.style.marginLeft = '50px'
+              artist(ar['id'],function(e) {
+                    if (e != null) {
+                      artst.style.backgroundImage = `url(${e['images'][0]['url']})`
+                      artst.style.backgroundRepeat = 'no-repeat'
+                      artst.style.backgroundSize = 'cover'
+                    }
+                  })
+              let a = document.createElement('audio')
+                a.type = "audio/mpeg"
+                a.preload = 'none'
+                artisttrack(`${ar['id']}`, function(e) {
+                  if (e != null) {
+                    a.src = e
+                  } else {
+                    artst.style.opacity = '.5'
+                  }
+                })
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar)
+                deep_artist(tracks, ar,info)
               })
+              artst.addEventListener('mouseover', function(e) {
+                        let target = e.target
+                        let audios = target.firstChild
+                        audios.play()
+                      })
+              artst.addEventListener('mouseleave', function(e) {
+                        let target = e.target
+                        let audios = target.firstChild
+                        audios.pause()
+                      })
+              // if (pla['track']['artists'][0]['name'] == ar['name']){
+              //     artst.click()
+              // }
+              artst.appendChild(a)
+              artst.appendChild(artname)
               artistcirle.appendChild(artst)
             }
             playable.appendChild(playaudio)
@@ -2812,6 +3041,7 @@ let by = document.createElement('div')
 
         function deep_artist(tracks, ar,info) {
           const ab = document.createElement('div')
+          ab.id = 'expanda' + ar['id']
           let artinfo = document.createElement('div')
           artinfo.style.gridColumn = '3 / 8'
           ab.style.display = 'grid'
@@ -3237,8 +3467,7 @@ let by = document.createElement('div')
               console.log(JSON.stringify(thxhr.response))
             }
           }
-          tracks.appendChild(info)
-          info.after(info,ab)
+          tracks.appendChild(ab)
           window.scrollTo({
               top:findPos(ab),
             behavior:'smooth'});
@@ -3253,3 +3482,18 @@ let by = document.createElement('div')
     return [curtop];
     }
 }
+
+function artist(id,callback) {
+  let url = 'https://api.spotify.com/v1/artists/' + id
+          let xhr = new XMLHttpRequest()
+          xhr.open('GET', url, true)
+          xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
+          xhr.send()
+          xhr.onload = function() {
+            if (xhr.status === 200) {
+              callback(JSON.parse(xhr.response))
+
+              console.log(JSON.stringify(xhr.response))
+            }
+}
+        }
