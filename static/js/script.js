@@ -160,6 +160,9 @@ let openinspotify = document.createElement('a')
                 })
 
                 trid.appendChild(d)
+                          window.scrollTo({
+              top:findPos(plid),
+            behavior:'smooth'});
               }
 
               let tracksid = document.querySelectorAll("#t_" + id + ">div[class=con3]")
@@ -329,13 +332,7 @@ let openinspotify = document.createElement('a')
                   } else {
                     audios.play()
                   }
-                  let info = document.createElement('div')
-                  info.style.display = 'flex'
-                  info.style.width = '100%'
-                  info.style.marginTop = '12px'
-                  info.style.marginBottom = '6px'
-                  info.className = 'recartist'
-                  deep_artist(artis, it,info)
+                  deep_artist(artis, it)
                 })
                 artis.appendChild(d)
               }
@@ -1125,8 +1122,9 @@ let openinspotify = document.createElement('a')
             if (xhr.status === 200) {
               let data = JSON.parse(this.response)
               let artis = document.getElementById('followedartist')
+              let dv = document.createElement('div')
+              dv.className = 'con2'
               let items = data['artists']['items']
-              let elem = []
               for (const it of items) {
                 let d = document.createElement('div')
                 d.tabIndex = 0
@@ -1162,15 +1160,14 @@ let openinspotify = document.createElement('a')
                   } else {
                     audios.play()
                   }
-                  let info = document.createElement('div')
-                  info.style.width = '100%'
-                  info.style.display = 'flex'
-                  info.style.marginTop = '12px'
-                  info.style.marginBottom = '6px'
-                  info.className = 'recartist'
-                  deep_artist(artis, it,info)
+                  if (dv.nextElementSibling) {
+            dv.nextElementSibling.remove()
+          }
+                  deep_artist(artis, it)
+
                 })
-                artis.appendChild(d)
+                dv.appendChild(d)
+                artis.appendChild(dv)
 
               }
               console.log('243 ' + data)
@@ -1808,7 +1805,7 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(block, ar,info)
+                deep_artist(block, ar)
               })
                 trackartist.appendChild(artst)
               } else if (second['name'] == last['name']) {
@@ -1821,7 +1818,7 @@ tracktype.appendChild(alb)
                 artst.style.marginLeft = '4px'
               artst.style.cursor = 'pointer'
               artst.addEventListener('click', function() {
-                deep_artist(block, ar,info)
+                deep_artist(block, ar)
               })
                 trackartist.appendChild(amper)
                 trackartist.appendChild(artst)
@@ -1832,7 +1829,7 @@ tracktype.appendChild(alb)
                 artst.style.marginRight = '4px'
               artst.style.cursor = 'pointer'
               artst.addEventListener('click', function() {
-                deep_artist(block, ar,info)
+                deep_artist(block, ar)
               })
                 trackartist.appendChild(artst)
 }} else {
@@ -1844,7 +1841,7 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
                                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(block, ar,info)
+                deep_artist(block, ar)
               })
                                 trackartist.appendChild(amper)
                 trackartist.appendChild(artst)
@@ -1855,7 +1852,7 @@ tracktype.appendChild(alb)
                                 artst.style.marginLeft = '3px'
                                 artst.style.marginRight = '4px'
               artst.addEventListener('click', function() {
-                deep_artist(block, ar,info)
+                deep_artist(block, ar)
               })
                 trackartist.appendChild(artst)
               }
@@ -1866,7 +1863,7 @@ tracktype.appendChild(alb)
                                 artst.style.marginLeft = '4px'
                 artst.style.marginRight = '4px'
               artst.addEventListener('click', function() {
-                deep_artist(block, ar,info)
+                deep_artist(block, ar)
               })
                 trackartist.appendChild(artst)}
               }
@@ -2012,11 +2009,18 @@ tracktype.appendChild(alb)
               if (t == null){
                 let t = document.querySelectorAll(`#t_${id} > div:last-child`)[0]
                 t.after(t,block)
+                window.scrollTo({
+              top:findPos(t),
+            behavior:'smooth'});
               } else {
                 t.after(t, block)
+                            window.scrollTo({
+              top:findPos(t),
+            behavior:'smooth'});
               }
 
             }
+
             window.addEventListener('resize',function (event){
             let containerWidth = trid.offsetWidth;
             let itemWidth = document.querySelectorAll(`#t_${id} > div`)[0].offsetWidth;
@@ -2048,8 +2052,14 @@ tracktype.appendChild(alb)
               if (t == null){
                 let t = document.querySelectorAll(`#t_${id} > div:last-child`)[0]
                 t.after(t,block)
+                            window.scrollTo({
+              top:findPos(t),
+            behavior:'smooth'});
               } else {
                 t.after(t, block)
+                            window.scrollTo({
+              top:findPos(t),
+            behavior:'smooth'});
               }
 
             }
@@ -2118,7 +2128,7 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar,info)
+                deep_artist(tracks, ar)
               })
                 trackartist.appendChild(artst)
               } else if (second['name'] == last['name']) {
@@ -2130,7 +2140,7 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar,info)
+                deep_artist(tracks, ar)
               })
                 trackartist.appendChild(amper)
                 trackartist.appendChild(artst)
@@ -2141,7 +2151,7 @@ tracktype.appendChild(alb)
                 artst.style.marginLeft = '4px'
                 artst.style.marginRight = '4px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar,info)
+                deep_artist(tracks, ar)
               })
                 trackartist.appendChild(artst)
 }} else {
@@ -2153,7 +2163,7 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
                                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar,info)
+                deep_artist(tracks, ar)
               })
                                 trackartist.appendChild(amper)
                 trackartist.appendChild(artst)
@@ -2163,7 +2173,7 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
                                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar,info)
+                deep_artist(tracks, ar)
               })
                 trackartist.appendChild(artst)
               } else {
@@ -2172,7 +2182,7 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
                                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar,info)
+                deep_artist(tracks, ar)
               })
                 trackartist.appendChild(artst)}
               }
@@ -2255,7 +2265,9 @@ tracktype.appendChild(alb)
             trackinfo.appendChild(recomend)
             trackinfo.appendChild(dvv)
             tracks.appendChild(info)
-            info.scrollIntoView()
+            window.scrollTo({
+              top:findPos(info),
+            behavior:'smooth'});
           } else if (type == 'nr') {
             let info = document.createElement('div')
             info.style.display = 'flex'
@@ -2317,7 +2329,7 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
               artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar,info)
+                deep_artist(tracks, ar)
               })
                 trackartist.appendChild(artst)
               } else if (second['name'] == last['name']) {
@@ -2329,7 +2341,7 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar,info)
+                deep_artist(tracks, ar)
               })
                 trackartist.appendChild(amper)
                 trackartist.appendChild(artst)
@@ -2340,7 +2352,7 @@ tracktype.appendChild(alb)
                 artst.style.marginLeft = '4px'
                 artst.style.marginRight = '4px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar,info)
+                deep_artist(tracks, ar)
               })
                 trackartist.appendChild(artst)
 }} else {
@@ -2352,7 +2364,7 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
                                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar,info)
+                deep_artist(tracks, ar)
               })
                                 trackartist.appendChild(amper)
                 trackartist.appendChild(artst)
@@ -2363,7 +2375,7 @@ tracktype.appendChild(alb)
                                 artst.style.marginLeft = '3px'
                                 artst.style.marginRight = '4px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar,info)
+                deep_artist(tracks, ar)
               })
                 trackartist.appendChild(artst)
               }else {
@@ -2372,7 +2384,7 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
                                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar,info)
+                deep_artist(tracks, ar)
               })
                 trackartist.appendChild(artst)}
               }
@@ -2452,7 +2464,7 @@ tracktype.appendChild(alb)
               let artst = document.createElement('div')
               artst.innerText = ar['name']
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar,info)
+                deep_artist(tracks, ar)
               })
               artistcirle.appendChild(artst)
             }
@@ -2465,7 +2477,9 @@ tracktype.appendChild(alb)
             trackinfo.appendChild(recomend)
             trackinfo.appendChild(dvv)
             tracks.appendChild(info)
-            info.scrollIntoView()
+            window.scrollTo({
+              top:findPos(info),
+            behavior:'smooth'});
           }
         }
 
@@ -2549,7 +2563,7 @@ tracktype.appendChild(alb)
               artst.innerText = ar['name']
               artst.style.cursor = 'pointer'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar,info)
+                deep_artist(tracks, ar)
               })
                 trackartist.appendChild(artst)
               } else if (second['name'] == last['name']) {
@@ -2561,7 +2575,7 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar,info)
+                deep_artist(tracks, ar)
               })
                 trackartist.appendChild(amper)
                 trackartist.appendChild(artst)
@@ -2572,7 +2586,7 @@ tracktype.appendChild(alb)
                 artst.style.marginLeft = '4px'
                 artst.style.marginRight = '4px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar,info)
+                deep_artist(tracks, ar)
               })
                 trackartist.appendChild(artst)
 }} else {
@@ -2584,7 +2598,7 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
                                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar,info)
+                deep_artist(tracks, ar)
               })
                                 trackartist.appendChild(amper)
                 trackartist.appendChild(artst)
@@ -2595,7 +2609,7 @@ tracktype.appendChild(alb)
                                 artst.style.marginLeft = '3px'
                                 artst.style.marginRight = '4px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar,info)
+                deep_artist(tracks, ar)
               })
                 trackartist.appendChild(artst)
               } else {
@@ -2604,7 +2618,7 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
                                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar,info)
+                deep_artist(tracks, ar)
               })
                 trackartist.appendChild(artst)}
               }
@@ -2624,7 +2638,7 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar,info)
+                deep_artist(tracks, ar)
               })
                 trackartist.appendChild(artst)
               } else if (second['name'] == last['name']) {
@@ -2636,7 +2650,7 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar,info)
+                deep_artist(tracks, ar)
               })
                 trackartist.appendChild(amper)
                 trackartist.appendChild(artst)
@@ -2647,7 +2661,7 @@ tracktype.appendChild(alb)
                 artst.style.marginLeft = '4px'
                 artst.style.marginRight = '4px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar,info)
+                deep_artist(tracks, ar)
               })
                 trackartist.appendChild(artst)
 }} else {
@@ -2659,7 +2673,7 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
                                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar,info)
+                deep_artist(tracks, ar)
               })
                                 trackartist.appendChild(amper)
                 trackartist.appendChild(artst)
@@ -2670,7 +2684,7 @@ tracktype.appendChild(alb)
                                 artst.style.marginLeft = '3px'
                                 artst.style.marginRight = '4px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar,info)
+                deep_artist(tracks, ar)
               })
                 trackartist.appendChild(artst)
               } else {
@@ -2679,7 +2693,7 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
                                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar,info)
+                deep_artist(tracks, ar)
               })
                 trackartist.appendChild(artst)}
               }
@@ -2843,7 +2857,7 @@ tracktype.appendChild(alb)
               artst.innerText = ar['name']
               artst.style.cursor = 'pointer'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar,info)
+                deep_artist(tracks, ar)
               })
                 trackartist.appendChild(artst)
               } else if (second['name'] == last['name']) {
@@ -2855,7 +2869,7 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar,info)
+                deep_artist(tracks, ar)
               })
                 trackartist.appendChild(amper)
                 trackartist.appendChild(artst)
@@ -2866,7 +2880,7 @@ tracktype.appendChild(alb)
                 artst.style.marginLeft = '4px'
                 artst.style.marginRight = '4px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar,info)
+                deep_artist(tracks, ar)
               })
                 trackartist.appendChild(artst)
 }} else {
@@ -2878,7 +2892,7 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
                                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar,info)
+                deep_artist(tracks, ar)
               })
                                 trackartist.appendChild(amper)
                 trackartist.appendChild(artst)
@@ -2889,7 +2903,7 @@ tracktype.appendChild(alb)
                                 artst.style.marginLeft = '3px'
                                 artst.style.marginRight = '4px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar,info)
+                deep_artist(tracks, ar)
               })
                 trackartist.appendChild(artst)
               } else {
@@ -2898,7 +2912,7 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
                                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar,info)
+                deep_artist(tracks, ar)
               })
                 trackartist.appendChild(artst)}
               }
@@ -2918,7 +2932,7 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar,info)
+                deep_artist(tracks, ar)
               })
                 trackartist.appendChild(artst)
               } else if (second['name'] == last['name']) {
@@ -2930,7 +2944,7 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar,info)
+                deep_artist(tracks, ar)
               })
                 trackartist.appendChild(amper)
                 trackartist.appendChild(artst)
@@ -2941,7 +2955,7 @@ tracktype.appendChild(alb)
                 artst.style.marginLeft = '4px'
                 artst.style.marginRight = '4px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar,info)
+                deep_artist(tracks, ar)
               })
                 trackartist.appendChild(artst)
 }} else {
@@ -2953,7 +2967,7 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
                                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar,info)
+                deep_artist(tracks, ar)
               })
                                 trackartist.appendChild(amper)
                 trackartist.appendChild(artst)
@@ -2964,7 +2978,7 @@ tracktype.appendChild(alb)
                                 artst.style.marginLeft = '3px'
                                 artst.style.marginRight = '4px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar,info)
+                deep_artist(tracks, ar)
               })
                 trackartist.appendChild(artst)
               } else {
@@ -2973,7 +2987,7 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
                                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar,info)
+                deep_artist(tracks, ar)
               })
                 trackartist.appendChild(artst)}
               }
@@ -3107,12 +3121,14 @@ if (info.nextElementSibling) {
           tracks.after(tracks, info)
         }
 
-        function deep_artist(tracks, ar,info) {
+        function deep_artist(tracks, ar) {
           const ab = document.createElement('div')
           let artinfo = document.createElement('div')
           artinfo.style.gridColumn = '3 / 8'
           ab.style.display = 'grid'
           ab.style.gridGap = '16px'
+                  ab.style.marginTop = '12px'
+                  ab.style.marginBottom = '6px'
           ab.className = 'recartist'
 
           let arurl = 'https://api.spotify.com/v1/artists/' + ar['id']
@@ -3576,7 +3592,7 @@ if (info.nextElementSibling) {
                   } else {
                     audios.play()
                   }
-                  deep_artist(tracks, ra,info)
+                  deep_artist(tracks, ra)
                 })
 
 
@@ -3600,7 +3616,17 @@ if (info.nextElementSibling) {
               console.log(JSON.stringify(thxhr.response))
             }
           }
-          tracks.appendChild(info)
-          info.after(info,ab)
-          ab.scrollIntoView()
+          tracks.appendChild(ab)
+          window.scrollTo({
+              top:findPos(ab),
+            behavior:'smooth'});
         }
+        function findPos(obj) {
+    let curtop = 0;
+    if (obj.offsetParent) {
+        do {
+            curtop += obj.offsetTop;
+        } while (obj = obj.offsetParent);
+    return [curtop];
+    }
+}

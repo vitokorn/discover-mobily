@@ -121,7 +121,9 @@
                   deeper(pla, tracks, 'playlist')
                 })
                 trid.appendChild(d)
-                plid.scrollIntoView()
+                            window.scrollTo({
+              top:findPos(plid),
+            behavior:'smooth'});
               }
 
             } else if (xhr.status === 401) {
@@ -1800,7 +1802,9 @@
             trackinfo.appendChild(dvv)
             block.appendChild(info)
             tracks.appendChild(block)
-            info.scrollIntoView()
+                        window.scrollTo({
+              top:findPos(info),
+            behavior:'smooth'});
           } else if (type == 'tt') {
             console.log('1496 pla ' + pla)
             let info = document.createElement('div')
@@ -1996,7 +2000,9 @@
             trackinfo.appendChild(recomend)
             trackinfo.appendChild(dvv)
             tracks.appendChild(info)
-            info.scrollIntoView()
+            window.scrollTo({
+              top:findPos(info),
+            behavior:'smooth'});
           } else if (type == 'nr') {
             let info = document.createElement('div')
             info.style.display = 'flex'
@@ -2191,7 +2197,9 @@ let by = document.createElement('div')
             trackinfo.appendChild(recomend)
             trackinfo.appendChild(dvv)
             tracks.appendChild(info)
-            info.scrollIntoView()
+            window.scrollTo({
+              top:findPos(info),
+            behavior:'smooth'});
           }
         }
 
@@ -2468,7 +2476,9 @@ let by = document.createElement('div')
             trackinfo.appendChild(recomend)
             trackinfo.appendChild(dvv)
             tracks.after(tracks,info)
-            info.scrollIntoView()
+            window.scrollTo({
+              top:findPos(info),
+            behavior:'smooth'});
           }
         function deeperalbum(pla, tracks, el,e) {
           let info = document.createElement('div')
@@ -2785,37 +2795,19 @@ let by = document.createElement('div')
               }
             }
           })
-          let artistcirle = document.createElement('div')
-          if (pla['artist']) {
-            for (const ar of pla['album']['artists']) {
-              let artst = document.createElement('div')
-              artst.innerText = ar['name']
-              artst.addEventListener('click', function() {
-                deep_artist(tracks, ar)
-              })
-              artistcirle.appendChild(artst)
-            }
-          } else {
-            for (const ar of pla['artists']) {
-              let artst = document.createElement('div')
-              artst.innerText = ar['name']
-              artst.addEventListener('click', function() {
-                deep_artist(tracks, ar)
-              })
-              artistcirle.appendChild(artst)
-            }
-          }
+
 
           playable.appendChild(playaudio)
           info.appendChild(playable)
           info.appendChild(trackinfo)
           info.appendChild(grid)
-          info.appendChild(artistcirle)
           trackinfo.appendChild(trackrelease)
           trackinfo.appendChild(trackartist)
           trackinfo.appendChild(recomend)
           tracks.after(tracks, info)
-          info.scrollIntoView()
+          window.scrollTo({
+              top:findPos(info),
+            behavior:'smooth'});
         }
 
         function deep_artist(tracks, ar,info) {
@@ -3247,5 +3239,17 @@ let by = document.createElement('div')
           }
           tracks.appendChild(info)
           info.after(info,ab)
-          ab.scrollIntoView()
+          window.scrollTo({
+              top:findPos(ab),
+            behavior:'smooth'});
+
         }
+        function findPos(obj) {
+    let curtop = 0;
+    if (obj.offsetParent) {
+        do {
+            curtop += obj.offsetTop;
+        } while (obj = obj.offsetParent);
+    return [curtop];
+    }
+}
