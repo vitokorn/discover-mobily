@@ -2506,10 +2506,6 @@ document.getElementById('expanda' + `${ar['id']}`).style.display = 'grid'
               top:findPos(info),
             behavior:'smooth'});
           } else if (type == 'nr') {
-                                let block = document.createElement('div')
-  block.className = 'expanded'
-          block.style.display = 'block'
-          block.style.width = '100%'
             block.id = 'expand' + pla['id']
             let info = document.createElement('div')
             info.style.display = 'flex'

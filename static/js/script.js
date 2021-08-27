@@ -332,7 +332,54 @@ let openinspotify = document.createElement('a')
                   } else {
                     audios.play()
                   }
-                  deep_artist(artis, it)
+                                                    let allTracks = document.querySelectorAll('#artists' + '>[id^=expand]');
+                  console.log('671 ' + allTracks[0])
+                  if (document.getElementById('expanda' + it['id'])!= null){
+                    document.getElementById('expanda' + it['id']).style.display = 'block'
+console.log('674')
+                    if (allTracks != null) {
+                      console.log('676')
+                      for (let i = 0; i < allTracks.length; i++) {
+                        if (document.getElementById('expanda' + it['id']) !=null && allTracks[i].id == document.getElementById('expanda' + it['id']).id){
+
+                        }
+                        else{
+                          console.log('681')
+                          allTracks[i].style.display = 'none'
+                        }
+                    }
+                    }
+
+                  }
+                  else {
+                    console.log('690')
+                    if (document.getElementById('expanda' + it['id']) !=null){
+                      console.log('692')
+                          window.scrollTo({
+              top:findPos(document.getElementById('expanda' + it['id'])),
+            behavior:'smooth'});}
+                    if (allTracks[0] == null){
+                      console.log('697')
+                      deep_artist(artis, it)
+                    }else if (allTracks != null) {
+                      console.log('700')
+                      for (let i = 0; i < allTracks.length; i++) {
+                        if (document.getElementById('expanda' + it['id']) !=null && allTracks[i].id == document.getElementById('expanda' + it['id']).id){
+console.log('703')
+                        } else{
+                          console.log('705')
+                          allTracks[i].style.display = 'none'
+                        }
+
+
+                    } if (document.getElementById('expanda' + it['id']) == null){
+                      deep_artist(artis, it)
+                      }
+                    }
+
+
+                  }
+
                 })
                 artis.appendChild(d)
               }
@@ -403,6 +450,54 @@ let openinspotify = document.createElement('a')
                   } else {
                     audios.play()
                   }
+                  let allTracks = document.querySelectorAll('#artists' + '>[id^=expand]');
+                  console.log('671 ' + allTracks[0])
+                  if (document.getElementById('expanda' + it['id'])!= null){
+                    document.getElementById('expanda' + it['id']).style.display = 'block'
+console.log('674')
+                    if (allTracks != null) {
+                      console.log('676')
+                      for (let i = 0; i < allTracks.length; i++) {
+                        if (document.getElementById('expanda' + it['id']) !=null && allTracks[i].id == document.getElementById('expanda' + it['id']).id){
+
+                        }
+                        else{
+                          console.log('681')
+                          allTracks[i].style.display = 'none'
+                        }
+                    }
+                    }
+
+                  }
+                  else {
+                    console.log('690')
+                    if (document.getElementById('expanda' + it['id']) !=null){
+                      console.log('692')
+                          window.scrollTo({
+              top:findPos(document.getElementById('expanda' + it['id'])),
+            behavior:'smooth'});}
+                    if (allTracks[0] == null){
+                      console.log('697')
+                      deep_artist(artis, it)
+                    }else if (allTracks != null) {
+                      console.log('700')
+                      for (let i = 0; i < allTracks.length; i++) {
+                        if (document.getElementById('expanda' + it['id']) !=null && allTracks[i].id == document.getElementById('expanda' + it['id']).id){
+console.log('703')
+                        } else{
+                          console.log('705')
+                          allTracks[i].style.display = 'none'
+                        }
+
+
+                    } if (document.getElementById('expanda' + it['id']) == null){
+                      deep_artist(artis, it)
+                      }
+                    }
+
+
+                  }
+
                 })
                 artis.appendChild(d)
               }
@@ -462,6 +557,53 @@ let openinspotify = document.createElement('a')
                     audios.pause()
                   } else {
                     audios.play()
+                  }
+                let allTracks = document.querySelectorAll('#artists' + '>[id^=expand]');
+                  console.log('671 ' + allTracks[0])
+                  if (document.getElementById('expanda' + it['id'])!= null){
+                    document.getElementById('expanda' + it['id']).style.display = 'block'
+console.log('674')
+                    if (allTracks != null) {
+                      console.log('676')
+                      for (let i = 0; i < allTracks.length; i++) {
+                        if (document.getElementById('expanda' + it['id']) !=null && allTracks[i].id == document.getElementById('expanda' + it['id']).id){
+
+                        }
+                        else{
+                          console.log('681')
+                          allTracks[i].style.display = 'none'
+                        }
+                    }
+                    }
+
+                  }
+                  else {
+                    console.log('690')
+                    if (document.getElementById('expanda' + it['id']) !=null){
+                      console.log('692')
+                          window.scrollTo({
+              top:findPos(document.getElementById('expanda' + it['id'])),
+            behavior:'smooth'});}
+                    if (allTracks[0] == null){
+                      console.log('697')
+                      deep_artist(artis, it)
+                    }else if (allTracks != null) {
+                      console.log('700')
+                      for (let i = 0; i < allTracks.length; i++) {
+                        if (document.getElementById('expanda' + it['id']) !=null && allTracks[i].id == document.getElementById('expanda' + it['id']).id){
+console.log('703')
+                        } else{
+                          console.log('705')
+                          allTracks[i].style.display = 'none'
+                        }
+
+
+                    } if (document.getElementById('expanda' + it['id']) == null){
+                      deep_artist(artis, it)
+                      }
+                    }
+
+
                   }
                 })
                 artis.appendChild(d)
@@ -701,7 +843,53 @@ let openinspotify = document.createElement('a')
                   } else {
                     audios.play()
                   }
-                  deeper(pla, tracks, 'tt')
+                  let allTracks = document.querySelectorAll('#toptrack' + '>[id^=expand]');
+                  console.log('671 ' + allTracks[0])
+                  if (document.getElementById('expand' + pla['id'])!= null){
+                    document.getElementById('expand' + pla['id']).style.display = 'block'
+console.log('674')
+                    if (allTracks != null) {
+                      console.log('676')
+                      for (let i = 0; i < allTracks.length; i++) {
+                        if (document.getElementById('expand' + pla['id']) !=null && allTracks[i].id == document.getElementById('expand' + pla['id']).id){
+
+                        }
+                        else{
+                          console.log('681')
+                          allTracks[i].style.display = 'none'
+                        }
+                    }
+                    }
+
+                  }
+                  else {
+                    console.log('690')
+                    if (document.getElementById('expand' + pla['id']) !=null){
+                      console.log('692')
+                          window.scrollTo({
+              top:findPos(document.getElementById('expand' + pla['id'])),
+            behavior:'smooth'});}
+                    if (allTracks[0] == null){
+                      console.log('697')
+                      deeper(pla, tracks, 'tt')
+                    }else if (allTracks != null) {
+                      console.log('700')
+                      for (let i = 0; i < allTracks.length; i++) {
+                        if (document.getElementById('expand' + pla['id']) !=null && allTracks[i].id == document.getElementById('expand' + pla['id']).id){
+console.log('703')
+                        } else{
+                          console.log('705')
+                          allTracks[i].style.display = 'none'
+                        }
+
+
+                    } if (document.getElementById('expand' + pla['id']) == null){
+                      deeper(pla, tracks, 'tt')
+                      }
+                    }
+
+
+                  }
                 })
                 tracks.appendChild(d)
               }
@@ -790,7 +978,53 @@ let openinspotify = document.createElement('a')
                   } else {
                     audios.play()
                   }
-                  deeper(pla, tracks, 'tt')
+                  let allTracks = document.querySelectorAll('#toptrack' + '>[id^=expand]');
+                  console.log('671 ' + allTracks[0])
+                  if (document.getElementById('expand' + pla['id'])!= null){
+                    document.getElementById('expand' + pla['id']).style.display = 'block'
+console.log('674')
+                    if (allTracks != null) {
+                      console.log('676')
+                      for (let i = 0; i < allTracks.length; i++) {
+                        if (document.getElementById('expand' + pla['id']) !=null && allTracks[i].id == document.getElementById('expand' + pla['id']).id){
+
+                        }
+                        else{
+                          console.log('681')
+                          allTracks[i].style.display = 'none'
+                        }
+                    }
+                    }
+
+                  }
+                  else {
+                    console.log('690')
+                    if (document.getElementById('expand' + pla['id']) !=null){
+                      console.log('692')
+                          window.scrollTo({
+              top:findPos(document.getElementById('expand' + pla['id'])),
+            behavior:'smooth'});}
+                    if (allTracks[0] == null){
+                      console.log('697')
+                      deeper(pla, tracks, 'tt')
+                    }else if (allTracks != null) {
+                      console.log('700')
+                      for (let i = 0; i < allTracks.length; i++) {
+                        if (document.getElementById('expand' + pla['id']) !=null && allTracks[i].id == document.getElementById('expand' + pla['id']).id){
+console.log('703')
+                        } else{
+                          console.log('705')
+                          allTracks[i].style.display = 'none'
+                        }
+
+
+                    } if (document.getElementById('expand' + pla['id']) == null){
+                      deeper(pla, tracks, 'tt')
+                      }
+                    }
+
+
+                  }
                 })
                 tracks.appendChild(d)
               }
@@ -849,7 +1083,53 @@ let openinspotify = document.createElement('a')
                   } else {
                     audios.play()
                   }
-                  deeper(pla, tracks, 'tt')
+                  let allTracks = document.querySelectorAll('#toptrack' + '>[id^=expand]');
+                  console.log('671 ' + allTracks[0])
+                  if (document.getElementById('expand' + pla['id'])!= null){
+                    document.getElementById('expand' + pla['id']).style.display = 'block'
+console.log('674')
+                    if (allTracks != null) {
+                      console.log('676')
+                      for (let i = 0; i < allTracks.length; i++) {
+                        if (document.getElementById('expand' + pla['id']) !=null && allTracks[i].id == document.getElementById('expand' + pla['id']).id){
+
+                        }
+                        else{
+                          console.log('681')
+                          allTracks[i].style.display = 'none'
+                        }
+                    }
+                    }
+
+                  }
+                  else {
+                    console.log('690')
+                    if (document.getElementById('expand' + pla['id']) !=null){
+                      console.log('692')
+                          window.scrollTo({
+              top:findPos(document.getElementById('expand' + pla['id'])),
+            behavior:'smooth'});}
+                    if (allTracks[0] == null){
+                      console.log('697')
+                      deeper(pla, tracks, 'tt')
+                    }else if (allTracks != null) {
+                      console.log('700')
+                      for (let i = 0; i < allTracks.length; i++) {
+                        if (document.getElementById('expand' + pla['id']) !=null && allTracks[i].id == document.getElementById('expand' + pla['id']).id){
+console.log('703')
+                        } else{
+                          console.log('705')
+                          allTracks[i].style.display = 'none'
+                        }
+
+
+                    } if (document.getElementById('expand' + pla['id']) == null){
+                      deeper(pla, tracks, 'tt')
+                      }
+                    }
+
+
+                  }
                 })
                 tracks.appendChild(d)
               }
@@ -1160,10 +1440,53 @@ let openinspotify = document.createElement('a')
                   } else {
                     audios.play()
                   }
-                  if (dv.nextElementSibling) {
-            dv.nextElementSibling.remove()
-          }
-                  deep_artist(artis, it)
+let allTracks = document.querySelectorAll('#followedartist' + '>[id^=expand]');
+                  console.log('671 ' + allTracks[0])
+                  if (document.getElementById('expanda' + it['id'])!= null){
+                    document.getElementById('expanda' + it['id']).style.display = 'block'
+console.log('674')
+                    if (allTracks != null) {
+                      console.log('676')
+                      for (let i = 0; i < allTracks.length; i++) {
+                        if (document.getElementById('expanda' + it['id']) !=null && allTracks[i].id == document.getElementById('expanda' + it['id']).id){
+
+                        }
+                        else{
+                          console.log('681')
+                          allTracks[i].style.display = 'none'
+                        }
+                    }
+                    }
+
+                  }
+                  else {
+                    console.log('690')
+                    if (document.getElementById('expanda' + it['id']) !=null){
+                      console.log('692')
+                          window.scrollTo({
+              top:findPos(document.getElementById('expanda' + it['id'])),
+            behavior:'smooth'});}
+                    if (allTracks[0] == null){
+                      console.log('697')
+                      deep_artist(artis, it)
+                    }else if (allTracks != null) {
+                      console.log('700')
+                      for (let i = 0; i < allTracks.length; i++) {
+                        if (document.getElementById('expanda' + it['id']) !=null && allTracks[i].id == document.getElementById('expanda' + it['id']).id){
+console.log('703')
+                        } else{
+                          console.log('705')
+                          allTracks[i].style.display = 'none'
+                        }
+
+
+                    } if (document.getElementById('expanda' + it['id']) == null){
+                      deep_artist(artis, it)
+                      }
+                    }
+
+
+                  }
 
                 })
                 dv.appendChild(d)
@@ -1806,7 +2129,7 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(block, ar)
+                hideel(ar,pla)
               })
                 trackartist.appendChild(artst)
               } else if (second['name'] == last['name']) {
@@ -1819,7 +2142,7 @@ tracktype.appendChild(alb)
                 artst.style.marginLeft = '4px'
               artst.style.cursor = 'pointer'
               artst.addEventListener('click', function() {
-                deep_artist(block, ar)
+                hideel(ar,pla)
               })
                 trackartist.appendChild(amper)
                 trackartist.appendChild(artst)
@@ -1830,7 +2153,7 @@ tracktype.appendChild(alb)
                 artst.style.marginRight = '4px'
               artst.style.cursor = 'pointer'
               artst.addEventListener('click', function() {
-                deep_artist(block, ar)
+                hideel(ar,pla)
               })
                 trackartist.appendChild(artst)
 }} else {
@@ -1842,7 +2165,7 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
                                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(block, ar)
+                hideel(ar,pla)
               })
                                 trackartist.appendChild(amper)
                 trackartist.appendChild(artst)
@@ -1853,7 +2176,7 @@ tracktype.appendChild(alb)
                                 artst.style.marginLeft = '3px'
                                 artst.style.marginRight = '4px'
               artst.addEventListener('click', function() {
-                deep_artist(block, ar)
+                hideel(ar,pla)
               })
                 trackartist.appendChild(artst)
               }
@@ -1864,10 +2187,40 @@ tracktype.appendChild(alb)
                                 artst.style.marginLeft = '4px'
                 artst.style.marginRight = '4px'
               artst.addEventListener('click', function() {
-                deep_artist(block, ar)
+                hideel(ar,pla)
               })
                 trackartist.appendChild(artst)}
               }
+            }
+                        function hideel(ar,pla) {
+              let ex = document.querySelectorAll('#expand' + pla['track']['id'] + '>[id^=expanda]');
+              if (document.getElementById('expanda' + `${ar['id']}`) ==null){
+                  if (ex[0] == null){
+                    deep_artist(block, ar,info)
+                  } else{
+                      for (let i = 0; i < ex.length; i++) {
+                    console.log('1740 ' + ex[i].id)
+                    ex[i].style.display = 'none'
+                        deep_artist(block, ar,info)
+                  }}
+
+
+
+                } else {
+                                      if (ex != null) {
+                      console.log('1779')
+                      for (let i = 0; i < ex.length; i++) {
+                        if (document.getElementById('expanda' + `${ar['id']}`) !=null && ex[i].id == document.getElementById('expanda' + `${ar['id']}`).id){
+document.getElementById('expanda' + `${ar['id']}`).style.display = 'grid'
+                        } else{
+                          ex[i].style.display = 'none'
+                        }
+
+
+                    }
+
+                    }
+                }
             }
             // trackartist.innerText = 'By ' + `${list2(arrr)}`
             let recomend = document.createElement('span')
@@ -2068,7 +2421,7 @@ tracktype.appendChild(alb)
             })
             // info.scrollIntoView()
           } else if (type == 'tt') {
-            console.log('1496 pla ' + pla)
+            block.id = 'expand' + pla['id']
             let info = document.createElement('div')
             info.style.display = 'flex'
             info.style.width = '100%'
@@ -2130,7 +2483,7 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar)
+                hideel2(ar,pla)
               })
                 trackartist.appendChild(artst)
               } else if (second['name'] == last['name']) {
@@ -2142,7 +2495,7 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar)
+                hideel2(ar,pla)
               })
                 trackartist.appendChild(amper)
                 trackartist.appendChild(artst)
@@ -2153,7 +2506,7 @@ tracktype.appendChild(alb)
                 artst.style.marginLeft = '4px'
                 artst.style.marginRight = '4px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar)
+                hideel2(ar,pla)
               })
                 trackartist.appendChild(artst)
 }} else {
@@ -2165,7 +2518,7 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
                                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar)
+                hideel2(ar,pla)
               })
                                 trackartist.appendChild(amper)
                 trackartist.appendChild(artst)
@@ -2175,7 +2528,7 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
                                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar)
+                hideel2(ar,pla)
               })
                 trackartist.appendChild(artst)
               } else {
@@ -2184,7 +2537,7 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
                                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar)
+                hideel2(ar,pla)
               })
                 trackartist.appendChild(artst)}
               }
@@ -2259,6 +2612,47 @@ tracktype.appendChild(alb)
                 }
               }
             })
+            function hideel2(ar,pla) {
+              let ex = document.querySelectorAll('#expand' + pla['id'] + '>[id^=expanda]');
+              console.log('2131 ' + '#expand' + pla['id'] + '>[id^=expanda]')
+              if (document.getElementById('expanda' + `${ar['id']}`) ==null){
+                  if (ex[0] == null){
+                    deep_artist(block, ar,info)
+                  } else{
+                      for (let i = 0; i < ex.length; i++) {
+                    console.log('1740 ' + ex[i].id)
+                    ex[i].style.display = 'none'
+                        deep_artist(block, ar,info)
+                  }}
+
+
+
+                } else {
+                                        if (document.getElementById('expanda' + `${ar['id']}`) !=null){
+                          window.scrollTo({
+              top:findPos(document.getElementById('expanda' + ar['id'])),
+            behavior:'smooth'});
+                        }
+                                      if (ex != null) {
+                      for (let i = 0; i < ex.length; i++) {
+                                              console.log('2145' + ex[i].id)
+
+                        if (document.getElementById('expanda' + `${ar['id']}`) !=null && ex[i].id == document.getElementById('expanda' + `${ar['id']}`).id){
+                          console.log('2148')
+document.getElementById('expanda' + `${ar['id']}`).style.display = 'grid'
+                          window.scrollTo({
+              top:findPos(document.getElementById('expanda' + `${ar['id']}`)),
+            behavior:'smooth'});
+                        } else{
+                          ex[i].style.display = 'none'
+                        }
+
+
+                    }
+
+                    }
+                }
+            }
             playable.appendChild(playaudio)
             info.appendChild(playable)
             info.appendChild(trackinfo)
@@ -2266,11 +2660,13 @@ tracktype.appendChild(alb)
             trackinfo.appendChild(trackartist)
             trackinfo.appendChild(recomend)
             trackinfo.appendChild(dvv)
-            tracks.appendChild(info)
+            block.appendChild(info)
+            tracks.appendChild(block)
             window.scrollTo({
-              top:findPos(info),
+              top:findPos(block),
             behavior:'smooth'});
           } else if (type == 'nr') {
+            block.id = 'expand' + pla['id']
             let info = document.createElement('div')
             info.style.display = 'flex'
             info.style.width = '100%'
@@ -2332,7 +2728,7 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
               artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar)
+                hideel3(ar,pla)
               })
                 trackartist.appendChild(artst)
               } else if (second['name'] == last['name']) {
@@ -2344,7 +2740,7 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar)
+                hideel3(ar,pla)
               })
                 trackartist.appendChild(amper)
                 trackartist.appendChild(artst)
@@ -2355,7 +2751,7 @@ tracktype.appendChild(alb)
                 artst.style.marginLeft = '4px'
                 artst.style.marginRight = '4px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar)
+                hideel3(ar,pla)
               })
                 trackartist.appendChild(artst)
 }} else {
@@ -2367,7 +2763,7 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
                                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar)
+                hideel3(ar,pla)
               })
                                 trackartist.appendChild(amper)
                 trackartist.appendChild(artst)
@@ -2378,7 +2774,7 @@ tracktype.appendChild(alb)
                                 artst.style.marginLeft = '3px'
                                 artst.style.marginRight = '4px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar)
+                hideel3(ar,pla)
               })
                 trackartist.appendChild(artst)
               }else {
@@ -2387,10 +2783,40 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
                                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar)
+                hideel3(ar,pla)
               })
                 trackartist.appendChild(artst)}
               }
+            }
+                        function hideel3(ar,pla) {
+              let ex = document.querySelectorAll('#expand' + pla['id'] + '>[id^=expanda]');
+              if (document.getElementById('expanda' + `${ar['id']}`) ==null){
+                  if (ex[0] == null){
+                    deep_artist(block, ar,info)
+                  } else{
+                      for (let i = 0; i < ex.length; i++) {
+                    console.log('1740 ' + ex[i].id)
+                    ex[i].style.display = 'none'
+                        deep_artist(block, ar,info)
+                  }}
+
+
+
+                } else {
+                                      if (ex != null) {
+                      console.log('3461')
+                      for (let i = 0; i < ex.length; i++) {
+                        if (document.getElementById('expanda' + `${ar['id']}`) !=null && ex[i].id == document.getElementById('expanda' + `${ar['id']}`).id){
+document.getElementById('expanda' + `${ar['id']}`).style.display = 'grid'
+                        } else{
+                          ex[i].style.display = 'none'
+                        }
+
+
+                    }
+
+                    }
+                }
             }
             let dvv = document.createElement('div')
             let openinspotify = document.createElement('a')
@@ -2479,7 +2905,8 @@ tracktype.appendChild(alb)
             trackinfo.appendChild(trackartist)
             trackinfo.appendChild(recomend)
             trackinfo.appendChild(dvv)
-            tracks.appendChild(info)
+            block.appendChild(info)
+            tracks.appendChild(block)
             window.scrollTo({
               top:findPos(info),
             behavior:'smooth'});
@@ -2487,6 +2914,11 @@ tracktype.appendChild(alb)
         }
 
         function deeperalbumtracks(pla,tracks,images) {
+          let block = document.createElement('div')
+          block.className = 'expanded'
+          block.style.display = 'block'
+          block.style.width = '100%'
+            block.id = 'expand' + pla['id']
             let info = document.createElement('div')
             info.style.display = 'flex'
             info.className = 'recalbum'
@@ -2567,7 +2999,7 @@ tracktype.appendChild(alb)
               artst.innerText = ar['name']
               artst.style.cursor = 'pointer'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar)
+                hideel4(ar,pla)
               })
                 trackartist.appendChild(artst)
               } else if (second['name'] == last['name']) {
@@ -2579,7 +3011,7 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar)
+                hideel4(ar,pla)
               })
                 trackartist.appendChild(amper)
                 trackartist.appendChild(artst)
@@ -2590,7 +3022,7 @@ tracktype.appendChild(alb)
                 artst.style.marginLeft = '4px'
                 artst.style.marginRight = '4px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar)
+                hideel4(ar,pla)
               })
                 trackartist.appendChild(artst)
 }} else {
@@ -2602,7 +3034,7 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
                                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar)
+                hideel4(ar,pla)
               })
                                 trackartist.appendChild(amper)
                 trackartist.appendChild(artst)
@@ -2613,7 +3045,7 @@ tracktype.appendChild(alb)
                                 artst.style.marginLeft = '3px'
                                 artst.style.marginRight = '4px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar)
+                hideel4(ar,pla)
               })
                 trackartist.appendChild(artst)
               } else {
@@ -2622,7 +3054,7 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
                                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar)
+                hideel4(ar,pla)
               })
                 trackartist.appendChild(artst)}
               }
@@ -2642,7 +3074,7 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar)
+                hideel4(ar,pla)
               })
                 trackartist.appendChild(artst)
               } else if (second['name'] == last['name']) {
@@ -2654,7 +3086,7 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar)
+                hideel4(ar,pla)
               })
                 trackartist.appendChild(amper)
                 trackartist.appendChild(artst)
@@ -2665,7 +3097,7 @@ tracktype.appendChild(alb)
                 artst.style.marginLeft = '4px'
                 artst.style.marginRight = '4px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar)
+                hideel4(ar,pla)
               })
                 trackartist.appendChild(artst)
 }} else {
@@ -2677,7 +3109,7 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
                                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar)
+                hideel4(ar,pla)
               })
                                 trackartist.appendChild(amper)
                 trackartist.appendChild(artst)
@@ -2688,7 +3120,7 @@ tracktype.appendChild(alb)
                                 artst.style.marginLeft = '3px'
                                 artst.style.marginRight = '4px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar)
+                hideel4(ar,pla)
               })
                 trackartist.appendChild(artst)
               } else {
@@ -2697,13 +3129,53 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
                                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar)
+                hideel4(ar,pla)
               })
                 trackartist.appendChild(artst)}
               }
             }
           }
+function hideel4(ar,pla) {
+              let ex = document.querySelectorAll('#expand' + pla['id'] + '>[id^=expanda]');
+              console.log('2131 ' + '#expand' + pla['id'] + '>[id^=expanda]')
+              if (document.getElementById('expanda' + `${ar['id']}`) ==null){
+                  if (ex[0] == null){
+                    deep_artist(block, ar,info)
+                  } else{
+                      for (let i = 0; i < ex.length; i++) {
+                    console.log('1740 ' + ex[i].id)
+                    ex[i].style.display = 'none'
+                        deep_artist(block, ar,info)
+                  }}
 
+
+
+                } else {
+                                        if (document.getElementById('expanda' + `${ar['id']}`) !=null){
+                          window.scrollTo({
+              top:findPos(document.getElementById('expanda' + ar['id'])),
+            behavior:'smooth'});
+                        }
+                                      if (ex != null) {
+                      for (let i = 0; i < ex.length; i++) {
+                                              console.log('2145' + ex[i].id)
+
+                        if (document.getElementById('expanda' + `${ar['id']}`) !=null && ex[i].id == document.getElementById('expanda' + `${ar['id']}`).id){
+                          console.log('2148')
+document.getElementById('expanda' + `${ar['id']}`).style.display = 'grid'
+                          window.scrollTo({
+              top:findPos(document.getElementById('expanda' + `${ar['id']}`)),
+            behavior:'smooth'});
+                        } else{
+                          ex[i].style.display = 'none'
+                        }
+
+
+                    }
+
+                    }
+                }
+            }
             let recomend = document.createElement('span')
             recomend.innerText = 'Recomended songs based on this'
             recomend.style.color = '#f037a5'
@@ -2776,10 +3248,19 @@ tracktype.appendChild(alb)
             trackinfo.appendChild(trackartist)
             trackinfo.appendChild(recomend)
             trackinfo.appendChild(dvv)
-            tracks.after(tracks,info)
+            block.appendChild(info)
+            tracks.after(tracks,block)
+          window.scrollTo({
+              top:findPos(block),
+            behavior:'smooth'});
           }
 
         function deeperalbum(pla, tracks, el,e) {
+          let block = document.createElement('div')
+          block.className = 'expanded'
+          block.style.display = 'block'
+          block.style.width = '100%'
+            block.id = 'expand' + pla['id']
           let info = document.createElement('div')
           info.style.display = 'flex'
           info.style.width = '100%'
@@ -2862,7 +3343,7 @@ tracktype.appendChild(alb)
               artst.innerText = ar['name']
               artst.style.cursor = 'pointer'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar)
+                hideel5(ar,pla)
               })
                 trackartist.appendChild(artst)
               } else if (second['name'] == last['name']) {
@@ -2874,7 +3355,7 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar)
+                hideel5(ar,pla)
               })
                 trackartist.appendChild(amper)
                 trackartist.appendChild(artst)
@@ -2885,7 +3366,7 @@ tracktype.appendChild(alb)
                 artst.style.marginLeft = '4px'
                 artst.style.marginRight = '4px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar)
+                hideel5(ar,pla)
               })
                 trackartist.appendChild(artst)
 }} else {
@@ -2897,7 +3378,7 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
                                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar)
+                hideel5(ar,pla)
               })
                                 trackartist.appendChild(amper)
                 trackartist.appendChild(artst)
@@ -2908,7 +3389,7 @@ tracktype.appendChild(alb)
                                 artst.style.marginLeft = '3px'
                                 artst.style.marginRight = '4px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar)
+                hideel5(ar,pla)
               })
                 trackartist.appendChild(artst)
               } else {
@@ -2917,7 +3398,7 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
                                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar)
+                hideel5(ar,pla)
               })
                 trackartist.appendChild(artst)}
               }
@@ -2937,7 +3418,7 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar)
+                hideel5(ar,pla)
               })
                 trackartist.appendChild(artst)
               } else if (second['name'] == last['name']) {
@@ -2949,7 +3430,7 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar)
+                hideel5(ar,pla)
               })
                 trackartist.appendChild(amper)
                 trackartist.appendChild(artst)
@@ -2960,7 +3441,7 @@ tracktype.appendChild(alb)
                 artst.style.marginLeft = '4px'
                 artst.style.marginRight = '4px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar)
+                hideel5(ar,pla)
               })
                 trackartist.appendChild(artst)
 }} else {
@@ -2983,7 +3464,7 @@ tracktype.appendChild(alb)
                                 artst.style.marginLeft = '3px'
                                 artst.style.marginRight = '4px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar)
+                hideel5(ar,pla)
               })
                 trackartist.appendChild(artst)
               } else {
@@ -2992,13 +3473,53 @@ tracktype.appendChild(alb)
               artst.style.cursor = 'pointer'
                                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-                deep_artist(tracks, ar)
+                hideel5(ar,pla)
               })
                 trackartist.appendChild(artst)}
               }
             }
           }
+function hideel5(ar,pla) {
+              let ex = document.querySelectorAll('#expand' + pla['id'] + '>[id^=expanda]');
+              console.log('2131 ' + '#expand' + pla['id'] + '>[id^=expanda]')
+              if (document.getElementById('expanda' + `${ar['id']}`) ==null){
+                  if (ex[0] == null){
+                    deep_artist(block, ar,info)
+                  } else{
+                      for (let i = 0; i < ex.length; i++) {
+                    console.log('1740 ' + ex[i].id)
+                    ex[i].style.display = 'none'
+                        deep_artist(block, ar,info)
+                  }}
 
+
+
+                } else {
+                                        if (document.getElementById('expanda' + `${ar['id']}`) !=null){
+                          window.scrollTo({
+              top:findPos(document.getElementById('expanda' + ar['id'])),
+            behavior:'smooth'});
+                        }
+                                      if (ex != null) {
+                      for (let i = 0; i < ex.length; i++) {
+                                              console.log('2145' + ex[i].id)
+
+                        if (document.getElementById('expanda' + `${ar['id']}`) !=null && ex[i].id == document.getElementById('expanda' + `${ar['id']}`).id){
+                          console.log('2148')
+document.getElementById('expanda' + `${ar['id']}`).style.display = 'grid'
+                          window.scrollTo({
+              top:findPos(document.getElementById('expanda' + `${ar['id']}`)),
+            behavior:'smooth'});
+                        } else{
+                          ex[i].style.display = 'none'
+                        }
+
+
+                    }
+
+                    }
+                }
+            }
           let grid = document.createElement('p')
                     for (let l of e) {
                       if (e != null) {
@@ -3123,10 +3644,16 @@ if (info.nextElementSibling) {
           trackinfo.appendChild(trackrelease)
           trackinfo.appendChild(trackartist)
           trackinfo.appendChild(recomend)
-          tracks.after(tracks, info)
+          block.appendChild(info)
+          tracks.after(tracks, block)
         }
 
         function deep_artist(tracks, ar) {
+          let block = document.createElement('div')
+  block.className = 'expanded'
+          block.style.display = 'block'
+          block.style.width = '100%'
+            block.id = 'expanda' + ar['id']
           const ab = document.createElement('div')
           let artinfo = document.createElement('div')
           artinfo.style.gridColumn = '3 / 8'
@@ -3412,9 +3939,6 @@ if (info.nextElementSibling) {
                 }
               }
 
-
-
-              console.log(JSON.stringify(axhr.response))
             }
           }
           let turl = 'https://api.spotify.com/v1/artists/' + ar['id'] + '/albums?include_groups=single,compilation'
@@ -3433,7 +3957,6 @@ if (info.nextElementSibling) {
                 con.className = 'col2'
 
                 for (const sing of data['items']) {
-                  console.log('397 ' + sing['id'])
                   let d = document.createElement('div')
                   d.tabIndex = 0
                   d.className = 'con3'
@@ -3622,8 +4145,10 @@ if (info.nextElementSibling) {
             }
           }
           tracks.appendChild(ab)
+          block.appendChild(ab)
+          tracks.appendChild(block)
           window.scrollTo({
-              top:findPos(ab),
+              top:findPos(block),
             behavior:'smooth'});
         }
         function findPos(obj) {
