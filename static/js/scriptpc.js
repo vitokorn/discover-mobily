@@ -1673,7 +1673,8 @@
             let by = document.createElement('p')
             by.innerText = 'By '
             trackartist.appendChild(by)
-            trackartist.style.display = 'block ruby'
+            trackartist.style.display = 'flex'
+            trackartist.style.alignItems = 'center'
             let dvv = document.createElement('div')
             let openinspotify = document.createElement('a')
             openinspotify.href = pla['track']['external_urls']['spotify']
@@ -1698,9 +1699,14 @@
               artst.style.cursor = 'pointer'
                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
-
-
-                    if (exa != null) {
+                if (document.getElementById('expanda' + `${ar['id']}`) ==null){
+                  console.log('1702' + exa)
+                  for (let i = 0; i < exa.length; i++) {
+                    exa[i].style.display = 'none'
+                  }
+                  deep_artist(block, ar,info)
+                } else {
+                                      if (exa != null) {
                       console.log('1704')
                       for (let i = 0; i < exa.length; i++) {
                         if (document.getElementById('expanda' + `${ar['id']}`) !=null && exa[i].id == document.getElementById('expanda' + `${ar['id']}`).id){
@@ -1713,8 +1719,9 @@
                     }
 
                     }
-                    if (document.getElementById('expanda' + `${ar['id']}`) ==null)
-                        deep_artist(block, ar,info)
+                }
+
+
 
               })
                 trackartist.appendChild(artst)
@@ -1728,8 +1735,24 @@
                 artst.style.marginLeft = '4px'
               artst.style.cursor = 'pointer'
               artst.addEventListener('click', function() {
-                    if (exa != null) {
-                      console.log('1732')
+                console.log('1737 expanda' + ar['id'])
+                if (document.getElementById('expanda' + `${ar['id']}`) ==null){
+                  console.log('1739 expanda' + ar['id'])
+                  if (exa != null){
+                    try{
+                      for (let i = 0; i < exa.length; i++) {
+                    console.log('1740 ' + exa[i].id)
+                    exa[i].style.display = 'none'
+                  }} catch (e){
+                      console.log( '1747 ' + e)
+                    }
+                    }
+
+                  console.log('1702' + exa)
+                  deep_artist(block, ar,info)
+                } else {
+                                      if (exa != null) {
+                      console.log('1704')
                       for (let i = 0; i < exa.length; i++) {
                         if (document.getElementById('expanda' + `${ar['id']}`) !=null && exa[i].id == document.getElementById('expanda' + `${ar['id']}`).id){
 
@@ -1741,8 +1764,7 @@
                     }
 
                     }
-                    if (document.getElementById('expanda' + `${ar['id']}`) ==null)
-                        deep_artist(block, ar,info)
+                }
               })
                 trackartist.appendChild(amper)
                 trackartist.appendChild(artst)
@@ -1753,8 +1775,22 @@
                 artst.style.marginRight = '4px'
               artst.style.cursor = 'pointer'
               artst.addEventListener('click', function() {
-                    if (exa != null) {
-                      console.log('1756')
+                if (document.getElementById('expanda' + `${ar['id']}`) ==null){
+                  console.log('1739 expanda' + ar['id'])
+                  if (exa != null){
+                    try{
+                      for (let i = 0; i < exa.length; i++) {
+                    console.log('1740 ' + exa[i].id)
+                    exa[i].style.display = 'none'
+                  }} catch (e){
+                      console.log( '1747 ' + e)
+                    }
+                    }
+
+                  deep_artist(block, ar,info)
+                } else {
+                                      if (exa != null) {
+                      console.log('1704')
                       for (let i = 0; i < exa.length; i++) {
                         if (document.getElementById('expanda' + `${ar['id']}`) !=null && exa[i].id == document.getElementById('expanda' + `${ar['id']}`).id){
 
@@ -1766,8 +1802,7 @@
                     }
 
                     }
-                    if (document.getElementById('expanda' + `${ar['id']}`) ==null)
-                        deep_artist(block, ar,info)
+                }
               })
                 trackartist.appendChild(artst)
 }} else {
@@ -1780,7 +1815,15 @@
                                 artst.style.marginLeft = '3px'
               artst.addEventListener('click', function() {
                 console.log('1779')
-                    if (exa != null) {
+                if (document.getElementById('expanda' + `${ar['id']}`) ==null){
+                  console.log('1702' + exa)
+                  for (let i = 0; i < exa.length; i++) {
+                    exa[i].style.display = 'none'
+                  }
+                  deep_artist(block, ar,info)
+                } else {
+                                      if (exa != null) {
+                      console.log('1704')
                       for (let i = 0; i < exa.length; i++) {
                         if (document.getElementById('expanda' + `${ar['id']}`) !=null && exa[i].id == document.getElementById('expanda' + `${ar['id']}`).id){
 
@@ -1792,8 +1835,7 @@
                     }
 
                     }
-                    if (document.getElementById('expanda' + `${ar['id']}`) ==null)
-                        deep_artist(block, ar,info)
+                }
               })
                                 trackartist.appendChild(amper)
                 trackartist.appendChild(artst)
@@ -1804,10 +1846,16 @@
                                 artst.style.marginLeft = '3px'
                                 artst.style.marginRight = '4px'
               artst.addEventListener('click', function() {
-                    if (exa != null) {
-                      console.log('1805')
+                if (document.getElementById('expanda' + `${ar['id']}`) ==null){
+                  console.log('1702' + exa)
+                  for (let i = 0; i < exa.length; i++) {
+                    exa[i].style.display = 'none'
+                  }
+                  deep_artist(block, ar,info)
+                } else {
+                                      if (exa != null) {
+                      console.log('1704')
                       for (let i = 0; i < exa.length; i++) {
-
                         if (document.getElementById('expanda' + `${ar['id']}`) !=null && exa[i].id == document.getElementById('expanda' + `${ar['id']}`).id){
 
                         } else{
@@ -1818,8 +1866,7 @@
                     }
 
                     }
-                    if (document.getElementById('expanda' + `${ar['id']}`) ==null)
-                        deep_artist(block, ar,info)
+                }
               })
                 trackartist.appendChild(artst)
               }
@@ -1830,13 +1877,19 @@
                                 artst.style.marginLeft = '4px'
                 artst.style.marginRight = '4px'
               artst.addEventListener('click', function() {
-                    if (exa != null) {
-                      console.log(1832)
+                if (document.getElementById('expanda' + `${ar['id']}`) ==null){
+                  console.log('1702' + exa)
+                  for (let i = 0; i < exa.length; i++) {
+                    exa[i].style.display = 'none'
+                  }
+                  deep_artist(block, ar,info)
+                } else {
+                                      if (exa != null) {
+                      console.log('1704')
                       for (let i = 0; i < exa.length; i++) {
                         if (document.getElementById('expanda' + `${ar['id']}`) !=null && exa[i].id == document.getElementById('expanda' + `${ar['id']}`).id){
 
-                        }
-                        else{
+                        } else{
                           exa[i].style.display = 'none'
                         }
 
@@ -1844,8 +1897,7 @@
                     }
 
                     }
-                    if (document.getElementById('expanda' + `${ar['id']}`) ==null)
-                        deep_artist(block, ar,info)
+                }
               })
                 trackartist.appendChild(artst)}
               }
@@ -2001,7 +2053,8 @@
             let by = document.createElement('div')
             by.innerText = 'By '
             trackartist.appendChild(by)
-            trackartist.style.display = 'block ruby'
+            trackartist.style.display = 'flex'
+            trackartist.style.alignItems = 'center'
             // trackartist.innerText = 'By ' + `${list(pla['artists'])}`
             let pta = pla['artists']
             for (const ar of pla['artists']) {
@@ -2234,7 +2287,8 @@
 let by = document.createElement('div')
             by.innerText = 'By '
             trackartist.appendChild(by)
-            trackartist.style.display = 'block ruby'
+            trackartist.style.display = 'flex'
+            trackartist.style.alignItems = 'center'
             // trackartist.innerText = 'By ' + `${list(pla['artists'])}`
                         let pta = pla['artists']
             for (const ar of pla['artists']) {
@@ -2490,7 +2544,8 @@ let by = document.createElement('div')
           let by = document.createElement('div')
             by.innerText = 'By '
             trackartist.appendChild(by)
-            trackartist.style.display = 'block ruby'
+            trackartist.style.display = 'flex'
+            trackartist.style.alignItems = 'center'
 
 
           if (pla['album']) {
@@ -2766,7 +2821,8 @@ let by = document.createElement('div')
 let by = document.createElement('div')
             by.innerText = 'By '
             trackartist.appendChild(by)
-            trackartist.style.display = 'block ruby'
+            trackartist.style.display = 'flex'
+            trackartist.style.alignItems = 'center'
           if (pla['album']) {
             // trackartist.innerText = 'By ' + `${list(pla['album']['artists'])}`
             let pta = pla['album']['artists']

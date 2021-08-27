@@ -1781,7 +1781,8 @@ tracktype.appendChild(alb)
             let by = document.createElement('p')
             by.innerText = 'By '
             trackartist.appendChild(by)
-            trackartist.style.display = 'block ruby'
+            trackartist.style.display = 'flex'
+            trackartist.style.alignItems = 'center'
             let dv = document.createElement('div')
             let openinspotify = document.createElement('a')
             openinspotify.href = pla['track']['external_urls']['spotify']
@@ -2113,7 +2114,8 @@ tracktype.appendChild(alb)
             let by = document.createElement('div')
             by.innerText = 'By '
             trackartist.appendChild(by)
-            trackartist.style.display = 'block ruby'
+            trackartist.style.display = 'flex'
+            trackartist.style.alignItems = 'center'
             // trackartist.innerText = 'By ' + `${list(pla['artists'])}`
             let pta = pla['artists']
             for (const ar of pla['artists']) {
@@ -2314,7 +2316,8 @@ tracktype.appendChild(alb)
             let by = document.createElement('div')
             by.innerText = 'By '
             trackartist.appendChild(by)
-            trackartist.style.display = 'block ruby'
+            trackartist.style.display = 'flex'
+            trackartist.style.alignItems = 'center'
             // trackartist.innerText = 'By ' + `${list(pla['artists'])}`
                         let pta = pla['artists']
             for (const ar of pla['artists']) {
@@ -2539,7 +2542,8 @@ tracktype.appendChild(alb)
           let by = document.createElement('div')
             by.innerText = 'By '
             trackartist.appendChild(by)
-            trackartist.style.display = 'block ruby'
+            trackartist.style.display = 'flex'
+            trackartist.style.alignItems = 'center'
             let dvv = document.createElement('div')
             let openinspotify = document.createElement('a')
             openinspotify.href = pla['external_urls']['spotify']
@@ -2843,7 +2847,8 @@ tracktype.appendChild(alb)
           let by = document.createElement('div')
             by.innerText = 'By '
             trackartist.appendChild(by)
-            trackartist.style.display = 'block ruby'
+            trackartist.style.display = 'flex'
+            trackartist.style.alignItems = 'center'
           if (pla['album']) {
             // trackartist.innerText = 'By ' + `${list(pla['album']['artists'])}`
             let pta = pla['album']['artists']
