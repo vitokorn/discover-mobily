@@ -1653,6 +1653,9 @@ console.log('703')
                     } else {
                       d.style.opacity = '.5'
                     }
+              main.addEventListener('click', function(e) {
+                    deeperalbum(alb, albu,fnn,items)
+                  })
                   })
                   d.appendChild(a)
                   main.addEventListener('mouseover', function(e) {
@@ -1708,7 +1711,9 @@ console.log('703')
                     } else {
                       d.style.opacity = '.5'
                     }
-                  })
+                    main.addEventListener('click', function(e) {
+                      deep_artist(arti,art)
+                  })})
                   d.appendChild(a)
                   main.addEventListener('mouseover', function(e) {
                     let target = e.target
@@ -1825,6 +1830,9 @@ console.log('703')
                     let target = e.target
                     let audios = target.lastChild
                     audios.pause()
+                  })
+                  main.addEventListener('click', function(e) {
+                      deeper(pla, songs, 'tt')
                   })
                   main.appendChild(d)
                   d1.appendChild(d2)
