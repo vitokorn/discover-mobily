@@ -3550,8 +3550,8 @@ document.getElementById('expanda' + `${ar['id']}`).style.display = 'grid'
                       rc.id = 'recart_' + ar['id']
                       for (const rst of rstracks) {
                         let rd = document.createElement('div')
+                        rd.className = 'con3'
                         rd.tabIndex = 0
-                        rd.style.display = 'inline-block'
                         rd.style.backgroundImage = `url(${rst['album']['images'][0]['url']})`
                         rd.style.backgroundRepeat = 'no-repeat'
                         rd.style.backgroundSize = 'cover'

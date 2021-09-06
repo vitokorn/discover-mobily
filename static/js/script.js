@@ -3723,7 +3723,7 @@ if (info.nextElementSibling) {
                       for (const rst of rstracks) {
                         let rd = document.createElement('div')
                         rd.tabIndex = 0
-                        rd.style.display = 'inline-block'
+                        rd.className = 'con3'
                         rd.style.backgroundImage = `url(${rst['album']['images'][0]['url']})`
                         rd.style.backgroundRepeat = 'no-repeat'
                         rd.style.backgroundSize = 'cover'
