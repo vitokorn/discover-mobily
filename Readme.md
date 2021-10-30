@@ -69,7 +69,7 @@ requests
 
 
 ## Roadmap
-Add Spotify Genres, Spotify Playlists and Search. Rewrite requests to spotify for Saved Albums. Add top track name to 
+Add Spotify Playlists and fix search. Rewrite requests to spotify for Saved Albums. Add top track name to 
 Top Artist, Followed Artists. Make pagination if playlist or category has more than 100 tracks. Make tabs for pc version.
 Add Artist and Track window with related artist and related tracks
 

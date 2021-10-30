@@ -3648,27 +3648,27 @@ if (info.nextElementSibling) {
           tracks.after(tracks, block)
         }
 
-        function deep_artist(tracks, ar) {
-          let block = document.createElement('div')
-  block.className = 'expanded'
-          block.style.display = 'block'
-          block.style.width = '100%'
+        async function deep_artist(tracks, ar) {
+            let block = document.createElement('div')
+            block.className = 'expanded'
+            block.style.display = 'block'
+            block.style.width = '100%'
             block.id = 'expanda' + ar['id']
-          const ab = document.createElement('div')
-          let artinfo = document.createElement('div')
-          artinfo.style.gridColumn = '3 / 8'
-          ab.style.display = 'grid'
-          ab.style.gridGap = '16px'
-                  ab.style.marginTop = '12px'
-                  ab.style.marginBottom = '6px'
-          ab.className = 'recartist'
+            const ab = document.createElement('div')
+            let artinfo = document.createElement('div')
+            artinfo.style.gridColumn = '3 / 8'
+            ab.style.display = 'grid'
+            ab.style.gridGap = '16px'
+            ab.style.marginTop = '12px'
+            ab.style.marginBottom = '6px'
+            ab.className = 'recartist'
 
           let arurl = 'https://api.spotify.com/v1/artists/' + ar['id']
           let arxhr = new XMLHttpRequest()
           arxhr.open('GET', arurl, true)
           arxhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
           arxhr.send()
-          arxhr.onload = function() {
+          arxhr.onload = await function() {
             if (arxhr.status === 200) {
               let data = JSON.parse(arxhr.response)
               console.log('202' + data)
@@ -3801,7 +3801,7 @@ if (info.nextElementSibling) {
           xhr.open('GET', url, true)
           xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
           xhr.send()
-          xhr.onload = function() {
+          xhr.onload = await function() {
             if (xhr.status === 200) {
               let data = JSON.parse(xhr.response)
               let tt = document.createElement('audio')
@@ -3883,7 +3883,7 @@ if (info.nextElementSibling) {
           axhr.open('GET', aurl, true)
           axhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
           axhr.send()
-          axhr.onload = function() {
+          axhr.onload = await function() {
             if (axhr.status === 200) {
               let data = JSON.parse(axhr.response)
               if (data['items'].length == 0) {
@@ -3946,7 +3946,7 @@ if (info.nextElementSibling) {
           txhr.open('GET', turl, true)
           txhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
           txhr.send()
-          txhr.onload = function() {
+          txhr.onload = await function() {
             if (txhr.status === 200) {
               let data = JSON.parse(txhr.response)
               if (data['items'].length == 0) {
@@ -4011,7 +4011,7 @@ if (info.nextElementSibling) {
           aoxhr.open('GET', aourl, true)
           aoxhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
           aoxhr.send()
-          aoxhr.onload = function() {
+          aoxhr.onload =await function() {
             if (aoxhr.status === 200) {
               let data = JSON.parse(aoxhr.response)
               if (data['items'].length == 0) {
@@ -4079,7 +4079,7 @@ if (info.nextElementSibling) {
           rxhr.open('GET', rurl, true)
           rxhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
           rxhr.send()
-          rxhr.onload = function() {
+          rxhr.onload = await function() {
             if (rxhr.status === 200) {
               let data = JSON.parse(rxhr.response)
               let con = document.createElement('div')

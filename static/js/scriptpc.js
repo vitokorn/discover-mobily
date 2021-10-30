@@ -3485,7 +3485,7 @@ document.getElementById('expanda' + `${ar['id']}`).style.display = 'grid'
             behavior:'smooth'});
         }
 
-        function deep_artist(tracks, ar,info) {
+        async function deep_artist(tracks, ar,info) {
           let block = document.createElement('div')
   block.className = 'expanded'
           block.style.display = 'block'
@@ -3503,7 +3503,7 @@ document.getElementById('expanda' + `${ar['id']}`).style.display = 'grid'
           arxhr.open('GET', arurl, true)
           arxhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
           arxhr.send()
-          arxhr.onload = function() {
+          arxhr.onload = await function() {
             if (arxhr.status === 200) {
               let data = JSON.parse(arxhr.response)
               console.log('202' + data)
@@ -3623,7 +3623,7 @@ document.getElementById('expanda' + `${ar['id']}`).style.display = 'grid'
           xhr.open('GET', url, true)
           xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
           xhr.send()
-          xhr.onload = function() {
+          xhr.onload = await function() {
             if (xhr.status === 200) {
               let data = JSON.parse(xhr.response)
               let tt = document.createElement('audio')
@@ -3676,7 +3676,7 @@ document.getElementById('expanda' + `${ar['id']}`).style.display = 'grid'
           axhr.open('GET', aurl, true)
           axhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
           axhr.send()
-          axhr.onload = function() {
+          axhr.onload = await function() {
             if (axhr.status === 200) {
               let data = JSON.parse(axhr.response)
               if (data['items'].length == 0) {
@@ -3737,7 +3737,7 @@ document.getElementById('expanda' + `${ar['id']}`).style.display = 'grid'
           txhr.open('GET', turl, true)
           txhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
           txhr.send()
-          txhr.onload = function() {
+          txhr.onload = await function() {
             if (txhr.status === 200) {
               let data = JSON.parse(txhr.response)
               if (data['items'].length == 0) {
@@ -3796,7 +3796,7 @@ document.getElementById('expanda' + `${ar['id']}`).style.display = 'grid'
           aoxhr.open('GET', aourl, true)
           aoxhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
           aoxhr.send()
-          aoxhr.onload = function() {
+          aoxhr.onload = await function() {
             if (aoxhr.status === 200) {
               let data = JSON.parse(aoxhr.response)
               if (data['items'].length == 0) {
@@ -3857,7 +3857,7 @@ document.getElementById('expanda' + `${ar['id']}`).style.display = 'grid'
           rxhr.open('GET', rurl, true)
           rxhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
           rxhr.send()
-          rxhr.onload = function() {
+          rxhr.onload = await function() {
             if (rxhr.status === 200) {
               let data = JSON.parse(rxhr.response)
               let con = document.createElement('div')
