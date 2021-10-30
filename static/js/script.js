@@ -39,8 +39,11 @@ function initElement(id) {
         let playlistdiv = document.getElementById('playlist')
         playlistdiv.innerHTML = ''
         tracks.innerHTML = ''
-        let plid = `<div id="p_${id}" class="con2"></div>`
-        playlistdiv.insertAdjacentHTML('afterbegin', plid)
+        let plid = document.createElement('div')
+        plid.id = 'p_' + id
+        plid.className = 'con2'
+        // let plid = `<div id="p_${id}" class="con2"></div>`
+        playlistdiv.appendChild(plid)
 
         let html = `<div class="con4">${name}</div><div style="width: 60%;display: flex;align-items: center"><button class="button"><a href="${data['external_urls']['spotify']}" target="_blank">Open in Spotify</a></button>${description}</div><div class="con4" style="background-image: url('${image}');background-size: cover;background-repeat: no-repeat"></div>`
         let refresh = `<button id="refresh_${id}" class="refresh-end" onclick="refr('refresh_${id}')"><img src="../static/images/refresh-icon.svg" height="12" id="icon_${id}" alt="refresh button"></button>`
@@ -1997,7 +2000,9 @@ function deeper(pla, tracks, type, trid, id) {
         trackinfo.appendChild(trackartist)
         trackinfo.appendChild(recomend)
         trackinfo.appendChild(dv)
-        block.appendChild(info)
+        block.insertAdjacentHTML('afterbegin',info.outerHTML)
+        console.log(2001)
+        console.log(block.outerHTML)
 
         let containerWidth = trid.offsetWidth;
         let itemWidth = document.querySelectorAll(`#t_${id} > div`)[0].offsetWidth;
@@ -3649,7 +3654,8 @@ let request = obj => {
             if (xhr.status >= 200 && xhr.status < 300) {
                 resolve(JSON.parse(xhr.response));
             } else {
-                reject(xhr.statusText);
+                reject(xhr.status);
+                // reject(xhr.statusText);
             }
         };
         xhr.onerror = () => reject(xhr.statusText);
