@@ -26,9 +26,9 @@
         <span id="topartistsall">{{ _('All time') }}</span>
         <button id="refresh_topartistsall" class="refresh-end" onclick="refr('refresh_topartistsall')"><img id="icon_topartistsall" height="12" src="../static/images/refresh-icon.svg"></button>
     </div>
-        <div id="artists" class="container-fluid con2"></div>
-        <div id="artists6" class="container-fluid con2"></div>
-        <div id="artistsall" class="container-fluid con2"></div>
+        <div style="display: none" id="artists" class="container-fluid con2"></div>
+        <div style="display: none" id="artists6" class="container-fluid con2"></div>
+        <div style="display: none" id="artistsall" class="container-fluid con2"></div>
     </div>
     <button class="accordion" id="tt">{{ _('Your Top tracks') }}</button>
     <div class="panel">
@@ -38,9 +38,9 @@
         <button id="refresh_toptrackssix" class="refresh-end" onclick="refr('refresh_toptrackssix')"><img id="icon_toptrackssix" height="12" src="../static/images/refresh-icon.svg"></button>
         <span id="toptracksall">{{ _('All time') }}</span>
         <button id="refresh_toptracksall" class="refresh-end" onclick="refr('refresh_toptracksall')"><img id="icon_toptracksall" height="12" src="../static/images/refresh-icon.svg"></button>
-        <div id="toptrack" class="container-fluid con2"></div>
-        <div id="toptrack6" class="container-fluid con2"></div>
-    <div id="toptrackat" class="container-fluid con2"></div>
+        <div style="display: none" id="toptrack" class="container-fluid con2"></div>
+        <div style="display: none" id="toptrack6" class="container-fluid con2"></div>
+    <div style="display: none" id="toptrackat" class="container-fluid con2"></div>
     </div>
     <button id="sva" class="accordion">{{ _('Your Saved albums') }}</button>
     <div class="panel">
@@ -55,7 +55,7 @@
     <button id="followedartists" class="accordion">{{ _('Your Followed artists') }}</button>
     <div class="panel">
         <button id="refresh_followedartist" class="refresh-end" onclick="refr('refresh_followedartist')"><img id="icon_followedartist" height="12" src="../static/images/refresh-icon.svg"></button>
-        <div id="followedartist" class="container-fluid con2"></div>
+        <div style="display: none" id="followedartist" class="container-fluid con2"></div>
     </div>
 {#    <button class="accordion" onclick="spotifyplaylists()">{{ _('Spotify Playlists') }}</button>#}
 {#    <div class="panel">#}

@@ -279,7 +279,7 @@ function topartistst() {
         let data = response.data
         let artis = document.getElementById('artists')
         let items = data['items']
-        for (const it of items) {
+        for await (const it of items) {
             let d = document.createElement('div')
             d.tabIndex = 0
             d.className = 'con3'
@@ -307,58 +307,17 @@ function topartistst() {
                 mouseleave2stop(e)
             })
             d.addEventListener('click', function () {
-
-                let allTracks = document.querySelectorAll('#artists' + '>[id^=expand]');
-                console.log('671 ' + allTracks[0])
-                if (document.getElementById('expanda' + it['id']) != null) {
-                    document.getElementById('expanda' + it['id']).style.display = 'block'
-                    console.log('674')
-                    if (allTracks != null) {
-                        console.log('676')
-                        for (let i = 0; i < allTracks.length; i++) {
-                            if (document.getElementById('expanda' + it['id']) != null && allTracks[i].id === document.getElementById('expanda' + it['id']).id) {
-
-                            } else {
-                                console.log('681')
-                                allTracks[i].style.display = 'none'
-                            }
-                        }
-                    }
-
-                } else {
-                    console.log('690')
-                    if (document.getElementById('expanda' + it['id']) != null) {
-                        console.log('692')
-                        window.scrollTo({
-                            top: findPos(document.getElementById('expanda' + it['id'])),
-                            behavior: 'smooth'
-                        });
-                    }
-                    if (allTracks[0] == null) {
-                        console.log('697')
-                        deep_artist(artis, it)
-                    } else if (allTracks != null) {
-                        console.log('700')
-                        for (let i = 0; i < allTracks.length; i++) {
-                            if (document.getElementById('expanda' + it['id']) != null && allTracks[i].id === document.getElementById('expanda' + it['id']).id) {
-                                console.log('703')
-                            } else {
-                                console.log('705')
-                                allTracks[i].style.display = 'none'
-                            }
-
-
-                        }
-                        if (document.getElementById('expanda' + it['id']) == null) {
-                            deep_artist(artis, it)
-                        }
-                    }
-
-
-                }
+                deep_artist(artis.lastChild, it,true)
             })
             artis.appendChild(d)
         }
+
+        let rectrack = document.createElement('div')
+        rectrack.className = 'rectrack'
+        artis.appendChild(rectrack)
+        document.getElementById('artists').style.display = 'flex'
+        document.getElementById('artists6').style.display = 'none'
+        document.getElementById('artistsall').style.display = 'none'
     }).catch((error) => {
         if (error.status === 401) {
             request({
@@ -373,11 +332,12 @@ function topartistst() {
             })
         }
     })
+
 }
 
 function topartistst6() {
     request({
-        url: 'https://api.spotify.com/v1/me/tracks?offset=' + offset + '&limit=50',
+        url: 'https://api.spotify.com/v1/me/top/artists?time_range=medium_term',
         method: 'get',
         headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('access_token')
@@ -386,7 +346,7 @@ function topartistst6() {
         let data = response.data
         let artis = document.getElementById('artists6')
         let items = data['items']
-        for (const it of items) {
+        for await (const it of items) {
             let d = document.createElement('div')
             d.tabIndex = 0
             d.className = 'con3'
@@ -414,58 +374,13 @@ function topartistst6() {
                 mouseleave2stop(e)
             })
             d.addEventListener('click', function () {
-                let allTracks = document.querySelectorAll('#artists' + '>[id^=expand]');
-                console.log('671 ' + allTracks[0])
-                if (document.getElementById('expanda' + it['id']) != null) {
-                    document.getElementById('expanda' + it['id']).style.display = 'block'
-                    console.log('674')
-                    if (allTracks != null) {
-                        console.log('676')
-                        for (let i = 0; i < allTracks.length; i++) {
-                            if (document.getElementById('expanda' + it['id']) != null && allTracks[i].id === document.getElementById('expanda' + it['id']).id) {
-
-                            } else {
-                                console.log('681')
-                                allTracks[i].style.display = 'none'
-                            }
-                        }
-                    }
-
-                } else {
-                    console.log('690')
-                    if (document.getElementById('expanda' + it['id']) != null) {
-                        console.log('692')
-                        window.scrollTo({
-                            top: findPos(document.getElementById('expanda' + it['id'])),
-                            behavior: 'smooth'
-                        });
-                    }
-                    if (allTracks[0] == null) {
-                        console.log('697')
-                        deep_artist(artis, it)
-                    } else if (allTracks != null) {
-                        console.log('700')
-                        for (let i = 0; i < allTracks.length; i++) {
-                            if (document.getElementById('expanda' + it['id']) != null && allTracks[i].id === document.getElementById('expanda' + it['id']).id) {
-                                console.log('703')
-                            } else {
-                                console.log('705')
-                                allTracks[i].style.display = 'none'
-                            }
-
-
-                        }
-                        if (document.getElementById('expanda' + it['id']) == null) {
-                            deep_artist(artis, it)
-                        }
-                    }
-
-
-                }
-
+                deep_artist(artis.lastChild, it,true)
             })
             artis.appendChild(d)
         }
+        let rectrack = document.createElement('div')
+        rectrack.className = 'rectrack'
+        artis.appendChild(rectrack)
         document.getElementById('artists').style.display = 'none'
         document.getElementById('artists6').style.display = 'flex'
         document.getElementById('artistsall').style.display = 'none'
@@ -485,7 +400,7 @@ function topartiststall() {
         let data = response.data
         let artis = document.getElementById('artistsall')
         let items = data['items']
-        for (const it of items) {
+        for await (const it of items) {
             let d = document.createElement('div')
             d.tabIndex = 0
             d.className = 'con3'
@@ -513,64 +428,20 @@ function topartiststall() {
                 mouseleave2stop(e)
             })
             d.addEventListener('click', function () {
-                let allTracks = document.querySelectorAll('#artists' + '>[id^=expand]');
-                console.log('671 ' + allTracks[0])
-                if (document.getElementById('expanda' + it['id']) != null) {
-                    document.getElementById('expanda' + it['id']).style.display = 'block'
-                    console.log('674')
-                    if (allTracks != null) {
-                        console.log('676')
-                        for (let i = 0; i < allTracks.length; i++) {
-                            if (document.getElementById('expanda' + it['id']) != null && allTracks[i].id === document.getElementById('expanda' + it['id']).id) {
-
-                            } else {
-                                console.log('681')
-                                allTracks[i].style.display = 'none'
-                            }
-                        }
-                    }
-
-                } else {
-                    console.log('690')
-                    if (document.getElementById('expanda' + it['id']) != null) {
-                        console.log('692')
-                        window.scrollTo({
-                            top: findPos(document.getElementById('expanda' + it['id'])),
-                            behavior: 'smooth'
-                        });
-                    }
-                    if (allTracks[0] == null) {
-                        console.log('697')
-                        deep_artist(artis, it)
-                    } else if (allTracks != null) {
-                        console.log('700')
-                        for (let i = 0; i < allTracks.length; i++) {
-                            if (document.getElementById('expanda' + it['id']) != null && allTracks[i].id === document.getElementById('expanda' + it['id']).id) {
-                                console.log('703')
-                            } else {
-                                console.log('705')
-                                allTracks[i].style.display = 'none'
-                            }
-
-
-                        }
-                        if (document.getElementById('expanda' + it['id']) == null) {
-                            deep_artist(artis, it)
-                        }
-                    }
-
-
-                }
+                deep_artist(artis.lastChild, it,true)
             })
             artis.appendChild(d)
         }
-
+        let rectrack = document.createElement('div')
+        rectrack.className = 'rectrack'
+        artis.appendChild(rectrack)
         document.getElementById('artists').style.display = 'none'
         document.getElementById('artists6').style.display = 'none'
         document.getElementById('artistsall').style.display = 'flex'
     }).catch((error) => {
 
     })
+
 }
 
 document.getElementById('topartists6').addEventListener('click', function () {
@@ -709,13 +580,13 @@ function topttracks() {
         headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('access_token')
         }
-    }).then((response) => {
+    }).then(async (response) => {
         let data = response.data
         let tracks = document.getElementById('toptrack')
         tracks.innerHTML = ''
         let playtrack = data['items']
         console.log('325 ' + playtrack)
-        for (const pla of playtrack) {
+        for await(const pla of playtrack) {
             let d = document.createElement('div')
             d.tabIndex = 0
             d.className = 'con3'
@@ -739,59 +610,13 @@ function topttracks() {
                 mouseleave2stop(e)
             })
             d.addEventListener('click', function () {
-                let allTracks = document.querySelectorAll('#toptrack' + '>[id^=expand]');
-                console.log('671 ' + allTracks[0])
-                if (document.getElementById('expand' + pla['id']) != null) {
-                    document.getElementById('expand' + pla['id']).style.display = 'block'
-                    console.log('674')
-                    if (allTracks != null) {
-                        console.log('676')
-                        for (let i = 0; i < allTracks.length; i++) {
-                            if (document.getElementById('expand' + pla['id']) != null && allTracks[i].id === document.getElementById('expand' + pla['id']).id) {
-
-                            } else {
-                                console.log('681')
-                                allTracks[i].style.display = 'none'
-                            }
-                        }
-                    }
-
-                } else {
-                    console.log('690')
-                    if (document.getElementById('expand' + pla['id']) != null) {
-                        console.log('692')
-                        window.scrollTo({
-                            top: findPos(document.getElementById('expand' + pla['id'])),
-                            behavior: 'smooth'
-                        });
-                    }
-                    if (allTracks[0] == null) {
-                        console.log('697')
-                        deeperTracks(tracks, pla)
-                        // deeper(pla, tracks, 'tt')
-                    } else if (allTracks != null) {
-                        console.log('700')
-                        for (let i = 0; i < allTracks.length; i++) {
-                            if (document.getElementById('expand' + pla['id']) != null && allTracks[i].id === document.getElementById('expand' + pla['id']).id) {
-                                console.log('703')
-                            } else {
-                                console.log('705')
-                                allTracks[i].style.display = 'none'
-                            }
-
-
-                        }
-                        if (document.getElementById('expand' + pla['id']) == null) {
-                            deeperTracks(tracks, pla)
-                            // deeper(pla, tracks, 'tt')
-                        }
-                    }
-
-
-                }
+                deeper(pla, tracks.lastChild, 'tt')
             })
             tracks.appendChild(d)
         }
+        let rectrack = document.createElement('div')
+        rectrack.className = 'rectrack'
+        tracks.appendChild(rectrack)
         document.getElementById('toptrack').style.display = 'flex'
         document.getElementById('toptrack6').style.display = 'none'
         document.getElementById('toptrackat').style.display = 'none'
@@ -837,14 +662,13 @@ function topttracks6() {
         headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('access_token')
         }
-    }).then((response) => {
+    }).then(async (response) => {
         let data = response.data
         let tracks = document.getElementById('toptrack6')
         tracks.innerHTML = ''
         let playtrack = data['items']
         console.log('372 ' + playtrack)
-        let elem = []
-        for (const pla of playtrack) {
+        for await(const pla of playtrack) {
             let d = document.createElement('div')
             d.tabIndex = 0
             d.className = 'con3'
@@ -868,61 +692,16 @@ function topttracks6() {
                 mouseleave2stop(e)
             })
             d.addEventListener('click', function () {
-                let allTracks = document.querySelectorAll('#toptrack' + '>[id^=expand]');
-                console.log('671 ' + allTracks[0])
-                if (document.getElementById('expand' + pla['id']) != null) {
-                    document.getElementById('expand' + pla['id']).style.display = 'block'
-                    console.log('674')
-                    if (allTracks != null) {
-                        console.log('676')
-                        for (let i = 0; i < allTracks.length; i++) {
-                            if (document.getElementById('expand' + pla['id']) != null && allTracks[i].id === document.getElementById('expand' + pla['id']).id) {
-
-                            } else {
-                                console.log('681')
-                                allTracks[i].style.display = 'none'
-                            }
-                        }
-                    }
-
-                } else {
-                    console.log('690')
-                    if (document.getElementById('expand' + pla['id']) != null) {
-                        console.log('692')
-                        window.scrollTo({
-                            top: findPos(document.getElementById('expand' + pla['id'])),
-                            behavior: 'smooth'
-                        });
-                    }
-                    if (allTracks[0] == null) {
-                        console.log('697')
-                        deeper(pla, tracks, 'tt')
-                    } else if (allTracks != null) {
-                        console.log('700')
-                        for (let i = 0; i < allTracks.length; i++) {
-                            if (document.getElementById('expand' + pla['id']) != null && allTracks[i].id === document.getElementById('expand' + pla['id']).id) {
-                                console.log('703')
-                            } else {
-                                console.log('705')
-                                allTracks[i].style.display = 'none'
-                            }
-
-
-                        }
-                        if (document.getElementById('expand' + pla['id']) == null) {
-                            deeper(pla, tracks, 'tt')
-                        }
-                    }
-
-
-                }
+                deeper(pla, tracks.lastChild, 'tt')
             })
             tracks.appendChild(d)
         }
+        let rectrack = document.createElement('div')
+        rectrack.className = 'rectrack'
+        tracks.appendChild(rectrack)
         document.getElementById('toptrack6').style.display = 'flex'
         document.getElementById('toptrack').style.display = 'none'
         document.getElementById('toptrackat').style.display = 'none'
-
     }).catch((error) => {
 
     })
@@ -936,13 +715,13 @@ function topttracksall() {
         headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('access_token')
         }
-    }).then((response) => {
+    }).then(async (response) => {
         let data = response.data
         let tracks = document.getElementById('toptrackat')
         tracks.innerHTML = ''
         let playtrack = data['items']
         console.log('403' + playtrack)
-        for (const pla of playtrack) {
+        for await(const pla of playtrack) {
             let d = document.createElement('div')
             d.tabIndex = 0
             d.className = 'con3'
@@ -966,57 +745,13 @@ function topttracksall() {
                 mouseleave2stop(e)
             })
             d.addEventListener('click', function () {
-                let allTracks = document.querySelectorAll('#toptrack' + '>[id^=expand]');
-                console.log('671 ' + allTracks[0])
-                if (document.getElementById('expand' + pla['id']) != null) {
-                    document.getElementById('expand' + pla['id']).style.display = 'block'
-                    console.log('674')
-                    if (allTracks != null) {
-                        console.log('676')
-                        for (let i = 0; i < allTracks.length; i++) {
-                            if (document.getElementById('expand' + pla['id']) != null && allTracks[i].id === document.getElementById('expand' + pla['id']).id) {
-
-                            } else {
-                                console.log('681')
-                                allTracks[i].style.display = 'none'
-                            }
-                        }
-                    }
-
-                } else {
-                    console.log('690')
-                    if (document.getElementById('expand' + pla['id']) != null) {
-                        console.log('692')
-                        window.scrollTo({
-                            top: findPos(document.getElementById('expand' + pla['id'])),
-                            behavior: 'smooth'
-                        });
-                    }
-                    if (allTracks[0] == null) {
-                        console.log('697')
-                        deeper(pla, tracks, 'tt')
-                    } else if (allTracks != null) {
-                        console.log('700')
-                        for (let i = 0; i < allTracks.length; i++) {
-                            if (document.getElementById('expand' + pla['id']) != null && allTracks[i].id === document.getElementById('expand' + pla['id']).id) {
-                                console.log('703')
-                            } else {
-                                console.log('705')
-                                allTracks[i].style.display = 'none'
-                            }
-
-
-                        }
-                        if (document.getElementById('expand' + pla['id']) == null) {
-                            deeper(pla, tracks, 'tt')
-                        }
-                    }
-
-
-                }
+                deeper(pla, tracks, 'tt')
             })
             tracks.appendChild(d)
         }
+        let rectrack = document.createElement('div')
+        rectrack.className = 'rectrack'
+        tracks.appendChild(rectrack)
         document.getElementById('toptrackat').style.display = 'flex'
         document.getElementById('toptrack').style.display = 'none'
         document.getElementById('toptrack6').style.display = 'none'
@@ -1056,7 +791,7 @@ function saved_albums() {
         albums.innerHTML = ''
         let savedalbum = data['items']
         console.log('435 ' + savedalbum)
-        for (const sa of savedalbum) {
+        for await (let sa of savedalbum) {
             let d = document.createElement('div')
             d.tabIndex = 0
             d.className = 'con3'
@@ -1083,7 +818,7 @@ function saved_albums() {
                 mouseleave2stop(e)
             })
             d.addEventListener('click', async function () {
-                await albumstracks(sa['album']['id'], function () {
+                await albumstracks(sa['album']['id']).then(async (response) => {
                     let con = document.createElement('div')
                     con.style.display = 'block'
                     con.innerText = 'Tracks'
@@ -1112,7 +847,7 @@ function saved_albums() {
                     albart.innerText = `Album by ${list(sa['album']['artists'])}`
                     let grid = document.createElement('div')
                     grid.className = 'con2'
-                    for (let el of response.data['items']) {
+                    for await(let el of response.data['items']) {
                         let td = document.createElement('div')
                         td.className = 'img-xs'
                         td.style.backgroundImage = `url(${sa['album']['images'][1]['url']})`
@@ -1158,6 +893,9 @@ function saved_albums() {
             })
             albums.appendChild(d)
         }
+            let rectrack = document.createElement('div')
+            rectrack.className = 'rectrack'
+            albums.appendChild(rectrack)
     }).catch((error) => {
 
     })
@@ -1186,6 +924,7 @@ function sendRequest(offset) {
     }).then((response) => {
         let data = response.data
         let items = data['items']
+        let tracks =  document.getElementById('savedtrack')
         for (const pla of items) {
             let d = document.createElement('div')
             d.tabIndex = 0
@@ -1210,14 +949,16 @@ function sendRequest(offset) {
                 mouseleave2stop(e)
             })
             d.addEventListener('click', function () {
-                deeper(pla, document.getElementById('savedtrack'), 'playlist')
+                deeper(pla, tracks.lastChild, 'playlist')
             })
             document.getElementById('savedtrack').appendChild(d)
         }
         if (items.length > 0) {
             sendRequest(offset + 50)
-
-
+        } else {
+            let rectrack = document.createElement('div')
+            rectrack.className = 'rectrack'
+            tracks.appendChild(rectrack)
         }
     }).catch((error) => {
 
@@ -1244,7 +985,7 @@ function getfollowedartist() {
         let data = response.data
         let artis = document.getElementById('followedartist')
         let items = data['artists']['items']
-        for (const it of items) {
+        for await (const it of items) {
             let d = document.createElement('div')
             d.tabIndex = 0
             d.className = 'con3'
@@ -1272,59 +1013,13 @@ function getfollowedartist() {
                 mouseleave2stop(e)
             })
             d.addEventListener('click', function () {
-                let allTracks = document.querySelectorAll('#followedartist' + '>[id^=expand]');
-                console.log('671 ' + allTracks[0])
-                if (document.getElementById('expanda' + it['id']) != null) {
-                    document.getElementById('expanda' + it['id']).style.display = 'block'
-                    console.log('674')
-                    if (allTracks != null) {
-                        console.log('676')
-                        for (let i = 0; i < allTracks.length; i++) {
-                            if (document.getElementById('expanda' + it['id']) != null && allTracks[i].id === document.getElementById('expanda' + it['id']).id) {
-
-                            } else {
-                                console.log('681')
-                                allTracks[i].style.display = 'none'
-                            }
-                        }
-                    }
-
-                } else {
-                    console.log('690')
-                    if (document.getElementById('expanda' + it['id']) != null) {
-                        console.log('692')
-                        window.scrollTo({
-                            top: findPos(document.getElementById('expanda' + it['id'])),
-                            behavior: 'smooth'
-                        });
-                    }
-                    if (allTracks[0] == null) {
-                        console.log('697')
-                        deep_artist(artis, it)
-                    } else if (allTracks != null) {
-                        console.log('700')
-                        for (let i = 0; i < allTracks.length; i++) {
-                            if (document.getElementById('expanda' + it['id']) != null && allTracks[i].id === document.getElementById('expanda' + it['id']).id) {
-                                console.log('703')
-                            } else {
-                                console.log('705')
-                                allTracks[i].style.display = 'none'
-                            }
-
-
-                        }
-                        if (document.getElementById('expanda' + it['id']) == null) {
-                            deep_artist(artis, it)
-                        }
-                    }
-
-
-                }
-
+                deep_artist(artis.lastChild, it,true)
             })
             artis.appendChild(d)
         }
-
+        let rectrack = document.createElement('div')
+        rectrack.className = 'rectrack'
+        artis.appendChild(rectrack)
     }).catch((error) => {
 
     })
@@ -1375,7 +1070,6 @@ function newrelease(elem, offset) {
         let items = data['albums']
         for (const it of items) {
             let tracks = it['tracks']['items']
-            let fnn = (tracks.find(e => e.preview_url))
             let d = document.createElement('div')
             d.tabIndex = 0
             d.className = 'con3'
@@ -1385,12 +1079,12 @@ function newrelease(elem, offset) {
             let a = document.createElement('audio')
             a.type = "audio/mpeg"
             a.preload = 'none'
-            if (fnn && fnn['preview_url']) {
-                a.src = `${fnn['preview_url']}`
-                d.innerText = `${list(fnn['artists'])} -  ${fnn['name']}`
+            if (tracks[0]['preview_url']) {
+                a.src = tracks[0]['preview_url']
+                d.innerText = `${list(tracks[0]['artists'])} -  ${tracks[0]['name']}`
             } else {
                 d.style.opacity = '.5'
-                d.innerText = `${list(it['artists'])} -  ${it['name']}`
+                d.innerText = `${list(tracks[0]['artists'])} -  ${tracks[0]['name']}`
             }
             d.appendChild(a)
             d.addEventListener('mouseover', function (e) {
@@ -1400,7 +1094,7 @@ function newrelease(elem, offset) {
                 mouseleave2stop(e)
             })
             d.addEventListener('click', function () {
-                deeper(it, nr, 'nr')
+                deeper(it, nr.lastChild, 'nr')
             })
             nr.appendChild(d)
         }
@@ -1410,7 +1104,11 @@ function newrelease(elem, offset) {
 
         }
     }).catch((error) => {
-
+        if (error.status === 400){
+            let rectrack = document.createElement('div')
+            rectrack.className = 'rectrack'
+            nr.appendChild(rectrack)
+        }
     })
 }
 
@@ -1586,7 +1284,7 @@ document.getElementById('srch').addEventListener('input', function () {
 
                     })
                     main.addEventListener('click', function (e) {
-                        deep_artist(arti, art)
+                        deep_artist(arti, art,false,'trackartist')
                     })
                     d.appendChild(a)
                     main.addEventListener('mouseover', function (e) {
@@ -1757,13 +1455,60 @@ function albumtracks(id) {
 }
 
 async function deeper(pla, tracks, type) {
-    let block = document.createElement('div')
-    block.className = 'expanded'
-    block.style.display = 'block'
-    block.style.width = '100%'
+    console.log(pla)
+    if (pla['track'] && pla['track']['id']) {
+        let allTracks = document.querySelectorAll(".rectrack > div");
+        if (await allTracks != null) {
+            for await(let i of allTracks) {
+                // eslint-disable-next-line no-empty
+                if (document.getElementById('d' + pla.track.id) != null && i.id === document.getElementById('d' + pla.track.id).id) {
+
+                } else {
+                    i.style.display = 'none'
+                }
+
+
+            }
+
+        }
+        if (document.getElementById('d' + pla.track.id)) {
+            document.getElementById('d' + pla.track.id).style.display = 'flex'
+            // setTimeout(() => {
+            //   window.scrollTo({
+            //     top:(document.getElementById('d'+ item.id)).offsetTop,
+            //     behavior:'smooth'});
+            // }, 10);
+            return
+        }
+    } else if (pla['id']) {
+        let allTracks = document.querySelectorAll(".rectrack > div");
+        if (await allTracks != null) {
+            for await(let i of allTracks) {
+                // eslint-disable-next-line no-empty
+                if (document.getElementById('d' + pla.id) != null && i.id === document.getElementById('d' + pla.id).id) {
+
+                } else {
+                    i.style.display = 'none'
+                }
+
+
+            }
+
+        }
+        if (document.getElementById('d' + pla.id)) {
+            document.getElementById('d' + pla.id).style.display = 'flex'
+            // setTimeout(() => {
+            //   window.scrollTo({
+            //     top:(document.getElementById('d'+ item.id)).offsetTop,
+            //     behavior:'smooth'});
+            // }, 10);
+            return
+        }
+    }
+
     if (type === 'playlist') {
-        block.id = 'expand' + pla['track']['id']
         let info = document.createElement('div')
+        info.id = 'd' + pla['track']['id']
         info.style.display = 'flex'
         info.style.width = '100%'
         info.style.marginTop = '12px'
@@ -1807,40 +1552,7 @@ async function deeper(pla, tracks, type) {
         btn.innerText = 'Open is Spotify'
         openinspotify.appendChild(btn)
         dvv.appendChild(openinspotify)
-
-        await artname(pla['track']['artists'], trackartist,tracks)
-
-        function hideel(ar, pla) {
-            let ex = document.querySelectorAll('#expand' + pla['track']['id'] + '>[id^=expanda]');
-            if (document.getElementById('expanda' + `${ar['id']}`) == null) {
-                if (ex[0] == null) {
-                    deep_artist(block, ar, info)
-                } else {
-                    for (let i = 0; i < ex.length; i++) {
-                        console.log('1740 ' + ex[i].id)
-                        ex[i].style.display = 'none'
-                        deep_artist(block, ar, info)
-                    }
-                }
-
-
-            } else {
-                if (ex != null) {
-                    console.log('1779')
-                    for (let i = 0; i < ex.length; i++) {
-                        if (document.getElementById('expanda' + `${ar['id']}`) != null && ex[i].id === document.getElementById('expanda' + `${ar['id']}`).id) {
-                            document.getElementById('expanda' + `${ar['id']}`).style.display = 'grid'
-                        } else {
-                            ex[i].style.display = 'none'
-                        }
-
-
-                    }
-
-                }
-            }
-        }
-
+        await artname(pla['track']['artists'], trackartist, tracks)
         let recomend = document.createElement('span')
         recomend.innerText = 'Recommended songs based on this'
         recomend.style.color = '#f037a5'
@@ -1877,7 +1589,7 @@ async function deeper(pla, tracks, type) {
                 }
             })
             artst.addEventListener('click', function () {
-                deep_artist(tracks, ar, info)
+                deep_artist(tracks, ar,false,'trackartist')
             })
             artst.addEventListener('mouseover', function (e) {
                 mouseover2play(e)
@@ -1900,19 +1612,17 @@ async function deeper(pla, tracks, type) {
         trackinfo.appendChild(trackartist)
         trackinfo.appendChild(recomend)
         trackinfo.appendChild(dvv)
-        block.appendChild(info)
-        tracks.appendChild(block)
+        tracks.appendChild(info)
         window.scrollTo({
             top: findPos(info),
             behavior: 'smooth'
         });
     } else if (type === 'tt') {
-        block.id = 'expand' + pla['id']
         console.log('1496 pla ' + pla)
         let info = document.createElement('div')
+        info.id = 'd' + pla['id']
         info.style.display = 'flex'
-        info.className = 'rectrack'
-        info.style.width = '100%'
+        info.className = 'playlisttrack card2'
         info.style.marginTop = '12px'
         info.style.marginBottom = '6px'
         let playable = document.createElement('div')
@@ -1945,7 +1655,7 @@ async function deeper(pla, tracks, type) {
         trackartist.style.display = 'flex'
         trackartist.style.alignItems = 'center'
         // trackartist.innerText = 'By ' + `${list(pla['artists'])}`
-        await artname(pla['artists'], trackartist)
+        await artname(pla['artists'], trackartist, tracks)
         let dvv = document.createElement('div')
         let openinspotify = document.createElement('a')
         openinspotify.href = pla['external_urls']['spotify']
@@ -1992,7 +1702,7 @@ async function deeper(pla, tracks, type) {
                 }
             })
             artst.addEventListener('click', function () {
-                deep_artist(tracks, ar, info)
+                deep_artist(tracks, ar,false,'trackartist')
             })
             artst.addEventListener('mouseover', function (e) {
                 mouseover2play(e)
@@ -2008,50 +1718,6 @@ async function deeper(pla, tracks, type) {
             artistcirle.appendChild(artst)
         }
 
-        function hideel2(ar, pla) {
-            let ex = document.querySelectorAll('#expand' + pla['id'] + '>[id^=expanda]');
-            console.log('2131 ' + '#expand' + pla['id'] + '>[id^=expanda]')
-            if (document.getElementById('expanda' + `${ar['id']}`) == null) {
-                if (ex[0] == null) {
-                    deep_artist(block, ar, info)
-                } else {
-                    for (let i = 0; i < ex.length; i++) {
-                        console.log('1740 ' + ex[i].id)
-                        ex[i].style.display = 'none'
-                        deep_artist(block, ar, info)
-                    }
-                }
-
-
-            } else {
-                if (document.getElementById('expanda' + `${ar['id']}`) != null) {
-                    window.scrollTo({
-                        top: findPos(document.getElementById('expanda' + ar['id'])),
-                        behavior: 'smooth'
-                    });
-                }
-                if (ex != null) {
-                    for (let i = 0; i < ex.length; i++) {
-                        console.log('2145' + ex[i].id)
-
-                        if (document.getElementById('expanda' + `${ar['id']}`) != null && ex[i].id === document.getElementById('expanda' + `${ar['id']}`).id) {
-                            console.log('2148')
-                            document.getElementById('expanda' + `${ar['id']}`).style.display = 'grid'
-                            window.scrollTo({
-                                top: findPos(document.getElementById('expanda' + `${ar['id']}`)),
-                                behavior: 'smooth'
-                            });
-                        } else {
-                            ex[i].style.display = 'none'
-                        }
-
-
-                    }
-
-                }
-            }
-        }
-
         playable.appendChild(playaudio)
         info.appendChild(playable)
         info.appendChild(trackinfo)
@@ -2060,18 +1726,16 @@ async function deeper(pla, tracks, type) {
         trackinfo.appendChild(trackartist)
         trackinfo.appendChild(recomend)
         trackinfo.appendChild(dvv)
-        block.appendChild(info)
-        tracks.appendChild(block)
+        tracks.appendChild(info)
         window.scrollTo({
             top: findPos(info),
             behavior: 'smooth'
         });
     } else if (type === 'nr') {
-        block.id = 'expand' + pla['id']
         let info = document.createElement('div')
+        info.id = 'd' + pla['id']
         info.style.display = 'flex'
-        info.className = 'rectrack'
-        info.style.width = '100%'
+        info.className = 'playlisttrack card2'
         info.style.marginTop = '12px'
         info.style.marginBottom = '6px'
         let playable = document.createElement('div')
@@ -2081,8 +1745,8 @@ async function deeper(pla, tracks, type) {
         playable.style.backgroundSize = 'cover'
         playable.innerText = `${list(pla['artists'])} -  ${pla['name']}`
         let playaudio = document.createElement('audio')
-        if (pla['preview_url'])
-            playaudio.src = `${pla['preview_url']}`
+        if (pla['tracks']['items'][0]['preview_url'])
+            playaudio.src = `${pla['tracks']['items'][0]['preview_url']}`
         else {
             playable.style.opacity = '.5'
         }
@@ -2104,38 +1768,7 @@ async function deeper(pla, tracks, type) {
         trackartist.style.display = 'flex'
         trackartist.style.alignItems = 'center'
         // trackartist.innerText = 'By ' + `${list(pla['artists'])}`
-        await artname(pla['artists'], trackartist)
-
-        function hideel3(ar, pla) {
-            let ex = document.querySelectorAll('#expand' + pla['id'] + '>[id^=expanda]');
-            if (document.getElementById('expanda' + `${ar['id']}`) == null) {
-                if (ex[0] == null) {
-                    deep_artist(block, ar, info)
-                } else {
-                    for (let i = 0; i < ex.length; i++) {
-                        console.log('1740 ' + ex[i].id)
-                        ex[i].style.display = 'none'
-                        deep_artist(block, ar, info)
-                    }
-                }
-
-
-            } else {
-                if (ex != null) {
-                    console.log('3461')
-                    for (let i = 0; i < ex.length; i++) {
-                        if (document.getElementById('expanda' + `${ar['id']}`) != null && ex[i].id === document.getElementById('expanda' + `${ar['id']}`).id) {
-                            document.getElementById('expanda' + `${ar['id']}`).style.display = 'grid'
-                        } else {
-                            ex[i].style.display = 'none'
-                        }
-
-
-                    }
-
-                }
-            }
-        }
+        await artname(pla['artists'], trackartist, tracks)
 
         let dvv = document.createElement('div')
         let openinspotify = document.createElement('a')
@@ -2182,7 +1815,7 @@ async function deeper(pla, tracks, type) {
                 }
             })
             artst.addEventListener('click', function () {
-                deep_artist(tracks, ar, info)
+                deep_artist(tracks, ar, false,'trackartist')
             })
             artst.addEventListener('mouseover', function (e) {
                 mouseover2play(e)
@@ -2205,8 +1838,7 @@ async function deeper(pla, tracks, type) {
         trackinfo.appendChild(trackartist)
         trackinfo.appendChild(recomend)
         trackinfo.appendChild(dvv)
-        block.appendChild(info)
-        tracks.appendChild(block)
+        tracks.appendChild(info)
         window.scrollTo({
             top: findPos(info),
             behavior: 'smooth'
@@ -2285,49 +1917,6 @@ async function deeperalbumtracks(pla, tracks, images) {
         await artname(pla['artists'], trackartist)
     }
 
-    function hideel4(ar, pla) {
-        let ex = document.querySelectorAll('#expand' + pla['id'] + '>[id^=expanda]');
-        console.log('2131 ' + '#expand' + pla['id'] + '>[id^=expanda]')
-        if (document.getElementById('expanda' + `${ar['id']}`) == null) {
-            if (ex[0] == null) {
-                deep_artist(block, ar, info)
-            } else {
-                for (let i = 0; i < ex.length; i++) {
-                    console.log('1740 ' + ex[i].id)
-                    ex[i].style.display = 'none'
-                    deep_artist(block, ar, info)
-                }
-            }
-
-
-        } else {
-            if (document.getElementById('expanda' + `${ar['id']}`) != null) {
-                window.scrollTo({
-                    top: findPos(document.getElementById('expanda' + ar['id'])),
-                    behavior: 'smooth'
-                });
-            }
-            if (ex != null) {
-                for (let i = 0; i < ex.length; i++) {
-                    console.log('2145' + ex[i].id)
-
-                    if (document.getElementById('expanda' + `${ar['id']}`) != null && ex[i].id === document.getElementById('expanda' + `${ar['id']}`).id) {
-                        console.log('2148')
-                        document.getElementById('expanda' + `${ar['id']}`).style.display = 'grid'
-                        window.scrollTo({
-                            top: findPos(document.getElementById('expanda' + `${ar['id']}`)),
-                            behavior: 'smooth'
-                        });
-                    } else {
-                        ex[i].style.display = 'none'
-                    }
-
-
-                }
-
-            }
-        }
-    }
 
     let recomend = document.createElement('span')
     recomend.innerText = 'Recommended songs based on this'
@@ -2422,49 +2011,6 @@ async function deeperalbum(pla, tracks, el, e) {
         await artname(pla['artists'], trackartist)
     }
 
-    function hideel5(ar, pla) {
-        let ex = document.querySelectorAll('#expand' + pla['id'] + '>[id^=expanda]');
-        console.log('2131 ' + '#expand' + pla['id'] + '>[id^=expanda]')
-        if (document.getElementById('expanda' + `${ar['id']}`) == null) {
-            if (ex[0] == null) {
-                deep_artist(block, ar, info)
-            } else {
-                for (let i = 0; i < ex.length; i++) {
-                    console.log('1740 ' + ex[i].id)
-                    ex[i].style.display = 'none'
-                    deep_artist(block, ar, info)
-                }
-            }
-
-
-        } else {
-            if (document.getElementById('expanda' + `${ar['id']}`) != null) {
-                window.scrollTo({
-                    top: findPos(document.getElementById('expanda' + ar['id'])),
-                    behavior: 'smooth'
-                });
-            }
-            if (ex != null) {
-                for (let i = 0; i < ex.length; i++) {
-                    console.log('2145' + ex[i].id)
-
-                    if (document.getElementById('expanda' + `${ar['id']}`) != null && ex[i].id === document.getElementById('expanda' + `${ar['id']}`).id) {
-                        console.log('2148')
-                        document.getElementById('expanda' + `${ar['id']}`).style.display = 'grid'
-                        window.scrollTo({
-                            top: findPos(document.getElementById('expanda' + `${ar['id']}`)),
-                            behavior: 'smooth'
-                        });
-                    } else {
-                        ex[i].style.display = 'none'
-                    }
-
-
-                }
-
-            }
-        }
-    }
 
     let con = document.createElement('div')
     con.style.display = 'block'
@@ -2544,21 +2090,78 @@ async function deeperalbum(pla, tracks, el, e) {
     });
 }
 
-async function deep_artist(tracks, ar, info) {
+async function deep_artist(tracks, item, flag, sib, related) {
+    let all = document.querySelectorAll('.rectrack > div')
+    let alltop = document.querySelectorAll('.rectrack > div.' + sib)
+    let last = document.querySelector('.rectrack > div.trackartist > div[id="art' + item.id + '"]')
+    // console.log(last)
+    // console.log(item.id)
+    if (flag === true) {
+        // console.log(item.id)
+        if (all.length !== 0 && all.length !== 0) {
+            for (let i = 0; i < all.length; i++) {
+                // console.log(all[i])
+                if (last !== null && all[i].firstChild.id === last.id && last.id === item.id) {
+                    last.parentElement.style.display = 'block'
+                } else {
+                    // console.log(all[i])
+                    all[i].style.display = 'none'
+                }
+            }
+        }
+    } else if (alltop.length !== 0 && alltop[alltop.length - 1].nextElementSibling !== null) {
+        let par = alltop[alltop.length - 1].nextElementSibling
+        while (par != null) {
+            par.style.display = 'none'
+            if (par.nextElementSibling !== null && par.nextElementSibling.style.display !== 'none') {
+                par = par.nextElementSibling
+            } else if (par.nextElementSibling !== null && par.nextElementSibling.style.display === 'none') {
+                par = par.nextElementSibling.nextElementSibling
+            } else if (par.nextElementSibling === null) {
+                par = null
+            }
+        }
+    } else if (related) {
+
+        let par = document.getElementById(related).parentElement.nextElementSibling
+        while (par != null) {
+            par.style.display = 'none'
+            if (par.nextElementSibling !== null && par.nextElementSibling.style.display !== 'none') {
+                par = par.nextElementSibling
+            } else if (par.nextElementSibling !== null && par.nextElementSibling.style.display === 'none') {
+                par = par.nextElementSibling.nextElementSibling
+            } else if (par.nextElementSibling === null) {
+                par = null
+            }
+        }
+    }
+    if (last !== null && last.id === 'art' + item.id) {
+        if (document.getElementById('art' + item.id)) {
+            document.getElementById('art' + item.id).parentElement.style.display = 'flex'
+        }
+        // setTimeout(() => {
+        //     window.scrollTo({
+        //         top: (document.getElementById('art' + item.id)).offsetTop,
+        //         behavior: 'smooth'
+        //     });
+        // }, 10);
+        return
+    }
+
     console.log(tracks)
     let block = document.createElement('div')
-    block.className = 'expanded'
+    block.className = 'trackartist card2'
     block.style.display = 'block'
     block.style.width = '100%'
-    block.id = 'expanda' + ar['id']
     const ab = document.createElement('div')
     let artinfo = document.createElement('div')
     artinfo.style.gridColumn = '3 / 8'
     ab.style.display = 'grid'
     ab.style.gridGap = '16px'
     ab.className = 'recartist'
+    ab.id = 'art' + item['id']
     await request({
-        url: 'https://api.spotify.com/v1/artists/' + ar['id'],
+        url: 'https://api.spotify.com/v1/artists/' + item['id'],
         method: 'get',
         headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('access_token')
@@ -2569,7 +2172,7 @@ async function deep_artist(tracks, ar, info) {
         let dv = document.createElement('div')
         dv.className = 'con3'
         dv.style.gridColumn = '1 / 3'
-        dv.id = ar['id']
+        dv.id = item['id']
         dv.style.backgroundImage = `url(${data['images'][0]['url']})`
         dv.style.backgroundRepeat = 'no-repeat'
         dv.style.backgroundSize = 'cover'
@@ -2593,7 +2196,7 @@ async function deep_artist(tracks, ar, info) {
         })
         let dvv = document.createElement('div')
         let openinspotify = document.createElement('a')
-        openinspotify.href = ar['external_urls']['spotify']
+        openinspotify.href = item['external_urls']['spotify']
         openinspotify.target = '_blank'
         let btn = document.createElement('button')
         btn.className = 'button'
@@ -2629,7 +2232,7 @@ async function deep_artist(tracks, ar, info) {
     area.style.gridArea = '1 / 8 / 3 / 10'
     area.innerText = 'Related Artists'
     await request({
-        url: 'https://api.spotify.com/v1/artists/' + ar['id'] + '/top-tracks?limit=10&market=' + localStorage.getItem('country'),
+        url: 'https://api.spotify.com/v1/artists/' + item['id'] + '/top-tracks?limit=10&market=' + localStorage.getItem('country'),
         method: 'get',
         headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('access_token')
@@ -2673,7 +2276,7 @@ async function deep_artist(tracks, ar, info) {
 
     })
     await request({
-        url: 'https://api.spotify.com/v1/artists/' + ar['id'] + '/albums?include_groups=album&limit=10',
+        url: 'https://api.spotify.com/v1/artists/' + item['id'] + '/albums?include_groups=album&limit=10',
         method: 'get',
         headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('access_token')
@@ -2726,7 +2329,7 @@ async function deep_artist(tracks, ar, info) {
     }).catch((error) => {
     })
     await request({
-        url: 'https://api.spotify.com/v1/artists/' + ar['id'] + '/albums?include_groups=single,compilation',
+        url: 'https://api.spotify.com/v1/artists/' + item['id'] + '/albums?include_groups=single,compilation',
         method: 'get',
         headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('access_token')
@@ -2779,7 +2382,7 @@ async function deep_artist(tracks, ar, info) {
     }).catch((error) => {
     })
     await request({
-        url: 'https://api.spotify.com/v1/artists/' + ar['id'] + '/albums?include_groups=appears_on',
+        url: 'https://api.spotify.com/v1/artists/' + item['id'] + '/albums?include_groups=appears_on',
         method: 'get',
         headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('access_token')
@@ -2836,7 +2439,7 @@ async function deep_artist(tracks, ar, info) {
 
     })
     await request({
-        url: 'https://api.spotify.com/v1/artists/' + ar['id'] + '/related-artists',
+        url: 'https://api.spotify.com/v1/artists/' + item['id'] + '/related-artists',
         method: 'get',
         headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('access_token')
@@ -2862,7 +2465,7 @@ async function deep_artist(tracks, ar, info) {
                 if (tracks[0].preview_url) {
                     a.src = tracks[0].preview_url
                 } else {
-                    artst.style.opacity = '.5'
+                    d.style.opacity = '.5'
                 }
             })
             d.appendChild(a)
@@ -2873,7 +2476,7 @@ async function deep_artist(tracks, ar, info) {
                 mouseleave2stop(e)
             })
             d.addEventListener('click', function () {
-                deep_artist(tracks, ra)
+                deep_artist(tracks, ra,false,'trackartist')
             })
 
 
@@ -2886,7 +2489,7 @@ async function deep_artist(tracks, ar, info) {
 
     })
     request({
-        url: 'https://api.spotify.com/v1/search?q="this is ' + ar['name'] + '"&type=playlist&limit=50&offset=0&market=' + localStorage.getItem('country'),
+        url: 'https://api.spotify.com/v1/search?q="this is ' + item['name'] + '"&type=playlist&limit=50&offset=0&market=' + localStorage.getItem('country'),
         method: 'get',
         headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('access_token')
@@ -2895,36 +2498,6 @@ async function deep_artist(tracks, ar, info) {
         console.log(response.data)
     }).catch((error) => {
     })
-    //                       function hideel(ar,pla) {
-    //               let ex = document.querySelectorAll('#expand' + ar['id'] + '>[id^=expanda]');
-    //               if (document.getElementById('expanda' + `${ar['id']}`) ==null){
-    //                   if (ex[0] == null){
-    //                     deep_artist(block, ar,info)
-    //                   } else{
-    //                       for (let i = 0; i < ex.length; i++) {
-    //                     console.log('1740 ' + ex[i].id)
-    //                     ex[i].style.display = 'none'
-    //                         deep_artist(block, ar,info)
-    //                   }}
-    //
-    //
-    //
-    //                 } else {
-    //                                       if (ex != null) {
-    //                       console.log('3461')
-    //                       for (let i = 0; i < ex.length; i++) {
-    //                         if (document.getElementById('expanda' + `${ar['id']}`) !=null && ex[i].id == document.getElementById('expanda' + `${ar['id']}`).id){
-    // document.getElementById('expanda' + `${ar['id']}`).style.display = 'grid'
-    //                         } else{
-    //                           ex[i].style.display = 'none'
-    //                         }
-    //
-    //
-    //                     }
-    //
-    //                     }
-    //                 }
-    //             }
     block.appendChild(ab)
     tracks.appendChild(block)
     window.scrollTo({
@@ -2988,7 +2561,7 @@ let request = obj => {
 function mouseover2play(e) {
     let target = e.target
     let audios = target.lastChild
-    if (audios){
+    if (audios) {
         audios.play()
     }
 }
@@ -2996,7 +2569,7 @@ function mouseover2play(e) {
 function mouseleave2stop(e) {
     let target = e.target
     let audios = target.lastChild
-    if (audios){
+    if (audios) {
         audios.pause()
     }
 }
@@ -3004,7 +2577,7 @@ function mouseleave2stop(e) {
 function parentmouseover2play(e) {
     let target = e.target
     let audios = target.firstChild.lastChild
-    if (audios){
+    if (audios) {
         audios.play()
     }
 }
@@ -3012,7 +2585,7 @@ function parentmouseover2play(e) {
 function parentmouseleave2stop(e) {
     let target = e.target
     let audios = target.firstChild.lastChild
-    if (audios){
+    if (audios) {
         audios.pause()
     }
 }
@@ -3020,6 +2593,7 @@ function parentmouseleave2stop(e) {
 let searchtimer = null
 
 function artname(pla, trackartist, tracks) {
+    console.log(tracks)
     let pta = pla
     for (const ar of pla) {
         let last = pta[pta.length - 1]
@@ -3033,7 +2607,7 @@ function artname(pla, trackartist, tracks) {
             artst.style.cursor = 'pointer'
             artst.style.marginLeft = '3px'
             artst.addEventListener('click', function () {
-                deep_artist(tracks, ar)
+                deep_artist(tracks, ar,false,'trackartist')
             })
             trackartist.appendChild(artst)
         } else if (second['name'] === last['name']) {
@@ -3045,7 +2619,7 @@ function artname(pla, trackartist, tracks) {
                 artst.style.cursor = 'pointer'
                 artst.style.marginLeft = '3px'
                 artst.addEventListener('click', function () {
-                    deep_artist(tracks, ar)
+                    deep_artist(tracks, ar,false,'trackartist')
                 })
                 trackartist.appendChild(amper)
                 trackartist.appendChild(artst)
@@ -3056,7 +2630,7 @@ function artname(pla, trackartist, tracks) {
                 artst.style.marginLeft = '4px'
                 artst.style.marginRight = '4px'
                 artst.addEventListener('click', function () {
-                    deep_artist(tracks, ar)
+                    deep_artist(tracks, ar,false,'trackartist')
                 })
                 trackartist.appendChild(artst)
             }
@@ -3069,7 +2643,7 @@ function artname(pla, trackartist, tracks) {
                 artst.style.cursor = 'pointer'
                 artst.style.marginLeft = '3px'
                 artst.addEventListener('click', function () {
-                    deep_artist(tracks, ar)
+                    deep_artist(tracks, ar,false,'trackartist')
                 })
                 trackartist.appendChild(amper)
                 trackartist.appendChild(artst)
@@ -3079,7 +2653,7 @@ function artname(pla, trackartist, tracks) {
                 artst.style.cursor = 'pointer'
                 artst.style.marginLeft = '3px'
                 artst.addEventListener('click', function () {
-                    deep_artist(tracks, ar)
+                    deep_artist(tracks, ar,false,'trackartist')
                 })
                 trackartist.appendChild(artst)
             } else {
@@ -3088,7 +2662,7 @@ function artname(pla, trackartist, tracks) {
                 artst.style.cursor = 'pointer'
                 artst.style.marginLeft = '3px'
                 artst.addEventListener('click', function () {
-                    deep_artist(tracks, ar)
+                    deep_artist(tracks, ar,false,'trackartist')
                 })
                 trackartist.appendChild(artst)
             }
@@ -3097,11 +2671,76 @@ function artname(pla, trackartist, tracks) {
 }
 
 async function deeperTracks(tracks, item, num, flag, sib, child) {
-    let block = document.createElement('div')
-    block.className = 'expanded'
-    block.style.display = 'block'
-    block.style.width = '100%'
-    console.log(tracks)
+    let allTracks = document.querySelectorAll(".rectrack > div");
+    if (await allTracks != null) {
+        for await(let i of allTracks) {
+            // eslint-disable-next-line no-empty
+            if (document.getElementById('d' + item.id) != null && i.id === document.getElementById('d' + item.id).id) {
+
+            } else {
+                i.style.display = 'none'
+            }
+
+
+        }
+
+    }
+    if (document.getElementById('d' + item.id)) {
+        document.getElementById('d' + item.id).style.display = 'flex'
+        // setTimeout(() => {
+        //   window.scrollTo({
+        //     top:(document.getElementById('d'+ item.id)).offsetTop,
+        //     behavior:'smooth'});
+        // }, 10);
+        return
+    }
+    // let all = document.querySelectorAll('.rectrack > div')
+    //   if (child){
+    //     let par = document.getElementById(child).parentElement.nextElementSibling
+    //     while (par != null) {
+    //       par.style.display = 'none'
+    //       if (par.nextElementSibling !== null && par.nextElementSibling.style.display !== 'none'){
+    //         par = par.nextElementSibling
+    //       } else if (par.nextElementSibling !== null && par.nextElementSibling.style.display === 'none'){
+    //         par = par.nextElementSibling.nextElementSibling
+    //       } else if (par.nextElementSibling === null){
+    //         par = null
+    //       }
+    //     }}else if (sib) {
+    //     let alltop = document.querySelectorAll('.rectrack > div.' + sib)
+    //     let current = alltop[alltop.length-1].nextElementSibling
+    //     while (current != null) {
+    //       current.style.display = 'none'
+    //       if (current.nextElementSibling !== null && current.nextElementSibling.style.display !== 'none'){
+    //         current = current.nextElementSibling
+    //       } else if (current.nextElementSibling !== null && current.nextElementSibling.style.display === 'none'){
+    //         current = current.nextElementSibling.nextElementSibling
+    //       } else if (current.nextElementSibling === null){
+    //         current = null
+    //       }
+    //
+    //     }
+    //     let newall = Array.from(all)
+    //     let track = newall.indexOf(document.getElementById('d'+item.id))
+    //     let album = newall.indexOf(alltop[alltop.length-1])
+    //     if (track!== -1 && track < album){
+    //       alltop[alltop.length-1].insertAdjacentElement('afterend', document.getElementById('d'+item.id));
+    //     }} else if (flag === true){
+    //     if (all.length !==0 && all.length !==0){
+    //       for (let i=0;i < all.length;i++){
+    //         all[i].style.display = 'none'
+    //       }
+    //     }}
+    //   if (document.getElementById('d'+item.id)){
+    //     document.getElementById('d'+item.id).style.display = 'flex'
+    //     // setTimeout(() => {
+    //     //   window.scrollTo({
+    //     //     top:(document.getElementById('d'+ item.id)).offsetTop,
+    //     //     behavior:'smooth'});
+    //     // }, 10);
+    //     return
+    //   }
+
     let start = document.createElement('div')
     start.className = "playlisttrack card2"
     start.id = `d` + item.id
@@ -3144,7 +2783,7 @@ async function deeperTracks(tracks, item, num, flag, sib, child) {
     let middle2 = document.createElement('div')
     middle2.style.display = 'flex'
     middle2.style.alignItems = 'center'
-    await artname(item.artists, middle2, block)
+    await artname(item.artists, middle2, tracks.lastChild)
     // for await (let art of item.artists) {
     //     let art1 = document.createElement('div')
     //     art1.style.marginRight = '4px'
@@ -3161,7 +2800,7 @@ async function deeperTracks(tracks, item, num, flag, sib, child) {
     let midspan = document.createElement('span')
     midspan.style.color = 'rgb(240, 55, 165)'
     midspan.innerText = 'Recommended songs based on this'
-    midspan.onclick = () => seedTracks(item.id, block)
+    midspan.onclick = () => seedTracks(item.id, tracks.lastChild)
     // midspan.onclick = seedTracks('yourplaylists',d.track,1,'playlisttrack','d'+ d.id)
     middle.appendChild(midspan)
     let dvv = document.createElement('div')
@@ -3178,7 +2817,7 @@ async function deeperTracks(tracks, item, num, flag, sib, child) {
     for await (let art of item.artists) {
         let pl = document.createElement('div')
         pl.className = 'artist-cirle con3'
-        pl.onclick = () => deep_artist(tracks, art)
+        pl.onclick = () => deep_artist(tracks, art,false,'trackartist')
         await artist(art['id']).then(async (response) => {
             // pl.onclick = "deeperartist('yourplaylists',art,d,1,false,'playlisttrack')"
             if (await response.data.images[0].url && item.preview_url) {
@@ -3212,11 +2851,10 @@ async function deeperTracks(tracks, item, num, flag, sib, child) {
         pl.appendChild(pl2)
         start.appendChild(pl)
     }
-    block.appendChild(start)
-    tracks.appendChild(block)
+    tracks.appendChild(start)
     window.scrollTo({
-            top: findPos(start),
-            behavior: 'smooth'
+        top: findPos(start),
+        behavior: 'smooth'
     });
 }
 
@@ -3329,8 +2967,8 @@ async function deeperTracks2(tracks, item, num, flag, sib, child) {
     block.appendChild(start)
     tracks.appendChild(block)
     window.scrollTo({
-            top: findPos(start),
-            behavior: 'smooth'
+        top: findPos(start),
+        behavior: 'smooth'
     });
 }
 

@@ -1,3 +1,29 @@
+:root {
+    --main-color:#3f3d58;
+    --tabs-background:rgba(0,0,0,.3);
+    --tabs-color:white;
+    --tabs-target:#f037a5;
+    --recomended-color:#f037a5;
+    --active-tab:#f037a5;
+    --button-background-color:transparent;
+    --button-background-border:2px solid #4caf50;
+    --con2-color: black;
+    --title-color:white;
+    --card2-background-color:#3f3d58;
+    --pl-color: #333;
+    --pl-background-color:white;
+    --h1-color:white;
+    --root-color:white;
+    --border-color:transparent;
+    --input-color:grey;
+    --border-top:#e7eaec;
+    --box-shadow:0 2px 4px 1px rgba(0,0,0,.18);
+    --search-color:white;
+    --checkbox-color: invert(0%) hue-rotate(70deg) brightness(150.1%);
+    --modal-background:white;
+    --modal-color:black
+}
+
 header{
     align-items: flex-end;
 }
@@ -535,4 +561,23 @@ footer{
     height: 46px;
     margin: 4px;
     border-radius: 50%;
+}
+.card2{
+    /*width: 95%;*/
+    background-size: cover;
+    display: flex;
+    -moz-box-pack: start;
+    place-content: flex-start;
+    -moz-box-align: stretch;
+    align-items: stretch;
+    flex-flow: row wrap;
+    /*height: 100%;*/
+    box-shadow: var(--box-shadow);
+    background-color: var(--pl-background-color);
+    padding: 16px;
+    margin: 0 0 24px;
+    color:var(--pl-color)
+}
+.rectrack{
+    width: 100%;
 }
