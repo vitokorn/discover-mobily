@@ -729,8 +729,8 @@ function saved_albums() {
                     d.style.opacity = '.5'
                 }
                 d.addEventListener('click', function (e) {
-                        deeperAlbum(albums.nextElementSibling, items, sa)
-                    })
+                    deeperAlbum(albums.nextElementSibling, items, sa)
+                })
             })
             d.appendChild(a)
             d.addEventListener('mouseover', function (e) {
@@ -1025,6 +1025,7 @@ document.getElementById('srch').addEventListener('input', function () {
                     'Authorization': 'Bearer ' + localStorage.getItem('access_token')
                 }
             }).then(async (response) => {
+                let searchrt = document.getElementById('searchrt')
                 let songs = document.getElementById('s1')
                 let arti = document.getElementById('ar1')
                 let albu = document.getElementById('al1')
@@ -1048,7 +1049,7 @@ document.getElementById('srch').addEventListener('input', function () {
                     main.className = 'playable-search'
                     let d = document.createElement('div')
                     d.tabIndex = 0
-                    d.className = 'con3'
+                    d.className = 'itemImg itemImg-xs itemImg-search'
                     d.style.backgroundImage = `url(${alb['images'][0]['url']})`
                     d.style.backgroundRepeat = 'no-repeat'
                     d.style.backgroundSize = 'cover'
@@ -1067,7 +1068,7 @@ document.getElementById('srch').addEventListener('input', function () {
                             d.style.opacity = '.5'
                         }
                         d.addEventListener('click', function (e) {
-                            deeperalbum(alb, albu, items[0], items)
+                            deeperAlbum(searchrt, items, alb, false, true)
                         })
                     })
                     d.appendChild(a)
@@ -1093,7 +1094,7 @@ document.getElementById('srch').addEventListener('input', function () {
                     main.className = 'playable-search'
                     let d = document.createElement('div')
                     d.tabIndex = 0
-                    d.className = 'con3'
+                    d.className = 'itemImg itemImg-xs itemImg-search'
                     if ((art['images']).length !== 0) {
                         d.style.backgroundImage = `url(${art['images'][0]['url']})`
                     } else {
@@ -1128,7 +1129,7 @@ document.getElementById('srch').addEventListener('input', function () {
 
                     })
                     main.addEventListener('click', function (e) {
-                        deep_artist(arti, art, false, 'trackartist')
+                        deep_artist(searchrt, art, true, 'trackartist')
                     })
                     d.appendChild(a)
                     main.addEventListener('mouseover', function (e) {
@@ -1153,7 +1154,7 @@ document.getElementById('srch').addEventListener('input', function () {
                     main.className = 'playable-search'
                     let d = document.createElement('div')
                     d.tabIndex = 0
-                    d.className = 'con3'
+                    d.className = 'itemImg itemImg-xs itemImg-search'
                     d.style.backgroundImage = `url(${pls['images'][0]['url']})`
                     d.style.backgroundRepeat = 'no-repeat'
                     d.style.backgroundSize = 'cover'
@@ -1185,6 +1186,9 @@ document.getElementById('srch').addEventListener('input', function () {
                     d.addEventListener('mouseleave', function (e) {
                         mouseleave2stop(e)
                     })
+                    d.addEventListener('click', function () {
+                        playlistLoad(pls, 'searchrt', true)
+                    })
                     main.appendChild(d)
                     d1.appendChild(d2)
                     main.appendChild(d1)
@@ -1195,7 +1199,7 @@ document.getElementById('srch').addEventListener('input', function () {
                     main.className = 'playable-search'
                     let d = document.createElement('div')
                     d.tabIndex = 0
-                    d.className = 'con3'
+                    d.className = 'itemImg itemImg-xs itemImg-search'
                     d.style.backgroundImage = `url(${pla['album']['images'][0]['url']})`
                     d.style.backgroundRepeat = 'no-repeat'
                     d.style.backgroundSize = 'cover'
@@ -1225,7 +1229,7 @@ document.getElementById('srch').addEventListener('input', function () {
                         mouseleave2stop(e)
                     })
                     main.addEventListener('click', function (e) {
-                        deeper(pla, songs, 'tt')
+                        deeper(pla, searchrt, 'tt')
                     })
                     main.appendChild(d)
                     d1.appendChild(d2)
@@ -1246,7 +1250,7 @@ document.getElementById('srch').addEventListener('input', function () {
 
                 }
             })
-            document.getElementById('search').style.visibility = 'unset'
+            document.getElementById('search').style.display = 'block'
         }
     }, 1000)
 
@@ -1395,7 +1399,7 @@ async function deeper(pla, tracks, type) {
         btn.innerText = 'Open is Spotify'
         openinspotify.appendChild(btn)
         dvv.appendChild(openinspotify)
-        await artname(pla['track']['artists'], trackartist, tracks,'playlisttrack')
+        await artname(pla['track']['artists'], trackartist, tracks, 'playlisttrack')
         let recomend = document.createElement('span')
         recomend.innerText = 'Recommended songs based on this'
         recomend.style.color = '#f037a5'
@@ -1494,7 +1498,7 @@ async function deeper(pla, tracks, type) {
         trackartist.style.display = 'flex'
         trackartist.style.alignItems = 'center'
         // trackartist.innerText = 'By ' + `${list(pla['artists'])}`
-        await artname(pla['artists'], trackartist, tracks,'playlisttrack')
+        await artname(pla['artists'], trackartist, tracks, 'playlisttrack')
         let dvv = document.createElement('div')
         let openinspotify = document.createElement('a')
         openinspotify.href = pla['external_urls']['spotify']
@@ -1509,7 +1513,7 @@ async function deeper(pla, tracks, type) {
         recomend.innerText = 'Recommended songs based on this'
         recomend.style.color = '#f037a5'
         recomend.addEventListener('click', async function () {
-            await seedTracks(pla, tracks,'playlisttrack card2', info.id)
+            await seedTracks(pla, tracks, 'playlisttrack card2', info.id)
         })
         let artistcirle = document.createElement('div')
         for (const ar of pla['artists']) {
@@ -1603,7 +1607,7 @@ async function deeper(pla, tracks, type) {
         trackartist.style.display = 'flex'
         trackartist.style.alignItems = 'center'
         // trackartist.innerText = 'By ' + `${list(pla['artists'])}`
-        await artname(pla['artists'], trackartist, tracks,'playlisttrack')
+        await artname(pla['artists'], trackartist, tracks, 'playlisttrack')
 
         let dvv = document.createElement('div')
         let openinspotify = document.createElement('a')
@@ -1687,7 +1691,7 @@ async function deeperAlbum(tracks, item, albus, child, search) {
         }
     }
     if (search === true) {
-        let albs = document.querySelectorAll('#search> .rectrack > div')
+        let albs = document.querySelectorAll('#search > div > .rectrack > div')
         for (let i = 0; i < albs.length; i++) {
             if (document.getElementById('alb' + albus.id) != null && albs[i].id === document.getElementById('alb' + albus.id).id) {
                 document.getElementById('alb' + albus.id).style.display = 'block'
@@ -1806,7 +1810,7 @@ async function deeperAlbum(tracks, item, albus, child, search) {
             mouseleave2stop(e)
         })
         td.addEventListener('click', function () {
-            deeperTracks2(tracks,i,albus,false,'deep_albums')
+            deeperTracks2(tracks, i, albus, false, 'deep_albums')
         })
         td.appendChild(ta)
         trackcon.appendChild(td)
@@ -2208,7 +2212,7 @@ async function deep_artist(tracks, item, flag, sib, related) {
                 mouseleave2stop(e)
             })
             d.addEventListener('click', function () {
-                deep_artist(tracks, ra, false, 'trackartist',ab.id)
+                deep_artist(tracks, ra, false, 'trackartist', ab.id)
             })
 
 
@@ -2324,7 +2328,7 @@ function parentmouseleave2stop(e) {
 
 let searchtimer = null
 
-function artname(pla, trackartist, tracks,sib) {
+function artname(pla, trackartist, tracks, sib) {
     console.log(tracks)
     let pta = pla
     for (const ar of pla) {
@@ -2403,6 +2407,9 @@ function artname(pla, trackartist, tracks,sib) {
 }
 
 async function deeperTracks(tracks, item, flag, sib, child) {
+    console.log(sib)
+    let all = document.querySelectorAll('.rectrack > div')
+    let last = document.querySelector('.rectrack > div[id="d' + item.id + '"]')
     // let allTracks = document.querySelectorAll(".rectrack > div");
     // if (await allTracks != null) {
     //     for await(let i of allTracks) {
@@ -2443,6 +2450,20 @@ async function deeperTracks(tracks, item, flag, sib, child) {
                 current = null
             }
 
+        }
+    }
+    if (await flag === true) {
+        // console.log(item.id)
+        if (all.length !== 0 && all.length !== 0) {
+            for (let i = 0; i < all.length; i++) {
+                // console.log(all[i])
+                if (last !== null && all[i].firstChild.id === last.id && last.id === item.id) {
+                    last.parentElement.style.display = 'block'
+                } else {
+                    // console.log(all[i])
+                    all[i].style.display = 'none'
+                }
+            }
         }
     }
     if (await document.getElementById('d' + item.id)) {
@@ -2496,7 +2517,7 @@ async function deeperTracks(tracks, item, flag, sib, child) {
     let middle2 = document.createElement('div')
     middle2.style.display = 'flex'
     middle2.style.alignItems = 'center'
-    await artname(item.artists, middle2, tracks,'playlisttrack')
+    await artname(item.artists, middle2, tracks, 'playlisttrack')
     // for await (let art of item.artists) {
     //     let art1 = document.createElement('div')
     //     art1.style.marginRight = '4px'
@@ -2570,10 +2591,11 @@ async function deeperTracks(tracks, item, flag, sib, child) {
         behavior: 'smooth'
     });
 }
-async function deeperTracks2(tracks, item,d, flag, sib) {
+
+async function deeperTracks2(tracks, item, d, flag, sib) {
     console.log(item)
     console.log(d)
-    if (await d.album){
+    if (await d.album) {
         item.images = d.album.images
     } else {
         item.images = d.images
@@ -2645,7 +2667,7 @@ async function deeperTracks2(tracks, item,d, flag, sib) {
     let middle2 = document.createElement('div')
     middle2.style.display = 'flex'
     middle2.style.alignItems = 'center'
-    await artname(item.artists, middle2, tracks,'playlisttrack')
+    await artname(item.artists, middle2, tracks, 'playlisttrack')
     let middletype = document.createElement('div')
     middletype.innerText = 'From the ' + `${d['album_type']}` + ' ' + `${item['name']}`
     middle.appendChild(middletype)
@@ -2653,7 +2675,7 @@ async function deeperTracks2(tracks, item,d, flag, sib) {
     let midspan = document.createElement('span')
     midspan.style.color = 'rgb(240, 55, 165)'
     midspan.innerText = 'Recommended songs based on this'
-    midspan.onclick = () => seedTracks(item, tracks,'playlisttrack card2')
+    midspan.onclick = () => seedTracks(item, tracks, 'playlisttrack card2')
     // midspan.onclick = seedTracks('yourplaylists',d.track,1,'playlisttrack','d'+ d.id)
     middle.appendChild(midspan)
     let dvv = document.createElement('div')
@@ -2891,6 +2913,129 @@ async function seedArtists(tracks, item, sib, child) {
     })
 }
 
+async function playlistLoad(item, parent, search) {
+    console.log('2896 ' + item.id)
+    request({
+        url: 'https://api.spotify.com/v1/playlists/' + item.id,
+        method: 'get',
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        }
+    }).then(async (response) => {
+        let data = response.data
+        console.log(data)
+        let name = data['name']
+        let description = data['description']
+        let image = data['images'][0]['url']
+        let playtrack = data['tracks']['items']
+
+        let playlistdiv = document.getElementById(parent)
+        let playlistcont = document.createElement('div')
+        playlistcont.id = 'p' + item.id
+        playlistcont.className = 'playlist card2'
+        let plid = document.createElement('div')
+        plid.className = 'con2'
+        playlistcont.appendChild(plid)
+        let names = document.createElement('div')
+        names.innerText = name
+        names.className = 'con4'
+        names.style.color = 'black'
+        plid.appendChild(names)
+
+        let dvv = document.createElement('div')
+        let openinspotify = document.createElement('a')
+        openinspotify.href = data['external_urls']['spotify']
+        openinspotify.target = '_blank'
+        let btn = document.createElement('button')
+        btn.className = 'button'
+        btn.innerText = 'Open is Spotify'
+        openinspotify.appendChild(btn)
+        dvv.appendChild(openinspotify)
+        let descriptions = document.createElement('div')
+        descriptions.innerHTML = description
+        descriptions.style.width = '60%'
+        descriptions.style.display = 'flex'
+        descriptions.style.alignItems = 'center'
+        descriptions.appendChild(dvv)
+        // descriptions.className = 'con4'
+        plid.appendChild(descriptions)
+        let cover = document.createElement('div')
+        cover.className = 'con4'
+        cover.style.backgroundImage = "url('" + image + "')"
+        cover.style.backgroundRepeat = 'no-repeat'
+        cover.style.backgroundSize = 'cover'
+        plid.appendChild(cover)
+        let refresh = document.createElement('button')
+        refresh.id = 'refresh_' + item.id
+        refresh.className = 'refresh-end'
+        refresh.setAttribute("onclick", "refr('refresh_" + item.id + "')")
+        plid.appendChild(refresh)
+        let img = document.createElement('img')
+        img.id = 'icon_' + item.id
+        img.src = '../static/images/refresh-icon.svg'
+        img.height = 12
+        refresh.appendChild(img)
+        let trid = document.createElement('div')
+        trid.className = 'con2'
+        playlistcont.appendChild(trid)
+        console.log(2961)
+        if (await playtrack) {
+            for await (let pla of playtrack) {
+                if (pla['track']){
+                                    console.log(pla)
+                let d = document.createElement('div')
+                d.tabIndex = 0
+                d.className = 'con3'
+                d.style.backgroundImage = `url(${pla['track']['album']['images'][0]['url']})`
+                d.style.backgroundRepeat = 'no-repeat'
+                d.style.backgroundSize = 'cover'
+                d.innerText = `${list(pla['track']['artists'])} -  ${pla['track']['name']}`
+                let a = document.createElement('audio')
+                a.type = "audio/mpeg"
+                a.preload = 'none'
+                if (pla['track']['preview_url'])
+                    a.src = `${pla['track']['preview_url']}`
+                else {
+                    d.style.opacity = '.5'
+                }
+                d.appendChild(a)
+                d.addEventListener('mouseover', function (e) {
+                    mouseover2play(e)
+                })
+                d.addEventListener('mouseleave', function (e) {
+                    mouseleave2stop(e)
+                })
+                d.addEventListener('click', function () {
+                    if (search) {
+                        deeperTracks(document.getElementById('searchrt'), pla['track'], false, 'playlist')
+                    } else {
+                        deeperTracks(playlistdiv.nextElementSibling, pla['track'], true, false)
+                    }
+                })
+                await trid.appendChild(d)
+                }
+            }
+            console.log(playlistdiv)
+            playlistdiv.appendChild(playlistcont)
+        }
+    }).catch((error) => {
+        if (error.status === 401) {
+            request({
+                url: '/spotify/refresh_token/' + localStorage.getItem('username'),
+                method: 'get',
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                }
+            }).then((response) => {
+                playlistLoad(item, parent, search)
+            }).catch((error) => {
+
+            })
+        }
+
+    })
+}
+
 async function thesoundof(pointer, name, num, sib, child) {
     let value = 'The Sound of ' + name.toUpperCase()
     let neww = this.titleCase(name)
@@ -3012,6 +3157,57 @@ function hideall(elem) {
         }
     }
 }
+
+let spllist = document.querySelectorAll("#sptplaylists > div");
+for (let i of spllist) {
+    i.addEventListener("click", function () {
+        if (document.getElementById('s' + i.id)) {
+        }
+        if (i.classList.contains("activetab")) {
+
+        } else {
+            i.classList.toggle("activetab");
+        }
+        spllist.forEach(function (ns) {
+            if (i.id === ns.id) {
+                if (document.getElementById('s' + ns.id)) {
+                    document.getElementById('s' + ns.id).style.display = 'block'
+                }
+            } else {
+                ns.classList.remove('activetab')
+                if (document.getElementById('s' + ns.id)) {
+                    document.getElementById('s' + ns.id).style.display = 'none'
+                }
+            }
+        });
+        let rectrack = document.getElementById('sptplaylists').nextElementSibling.childNodes
+        for (let i of rectrack) {
+            i.style.display = 'none'
+        }
+    });
+}
+function fetchSpotPlaylists(offset){
+      request({
+        url:'https://api.spotify.com/v1/users/spotify/playlists?fields=items(name,id)&limit=50&offset=' + offset,
+        method: 'get',
+        headers: {'Authorization': 'Bearer ' +  localStorage.getItem('access_token')}
+      })
+          .then(async (response) =>{
+              let items = response.data['items']
+              let sp = document.getElementById('splaylist')
+              for await (let item of items){
+                  let divsp = document.createElement('div')
+                  divsp.id = item.id
+                  divsp.onclick = () => playlistLoad(item, 'sptplaylists')
+                  divsp.className = 'hr-line-dashed'
+                  divsp.innerText = item.name
+                  sp.appendChild(divsp)
+              }
+            if (await response.data['items'].length > 0){
+              this.fetchSpotPlaylists(offset+=50)
+            }
+          })
+    }
 
 function SpotInit(event) {
     let id = event.currentTarget.id

@@ -70,14 +70,18 @@
         <div style="display: none" id="followedartist" class="container-fluid con2"></div>
         <div class="rectrack"></div>
     </div>
-    {#    <button class="accordion" onclick="spotifyplaylists()">{{ _('Spotify Playlists') }}</button>#}
-    {#    <div class="panel">#}
-    {#        <div id="spotplaylist" class="container-fluid con2"></div>#}
-    {#    </div>#}
-    {#    <button class="accordion" onclick="genres()">{{ _('Genres') }}</button>#}
-    {#    <div class="panel">#}
-    {#        <div id="genre" class="container-fluid con2"></div>#}
-    {#    </div>#}
+        <button class="accordion" onclick="fetchSpotPlaylists(0)">{{ _('Spotify Playlists') }}</button>
+        <div class="panel">
+        <div id="sptplaylists" class="con2">
+            <div class="head">
+                <input autocomplete="off" class="inp" type="text" placeholder="Please enter a search term.." oninput="filterres">
+            </div>
+            <div class="sp" style="display: block">
+                <div id="splaylist" class="pl" style="justify-content: center"></div>
+            </div>
+        </div>
+        <div class="rectrack"></div>
+        </div>
     <button id="newreleases" class="accordion">{{ _('New Releases') }}</button>
     <div class="panel">
         <button id="refresh_newrelease" class="refresh-end" onclick="refr('refresh_newrelease')"><img
@@ -86,24 +90,28 @@
         <div class="rectrack"></div>
     </div>
     <label>
-        <input id="srch" type="search">
+        <input id="srch" type="search" autocomplete="off">
     </label>
-    <div id="search" class="search" style="visibility: hidden">
-        <div style="grid-area: 1 / 1 / 2 / 2;">
-            <h4>Songs</h4>
-            <div id="s1"></div>
-        </div>
-        <div style="grid-area: 1 / 2 / 2 / 3;">
-            <h4>Artists</h4>
-            <div id="ar1"></div>
-        </div>
-        <div style="grid-area: 2 / 1 / 3 / 2;">
-            <h4>Albums</h4>
-            <div id="al1"></div>
-        </div>
-        <div style="grid-area: 2 / 2 / 3 / 3;">
-            <h4>Playlists</h4>
-            <div id="p1"></div>
+    <div id="search" class="search" style="display: none">
+        <div style="width: 100%;display: flex;flex-flow: row wrap;">
+            <div id="searchtext"></div>
+            <div style="width: 50%">
+                <div class="stitle">Songs</div>
+                <div id="s1"></div>
+            </div>
+            <div style="width: 50%">
+                <div class="stitle">Artists</div>
+                <div id="ar1"></div>
+            </div>
+            <div style="width: 50%">
+                <div class="stitle">Albums</div>
+                <div id="al1"></div>
+            </div>
+            <div style="width: 50%">
+                <div class="stitle">Playlists</div>
+                <div id="p1"></div>
+            </div>
+            <div id="searchrt" class="rectrack"></div>
         </div>
     </div>
 {% endblock %}
