@@ -45,19 +45,19 @@ function initElement(id) {
         descriptions.className = 'description'
         descriptions.appendChild(dvv)
         console.log(description)
-        for await(let q of query){
-            q.id = q.href.replace('spotify:playlist:','')
-            description.replace(q.href,q.href + 'id=' + q.id)
+        for await(let q of query) {
+            q.id = q.href.replace('spotify:playlist:', '')
+            description.replace(q.href, q.href + 'id=' + q.id)
             q.addEventListener('click', function () {
-                parsedLoad(q.id,playlistdiv,playlistcont.id)
+                parsedLoad(q.id, playlistdiv, playlistcont.id)
             })
 
             q.removeAttribute('href')
-            let xpath = "//a[text()='"+ q.innerText + "']"
+            let xpath = "//a[text()='" + q.innerText + "']"
             console.log(xpath)
             let matchingElement = document.evaluate(xpath, descriptions, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
             console.log(matchingElement)
-            descriptions.replaceChild(q,matchingElement)
+            descriptions.replaceChild(q, matchingElement)
         }
         // descriptions.className = 'con4'
         plid.appendChild(descriptions)
@@ -1925,7 +1925,7 @@ async function deep_artist(tracks, item, flag, sib, related) {
         headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('access_token')
         }
-    }).then((response) => {
+    }).then(async (response) => {
         let data = response.data
         console.log('202' + data)
         let dv = document.createElement('div')
@@ -1946,7 +1946,7 @@ async function deep_artist(tracks, item, flag, sib, related) {
         let af = document.createElement('div')
         af.innerText = data['followers']['total'] + ' followers'
         let ag = document.createElement('div')
-        ag.innerText = data['genres']
+        await genresname(data['genres'], ag, tracks, ab.id)
         let arr = document.createElement('div')
         arr.innerText = 'Recommended songs based on this'
         arr.style.color = '#f037a5'
@@ -2426,6 +2426,85 @@ function artname(pla, trackartist, tracks, sib) {
     }
 }
 
+function genresname(genres, trackartist, tracks, child) {
+    console.log(tracks)
+    console.log(genres)
+    let pta = genres
+    for (const g of genres) {
+        let last = pta[pta.length - 1]
+        let first = pta[0]
+        let second = pta[1]
+        let prelast = pta[pta.length - 2]
+        console.log('1610 ' + last)
+        if (first === last) {
+            let artst = document.createElement('div')
+            artst.innerText = g
+            artst.style.cursor = 'pointer'
+            artst.style.marginLeft = '3px'
+            artst.addEventListener('click', function () {
+                thesoundof(artst.innerText, tracks, child)
+            })
+            trackartist.appendChild(artst)
+        } else if (second === last) {
+            if (g === last) {
+                let amper = document.createElement('div')
+                amper.innerText = ' & '
+                let artst = document.createElement('div')
+                artst.innerText = g
+                artst.style.cursor = 'pointer'
+                artst.style.marginLeft = '3px'
+                artst.addEventListener('click', function () {
+                    thesoundof(artst.innerText, tracks, child)
+                })
+                trackartist.appendChild(amper)
+                trackartist.appendChild(artst)
+            } else {
+                let artst = document.createElement('div')
+                artst.innerText = g
+                artst.style.cursor = 'pointer'
+                artst.style.marginLeft = '4px'
+                artst.style.marginRight = '4px'
+                artst.addEventListener('click', function () {
+                    thesoundof(artst.innerText, tracks, child)
+                })
+                trackartist.appendChild(artst)
+            }
+        } else {
+            if (g === last) {
+                let amper = document.createElement('div')
+                amper.innerText = ' & '
+                let artst = document.createElement('div')
+                artst.innerText = g
+                artst.style.cursor = 'pointer'
+                artst.style.marginLeft = '3px'
+                artst.addEventListener('click', function () {
+                    thesoundof(artst.innerText, tracks, child)
+                })
+                trackartist.appendChild(amper)
+                trackartist.appendChild(artst)
+            } else if (g === prelast) {
+                let artst = document.createElement('div')
+                artst.innerText = g
+                artst.style.cursor = 'pointer'
+                artst.style.marginLeft = '3px'
+                artst.addEventListener('click', function () {
+                    thesoundof(artst.innerText, tracks, child)
+                })
+                trackartist.appendChild(artst)
+            } else {
+                let artst = document.createElement('div')
+                artst.innerText = g + ', '
+                artst.style.cursor = 'pointer'
+                artst.style.marginLeft = '3px'
+                artst.addEventListener('click', function () {
+                    thesoundof(artst.innerText, tracks, child)
+                })
+                trackartist.appendChild(artst)
+            }
+        }
+    }
+}
+
 async function deeperTracks(tracks, item, flag, sib, child) {
     console.log(sib)
     let all = document.querySelectorAll('.rectrack > div')
@@ -2475,13 +2554,14 @@ async function deeperTracks(tracks, item, flag, sib, child) {
     if (await flag === true) {
         // console.log(item.id)
         if (all.length !== 0 && all.length !== 0) {
-            for (let i = 0; i < all.length; i++) {
+            console.log(all)
+            for (let i of all) {
                 // console.log(all[i])
-                if (last !== null && all[i].firstChild.id === last.id && last.id === item.id) {
+                if (last !== null && i.firstChild.id === last.id && last.id === item.id) {
                     last.parentElement.style.display = 'block'
                 } else {
                     // console.log(all[i])
-                    all[i].style.display = 'none'
+                    i.style.display = 'none'
                 }
             }
         }
@@ -2981,19 +3061,19 @@ async function playlistLoad(item, parent, search) {
         descriptions.className = 'description'
         descriptions.appendChild(dvv)
 
-        for await(let q of query){
-            q.id = q.href.replace('spotify:playlist:','')
-            description.replace(q.href,q.href + 'id=' + q.id)
+        for await(let q of query) {
+            q.id = q.href.replace('spotify:playlist:', '')
+            description.replace(q.href, q.href + 'id=' + q.id)
             q.addEventListener('click', function () {
-                parsedLoad(q.id,playlistdiv,playlistcont.id)
+                parsedLoad(q.id, playlistdiv, playlistcont.id)
             })
 
             q.removeAttribute('href')
-            let xpath = "//a[text()='"+ q.innerText + "']"
+            let xpath = "//a[text()='" + q.innerText + "']"
             console.log(xpath)
             let matchingElement = document.evaluate(xpath, descriptions, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
             console.log(matchingElement)
-            descriptions.replaceChild(q,matchingElement)
+            descriptions.replaceChild(q, matchingElement)
         }
         // descriptions.className = 'con4'
         plid.appendChild(descriptions)
@@ -3019,38 +3099,38 @@ async function playlistLoad(item, parent, search) {
         console.log(2961)
         if (await playtrack) {
             for await (let pla of playtrack) {
-                if (pla['track']){
-                                    console.log(pla)
-                let d = document.createElement('div')
-                d.tabIndex = 0
-                d.className = 'con3'
-                d.style.backgroundImage = `url(${pla['track']['album']['images'][0]['url']})`
-                d.style.backgroundRepeat = 'no-repeat'
-                d.style.backgroundSize = 'cover'
-                d.innerText = `${list(pla['track']['artists'])} -  ${pla['track']['name']}`
-                let a = document.createElement('audio')
-                a.type = "audio/mpeg"
-                a.preload = 'none'
-                if (pla['track']['preview_url'])
-                    a.src = `${pla['track']['preview_url']}`
-                else {
-                    d.style.opacity = '.5'
-                }
-                d.appendChild(a)
-                d.addEventListener('mouseover', function (e) {
-                    mouseover2play(e)
-                })
-                d.addEventListener('mouseleave', function (e) {
-                    mouseleave2stop(e)
-                })
-                d.addEventListener('click', function () {
-                    if (search) {
-                        deeperTracks(document.getElementById('searchrt'), pla['track'], false, false,playlistcont.id)
-                    } else {
-                        deeperTracks(playlistdiv.nextElementSibling, pla['track'], true, false)
+                if (pla['track']) {
+                    console.log(pla)
+                    let d = document.createElement('div')
+                    d.tabIndex = 0
+                    d.className = 'con3'
+                    d.style.backgroundImage = `url(${pla['track']['album']['images'][0]['url']})`
+                    d.style.backgroundRepeat = 'no-repeat'
+                    d.style.backgroundSize = 'cover'
+                    d.innerText = `${list(pla['track']['artists'])} -  ${pla['track']['name']}`
+                    let a = document.createElement('audio')
+                    a.type = "audio/mpeg"
+                    a.preload = 'none'
+                    if (pla['track']['preview_url'])
+                        a.src = `${pla['track']['preview_url']}`
+                    else {
+                        d.style.opacity = '.5'
                     }
-                })
-                await trid.appendChild(d)
+                    d.appendChild(a)
+                    d.addEventListener('mouseover', function (e) {
+                        mouseover2play(e)
+                    })
+                    d.addEventListener('mouseleave', function (e) {
+                        mouseleave2stop(e)
+                    })
+                    d.addEventListener('click', function () {
+                        if (search) {
+                            deeperTracks(document.getElementById('searchrt'), pla['track'], false, false, playlistcont.id)
+                        } else {
+                            deeperTracks(playlistdiv.nextElementSibling, pla['track'], true, false)
+                        }
+                    })
+                    await trid.appendChild(d)
                 }
             }
             console.log(playlistdiv)
@@ -3074,7 +3154,7 @@ async function playlistLoad(item, parent, search) {
     })
 }
 
-async function parsedLoad(id, playlistdiv,child) {
+async function parsedLoad(id, playlistdiv, child) {
     console.log('2896 ' + id)
     if (await child) {
         let par = document.getElementById(child).nextElementSibling
@@ -3144,19 +3224,19 @@ async function parsedLoad(id, playlistdiv,child) {
         descriptions.className = 'description'
         descriptions.appendChild(dvv)
 
-        for await(let q of query){
-            q.id = q.href.replace('spotify:playlist:','')
-            description.replace(q.href,q.href + 'id=' + q.id)
+        for await(let q of query) {
+            q.id = q.href.replace('spotify:playlist:', '')
+            description.replace(q.href, q.href + 'id=' + q.id)
             q.addEventListener('click', function () {
-                parsedLoad(q.id,playlistdiv,playlistcont.id)
+                parsedLoad(q.id, playlistdiv, playlistcont.id)
             })
 
             q.removeAttribute('href')
-            let xpath = "//a[text()='"+ q.innerText + "']"
+            let xpath = "//a[text()='" + q.innerText + "']"
             console.log(xpath)
             let matchingElement = document.evaluate(xpath, descriptions, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
             console.log(matchingElement)
-            descriptions.replaceChild(q,matchingElement)
+            descriptions.replaceChild(q, matchingElement)
         }
         // descriptions.className = 'con4'
         plid.appendChild(descriptions)
@@ -3182,35 +3262,34 @@ async function parsedLoad(id, playlistdiv,child) {
         console.log(2961)
         if (await playtrack) {
             for await (let pla of playtrack) {
-                if (pla['track']){
-                                    console.log(pla)
-                let d = document.createElement('div')
-                d.tabIndex = 0
-                d.className = 'con3'
-                d.style.backgroundImage = `url(${pla['track']['album']['images'][0]['url']})`
-                d.style.backgroundRepeat = 'no-repeat'
-                d.style.backgroundSize = 'cover'
-                d.innerText = `${list(pla['track']['artists'])} -  ${pla['track']['name']}`
-                let a = document.createElement('audio')
-                a.type = "audio/mpeg"
-                a.preload = 'none'
-                if (pla['track']['preview_url'])
-                    a.src = `${pla['track']['preview_url']}`
-                else {
-                    d.style.opacity = '.5'
-                }
-                d.appendChild(a)
-                d.addEventListener('mouseover', function (e) {
-                    mouseover2play(e)
-                })
-                d.addEventListener('mouseleave', function (e) {
-                    mouseleave2stop(e)
-                })
-                d.addEventListener('click', function () {
-                    deeperTracks(playlistdiv.nextElementSibling, pla['track'], true, false)
-
-                })
-                await trid.appendChild(d)
+                if (pla['track']) {
+                    console.log(pla)
+                    let d = document.createElement('div')
+                    d.tabIndex = 0
+                    d.className = 'con3'
+                    d.style.backgroundImage = `url(${pla['track']['album']['images'][0]['url']})`
+                    d.style.backgroundRepeat = 'no-repeat'
+                    d.style.backgroundSize = 'cover'
+                    d.innerText = `${list(pla['track']['artists'])} -  ${pla['track']['name']}`
+                    let a = document.createElement('audio')
+                    a.type = "audio/mpeg"
+                    a.preload = 'none'
+                    if (pla['track']['preview_url'])
+                        a.src = `${pla['track']['preview_url']}`
+                    else {
+                        d.style.opacity = '.5'
+                    }
+                    d.appendChild(a)
+                    d.addEventListener('mouseover', function (e) {
+                        mouseover2play(e)
+                    })
+                    d.addEventListener('mouseleave', function (e) {
+                        mouseleave2stop(e)
+                    })
+                    d.addEventListener('click', function () {
+                        deeperTracks(playlistdiv.nextElementSibling, pla['track'], true, false)
+                    })
+                    await trid.appendChild(d)
                 }
             }
             console.log(playlistdiv)
@@ -3233,7 +3312,8 @@ async function parsedLoad(id, playlistdiv,child) {
 
     })
 }
-async function thesoundof(pointer, name, num, sib, child) {
+
+async function thesoundof(name, tracks, child) {
     let value = 'The Sound of ' + name.toUpperCase()
     let neww = this.titleCase(name)
     let newvalue = 'The Sound of ' + neww
@@ -3242,7 +3322,7 @@ async function thesoundof(pointer, name, num, sib, child) {
     request({
         url: 'https://api.spotify.com/v1/search/?q=' + newvalue + '&type=playlist&limit=5',
         method: 'get',
-        headers: {'Authorization': 'Bearer ' + document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1")}
+        headers: {'Authorization': 'Bearer ' + localStorage.getItem('access_token')}
     })
         .then(async (response) => {
             let playlists = response.data['playlists']['items']
@@ -3262,23 +3342,10 @@ async function thesoundof(pointer, name, num, sib, child) {
                 }
             })
             finded.then((finded => {
-                let alltop = document.querySelectorAll(' .item-container > .rectrack > div.hcontent > div.' + sib)
                 // console.log(child)
                 if (child) {
                     let par = document.getElementById(child).parentElement.nextElementSibling
                     // console.log(par)
-                    while (par != null) {
-                        par.style.display = 'none'
-                        if (par.nextElementSibling !== null && par.nextElementSibling.style.display !== 'none') {
-                            par = par.nextElementSibling
-                        } else if (par.nextElementSibling !== null && par.nextElementSibling.style.display === 'none') {
-                            par = par.nextElementSibling.nextElementSibling
-                        } else if (par.nextElementSibling === null) {
-                            par = null
-                        }
-                    }
-                } else if (sib !== false && alltop[alltop.length - 1].nextElementSibling !== null) {
-                    let par = alltop[alltop.length - 1].nextElementSibling
                     while (par != null) {
                         par.style.display = 'none'
                         if (par.nextElementSibling !== null && par.nextElementSibling.style.display !== 'none') {
@@ -3295,22 +3362,122 @@ async function thesoundof(pointer, name, num, sib, child) {
                     return
                 }
 
-                let playlist = []
                 // console.log('237' + playlists[i].id)
                 request({
                     url: 'https://api.spotify.com/v1/playlists/' + finded.id,
                     method: 'get',
-                    headers: {'Authorization': 'Bearer ' + document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1")}
+                    headers: {'Authorization': 'Bearer ' + localStorage.getItem('access_token')}
                 })
-                    .then((response) => {
+                    .then(async (response) => {
                         // console.log(response.data['tracks'])
-                        let tracks = response.data['tracks']
-                        if (tracks['items'][0]['track']['preview_url']) {
-                            finded.preview_url = tracks['items'][0]['track']['preview_url']
+                        let data = response.data
+                        let name = data['name']
+                        let description = data['description']
+                        let image = data['images'][0]['url']
+                        let playtrack = data['tracks']['items']
+
+                        let playlistcont = document.createElement('div')
+                        playlistcont.id = 'p' + finded.id
+                        playlistcont.className = 'playlist card2'
+                        let plid = document.createElement('div')
+                        plid.className = 'con2'
+                        playlistcont.appendChild(plid)
+                        let names = document.createElement('div')
+                        names.innerText = name
+                        names.className = 'con4'
+                        names.style.color = 'black'
+                        plid.appendChild(names)
+
+                        let dvv = document.createElement('div')
+                        let openinspotify = document.createElement('a')
+                        openinspotify.href = data['external_urls']['spotify']
+                        openinspotify.target = '_blank'
+                        let btn = document.createElement('button')
+                        btn.className = 'button'
+                        btn.innerText = 'Open is Spotify'
+                        openinspotify.appendChild(btn)
+                        dvv.appendChild(openinspotify)
+                        let html = await stringToHTML(description)
+                        let query = html.querySelectorAll('a')
+                        let descriptions = document.createElement('div')
+                        descriptions.innerHTML = description
+                        descriptions.style.width = '60%'
+                        descriptions.style.display = 'flex'
+                        descriptions.style.alignItems = 'center'
+                        descriptions.className = 'description'
+                        descriptions.appendChild(dvv)
+                        console.log(description)
+                        for await(let q of query) {
+                            q.id = q.href.replace('spotify:playlist:', '')
+                            description.replace(q.href, q.href + 'id=' + q.id)
+                            q.addEventListener('click', function () {
+                                parsedLoad(q.id, playlistcont, playlistcont.id)
+                            })
+
+                            q.removeAttribute('href')
+                            let xpath = "//a[text()='" + q.innerText + "']"
+                            console.log(xpath)
+                            let matchingElement = document.evaluate(xpath, descriptions, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+                            console.log(matchingElement)
+                            descriptions.replaceChild(q, matchingElement)
                         }
-                        finded.tracks = tracks
-                        playlist = finded
-                        playlist.type = 'deeperplaylist'
+                        // descriptions.className = 'con4'
+                        plid.appendChild(descriptions)
+                        let cover = document.createElement('div')
+                        cover.className = 'con4'
+                        cover.style.backgroundImage = "url('" + image + "')"
+                        cover.style.backgroundRepeat = 'no-repeat'
+                        cover.style.backgroundSize = 'cover'
+                        plid.appendChild(cover)
+                        let refresh = document.createElement('button')
+                        refresh.id = 'refresh_' + finded.id
+                        refresh.className = 'refresh-end'
+                        refresh.setAttribute("onclick", "refr('refresh_" + finded.id + "')")
+                        plid.appendChild(refresh)
+                        let img = document.createElement('img')
+                        img.id = 'icon_' + finded.id
+                        img.src = '../static/images/refresh-icon.svg'
+                        img.height = 12
+                        refresh.appendChild(img)
+                        let trid = document.createElement('div')
+                        trid.className = 'con2'
+                        playlistcont.appendChild(trid)
+                        for await (const pla of playtrack) {
+                            console.log('75 ' + pla)
+                            let d = document.createElement('div')
+                            d.tabIndex = 0
+                            d.className = 'con3'
+                            d.style.backgroundImage = `url(${pla['track']['album']['images'][0]['url']})`
+                            d.style.backgroundRepeat = 'no-repeat'
+                            d.style.backgroundSize = 'cover'
+                            d.innerText = `${list(pla['track']['artists'])} -  ${pla['track']['name']}`
+                            let a = document.createElement('audio')
+                            a.type = "audio/mpeg"
+                            a.preload = 'none'
+                            if (pla['track']['preview_url'])
+                                a.src = `${pla['track']['preview_url']}`
+                            else {
+                                d.style.opacity = '.5'
+                            }
+                            d.appendChild(a)
+                            d.addEventListener('mouseover', function (e) {
+                                mouseover2play(e)
+                            })
+                            d.addEventListener('mouseleave', function (e) {
+                                mouseleave2stop(e)
+                            })
+                            d.addEventListener('click', function () {
+                                deeperTracks(tracks, pla['track'], false, false,playlistcont.id)
+                            })
+
+
+                            await trid.appendChild(d)
+                            window.scrollTo({
+                                top: findPos(plid),
+                                behavior: 'smooth'
+                            });
+                        }
+                        tracks.appendChild(playlistcont)
                     })
             }))
 
@@ -3383,31 +3550,32 @@ for (let i of spllist) {
         }
     });
 }
-function fetchSpotPlaylists(offset){
-      request({
-        url:'https://api.spotify.com/v1/users/spotify/playlists?fields=items(name,id)&limit=50&offset=' + offset,
+
+function fetchSpotPlaylists(offset) {
+    request({
+        url: 'https://api.spotify.com/v1/users/spotify/playlists?fields=items(name,id)&limit=50&offset=' + offset,
         method: 'get',
-        headers: {'Authorization': 'Bearer ' +  localStorage.getItem('access_token')}
-      })
-          .then(async (response) =>{
-              let items = response.data['items']
-              let sp = document.getElementById('splaylist')
-              for await (let item of items){
-                  let divsp = document.createElement('div')
-                  divsp.id = item.id
-                  divsp.onclick = () => playlistLoad(item, 'sptplaylists')
-                  divsp.className = 'hr-line-dashed'
-                  divsp.innerText = item.name
-                  sp.appendChild(divsp)
-              }
-            if (await response.data['items'].length > 0){
-              this.fetchSpotPlaylists(offset+=50)
+        headers: {'Authorization': 'Bearer ' + localStorage.getItem('access_token')}
+    })
+        .then(async (response) => {
+            let items = response.data['items']
+            let sp = document.getElementById('splaylist')
+            for await (let item of items) {
+                let divsp = document.createElement('div')
+                divsp.id = item.id
+                divsp.onclick = () => playlistLoad(item, 'sptplaylists')
+                divsp.className = 'hr-line-dashed'
+                divsp.innerText = item.name
+                sp.appendChild(divsp)
             }
-          })
-    }
+            if (await response.data['items'].length > 0) {
+                this.fetchSpotPlaylists(offset += 50)
+            }
+        })
+}
 
 let stringToHTML = function (str) {
-	let parser = new DOMParser();
-	let doc = parser.parseFromString(str, 'text/html');
-	return doc.body;
+    let parser = new DOMParser();
+    let doc = parser.parseFromString(str, 'text/html');
+    return doc.body;
 };
