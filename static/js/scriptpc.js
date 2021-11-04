@@ -16,12 +16,14 @@ function initElement(id) {
         let playlistdiv = document.getElementById('playlist')
         let playlistcont = document.createElement('div')
         playlistcont.id = 'p' + id
+        playlistcont.className = 'playlist card2'
         let plid = document.createElement('div')
         plid.className = 'con2'
         playlistcont.appendChild(plid)
         let names = document.createElement('div')
         names.innerText = name
         names.className = 'con4'
+        names.style.color = 'black'
         plid.appendChild(names)
 
         let dvv = document.createElement('div')
@@ -33,12 +35,30 @@ function initElement(id) {
         btn.innerText = 'Open is Spotify'
         openinspotify.appendChild(btn)
         dvv.appendChild(openinspotify)
+        let html = await stringToHTML(description)
+        let query = html.querySelectorAll('a')
         let descriptions = document.createElement('div')
         descriptions.innerHTML = description
         descriptions.style.width = '60%'
         descriptions.style.display = 'flex'
         descriptions.style.alignItems = 'center'
+        descriptions.className = 'description'
         descriptions.appendChild(dvv)
+        console.log(description)
+        for await(let q of query){
+            q.id = q.href.replace('spotify:playlist:','')
+            description.replace(q.href,q.href + 'id=' + q.id)
+            q.addEventListener('click', function () {
+                parsedLoad(q.id,playlistdiv,playlistcont.id)
+            })
+
+            q.removeAttribute('href')
+            let xpath = "//a[text()='"+ q.innerText + "']"
+            console.log(xpath)
+            let matchingElement = document.evaluate(xpath, descriptions, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+            console.log(matchingElement)
+            descriptions.replaceChild(q,matchingElement)
+        }
         // descriptions.className = 'con4'
         plid.appendChild(descriptions)
         let cover = document.createElement('div')
@@ -2425,7 +2445,7 @@ async function deeperTracks(tracks, item, flag, sib, child) {
     //
     // }
     if (await child) {
-        let par = document.getElementById(child).parentElement.nextElementSibling
+        let par = document.getElementById(child).nextElementSibling
         while (par != null) {
             par.style.display = 'none'
             if (par.nextElementSibling !== null && par.nextElementSibling.style.display !== 'none') {
@@ -2951,12 +2971,30 @@ async function playlistLoad(item, parent, search) {
         btn.innerText = 'Open is Spotify'
         openinspotify.appendChild(btn)
         dvv.appendChild(openinspotify)
+        let html = await stringToHTML(description)
+        let query = html.querySelectorAll('a')
         let descriptions = document.createElement('div')
         descriptions.innerHTML = description
         descriptions.style.width = '60%'
         descriptions.style.display = 'flex'
         descriptions.style.alignItems = 'center'
+        descriptions.className = 'description'
         descriptions.appendChild(dvv)
+
+        for await(let q of query){
+            q.id = q.href.replace('spotify:playlist:','')
+            description.replace(q.href,q.href + 'id=' + q.id)
+            q.addEventListener('click', function () {
+                parsedLoad(q.id,playlistdiv,playlistcont.id)
+            })
+
+            q.removeAttribute('href')
+            let xpath = "//a[text()='"+ q.innerText + "']"
+            console.log(xpath)
+            let matchingElement = document.evaluate(xpath, descriptions, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+            console.log(matchingElement)
+            descriptions.replaceChild(q,matchingElement)
+        }
         // descriptions.className = 'con4'
         plid.appendChild(descriptions)
         let cover = document.createElement('div')
@@ -3007,7 +3045,7 @@ async function playlistLoad(item, parent, search) {
                 })
                 d.addEventListener('click', function () {
                     if (search) {
-                        deeperTracks(document.getElementById('searchrt'), pla['track'], false, 'playlist')
+                        deeperTracks(document.getElementById('searchrt'), pla['track'], false, false,playlistcont.id)
                     } else {
                         deeperTracks(playlistdiv.nextElementSibling, pla['track'], true, false)
                     }
@@ -3036,6 +3074,165 @@ async function playlistLoad(item, parent, search) {
     })
 }
 
+async function parsedLoad(id, playlistdiv,child) {
+    console.log('2896 ' + id)
+    if (await child) {
+        let par = document.getElementById(child).nextElementSibling
+        while (par != null) {
+            par.style.display = 'none'
+            if (par.nextElementSibling !== null && par.nextElementSibling.style.display !== 'none') {
+                par = par.nextElementSibling
+            } else if (par.nextElementSibling !== null && par.nextElementSibling.style.display === 'none') {
+                par = par.nextElementSibling.nextElementSibling
+            } else if (par.nextElementSibling === null) {
+                par = null
+            }
+        }
+    }
+    if (await document.getElementById('p' + id)) {
+        document.getElementById('p' + id).style.display = 'flex'
+        // setTimeout(() => {
+        //   window.scrollTo({
+        //     top:(document.getElementById('d'+ item.id)).offsetTop,
+        //     behavior:'smooth'});
+        // }, 10);
+        return
+    }
+    request({
+        url: 'https://api.spotify.com/v1/playlists/' + id,
+        method: 'get',
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        }
+    }).then(async (response) => {
+        let data = response.data
+        console.log(data)
+        let name = data['name']
+        let description = data['description']
+        let image = data['images'][0]['url']
+        let playtrack = data['tracks']['items']
+
+        let playlistcont = document.createElement('div')
+        playlistcont.id = 'p' + id
+        playlistcont.className = 'playlist card2'
+        let plid = document.createElement('div')
+        plid.className = 'con2'
+        playlistcont.appendChild(plid)
+        let names = document.createElement('div')
+        names.innerText = name
+        names.className = 'con4'
+        names.style.color = 'black'
+        plid.appendChild(names)
+
+        let dvv = document.createElement('div')
+        let openinspotify = document.createElement('a')
+        openinspotify.href = data['external_urls']['spotify']
+        openinspotify.target = '_blank'
+        let btn = document.createElement('button')
+        btn.className = 'button'
+        btn.innerText = 'Open is Spotify'
+        openinspotify.appendChild(btn)
+        dvv.appendChild(openinspotify)
+
+        let html = await stringToHTML(description)
+        let query = html.querySelectorAll('a')
+        let descriptions = document.createElement('div')
+        descriptions.innerHTML = description
+        descriptions.style.width = '60%'
+        descriptions.style.display = 'flex'
+        descriptions.style.alignItems = 'center'
+        descriptions.className = 'description'
+        descriptions.appendChild(dvv)
+
+        for await(let q of query){
+            q.id = q.href.replace('spotify:playlist:','')
+            description.replace(q.href,q.href + 'id=' + q.id)
+            q.addEventListener('click', function () {
+                parsedLoad(q.id,playlistdiv,playlistcont.id)
+            })
+
+            q.removeAttribute('href')
+            let xpath = "//a[text()='"+ q.innerText + "']"
+            console.log(xpath)
+            let matchingElement = document.evaluate(xpath, descriptions, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+            console.log(matchingElement)
+            descriptions.replaceChild(q,matchingElement)
+        }
+        // descriptions.className = 'con4'
+        plid.appendChild(descriptions)
+        let cover = document.createElement('div')
+        cover.className = 'con4'
+        cover.style.backgroundImage = "url('" + image + "')"
+        cover.style.backgroundRepeat = 'no-repeat'
+        cover.style.backgroundSize = 'cover'
+        plid.appendChild(cover)
+        let refresh = document.createElement('button')
+        refresh.id = 'refresh_' + id
+        refresh.className = 'refresh-end'
+        refresh.setAttribute("onclick", "refr('refresh_" + id + "')")
+        plid.appendChild(refresh)
+        let img = document.createElement('img')
+        img.id = 'icon_' + id
+        img.src = '../static/images/refresh-icon.svg'
+        img.height = 12
+        refresh.appendChild(img)
+        let trid = document.createElement('div')
+        trid.className = 'con2'
+        playlistcont.appendChild(trid)
+        console.log(2961)
+        if (await playtrack) {
+            for await (let pla of playtrack) {
+                if (pla['track']){
+                                    console.log(pla)
+                let d = document.createElement('div')
+                d.tabIndex = 0
+                d.className = 'con3'
+                d.style.backgroundImage = `url(${pla['track']['album']['images'][0]['url']})`
+                d.style.backgroundRepeat = 'no-repeat'
+                d.style.backgroundSize = 'cover'
+                d.innerText = `${list(pla['track']['artists'])} -  ${pla['track']['name']}`
+                let a = document.createElement('audio')
+                a.type = "audio/mpeg"
+                a.preload = 'none'
+                if (pla['track']['preview_url'])
+                    a.src = `${pla['track']['preview_url']}`
+                else {
+                    d.style.opacity = '.5'
+                }
+                d.appendChild(a)
+                d.addEventListener('mouseover', function (e) {
+                    mouseover2play(e)
+                })
+                d.addEventListener('mouseleave', function (e) {
+                    mouseleave2stop(e)
+                })
+                d.addEventListener('click', function () {
+                    deeperTracks(playlistdiv.nextElementSibling, pla['track'], true, false)
+
+                })
+                await trid.appendChild(d)
+                }
+            }
+            console.log(playlistdiv)
+            playlistdiv.appendChild(playlistcont)
+        }
+    }).catch((error) => {
+        if (error.status === 401) {
+            request({
+                url: '/spotify/refresh_token/' + localStorage.getItem('username'),
+                method: 'get',
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                }
+            }).then((response) => {
+                playlistLoad(item, parent, search)
+            }).catch((error) => {
+
+            })
+        }
+
+    })
+}
 async function thesoundof(pointer, name, num, sib, child) {
     let value = 'The Sound of ' + name.toUpperCase()
     let neww = this.titleCase(name)
@@ -3209,14 +3406,8 @@ function fetchSpotPlaylists(offset){
           })
     }
 
-function SpotInit(event) {
-    let id = event.currentTarget.id
-    request({
-        url: 'https://api.spotify.com/v1/playlists/' + id,
-        method: 'get',
-        headers: {'Authorization': 'Bearer ' + document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1")}
-    })
-        .then((response) => {
-            let data = response.data
-        })
-}
+let stringToHTML = function (str) {
+	let parser = new DOMParser();
+	let doc = parser.parseFromString(str, 'text/html');
+	return doc.body;
+};

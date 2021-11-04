@@ -453,7 +453,7 @@ position: relative;
     display: flex;
 }
 a{
-    color: antiquewhite;
+    color: black;
 }
 /*.header{*/
 /*    overflow: hidden;*/
@@ -604,4 +604,16 @@ footer{
     display: flex;
     margin: 16px 0 6px;
     color:#fff
+}
+
+.description{
+    width: 60%;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.description a{
+    cursor: pointer;
+    margin-left: 4px;
+    margin-right: 4px;
 }
