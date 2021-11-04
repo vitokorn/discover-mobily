@@ -555,7 +555,7 @@ footer{
     border-radius: 50%;
 }
 .card2{
-    width: 95%;
+    /*width: 95%;*/
     background-size: cover;
     display: flex;
     -moz-box-pack: start;
@@ -616,4 +616,14 @@ footer{
     cursor: pointer;
     margin-left: 4px;
     margin-right: 4px;
+}
+
+.hcontent{
+    display: block;
+    background: #FFF;
+    width: calc(100% - 70px);
+    position: absolute;
+    overflow-y: scroll;
+    left: 0;
+    margin-left: 10px;
 }

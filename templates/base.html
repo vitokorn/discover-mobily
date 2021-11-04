@@ -61,9 +61,9 @@
             sc.src = "{{ url_for('static', filename='js/scriptpc.js') }}"
             document.body.appendChild(sc)
         } else{
-            let sc = document.createElement('script')
-            sc.src = "{{ url_for('static', filename='js/script.js') }}"
-            document.body.appendChild(sc)
+            if (window.location.pathname !== '/mobile/'){
+                window.location.pathname = '/mobile/'
+            }
         }
         </script>
     {% endif %}
