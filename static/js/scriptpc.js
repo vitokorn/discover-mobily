@@ -243,6 +243,12 @@ function topartistst() {
                 } else {
                     d.style.opacity = '.5'
                 }
+                let art = {}
+                art.self = it
+                art.tt = tracks
+                d.addEventListener('click', function () {
+                    deep_artist(rectrack, it, true, false, false, art)
+                })
             })
             d.appendChild(a)
             d.addEventListener('mouseover', function (e) {
@@ -250,9 +256,6 @@ function topartistst() {
             })
             d.addEventListener('mouseleave', function (e) {
                 mouseleave2stop(e)
-            })
-            d.addEventListener('click', function () {
-                deep_artist(rectrack, it, true)
             })
             artis.appendChild(d)
         }
@@ -307,6 +310,12 @@ function topartistst6() {
                 } else {
                     d.style.opacity = '.5'
                 }
+                let art = {}
+                art.self = it
+                art.tt = tracks
+                d.addEventListener('click', function () {
+                    deep_artist(rectrack, it, true, false, false, art)
+                })
             })
             d.appendChild(a)
             d.addEventListener('mouseover', function (e) {
@@ -314,9 +323,6 @@ function topartistst6() {
             })
             d.addEventListener('mouseleave', function (e) {
                 mouseleave2stop(e)
-            })
-            d.addEventListener('click', function () {
-                deep_artist(rectrack, it, true)
             })
             artis.appendChild(d)
         }
@@ -359,6 +365,12 @@ function topartiststall() {
                 } else {
                     d.style.opacity = '.5'
                 }
+                let art = {}
+                art.self = it
+                art.tt = tracks
+                d.addEventListener('click', function () {
+                    deep_artist(rectrack, it, true, false, false, art)
+                })
             })
             d.appendChild(a)
             d.addEventListener('mouseover', function (e) {
@@ -366,9 +378,6 @@ function topartiststall() {
             })
             d.addEventListener('mouseleave', function (e) {
                 mouseleave2stop(e)
-            })
-            d.addEventListener('click', function () {
-                deep_artist(rectrack, it, true)
             })
             artis.appendChild(d)
         }
@@ -872,6 +881,12 @@ function getfollowedartist() {
                 } else {
                     d.style.opacity = '.5'
                 }
+                let art = {}
+                art.self = it
+                art.tt = tracks
+                d.addEventListener('click', function () {
+                    deep_artist(artis.nextElementSibling, it, true, false, false, art)
+                })
             })
             d.appendChild(a)
             d.addEventListener('mouseover', function (e) {
@@ -879,9 +894,6 @@ function getfollowedartist() {
             })
             d.addEventListener('mouseleave', function (e) {
                 mouseleave2stop(e)
-            })
-            d.addEventListener('click', function () {
-                deep_artist(artis.nextElementSibling, it, true)
             })
             artis.appendChild(d)
         }
@@ -1450,9 +1462,12 @@ async function deeper(pla, tracks, type) {
                 } else {
                     artst.style.opacity = '.5'
                 }
-            })
-            artst.addEventListener('click', function () {
-                deep_artist(tracks, ar, false, 'trackartist')
+                let art = {}
+                art.self = ar
+                art.tt = tracks
+                artst.addEventListener('click', function () {
+                    deep_artist(tracks, ar, false, 'trackartist', false, art)
+                })
             })
             artst.addEventListener('mouseover', function (e) {
                 mouseover2play(e)
@@ -1559,9 +1574,12 @@ async function deeper(pla, tracks, type) {
                 } else {
                     artst.style.opacity = '.5'
                 }
-            })
-            artst.addEventListener('click', function () {
-                deep_artist(tracks, ar, false, 'trackartist')
+                let art = {}
+                art.self = ar
+                art.tt = tracks
+                artst.addEventListener('click', function () {
+                    deep_artist(tracks, ar, false, 'trackartist', false, art)
+                })
             })
             artst.addEventListener('mouseover', function (e) {
                 mouseover2play(e)
@@ -1662,6 +1680,12 @@ async function deeper(pla, tracks, type) {
                 } else {
                     artst.style.opacity = '.5'
                 }
+                let art = {}
+                art.self = ar
+                art.tt = tracks
+                artst.addEventListener('click', function () {
+                    deep_artist(tracks, ar, false, 'trackartist', false, art)
+                })
             })
             artst.addEventListener('click', function () {
                 deep_artist(tracks, ar, false, 'trackartist')
@@ -1851,7 +1875,7 @@ async function deeperAlbum(tracks, item, albus, child, search) {
     });
 }
 
-async function deep_artist(tracks, item, flag, sib, related) {
+async function deep_artist(tracks, item, flag, sib, related, artistandtt) {
     let all = document.querySelectorAll('.rectrack > div')
     let alltop = document.querySelectorAll('.rectrack > div.' + sib)
     let last = document.querySelector('.rectrack > div.trackartist > div[id="art' + item.id + '"]')
@@ -1915,24 +1939,16 @@ async function deep_artist(tracks, item, flag, sib, related) {
     const ab = document.createElement('div')
     let artinfo = document.createElement('div')
     artinfo.style.gridColumn = '3 / 8'
-    ab.style.display = 'grid'
-    ab.style.gridGap = '16px'
-    ab.className = 'recartist'
-    ab.id = 'art' + item['id']
-    await request({
-        url: 'https://api.spotify.com/v1/artists/' + item['id'],
-        method: 'get',
-        headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
-        }
-    }).then(async (response) => {
-        let data = response.data
-        console.log('202' + data)
+    if (artistandtt) {
+        ab.style.display = 'grid'
+        ab.style.gridGap = '16px'
+        ab.className = 'recartist'
+        ab.id = 'art' + artistandtt.self.id
         let dv = document.createElement('div')
         dv.className = 'con3'
         dv.style.gridColumn = '1 / 3'
         dv.id = item['id']
-        dv.style.backgroundImage = `url(${data['images'][0]['url']})`
+        dv.style.backgroundImage = `url(${artistandtt.self['images'][0]['url']})`
         dv.style.backgroundRepeat = 'no-repeat'
         dv.style.backgroundSize = 'cover'
         dv.addEventListener('mouseover', function (e) {
@@ -1942,16 +1958,17 @@ async function deep_artist(tracks, item, flag, sib, related) {
             mouseleave2stop(e)
         })
 
-        artinfo.innerText = data['name']
+        artinfo.innerText = artistandtt.self['name']
         let af = document.createElement('div')
-        af.innerText = data['followers']['total'] + ' followers'
+        af.innerText = artistandtt.self['followers']['total'] + ' followers'
         let ag = document.createElement('div')
-        await genresname(data['genres'], ag, tracks, ab.id)
+        ag.style.display = 'flex'
+        await genresname(artistandtt.self['genres'], ag, tracks, ab.id)
         let arr = document.createElement('div')
         arr.innerText = 'Recommended songs based on this'
         arr.style.color = '#f037a5'
         arr.addEventListener('click', async function () {
-            await seedArtists(tracks, data, 'trackartist')
+            await seedArtists(tracks, artistandtt.self, 'trackartist')
         })
         let dvv = document.createElement('div')
         let openinspotify = document.createElement('a')
@@ -1968,11 +1985,67 @@ async function deep_artist(tracks, item, flag, sib, related) {
         artinfo.appendChild(arr)
         artinfo.appendChild(dvv)
         ab.appendChild(artinfo)
-        console.log(JSON.stringify('204 ' + data['images'][0]['url']))
+    } else {
+        ab.style.display = 'grid'
+        ab.style.gridGap = '16px'
+        ab.className = 'recartist'
+        ab.id = 'art' + item['id']
+        await request({
+            url: 'https://api.spotify.com/v1/artists/' + item['id'],
+            method: 'get',
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+            }
+        }).then(async (response) => {
+            let data = response.data
+            console.log('202' + data)
+            let dv = document.createElement('div')
+            dv.className = 'con3'
+            dv.style.gridColumn = '1 / 3'
+            dv.id = item['id']
+            dv.style.backgroundImage = `url(${data['images'][0]['url']})`
+            dv.style.backgroundRepeat = 'no-repeat'
+            dv.style.backgroundSize = 'cover'
+            dv.addEventListener('mouseover', function (e) {
+                mouseover2play(e)
+            })
+            dv.addEventListener('mouseleave', function (e) {
+                mouseleave2stop(e)
+            })
 
-    }).catch((error) => {
+            artinfo.innerText = data['name']
+            let af = document.createElement('div')
+            af.innerText = data['followers']['total'] + ' followers'
+            let ag = document.createElement('div')
+            ag.style.display = 'flex'
+            await genresname(data['genres'], ag, tracks, ab.id)
+            let arr = document.createElement('div')
+            arr.innerText = 'Recommended songs based on this'
+            arr.style.color = '#f037a5'
+            arr.addEventListener('click', async function () {
+                await seedArtists(tracks, data, 'trackartist')
+            })
+            let dvv = document.createElement('div')
+            let openinspotify = document.createElement('a')
+            openinspotify.href = item['external_urls']['spotify']
+            openinspotify.target = '_blank'
+            let btn = document.createElement('button')
+            btn.className = 'button'
+            btn.innerText = 'Open is Spotify'
+            openinspotify.appendChild(btn)
+            dvv.appendChild(openinspotify)
+            ab.appendChild(dv)
+            artinfo.appendChild(af)
+            artinfo.appendChild(ag)
+            artinfo.appendChild(arr)
+            artinfo.appendChild(dvv)
+            ab.appendChild(artinfo)
+            console.log(JSON.stringify('204 ' + data['images'][0]['url']))
 
-    })
+        }).catch((error) => {
+
+        })
+    }
     const grid = document.createElement('div')
     grid.style.gridColumn = '1/8'
     let name = document.createElement('div')
@@ -1990,18 +2063,11 @@ async function deep_artist(tracks, item, flag, sib, related) {
     let area = document.createElement('div')
     area.style.gridArea = '1 / 8 / 3 / 10'
     area.innerText = 'Related Artists'
-    await request({
-        url: 'https://api.spotify.com/v1/artists/' + item['id'] + '/top-tracks?limit=10&market=' + localStorage.getItem('country'),
-        method: 'get',
-        headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
-        }
-    }).then(async (response) => {
-        let data = response.data
+    if (await artistandtt) {
         let con = document.createElement('div')
         con.className = 'col2'
 
-        for await (const topt of data['tracks']) {
+        for await (const topt of artistandtt.tt) {
             let d = document.createElement('div')
             d.tabIndex = 0
             d.className = 'con3'
@@ -2031,9 +2097,52 @@ async function deep_artist(tracks, item, flag, sib, related) {
             name.after(name, con)
             ab.appendChild(grid)
         }
-    }).catch((error) => {
+    } else {
+        await request({
+            url: 'https://api.spotify.com/v1/artists/' + item['id'] + '/top-tracks?limit=10&market=' + localStorage.getItem('country'),
+            method: 'get',
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+            }
+        }).then(async (response) => {
+            let data = response.data
+            let con = document.createElement('div')
+            con.className = 'col2'
 
-    })
+            for await (const topt of data['tracks']) {
+                let d = document.createElement('div')
+                d.tabIndex = 0
+                d.className = 'con3'
+                d.style.backgroundImage = `url(${topt['album']['images'][0]['url']})`
+                d.style.backgroundRepeat = 'no-repeat'
+                d.style.backgroundSize = 'cover'
+                d.innerText = `${list(topt['artists'])} -  ${topt['name']}`
+                let a = document.createElement('audio')
+                a.type = "audio/mpeg"
+                a.preload = 'none'
+                if (topt['preview_url'])
+                    a.src = `${topt['preview_url']}`
+                else {
+                    d.style.opacity = '.5'
+                }
+                d.appendChild(a)
+                d.addEventListener('mouseover', function (e) {
+                    mouseover2play(e)
+                })
+                d.addEventListener('mouseleave', function (e) {
+                    mouseleave2stop(e)
+                })
+                d.addEventListener('click', function () {
+                    deeperTracks(tracks, topt, false, 'trackartist', 'art' + item.id)
+                })
+                con.appendChild(d)
+                name.after(name, con)
+                ab.appendChild(grid)
+            }
+        }).catch((error) => {
+
+        })
+    }
     await request({
         url: 'https://api.spotify.com/v1/artists/' + item['id'] + '/albums?include_groups=album&limit=10',
         method: 'get',
@@ -2223,6 +2332,12 @@ async function deep_artist(tracks, item, flag, sib, related) {
                 } else {
                     d.style.opacity = '.5'
                 }
+                let art = {}
+                art.self = ra
+                art.tt = tracks
+                d.addEventListener('click', function () {
+                    deep_artist(tracks, ra, false, 'trackartist', ab.id, art)
+                })
             })
             d.appendChild(a)
             d.addEventListener('mouseover', function (e) {
@@ -2230,9 +2345,6 @@ async function deep_artist(tracks, item, flag, sib, related) {
             })
             d.addEventListener('mouseleave', function (e) {
                 mouseleave2stop(e)
-            })
-            d.addEventListener('click', function () {
-                deep_artist(tracks, ra, false, 'trackartist', ab.id)
             })
 
 
@@ -3467,7 +3579,7 @@ async function thesoundof(name, tracks, child) {
                                 mouseleave2stop(e)
                             })
                             d.addEventListener('click', function () {
-                                deeperTracks(tracks, pla['track'], false, false,playlistcont.id)
+                                deeperTracks(tracks, pla['track'], false, false, playlistcont.id)
                             })
 
 
