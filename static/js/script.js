@@ -51,6 +51,13 @@ function initElement(id) {
             description.replace(q.href, q.href + 'id=' + q.id)
             q.addEventListener('click', function () {
                 parsedLoad(q.id, playlistdiv, playlistcont.id)
+                for (let i of playlistdiv.nextElementSibling.children) {
+                    if (i.id === q.id) {
+                        i.style.display = 'block'
+                    } else {
+                        i.style.display = 'none'
+                    }
+                }
             })
 
             q.removeAttribute('href')
@@ -3417,6 +3424,7 @@ function titleCase(str) {
     // Directly return the joined string
     return splitStr.join(' ');
 }
+
 document.getElementById('spinput').onclick = filterres
 
 function filterres(event) {
@@ -3445,17 +3453,18 @@ function hideall(elem) {
         }
     }
 }
-function spactivetab(event){
+
+function spactivetab(event) {
     let target = event.target
     let spllist = document.querySelectorAll("#splaylist > div");
-for (let i of spllist) {
-    if (i.id === target.id ){
-        if (i.classList.contains("activetab")) {
+    for (let i of spllist) {
+        if (i.id === target.id) {
+            if (i.classList.contains("activetab")) {
 
-        } else {
-            i.classList.toggle("activetab");
+            } else {
+                i.classList.toggle("activetab");
+            }
         }
-    }
         spllist.forEach(function (ns) {
             if (i.id === ns.id) {
                 if (document.getElementById('s' + ns.id)) {
@@ -3472,7 +3481,7 @@ for (let i of spllist) {
         for (let i of rectrack) {
             i.style.display = 'none'
         }
-}
+    }
 }
 
 
@@ -3491,12 +3500,16 @@ function fetchSpotPlaylists(offset) {
                 divsp.addEventListener('click', function (e) {
                     playlistLoad(item, 'sptplaylists')
                     let playlists = document.querySelectorAll('[id^=p]')
-                    for (let p of playlists){
-                        if (p.id === divsp.id){
+                    for (let p of playlists) {
+                        if (p.id === divsp.id) {
                             p.style.display = 'block'
                         } else {
                             p.style.display = 'none'
                         }
+                    }
+                    let rectr = document.getElementById('sptplaylists').nextElementSibling.children
+                    for (let r of rectr) {
+                        r.style.display = 'none'
                     }
                 })
                 divsp.className = 'hr-line-dashed'

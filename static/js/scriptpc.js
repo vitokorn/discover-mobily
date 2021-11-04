@@ -49,7 +49,14 @@ function initElement(id) {
             q.id = q.href.replace('spotify:playlist:', '')
             description.replace(q.href, q.href + 'id=' + q.id)
             q.addEventListener('click', function () {
-                parsedLoad(q.id, playlistdiv, playlistcont.id)
+                parsedLoad(q.id, playlistdiv.nextElementSibling, playlistcont.id)
+                for (let i of playlistdiv.nextElementSibling.children) {
+                    if (i.id === q.id) {
+                        i.style.display = 'block'
+                    } else {
+                        i.style.display = 'none'
+                    }
+                }
             })
 
             q.removeAttribute('href')
@@ -105,7 +112,7 @@ function initElement(id) {
                 mouseleave2stop(e)
             })
             d.addEventListener('click', function () {
-                deeper(pla, playlistdiv.nextElementSibling, 'playlist')
+                deeperTracks(playlistdiv.nextElementSibling, pla['track'], true, false, playlistcont.id)
             })
 
 
@@ -3127,7 +3134,7 @@ async function seedArtists(tracks, item, sib, child) {
 
 async function playlistLoad(item, parent, search) {
     console.log('2896 ' + item.id)
-    if (await document.getElementById('p' + item.id)){
+    if (await document.getElementById('p' + item.id)) {
         document.getElementById('p' + item.id).style.display = 'block'
         return
     }
@@ -3420,7 +3427,7 @@ async function parsedLoad(id, playlistdiv, child) {
                     'Authorization': 'Bearer ' + localStorage.getItem('access_token')
                 }
             }).then((response) => {
-                playlistLoad(item, parent, search)
+                parsedLoad(id, playlistdiv, child)
             }).catch((error) => {
 
             })
@@ -3644,7 +3651,7 @@ function hideall(elem) {
 function test(event) {
     console.log(3653)
     let spllist = document.querySelectorAll("#sptplaylists > div:not(.head,.sp)");
-        console.log(spllist)
+    console.log(spllist)
     for (let i of spllist) {
         console.log(3654)
         i.addEventListener("click", function () {
@@ -3686,12 +3693,16 @@ function fetchSpotPlaylists(offset) {
                 divsp.addEventListener('click', function (e) {
                     playlistLoad(item, 'sptplaylists')
                     let playlists = document.querySelectorAll('[id^=p]')
-                    for (let p of playlists){
-                        if (p.id === divsp.id){
+                    for (let p of playlists) {
+                        if (p.id === divsp.id) {
                             p.style.display = 'block'
                         } else {
                             p.style.display = 'none'
                         }
+                    }
+                    let rectr = document.getElementById('sptplaylists').nextElementSibling.children
+                    for (let r of rectr) {
+                        r.style.display = 'none'
                     }
                 })
                 divsp.className = 'hr-line-dashed'

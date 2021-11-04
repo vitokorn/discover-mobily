@@ -555,7 +555,7 @@ footer{
     border-radius: 50%;
 }
 .card2{
-    /*width: 95%;*/
+    width: 95%;
     background-size: cover;
     display: flex;
     -moz-box-pack: start;
