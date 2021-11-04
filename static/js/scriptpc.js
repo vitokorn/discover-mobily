@@ -3127,6 +3127,10 @@ async function seedArtists(tracks, item, sib, child) {
 
 async function playlistLoad(item, parent, search) {
     console.log('2896 ' + item.id)
+    if (await document.getElementById('p' + item.id)){
+        document.getElementById('p' + item.id).style.display = 'block'
+        return
+    }
     request({
         url: 'https://api.spotify.com/v1/playlists/' + item.id,
         method: 'get',
@@ -3608,14 +3612,17 @@ function titleCase(str) {
     return splitStr.join(' ');
 }
 
+document.getElementById('spinput').oninput = filterres
+
 function filterres(event) {
+    console.log(3613)
     let input = event.target
     let filter = input.value.toUpperCase();
-    let pl = document.querySelectorAll('#sptplaylists > div:not(.rectrack,.head) > div.pl > div');
+    let pl = document.querySelectorAll('#splaylist >  div');
 
     for (let i = 0; i < pl.length; i++) {
         if (pl[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
-            pl[i].style.display = "block";
+            pl[i].style.display = "flex";
         } else {
             pl[i].style.display = "none";
         }
@@ -3634,34 +3641,35 @@ function hideall(elem) {
     }
 }
 
-let spllist = document.querySelectorAll("#sptplaylists > div");
-for (let i of spllist) {
-    i.addEventListener("click", function () {
-        if (document.getElementById('s' + i.id)) {
-        }
-        if (i.classList.contains("activetab")) {
+function test(event) {
+    console.log(3653)
+    let spllist = document.querySelectorAll("#sptplaylists > div:not(.head,.sp)");
+        console.log(spllist)
+    for (let i of spllist) {
+        console.log(3654)
+        i.addEventListener("click", function () {
+            if (event.target.id === i.id && i.classList.contains("activetab")) {
 
-        } else {
-            i.classList.toggle("activetab");
-        }
-        spllist.forEach(function (ns) {
-            if (i.id === ns.id) {
-                if (document.getElementById('s' + ns.id)) {
-                    document.getElementById('s' + ns.id).style.display = 'block'
-                }
             } else {
-                ns.classList.remove('activetab')
-                if (document.getElementById('s' + ns.id)) {
-                    document.getElementById('s' + ns.id).style.display = 'none'
-                }
+                i.classList.toggle("activetab");
             }
+            spllist.forEach(function (ns) {
+                if (i.id === ns.id) {
+                    if (document.getElementById('p' + ns.id)) {
+                        document.getElementById('p' + ns.id).style.display = 'block'
+                    }
+                } else {
+                    ns.classList.remove('activetab')
+                    if (document.getElementById('p' + ns.id)) {
+                        document.getElementById('p' + ns.id).style.display = 'none'
+                    }
+                }
+            });
+
         });
-        let rectrack = document.getElementById('sptplaylists').nextElementSibling.childNodes
-        for (let i of rectrack) {
-            i.style.display = 'none'
-        }
-    });
+    }
 }
+
 
 function fetchSpotPlaylists(offset) {
     request({
@@ -3675,7 +3683,17 @@ function fetchSpotPlaylists(offset) {
             for await (let item of items) {
                 let divsp = document.createElement('div')
                 divsp.id = item.id
-                divsp.onclick = () => playlistLoad(item, 'sptplaylists')
+                divsp.addEventListener('click', function (e) {
+                    playlistLoad(item, 'sptplaylists')
+                    let playlists = document.querySelectorAll('[id^=p]')
+                    for (let p of playlists){
+                        if (p.id === divsp.id){
+                            p.style.display = 'block'
+                        } else {
+                            p.style.display = 'none'
+                        }
+                    }
+                })
                 divsp.className = 'hr-line-dashed'
                 divsp.innerText = item.name
                 sp.appendChild(divsp)
