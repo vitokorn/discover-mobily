@@ -621,9 +621,21 @@ footer{
 .hcontent{
     display: block;
     background: #FFF;
-    width: calc(100% - 70px);
+    width: calc(100% - 120px);
     position: absolute;
     overflow-y: scroll;
-    left: 0;
+    left: 20px;
     margin-left: 10px;
+}
+.playlist{
+    width: 95%;
+}
+.recartist{
+    display: flex;
+    gap: 16px;
+    text-align: left;
+    width: 100%;
+}
+.break{
+    flex-basis: 100%;
 }
