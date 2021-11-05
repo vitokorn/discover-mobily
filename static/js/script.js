@@ -103,9 +103,9 @@ function initElement(id) {
             a.preload = 'none'
             if (pla['track']['preview_url']) {
                 a.src = `${pla['track']['preview_url']}`
-                // d.addEventListener('click', function (e) {
-                //     specialclick(e)
-                // })
+                icontainer.addEventListener('click', function (e) {
+                    parentclick(e)
+                })
             } else {
                 d.style.opacity = '.5'
             }
@@ -120,7 +120,6 @@ function initElement(id) {
             d.addEventListener('click', function (e) {
                 deeper(pla, rectrack, 'playlist')
             })
-
 
             await trid.appendChild(icontainer)
             window.scrollTo({
@@ -257,6 +256,9 @@ function topartistst() {
                 let tracks = data['tracks']
                 if (tracks[0].preview_url) {
                     a.src = tracks[0].preview_url
+                    icontainer.addEventListener('click', function (e) {
+                        parentclick(e)
+                    })
                 } else {
                     d.style.opacity = '.5'
                 }
@@ -266,10 +268,8 @@ function topartistst() {
                 d.addEventListener('click', function (e) {
                     hideall(tracks)
                     deep_artist(rectrack, it, true, false, false, art)
-                    click2play(e)
                 })
             })
-            d.appendChild(a)
             rectrack.appendChild(hcontent)
             icontainer.appendChild(d)
             icontainer.appendChild(rectrack)
@@ -330,6 +330,9 @@ function topartistst6() {
                 let tracks = data['tracks']
                 if (tracks[0].preview_url) {
                     a.src = tracks[0].preview_url
+                    icontainer.addEventListener('click', function (e) {
+                        parentclick(e)
+                    })
                 } else {
                     d.style.opacity = '.5'
                 }
@@ -339,10 +342,8 @@ function topartistst6() {
                 d.addEventListener('click', function (e) {
                     hideall(tracks)
                     deep_artist(rectrack, it, true, false, false, art)
-                    click2play(e)
                 })
             })
-            d.appendChild(a)
             rectrack.appendChild(hcontent)
             icontainer.appendChild(d)
             icontainer.appendChild(rectrack)
@@ -391,6 +392,9 @@ function topartiststall() {
                 let tracks = data['tracks']
                 if (tracks[0].preview_url) {
                     a.src = tracks[0].preview_url
+                    icontainer.addEventListener('click', function (e) {
+                        parentclick(e)
+                    })
                 } else {
                     d.style.opacity = '.5'
                 }
@@ -400,10 +404,8 @@ function topartiststall() {
                 d.addEventListener('click', function (e) {
                     hideall(tracks)
                     deep_artist(rectrack, it, true, false, false, art)
-                    click2play(e)
                 })
             })
-            d.appendChild(a)
             rectrack.appendChild(hcontent)
             icontainer.appendChild(d)
             icontainer.appendChild(rectrack)
@@ -584,15 +586,16 @@ function topttracks() {
             let a = document.createElement('audio')
             a.type = "audio/mpeg"
             a.preload = 'none'
-            if (pla['preview_url'])
+            if (pla['preview_url']) {
                 a.src = `${pla['preview_url']}`
-            else {
+                icontainer.addEventListener('click', function (e) {
+                    parentclick(e)
+                })
+            } else {
                 d.style.opacity = '.5'
             }
-            d.appendChild(a)
             d.addEventListener('click', function (e) {
                 deeper(pla, rectrack, 'tt')
-                click2play(e)
             })
             rectrack.appendChild(hcontent)
             icontainer.appendChild(d)
@@ -669,17 +672,17 @@ function topttracks6() {
             let a = document.createElement('audio')
             a.type = "audio/mpeg"
             a.preload = 'none'
-            if (pla['preview_url'])
+            if (pla['preview_url']) {
                 a.src = `${pla['preview_url']}`
-            else {
+                icontainer.addEventListener('click', function (e) {
+                    parentclick(e)
+                })
+            } else {
                 d.style.opacity = '.5'
             }
-            d.appendChild(a)
             d.addEventListener('click', function (e) {
                 deeper(pla, rectrack, 'tt')
-                click2play(e)
             })
-
             rectrack.appendChild(hcontent)
             icontainer.appendChild(d)
             icontainer.appendChild(rectrack)
@@ -726,16 +729,19 @@ function topttracksall() {
             let a = document.createElement('audio')
             a.type = "audio/mpeg"
             a.preload = 'none'
-            if (pla['preview_url'])
+            if (pla['preview_url']) {
                 a.src = `${pla['preview_url']}`
-            else {
+                icontainer.addEventListener('click', function (e) {
+                    parentclick(e)
+                })
+            } else {
                 d.style.opacity = '.5'
             }
             d.appendChild(a)
             d.addEventListener('click', function (e) {
                 deeper(pla, rectrack, 'tt')
-                click2play(e)
             })
+
             rectrack.appendChild(hcontent)
             icontainer.appendChild(d)
             icontainer.appendChild(rectrack)
@@ -803,19 +809,21 @@ function saved_albums() {
                 let items = response.data['items']
                 if (items[0].preview_url) {
                     a.src = items[0].preview_url
+                    icontainer.addEventListener('click', function (e) {
+                        parentclick(e)
+                    })
                 } else {
                     d.style.opacity = '.5'
                 }
                 d.addEventListener('click', function (e) {
                     deeperAlbum(rectrack, items, sa)
-                    click2play(e)
                 })
             })
-                    rectrack.appendChild(hcontent)
-        icontainer.appendChild(d)
-        icontainer.appendChild(rectrack)
-        icontainer.appendChild(a)
-        albums.appendChild(icontainer)
+            rectrack.appendChild(hcontent)
+            icontainer.appendChild(d)
+            icontainer.appendChild(rectrack)
+            icontainer.appendChild(a)
+            albums.appendChild(icontainer)
         }
     }).catch((error) => {
 
@@ -863,15 +871,16 @@ function sendRequest(offset) {
             let a = document.createElement('audio')
             a.type = "audio/mpeg"
             a.preload = 'none'
-            if (pla['track']['preview_url'])
+            if (pla['track']['preview_url']) {
                 a.src = `${pla['track']['preview_url']}`
-            else {
+                icontainer.addEventListener('click', function (e) {
+                    parentclick(e)
+                })
+            } else {
                 d.style.opacity = '.5'
             }
-            d.appendChild(a)
             d.addEventListener('click', function (e) {
                 deeper(pla, tracks.nextElementSibling, 'playlist')
-                click2play(e)
             })
             rectrack.appendChild(hcontent)
             icontainer.appendChild(d)
@@ -932,6 +941,9 @@ function getfollowedartist() {
                 let tracks = data['tracks']
                 if (tracks[0].preview_url) {
                     a.src = tracks[0].preview_url
+                    icontainer.addEventListener('click', function (e) {
+                        parentclick(e)
+                    })
                 } else {
                     d.style.opacity = '.5'
                 }
@@ -941,10 +953,8 @@ function getfollowedartist() {
                 d.addEventListener('click', function (e) {
                     hideall(tracks)
                     deep_artist(rectrack, it, true, false, false, art)
-                    click2play(e)
                 })
             })
-            d.appendChild(a)
             rectrack.appendChild(hcontent)
             icontainer.appendChild(d)
             icontainer.appendChild(rectrack)
@@ -1020,14 +1030,15 @@ function newrelease(elem, offset) {
             if (tracks[0]['preview_url']) {
                 a.src = tracks[0]['preview_url']
                 d.innerText = `${list(tracks[0]['artists'])} -  ${tracks[0]['name']}`
+                icontainer.addEventListener('click', function (e) {
+                    parentclick(e)
+                })
             } else {
                 d.style.opacity = '.5'
                 d.innerText = `${list(tracks[0]['artists'])} -  ${tracks[0]['name']}`
             }
-            d.appendChild(a)
             d.addEventListener('click', function (e) {
                 deeper(it, rectrack, 'nr')
-                click2play(e)
             })
             rectrack.appendChild(hcontent)
             icontainer.appendChild(d)
@@ -1166,6 +1177,7 @@ document.getElementById('srch').addEventListener('input', function () {
                     d.appendChild(a)
                     main.addEventListener('click', function (e) {
                         parentclick2play(e)
+                        deeperAlbum(searchrt, items, alb, false, true)
                     })
                     main.appendChild(d)
                     d1.appendChild(d2)
@@ -1217,6 +1229,7 @@ document.getElementById('srch').addEventListener('input', function () {
                     })
                     d.appendChild(a)
                     d.addEventListener('click', function (e) {
+                        deep_artist(searchrt, art, true, 'trackartist')
                         click2play(e)
                     })
                     main.appendChild(d)
@@ -1250,6 +1263,7 @@ document.getElementById('srch').addEventListener('input', function () {
                     })
                     d.appendChild(a)
                     main.addEventListener('click', function (e) {
+                        playlistLoad(pls, searchrt.children[0], true)
                         parentclick2play(e)
                     })
                     d.addEventListener('click', function (e) {
@@ -1284,6 +1298,7 @@ document.getElementById('srch').addEventListener('input', function () {
                     }
                     d.appendChild(a)
                     d.addEventListener('click', function (e) {
+                        deeper(pla, searchrt, 'tt')
                         click2play(e)
                     })
                     main.addEventListener('click', function (e) {
@@ -1460,8 +1475,8 @@ async function deeper(pla, tracks, type) {
         let recomend = document.createElement('span')
         recomend.innerText = 'Recommended songs based on this'
         recomend.style.color = '#f037a5'
-        recomend.addEventListener('click', async function () {
-            await seedTracks(pla['track'], tracks, 'playlisttrack card2', info.id)
+        recomend.addEventListener('click', function () {
+            seedTracks(pla['track'], tracks, 'playlisttrack card2', info.id)
         })
         let artistcirle = document.createElement('div')
         for (const ar of pla['track']['artists']) {
@@ -1526,6 +1541,16 @@ async function deeper(pla, tracks, type) {
             top: findPos(info),
             behavior: 'smooth'
         });
+        window.addEventListener('resize', async function () {
+            let lst = tracks.children[0].children
+            // console.log(lst)
+            let newarray = []
+            for await(let i of lst) {
+                // console.log(i)
+                newarray.push(i.offsetHeight)
+            }
+            tracks.style.height = newarray.reduce((a, b) => a + b, 0) + 50 + 'px'
+        })
     } else if (type === 'tt') {
         console.log('1496 pla ' + pla)
         let info = document.createElement('div')
@@ -1574,8 +1599,8 @@ async function deeper(pla, tracks, type) {
         let recomend = document.createElement('span')
         recomend.innerText = 'Recommended songs based on this'
         recomend.style.color = '#f037a5'
-        recomend.addEventListener('click', async function () {
-            await seedTracks(pla, tracks, 'playlisttrack card2', info.id)
+        recomend.addEventListener('click', function () {
+            seedTracks(pla, tracks, 'playlisttrack card2', info.id)
         })
         let artistcirle = document.createElement('div')
         for (const ar of pla['artists']) {
@@ -1640,6 +1665,16 @@ async function deeper(pla, tracks, type) {
             top: findPos(info),
             behavior: 'smooth'
         });
+        window.addEventListener('resize', async function () {
+            let lst = tracks.children[0].children
+            // console.log(lst)
+            let newarray = []
+            for await(let i of lst) {
+                // console.log(i)
+                newarray.push(i.offsetHeight)
+            }
+            tracks.style.height = newarray.reduce((a, b) => a + b, 0) + 50 + 'px'
+        })
     } else if (type === 'nr') {
         let info = document.createElement('div')
         info.id = 'd' + pla['id']
@@ -1749,6 +1784,16 @@ async function deeper(pla, tracks, type) {
             top: findPos(info),
             behavior: 'smooth'
         });
+        window.addEventListener('resize', async function () {
+            let lst = tracks.children[0].children
+            // console.log(lst)
+            let newarray = []
+            for await(let i of lst) {
+                // console.log(i)
+                newarray.push(i.offsetHeight)
+            }
+            tracks.style.height = newarray.reduce((a, b) => a + b, 0) + 50 + 'px'
+        })
     }
 }
 
@@ -1796,6 +1841,16 @@ async function deeperAlbum(tracks, item, albus, child, search) {
                 behavior: 'smooth'
             });
         }, 10);
+        window.addEventListener('resize', async function () {
+            let lst = tracks.children[0].children
+            // console.log(lst)
+            let newarray = []
+            for await(let i of lst) {
+                // console.log(i)
+                newarray.push(i.offsetHeight)
+            }
+            tracks.style.height = newarray.reduce((a, b) => a + b, 0) + 50 + 'px'
+        })
         return
     }
     let info = document.createElement('div')
@@ -1916,6 +1971,16 @@ async function deeperAlbum(tracks, item, albus, child, search) {
         top: findPos(trackinfo),
         behavior: 'smooth'
     });
+    window.addEventListener('resize', async function () {
+        let lst = tracks.children[0].children
+        // console.log(lst)
+        let newarray = []
+        for await(let i of lst) {
+            // console.log(i)
+            newarray.push(i.offsetHeight)
+        }
+        tracks.style.height = newarray.reduce((a, b) => a + b, 0) + 50 + 'px'
+    })
 }
 
 async function deep_artist(tracks, item, flag, sib, related, artistandtt) {
@@ -1998,6 +2063,16 @@ async function deep_artist(tracks, item, flag, sib, related, artistandtt) {
                 top: findPos(document.getElementById('art' + item.id)),
                 behavior: 'smooth'
             });
+            window.addEventListener('resize', async function () {
+                let lst = tracks.children[0].children
+                // console.log(lst)
+                let newarray = []
+                for await(let i of lst) {
+                    // console.log(i)
+                    newarray.push(i.offsetHeight)
+                }
+                tracks.style.height = newarray.reduce((a, b) => a + b, 0) + 50 + 'px'
+            })
         }
         return
     }
@@ -2029,8 +2104,8 @@ async function deep_artist(tracks, item, flag, sib, related, artistandtt) {
         let arr = document.createElement('div')
         arr.innerText = 'Recommended songs based on this'
         arr.style.color = '#f037a5'
-        arr.addEventListener('click', async function () {
-            await seedArtists(tracks, artistandtt.self, 'trackartist')
+        arr.addEventListener('click', function () {
+            seedArtists(tracks, artistandtt.self, 'trackartist')
         })
         let dvv = document.createElement('div')
         let openinspotify = document.createElement('a')
@@ -2077,8 +2152,8 @@ async function deep_artist(tracks, item, flag, sib, related, artistandtt) {
             let arr = document.createElement('div')
             arr.innerText = 'Recommended songs based on this'
             arr.style.color = '#f037a5'
-            arr.addEventListener('click', async function () {
-                await seedArtists(tracks, data, 'trackartist')
+            arr.addEventListener('click', function () {
+                seedArtists(tracks, data, 'trackartist')
             })
             let dvv = document.createElement('div')
             let openinspotify = document.createElement('a')
@@ -2235,12 +2310,21 @@ async function deep_artist(tracks, item, flag, sib, related, artistandtt) {
         newarray.push(i.offsetHeight)
     }
     console.log(lst)
-    console.log(newarray.reduce((a, b) => a + b, 0) + 'px')
     tracks.style.height = newarray.reduce((a, b) => a + b, 0) + 150 + 'px'
     window.scrollTo({
         top: findPos(block),
         behavior: 'smooth'
     });
+    window.addEventListener('resize', async function () {
+        let lst = tracks.children[0].children
+        // console.log(lst)
+        let newarray = []
+        for await(let i of lst) {
+            // console.log(i)
+            newarray.push(i.offsetHeight)
+        }
+        tracks.style.height = newarray.reduce((a, b) => a + b, 0) + 50 + 'px'
+    })
 
 }
 
@@ -2484,6 +2568,8 @@ let request = obj => {
 };
 
 function click2play(e) {
+    e.stopPropagation()
+    console.log(e.target)
     let target = e.target
     let audios = target.lastChild
     console.log(audios)
@@ -2505,6 +2591,7 @@ function click2play(e) {
 }
 
 function parentclick2play(e) {
+
     let target = e.target
     let audios = target.firstChild.lastChild
     for (let i of allaudio) {
@@ -2521,6 +2608,29 @@ function parentclick2play(e) {
         audios.play()
     }
 }
+
+function parentclick(e) {
+    e.stopPropagation()
+    console.log(e.target)
+    let target = e.target
+    let audios = target.parentElement.lastChild
+    for (let i of allaudio) {
+        if (i === e.target.lastChild) {
+
+        } else {
+            i.pause()
+        }
+    }
+    if (typeof audios === 'function') {
+        if (audios.paused === false) {
+            audios.pause()
+        } else {
+            audios.play()
+        }
+    }
+
+}
+
 
 function specialclick(e) {
     let target = e.target.parentElement
@@ -2775,11 +2885,20 @@ async function deeperTracks(tracks, item, flag, sib, child) {
             // console.log(i)
             newarray.push(i.offsetHeight)
         }
-        console.log(newarray.reduce((a, b) => a + b, 0) + 50 + 'px')
         tracks.style.height = newarray.reduce((a, b) => a + b, 0) + 50 + 'px'
         window.scrollTo({
             top: findPos(document.getElementById('d' + item.id)),
             behavior: 'smooth'
+        })
+        window.addEventListener('resize', async function () {
+            let lst = tracks.children[0].children
+            // console.log(lst)
+            let newarray = []
+            for await(let i of lst) {
+                // console.log(i)
+                newarray.push(i.offsetHeight)
+            }
+            tracks.style.height = newarray.reduce((a, b) => a + b, 0) + 50 + 'px'
         })
         return
     }
@@ -2910,6 +3029,16 @@ async function deeperTracks(tracks, item, flag, sib, child) {
         top: findPos(start),
         behavior: 'smooth'
     });
+    window.addEventListener('resize', async function () {
+        let lst = tracks.children[0].children
+        // console.log(lst)
+        let newarray = []
+        for await(let i of lst) {
+            // console.log(i)
+            newarray.push(i.offsetHeight)
+        }
+        tracks.style.height = newarray.reduce((a, b) => a + b, 0) + 50 + 'px'
+    })
 }
 
 async function deeperTracks2(tracks, item, d, flag, sib) {
@@ -2947,12 +3076,21 @@ async function deeperTracks2(tracks, item, d, flag, sib) {
             // console.log(i)
             newarray.push(i.offsetHeight)
         }
-        console.log(newarray.reduce((a, b) => a + b, 0) + 50 + 'px')
         tracks.style.height = newarray.reduce((a, b) => a + b, 0) + 50 + 'px'
         window.scrollTo({
             top: findPos(document.getElementById('d' + item.id)),
             behavior: 'smooth'
         });
+        window.addEventListener('resize', async function () {
+            let lst = tracks.children[0].children
+            // console.log(lst)
+            let newarray = []
+            for await(let i of lst) {
+                // console.log(i)
+                newarray.push(i.offsetHeight)
+            }
+            tracks.style.height = newarray.reduce((a, b) => a + b, 0) + 50 + 'px'
+        })
         return
     }
     let start = document.createElement('div')
@@ -3072,6 +3210,16 @@ async function deeperTracks2(tracks, item, d, flag, sib) {
         top: findPos(start),
         behavior: 'smooth'
     });
+    window.addEventListener('resize', async function () {
+        let lst = tracks.children[0].children
+        // console.log(lst)
+        let newarray = []
+        for await(let i of lst) {
+            // console.log(i)
+            newarray.push(i.offsetHeight)
+        }
+        tracks.style.height = newarray.reduce((a, b) => a + b, 0) + 50 + 'px'
+    })
 }
 
 async function seedTracks(item, tracks, sib, child) {
@@ -3115,12 +3263,20 @@ async function seedTracks(item, tracks, sib, child) {
         }
         console.log(newarray.reduce((a, b) => a + b, 0) + 50 + 'px')
         tracks.style.height = newarray.reduce((a, b) => a + b, 0) + 50 + 'px'
-        setTimeout(() => {
-            window.scrollTo({
-                top: (document.getElementById('st' + item.id)).offsetTop,
-                behavior: 'smooth'
-            });
-        }, 10);
+        window.scrollTo({
+            top: (document.getElementById('st' + item.id)).offsetTop,
+            behavior: 'smooth'
+        });
+        window.addEventListener('resize', async function () {
+            let lst = tracks.children[0].children
+            // console.log(lst)
+            let newarray = []
+            for await(let i of lst) {
+                // console.log(i)
+                newarray.push(i.offsetHeight)
+            }
+            tracks.style.height = newarray.reduce((a, b) => a + b, 0) + 50 + 'px'
+        })
         return
     }
     request({
@@ -3177,6 +3333,16 @@ async function seedTracks(item, tracks, sib, child) {
             newarray.push(i.offsetHeight)
         }
         tracks.style.height = newarray.reduce((a, b) => a + b, 0) + 50 + 'px'
+        window.addEventListener('resize', async function () {
+            let lst = tracks.children[0].children
+            // console.log(lst)
+            let newarray = []
+            for await(let i of lst) {
+                // console.log(i)
+                newarray.push(i.offsetHeight)
+            }
+            tracks.style.height = newarray.reduce((a, b) => a + b, 0) + 50 + 'px'
+        })
     }).catch((error) => {
 
     })
@@ -3221,14 +3387,21 @@ async function seedArtists(tracks, item, sib, child) {
             // console.log(i)
             newarray.push(i.offsetHeight)
         }
-        console.log(newarray.reduce((a, b) => a + b, 0) + 50 + 'px')
         tracks.style.height = newarray.reduce((a, b) => a + b, 0) + 50 + 'px'
-        setTimeout(() => {
-            window.scrollTo({
-                top: (document.getElementById('sa' + item.id)).offsetTop,
-                behavior: 'smooth'
-            });
-        }, 10);
+        window.scrollTo({
+            top: (document.getElementById('sa' + item.id)).offsetTop,
+            behavior: 'smooth'
+        });
+        window.addEventListener('resize', async function () {
+            let lst = tracks.children[0].children
+            // console.log(lst)
+            let newarray = []
+            for await(let i of lst) {
+                // console.log(i)
+                newarray.push(i.offsetHeight)
+            }
+            tracks.style.height = newarray.reduce((a, b) => a + b, 0) + 50 + 'px'
+        })
         return
     }
     request({
@@ -3285,11 +3458,39 @@ async function seedArtists(tracks, item, sib, child) {
             newarray.push(i.offsetHeight)
         }
         tracks.style.height = newarray.reduce((a, b) => a + b, 0) + 50 + 'px'
+        window.addEventListener('resize', async function () {
+            let lst = tracks.children[0].children
+            // console.log(lst)
+            let newarray = []
+            for await(let i of lst) {
+                // console.log(i)
+                newarray.push(i.offsetHeight)
+            }
+            tracks.style.height = newarray.reduce((a, b) => a + b, 0) + 50 + 'px'
+        })
     })
 }
 
 async function playlistLoad(item, parent, search) {
-    if (document.getElementById('p' + item.id)) {
+    let all = document.querySelectorAll('.rectrack > div.hcontent > div')
+    let last = document.querySelector('.rectrack > div.hcontent > div#p' + item.id)
+    if (await all.length !== 0) {
+        console.log(all)
+        for (let i of all) {
+            console.log(i)
+            console.log(last)
+            console.log(item.id)
+            if (last !== null && i.id === last.id && last.id === 'p' + item.id) {
+                last.style.display = 'block'
+            } else {
+                // console.log(all[i])
+                i.style.display = 'none'
+            }
+        }
+
+    }
+    if (await document.getElementById('p' + item.id)) {
+        document.getElementById('p' + item.id).style.display = 'block'
         return
     }
     console.log('2896 ' + item.id)
@@ -3396,9 +3597,12 @@ async function playlistLoad(item, parent, search) {
                     let a = document.createElement('audio')
                     a.type = "audio/mpeg"
                     a.preload = 'none'
-                    if (pla['track']['preview_url'])
+                    if (pla['track']['preview_url']) {
                         a.src = `${pla['track']['preview_url']}`
-                    else {
+                        icontainer.addEventListener('click', function (e) {
+                            parentclick(e)
+                        })
+                    } else {
                         d.style.opacity = '.5'
                     }
                     let rectrack = document.createElement('div')
@@ -3409,6 +3613,7 @@ async function playlistLoad(item, parent, search) {
                     icontainer.appendChild(d)
                     icontainer.appendChild(rectrack)
                     icontainer.appendChild(a)
+
                     d.addEventListener('click', function (e) {
                         if (search) {
                             let alltop = document.querySelectorAll('.rectrack > div.hcontent> div.playlist')
@@ -3427,18 +3632,51 @@ async function playlistLoad(item, parent, search) {
                                     }
                                 }
                             }
-                            deeperTracks(playlistdiv, pla['track'], false, false, playlistcont.id)
-                            click2play(e)
+                            deeperTracks(playlistdiv.parentElement, pla['track'], false, false, playlistcont.id)
                         } else {
                             deeperTracks(rectrack, pla['track'], true, false)
-                            click2play(e)
                         }
                     })
                     await trid.appendChild(icontainer)
                 }
             }
+            if (all.length !== 0) {
+                console.log(all)
+                for (let i of all) {
+                    // console.log(all[i])
+                    if (last !== null && i.id === last.id && last.id === 'p' + item.id) {
+                        last.parentElement.style.display = 'block'
+                    } else {
+                        // console.log(all[i])
+                        i.style.display = 'none'
+                    }
+                }
+            }
             console.log(playlistdiv)
             playlistdiv.appendChild(playlistcont)
+            if (search) {
+                let lst = playlistdiv.parentElement.children
+                // console.log(lst)
+                let newarray = []
+                for await(let i of lst) {
+                    // console.log(i)
+                    newarray.push(i.offsetHeight)
+                }
+                console.log(newarray.reduce((a, b) => a + b, 0) + 50 + 'px')
+                playlistdiv.parentElement.style.height = newarray.reduce((a, b) => a + b, 0) + 50 + 'px'
+                window.addEventListener('resize', async function () {
+                    let lst = playlistdiv.children
+                    // console.log(lst)
+                    let newarray = []
+                    for await(let i of lst) {
+                        // console.log(i)
+                        newarray.push(i.offsetHeight)
+                    }
+                    playlistdiv.parentElement.style.height = newarray.reduce((a, b) => a + b, 0) + 50 + 'px'
+                })
+            }
+            // console.log(item.id)
+
         }
     }).catch((error) => {
         if (error.status === 401) {
@@ -3584,7 +3822,7 @@ async function parsedLoad(id, playlistdiv, child) {
                     if (pla['track']['preview_url']) {
                         a.src = `${pla['track']['preview_url']}`
                         icontainer.addEventListener('click', function (e) {
-                            specialclick(this)
+                            parentclick(e)
                         })
                     } else {
                         d.style.opacity = '.5'
@@ -3831,33 +4069,32 @@ function hideall(elem) {
     }
 }
 
-function spactivetab(event) {
-    let target = event.target
+function spotwatcher() {
+    console.log(4048)
     let spllist = document.querySelectorAll("#splaylist > div");
+    console.log(spllist)
     for (let i of spllist) {
-        if (i.id === target.id) {
+        i.addEventListener("click", function () {
+            if (document.getElementById('p' + i.id)) {
+            }
             if (i.classList.contains("activetab")) {
 
             } else {
                 i.classList.toggle("activetab");
             }
-        }
-        spllist.forEach(function (ns) {
-            if (i.id === ns.id) {
-                if (document.getElementById('s' + ns.id)) {
-                    document.getElementById('s' + ns.id).style.display = 'block'
+            spllist.forEach(function (ns) {
+                if (i.id === ns.id) {
+                    if (document.getElementById('p' + ns.id)) {
+                        document.getElementById('p' + ns.id).style.display = 'block'
+                    }
+                } else {
+                    ns.classList.remove('activetab')
+                    if (document.getElementById('p' + ns.id)) {
+                        document.getElementById('p' + ns.id).style.display = 'none'
+                    }
                 }
-            } else {
-                ns.classList.remove('activetab')
-                if (document.getElementById('s' + ns.id)) {
-                    document.getElementById('s' + ns.id).style.display = 'none'
-                }
-            }
+            });
         });
-        let rectrack = document.getElementById('sptplaylists').nextElementSibling.childNodes
-        for (let i of rectrack) {
-            i.style.display = 'none'
-        }
     }
 }
 
@@ -3876,14 +4113,6 @@ function fetchSpotPlaylists(offset) {
                 divsp.id = item.id
                 divsp.addEventListener('click', function (e) {
                     playlistLoad(item, 'sptplaylists')
-                    let playlists = document.querySelectorAll('[id^=p]')
-                    for (let p of playlists) {
-                        if (p.id === divsp.id) {
-                            p.style.display = 'block'
-                        } else {
-                            p.style.display = 'none'
-                        }
-                    }
                 })
                 divsp.className = 'hr-line-dashed'
                 divsp.innerText = item.name
@@ -3891,6 +4120,8 @@ function fetchSpotPlaylists(offset) {
             }
             if (await response.data['items'].length > 0) {
                 this.fetchSpotPlaylists(offset += 50)
+            } else {
+                spotwatcher()
             }
         })
 }
