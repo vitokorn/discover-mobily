@@ -64,8 +64,8 @@
                 id="icon_followedartist" height="12" src="../static/images/refresh-icon.svg"></button>
         <div style="display: none" id="followedartist" class="con2"></div>
     </div>
-        <button class="accordion" onclick="fetchSpotPlaylists(0)">{{ _('Spotify Playlists') }}</button>
-        <div class="panel">
+    <button class="accordion" onclick="fetchSpotPlaylists(0)">{{ _('Spotify Playlists') }}</button>
+    <div class="panel">
         <div id="sptplaylists" class="con2">
             <div class="head">
                 <input id="spinput" autocomplete="off" class="inp" type="text" placeholder="Please enter a search term
@@ -75,7 +75,7 @@
                 <div id="splaylist" class="pl" style="justify-content: center"></div>
             </div>
         </div>
-        </div>
+    </div>
     <button id="newreleases" class="accordion">{{ _('New Releases') }}</button>
     <div class="panel">
         <button id="refresh_newrelease" class="refresh-end" onclick="refr('refresh_newrelease')"><img
@@ -104,7 +104,11 @@
                 <div class="stitle">Playlists</div>
                 <div id="p1"></div>
             </div>
-            <div id="searchrt" class="rectrack"></div>
+            <div class="item-container" style="width: 100%;">
+                <div id="searchrt" class="rectrack">
+                    <div class="hcontent"></div>
+                </div>
+            </div>
         </div>
     </div>
     <script>
