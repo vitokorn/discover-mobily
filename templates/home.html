@@ -115,6 +115,11 @@
             <div id="searchrt" class="rectrack"></div>
         </div>
     </div>
+        <script>
+            let sc = document.createElement('script')
+            sc.src = "{{ url_for('static', filename='js/scriptpc.js') }}"
+            document.body.appendChild(sc)
+    </script>
 {% endblock %}
 {% block javascript %}
 

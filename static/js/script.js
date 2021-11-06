@@ -1176,12 +1176,12 @@ document.getElementById('srch').addEventListener('input', function () {
                             deeperAlbum(searchrt, items, alb, false, true)
                             click2play(e)
                         })
-                    })
-                    d.appendChild(a)
-                    main.addEventListener('click', function (e) {
+                        main.addEventListener('click', function (e) {
                         parentclick2play(e)
                         deeperAlbum(searchrt, items, alb, false, true)
                     })
+                    })
+                    d.appendChild(a)
                     main.appendChild(d)
                     d1.appendChild(d2)
                     main.appendChild(d1)
@@ -2085,7 +2085,6 @@ async function deep_artist(tracks, item, flag, sib, related, artistandtt) {
     block.className = 'trackartist card2'
     const ab = document.createElement('div')
     let artinfo = document.createElement('div')
-    artinfo.style.gridColumn = '3 / 8'
     if (artistandtt) {
         ab.style.gridGap = '16px'
         ab.className = 'recartist card2'
@@ -2096,7 +2095,10 @@ async function deep_artist(tracks, item, flag, sib, related, artistandtt) {
         dv.style.backgroundImage = `url(${artistandtt.self['images'][0]['url']})`
         dv.style.backgroundRepeat = 'no-repeat'
         dv.style.backgroundSize = 'cover'
-        dv.onclick = click2play
+        dv.addEventListener('click', function (e) {
+            click2play(e)
+            artistswitch(item,tracks)
+        })
 
         artinfo.innerText = artistandtt.self['name']
         let af = document.createElement('div')
@@ -2180,10 +2182,12 @@ async function deep_artist(tracks, item, flag, sib, related, artistandtt) {
 
         })
     }
+    let blockartist = document.createElement('div')
+    blockartist.className = 'blockartist card2'
     let name = document.createElement('div')
     name.innerText = 'Top tracks'
     name.className = 'break'
-    block.appendChild(name)
+    blockartist.appendChild(name)
     if (await artistandtt) {
         let con = document.createElement('div')
         con.className = 'card2'
@@ -2210,7 +2214,7 @@ async function deep_artist(tracks, item, flag, sib, related, artistandtt) {
                 click2play(e)
             })
             con.appendChild(d)
-            name.after(name, con)
+            blockartist.appendChild(con)
         }
     } else {
         await request({
@@ -2246,7 +2250,7 @@ async function deep_artist(tracks, item, flag, sib, related, artistandtt) {
                     click2play(e)
                 })
                 con.appendChild(d)
-                name.after(name, con)
+                blockartist.appendChild(con)
             }
         }).catch((error) => {
 
@@ -2255,24 +2259,25 @@ async function deep_artist(tracks, item, flag, sib, related, artistandtt) {
     let nme = document.createElement('div')
     nme.innerText = 'Albums'
     nme.className = 'break'
-    block.appendChild(nme)
-    await deeperartistalbum(item, tracks, block)
+    blockartist.appendChild(nme)
+    await deeperartistalbum(item, tracks, blockartist)
     let nm = document.createElement('div')
     nm.innerText = 'Single'
     nm.className = 'break'
 
 
-    block.appendChild(nm)
-    await deeperartistsingle(item, tracks, block)
+    blockartist.appendChild(nm)
+    await deeperartistsingle(item, tracks, blockartist)
     let ne = document.createElement('div')
     ne.innerText = 'Appears on'
     ne.className = 'break'
-    block.appendChild(ne)
-    await deeperartistsappear(item, tracks, block)
+    blockartist.appendChild(ne)
+    await deeperartistsappear(item, tracks, blockartist)
     let area = document.createElement('div')
     area.innerText = 'Related Artists'
     area.className = 'break'
-    await deeperrelated(item, tracks, block, ab)
+    await deeperrelated(item, tracks, blockartist, ab)
+    block.appendChild(blockartist)
     // request({
     //     url: 'https://api.spotify.com/v1/search?q="this is ' + item['name'] + '"&type=playlist&limit=50&offset=0&market=' + localStorage.getItem('country'),
     //     method: 'get',
@@ -3379,6 +3384,7 @@ async function seedArtists(tracks, item, sib, child) {
     }
     if (await document.getElementById('sa' + item.id)) {
         document.getElementById('sa' + item.id).style.display = 'flex'
+        document.getElementById('art' + item.id).children[1].style.display = 'none'
         await hideall(tracks)
         // console.log(target.nextElementSibling)
         let lst = tracks.children[0].children
@@ -3441,7 +3447,7 @@ async function seedArtists(tracks, item, sib, child) {
             }
             rd.appendChild(ra)
             rd.addEventListener('click', function (e) {
-                deeperTracks(tracks, rst, false, 'seed_artists')
+                deeperTracks(tracks, rst, false, 'trackartist')
                 click2play(e)
             })
             rd.appendChild(ra)
@@ -3449,8 +3455,8 @@ async function seedArtists(tracks, item, sib, child) {
         }
         await hideall(tracks)
         // console.log(target.nextElementSibling)
-
-        tracks.children[0].appendChild(rc)
+        document.getElementById('art' + item.id).children[1].style.display = 'none'
+        document.getElementById('art' + item.id).appendChild(rc)
         let lst = tracks.children[0].children
         // console.log(lst)
         let newarray = []
@@ -4138,6 +4144,36 @@ let stringToHTML = function (str) {
     return doc.body;
 };
 
+
+async function artistswitch(item, tracks) {
+    if (document.getElementById('sa' + item.id)) {
+        document.getElementById('sa' + item.id).style.display = 'none'
+        document.getElementById('art' + item.id).children[1].style.display = 'block'
+    }
+    let lst = tracks.children[0].children
+    // console.log(lst)
+    let newarray = []
+    for await(let i of lst) {
+        // console.log(i)
+        newarray.push(i.offsetHeight)
+    }
+    console.log(newarray.reduce((a, b) => a + b, 0) + 50 + 'px')
+    tracks.style.height = newarray.reduce((a, b) => a + b, 0) + 50 + 'px'
+    window.scrollTo({
+        top: findPos(document.getElementById('art' + item.id)),
+        behavior: 'smooth'
+    });
+    window.addEventListener('resize', async function () {
+        let lst = tracks.children[0].children
+        // console.log(lst)
+        let newarray = []
+        for await(let i of lst) {
+            // console.log(i)
+            newarray.push(i.offsetHeight)
+        }
+        tracks.style.height = newarray.reduce((a, b) => a + b, 0) + 50 + 'px'
+    })
+}
 // let containerWidth = trid.offsetWidth;
 // let itemWidth = document.querySelectorAll(`#t_${id} > div`)[0].offsetWidth;
 // let itemsPerRow = Math.floor(containerWidth / itemWidth);

@@ -68,9 +68,7 @@
             return check;
         };
         if (window.mobileCheck() === false) {
-            let sc = document.createElement('script')
-            sc.src = "{{ url_for('static', filename='js/scriptpc.js') }}"
-            document.body.appendChild(sc)
+
         } else {
             if (window.location.pathname !== '/mobile/') {
                 window.location.pathname = '/mobile/'
