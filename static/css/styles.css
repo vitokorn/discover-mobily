@@ -492,6 +492,8 @@ footer{
     animation-iteration-count: infinite;
     animation-timing-function: linear;
     animation-play-state: inherit;
+    border: transparent;
+    background-color: var(--button-background-color);
 }
 
 .refresh-end {
@@ -641,4 +643,13 @@ footer{
 }
 header a{
     color: antiquewhite;
+}
+
+.btn{
+    width: 24px;
+    height: 24px;
+    margin-bottom: auto;
+    margin-top: auto;
+    border: transparent;
+    background-color: var(--button-background-color);
 }

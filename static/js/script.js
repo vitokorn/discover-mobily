@@ -79,7 +79,7 @@ function initElement(id) {
         plid.appendChild(cover)
         let refresh = document.createElement('button')
         refresh.id = 'refresh_' + id
-        refresh.className = 'refresh-end'
+        refresh.className = 'refresh-end btn'
         refresh.setAttribute("onclick", "refr('refresh_" + id + "')")
         plid.appendChild(refresh)
         let img = document.createElement('img')
@@ -97,19 +97,31 @@ function initElement(id) {
             let d = document.createElement('div')
             d.tabIndex = 0
             d.className = 'con3'
-            d.style.backgroundImage = `url(${pla['track']['album']['images'][0]['url']})`
-            d.style.backgroundRepeat = 'no-repeat'
-            d.style.backgroundSize = 'cover'
             d.innerText = `${list(pla['track']['artists'])} -  ${pla['track']['name']}`
             let a = document.createElement('audio')
             a.type = "audio/mpeg"
             a.preload = 'none'
-            if (pla['track']['preview_url']) {
+            if (pla.track.album.images[0].url && pla.track.preview_url) {
+                d.style.backgroundImage = `url(${pla['track']['album']['images'][0]['url']})`
+                d.style.backgroundRepeat = 'no-repeat'
+                d.style.backgroundSize = 'cover'
+                a.src = `${pla['track']['preview_url']}`
+                icontainer.addEventListener('click', function (e) {
+                    parentclick(e)
+                })
+            } else if (pla.track.album.images[0].url && !pla.track.preview_url) {
+                d.style.backgroundImage = `url(${pla['track']['album']['images'][0]['url']})`
+                d.style.backgroundRepeat = 'no-repeat'
+                d.style.backgroundSize = 'cover'
+                d.style.opacity = '.5'
+            } else if (!pla.track.album.images[0].url && pla.track.preview_url) {
+                d.style.backgroundColor = 'grey'
                 a.src = `${pla['track']['preview_url']}`
                 icontainer.addEventListener('click', function (e) {
                     parentclick(e)
                 })
             } else {
+                d.style.backgroundColor = 'grey'
                 d.style.opacity = '.5'
             }
             let rectrack = document.createElement('div')
@@ -243,9 +255,6 @@ function topartistst() {
             let d = document.createElement('div')
             d.tabIndex = 0
             d.className = 'con3'
-            d.style.backgroundImage = `url(${it['images'][1]['url']})`
-            d.style.backgroundRepeat = 'no-repeat'
-            d.style.backgroundSize = 'cover'
             d.innerText = `${it['name']}`
             let a = document.createElement('audio')
             a.type = "audio/mpeg"
@@ -257,12 +266,27 @@ function topartistst() {
             await artisttrack(`${it['id']}`).then((response) => {
                 let data = response.data
                 let tracks = data['tracks']
-                if (tracks[0].preview_url) {
+                if (it['images'][1]['url'] && tracks[0].preview_url) {
+                    d.style.backgroundImage = `url(${it['images'][1]['url']})`
+                    d.style.backgroundRepeat = 'no-repeat'
+                    d.style.backgroundSize = 'cover'
+                    a.src = tracks[0].preview_url
+                    icontainer.addEventListener('click', function (e) {
+                        parentclick(e)
+                    })
+                } else if (it['images'][1]['url'] && !tracks[0].preview_url) {
+                    d.style.backgroundImage = `url(${it['images'][1]['url']})`
+                    d.style.backgroundRepeat = 'no-repeat'
+                    d.style.backgroundSize = 'cover'
+                    d.style.opacity = '.5'
+                } else if (!it['images'][1]['url'] && tracks[0].preview_url) {
+                    d.style.backgroundColor = 'grey'
                     a.src = tracks[0].preview_url
                     icontainer.addEventListener('click', function (e) {
                         parentclick(e)
                     })
                 } else {
+                    d.style.backgroundColor = 'grey'
                     d.style.opacity = '.5'
                 }
                 let art = {}
@@ -331,12 +355,27 @@ function topartistst6() {
             await artisttrack(`${it['id']}`).then((response) => {
                 let data = response.data
                 let tracks = data['tracks']
-                if (tracks[0].preview_url) {
+                if (it['images'][1]['url'] && tracks[0].preview_url) {
+                    d.style.backgroundImage = `url(${it['images'][1]['url']})`
+                    d.style.backgroundRepeat = 'no-repeat'
+                    d.style.backgroundSize = 'cover'
+                    a.src = tracks[0].preview_url
+                    icontainer.addEventListener('click', function (e) {
+                        parentclick(e)
+                    })
+                } else if (it['images'][1]['url'] && !tracks[0].preview_url) {
+                    d.style.backgroundImage = `url(${it['images'][1]['url']})`
+                    d.style.backgroundRepeat = 'no-repeat'
+                    d.style.backgroundSize = 'cover'
+                    d.style.opacity = '.5'
+                } else if (!it['images'][1]['url'] && tracks[0].preview_url) {
+                    d.style.backgroundColor = 'grey'
                     a.src = tracks[0].preview_url
                     icontainer.addEventListener('click', function (e) {
                         parentclick(e)
                     })
                 } else {
+                    d.style.backgroundColor = 'grey'
                     d.style.opacity = '.5'
                 }
                 let art = {}
@@ -393,12 +432,27 @@ function topartiststall() {
             await artisttrack(`${it['id']}`).then((response) => {
                 let data = response.data
                 let tracks = data['tracks']
-                if (tracks[0].preview_url) {
+                if (it['images'][1]['url'] && tracks[0].preview_url) {
+                    d.style.backgroundImage = `url(${it['images'][1]['url']})`
+                    d.style.backgroundRepeat = 'no-repeat'
+                    d.style.backgroundSize = 'cover'
+                    a.src = tracks[0].preview_url
+                    icontainer.addEventListener('click', function (e) {
+                        parentclick(e)
+                    })
+                } else if (it['images'][1]['url'] && !tracks[0].preview_url) {
+                    d.style.backgroundImage = `url(${it['images'][1]['url']})`
+                    d.style.backgroundRepeat = 'no-repeat'
+                    d.style.backgroundSize = 'cover'
+                    d.style.opacity = '.5'
+                } else if (!it['images'][1]['url'] && tracks[0].preview_url) {
+                    d.style.backgroundColor = 'grey'
                     a.src = tracks[0].preview_url
                     icontainer.addEventListener('click', function (e) {
                         parentclick(e)
                     })
                 } else {
+                    d.style.backgroundColor = 'grey'
                     d.style.opacity = '.5'
                 }
                 let art = {}
@@ -566,7 +620,6 @@ function topttracks() {
         }
     }).then(async (response) => {
         let data = response.data
-        let rectrack = document.getElementById('rectracktrack')
         let tracks = document.getElementById('toptrack')
         tracks.innerHTML = ''
         let playtrack = data['items']
@@ -582,19 +635,31 @@ function topttracks() {
             let d = document.createElement('div')
             d.tabIndex = 0
             d.className = 'con3'
-            d.style.backgroundImage = `url(${pla['album']['images'][1]['url']})`
-            d.style.backgroundRepeat = 'no-repeat'
-            d.style.backgroundSize = 'cover'
             d.innerText = `${list(pla['artists'])} -  ${pla['name']}`
             let a = document.createElement('audio')
             a.type = "audio/mpeg"
             a.preload = 'none'
-            if (pla['preview_url']) {
+            if (pla['album']['images'][1]['url'] && pla['preview_url']) {
+                d.style.backgroundImage = `url(${pla['album']['images'][1]['url']})`
+                d.style.backgroundRepeat = 'no-repeat'
+                d.style.backgroundSize = 'cover'
+                a.src = `${pla['preview_url']}`
+                icontainer.addEventListener('click', function (e) {
+                    parentclick(e)
+                })
+            } else if (pla['album']['images'][1]['url'] && !pla['preview_url']) {
+                d.style.backgroundImage = `url(${pla['album']['images'][1]['url']})`
+                d.style.backgroundRepeat = 'no-repeat'
+                d.style.backgroundSize = 'cover'
+                d.style.opacity = '.5'
+            } else if (!pla['album']['images'][1]['url'] && pla['preview_url']) {
+                d.style.backgroundColor = 'grey'
                 a.src = `${pla['preview_url']}`
                 icontainer.addEventListener('click', function (e) {
                     parentclick(e)
                 })
             } else {
+                d.style.backgroundColor = 'grey'
                 d.style.opacity = '.5'
             }
             d.addEventListener('click', function (e) {
@@ -653,7 +718,6 @@ function topttracks6() {
         }
     }).then(async (response) => {
         let data = response.data
-        let rectrack = document.getElementById('rectracktrack')
         let tracks = document.getElementById('toptrack6')
         tracks.innerHTML = ''
         let playtrack = data['items']
@@ -668,19 +732,31 @@ function topttracks6() {
             let d = document.createElement('div')
             d.tabIndex = 0
             d.className = 'con3'
-            d.style.backgroundImage = `url(${pla['album']['images'][1]['url']})`
-            d.style.backgroundRepeat = 'no-repeat'
-            d.style.backgroundSize = 'cover'
             d.innerText = `${list(pla['artists'])} -  ${pla['name']}`
             let a = document.createElement('audio')
             a.type = "audio/mpeg"
             a.preload = 'none'
-            if (pla['preview_url']) {
+            if (pla['album']['images'][1]['url'] && pla['preview_url']) {
+                d.style.backgroundImage = `url(${pla['album']['images'][1]['url']})`
+                d.style.backgroundRepeat = 'no-repeat'
+                d.style.backgroundSize = 'cover'
+                a.src = `${pla['preview_url']}`
+                icontainer.addEventListener('click', function (e) {
+                    parentclick(e)
+                })
+            } else if (pla['album']['images'][1]['url'] && !pla['preview_url']) {
+                d.style.backgroundImage = `url(${pla['album']['images'][1]['url']})`
+                d.style.backgroundRepeat = 'no-repeat'
+                d.style.backgroundSize = 'cover'
+                d.style.opacity = '.5'
+            } else if (!pla['album']['images'][1]['url'] && pla['preview_url']) {
+                d.style.backgroundColor = 'grey'
                 a.src = `${pla['preview_url']}`
                 icontainer.addEventListener('click', function (e) {
                     parentclick(e)
                 })
             } else {
+                d.style.backgroundColor = 'grey'
                 d.style.opacity = '.5'
             }
             d.addEventListener('click', function (e) {
@@ -725,19 +801,31 @@ function topttracksall() {
             let d = document.createElement('div')
             d.tabIndex = 0
             d.className = 'con3'
-            d.style.backgroundImage = `url(${pla['album']['images'][1]['url']})`
-            d.style.backgroundRepeat = 'no-repeat'
-            d.style.backgroundSize = 'cover'
             d.innerText = `${list(pla['artists'])} -  ${pla['name']}`
             let a = document.createElement('audio')
             a.type = "audio/mpeg"
             a.preload = 'none'
-            if (pla['preview_url']) {
+            if (pla['album']['images'][1]['url'] && pla['preview_url']) {
+                d.style.backgroundImage = `url(${pla['album']['images'][1]['url']})`
+                d.style.backgroundRepeat = 'no-repeat'
+                d.style.backgroundSize = 'cover'
+                a.src = `${pla['preview_url']}`
+                icontainer.addEventListener('click', function (e) {
+                    parentclick(e)
+                })
+            } else if (pla['album']['images'][1]['url'] && !pla['preview_url']) {
+                d.style.backgroundImage = `url(${pla['album']['images'][1]['url']})`
+                d.style.backgroundRepeat = 'no-repeat'
+                d.style.backgroundSize = 'cover'
+                d.style.opacity = '.5'
+            } else if (!pla['album']['images'][1]['url'] && pla['preview_url']) {
+                d.style.backgroundColor = 'grey'
                 a.src = `${pla['preview_url']}`
                 icontainer.addEventListener('click', function (e) {
                     parentclick(e)
                 })
             } else {
+                d.style.backgroundColor = 'grey'
                 d.style.opacity = '.5'
             }
             d.appendChild(a)
@@ -801,21 +889,33 @@ function saved_albums() {
             let d = document.createElement('div')
             d.tabIndex = 0
             d.className = 'con3'
-            d.style.backgroundImage = `url(${sa['album']['images'][1]['url']})`
-            d.style.backgroundRepeat = 'no-repeat'
-            d.style.backgroundSize = 'cover'
             d.innerText = `${list(sa['album']['artists'])} -  ${sa['album']['name']}`
             let a = document.createElement('audio')
             a.type = "audio/mpeg"
             a.preload = 'none'
             albumtracks(sa['album']['id']).then((response) => {
                 let items = response.data['items']
-                if (items[0].preview_url) {
+                if (sa['album']['images'][1]['url'] && items[0].preview_url) {
+                    d.style.backgroundImage = `url(${sa['album']['images'][1]['url']})`
+                    d.style.backgroundRepeat = 'no-repeat'
+                    d.style.backgroundSize = 'cover'
+                    a.src = items[0].preview_url
+                    icontainer.addEventListener('click', function (e) {
+                        parentclick(e)
+                    })
+                } else if (sa['album']['images'][1]['url'] && !tracks[0]['preview_url']) {
+                    d.style.backgroundImage = `url(${sa['album']['images'][1]['url']})`
+                    d.style.backgroundRepeat = 'no-repeat'
+                    d.style.backgroundSize = 'cover'
+                    d.style.opacity = '.5'
+                } else if (!sa['album']['images'][1]['url'] && tracks[0]['preview_url']) {
+                    d.style.backgroundColor = 'grey'
                     a.src = items[0].preview_url
                     icontainer.addEventListener('click', function (e) {
                         parentclick(e)
                     })
                 } else {
+                    d.style.backgroundColor = 'grey'
                     d.style.opacity = '.5'
                 }
                 d.addEventListener('click', function (e) {
@@ -867,21 +967,34 @@ function sendRequest(offset) {
             let d = document.createElement('div')
             d.tabIndex = 0
             d.className = 'con3'
-            d.style.backgroundImage = `url(${pla['track']['album']['images'][1]['url']})`
-            d.style.backgroundRepeat = 'no-repeat'
-            d.style.backgroundSize = 'cover'
             d.innerText = `${list(pla['track']['artists'])} -  ${pla['track']['name']}`
             let a = document.createElement('audio')
             a.type = "audio/mpeg"
             a.preload = 'none'
-            if (pla['track']['preview_url']) {
+            if (pla['track']['album']['images'][1]['url'] && pla['track']['preview_url']) {
+                d.style.backgroundImage = `url(${pla['track']['album']['images'][1]['url']})`
+                d.style.backgroundRepeat = 'no-repeat'
+                d.style.backgroundSize = 'cover'
+                a.src = `${pla['track']['preview_url']}`
+                icontainer.addEventListener('click', function (e) {
+                    parentclick(e)
+                })
+            } else if (pla['track']['album']['images'][1]['url'] && !pla['track']['preview_url']) {
+                d.style.backgroundImage = `url(${pla['track']['album']['images'][1]['url']})`
+                d.style.backgroundRepeat = 'no-repeat'
+                d.style.backgroundSize = 'cover'
+                d.style.opacity = '.5'
+            } else if (!pla['track']['album']['images'][1]['url'] && pla['track']['preview_url']) {
+                d.style.backgroundColor = 'grey'
                 a.src = `${pla['track']['preview_url']}`
                 icontainer.addEventListener('click', function (e) {
                     parentclick(e)
                 })
             } else {
+                d.style.backgroundColor = 'grey'
                 d.style.opacity = '.5'
             }
+
             d.addEventListener('click', function (e) {
                 deeper(pla, tracks.nextElementSibling, 'playlist')
             })
@@ -942,12 +1055,27 @@ function getfollowedartist() {
             await artisttrack(`${it['id']}`).then((response) => {
                 let data = response.data
                 let tracks = data['tracks']
-                if (tracks[0].preview_url) {
+                if (it['images'][1]['url'] && tracks[0].preview_url) {
+                    d.style.backgroundImage = `url(${it['images'][1]['url']})`
+                    d.style.backgroundRepeat = 'no-repeat'
+                    d.style.backgroundSize = 'cover'
+                    a.src = tracks[0].preview_url
+                    icontainer.addEventListener('click', function (e) {
+                        parentclick(e)
+                    })
+                } else if (it['images'][1]['url'] && !tracks[0].preview_url) {
+                    d.style.backgroundImage = `url(${it['images'][1]['url']})`
+                    d.style.backgroundRepeat = 'no-repeat'
+                    d.style.backgroundSize = 'cover'
+                    d.style.opacity = '.5'
+                } else if (!it['images'][1]['url'] && tracks[0].preview_url) {
+                    d.style.backgroundColor = 'grey'
                     a.src = tracks[0].preview_url
                     icontainer.addEventListener('click', function (e) {
                         parentclick(e)
                     })
                 } else {
+                    d.style.backgroundColor = 'grey'
                     d.style.opacity = '.5'
                 }
                 let art = {}
@@ -1030,15 +1158,29 @@ function newrelease(elem, offset) {
             let a = document.createElement('audio')
             a.type = "audio/mpeg"
             a.preload = 'none'
-            if (tracks[0]['preview_url']) {
+            d.innerText = `${list(tracks[0]['artists'])} -  ${tracks[0]['name']}`
+            if (it['images'][0]['url'] && tracks[0]['preview_url']) {
+                d.style.backgroundImage = `url(${it['images'][0]['url']})`
+                d.style.backgroundRepeat = 'no-repeat'
+                d.style.backgroundSize = 'cover'
                 a.src = tracks[0]['preview_url']
-                d.innerText = `${list(tracks[0]['artists'])} -  ${tracks[0]['name']}`
+                icontainer.addEventListener('click', function (e) {
+                    parentclick(e)
+                })
+            } else if (it['images'][0]['url'] && !tracks[0]['preview_url']) {
+                d.style.backgroundImage = `url(${it['images'][0]['url']})`
+                d.style.backgroundRepeat = 'no-repeat'
+                d.style.backgroundSize = 'cover'
+                d.style.opacity = '.5'
+            } else if (!it['images'][0]['url'] && tracks[0]['preview_url']) {
+                d.style.backgroundColor = 'grey'
+                a.src = tracks[0]['preview_url']
                 icontainer.addEventListener('click', function (e) {
                     parentclick(e)
                 })
             } else {
+                d.style.backgroundColor = 'grey'
                 d.style.opacity = '.5'
-                d.innerText = `${list(tracks[0]['artists'])} -  ${tracks[0]['name']}`
             }
             d.addEventListener('click', function (e) {
                 deeper(it, rectrack, 'nr')
@@ -1096,7 +1238,7 @@ function refr(id) {
                 document.getElementById(id.replace('refresh_', 'p')).remove()
                 initElement(id.replace('refresh_', ''))
             }
-            refreshButton.setAttribute("class", "refresh-end")
+            refreshButton.setAttribute("class", "refresh-end btn")
             refreshButton.disabled = false
         })
     }, 100)
@@ -2092,11 +2234,14 @@ async function deep_artist(tracks, item, flag, sib, related, artistandtt) {
         let dv = document.createElement('div')
         dv.className = 'con3'
         dv.id = item['id']
-        dv.style.backgroundImage = `url(${artistandtt.self['images'][0]['url']})`
-        dv.style.backgroundRepeat = 'no-repeat'
-        dv.style.backgroundSize = 'cover'
+        if (artistandtt.self['images'][0]['url']) {
+            dv.style.backgroundImage = `url(${artistandtt.self['images'][0]['url']})`
+            dv.style.backgroundRepeat = 'no-repeat'
+            dv.style.backgroundSize = 'cover'
+        } else {
+            dv.style.backgroundColor = 'grey'
+        }
         dv.addEventListener('click', function (e) {
-            click2play(e)
             artistswitch(item, tracks)
         })
 
@@ -2144,11 +2289,14 @@ async function deep_artist(tracks, item, flag, sib, related, artistandtt) {
             let dv = document.createElement('div')
             dv.className = 'con3'
             dv.id = item['id']
-            dv.style.backgroundImage = `url(${data['images'][0]['url']})`
-            dv.style.backgroundRepeat = 'no-repeat'
-            dv.style.backgroundSize = 'cover'
+            if (data['images'][0]['url']) {
+                dv.style.backgroundImage = `url(${data['images'][0]['url']})`
+                dv.style.backgroundRepeat = 'no-repeat'
+                dv.style.backgroundSize = 'cover'
+            } else {
+                dv.style.backgroundColor = 'grey'
+            }
             dv.addEventListener('click', function (e) {
-                click2play(e)
                 artistswitch(item, tracks)
             })
             artinfo.innerText = data['name']
@@ -2194,30 +2342,45 @@ async function deep_artist(tracks, item, flag, sib, related, artistandtt) {
     if (await artistandtt) {
         let con = document.createElement('div')
         con.className = 'card2'
-
+        if (artistandtt.tt.length > 0){
         for await (const topt of artistandtt.tt) {
             let d = document.createElement('div')
             d.tabIndex = 0
             d.className = 'con3'
-            d.style.backgroundImage = `url(${topt['album']['images'][0]['url']})`
-            d.style.backgroundRepeat = 'no-repeat'
-            d.style.backgroundSize = 'cover'
             d.innerText = `${list(topt['artists'])} -  ${topt['name']}`
             let a = document.createElement('audio')
             a.type = "audio/mpeg"
             a.preload = 'none'
-            if (topt['preview_url'])
-                a.src = `${topt['preview_url']}`
-            else {
+            if (topt['album']['images'][0]['url'] && topt['preview_url']) {
+                d.style.backgroundImage = `url(${topt['album']['images'][0]['url']})`
+                d.style.backgroundRepeat = 'no-repeat'
+                d.style.backgroundSize = 'cover'
+                a.src = topt['preview_url']
+                d.addEventListener('click', function (e) {
+                    click2play(e)
+                })
+            } else if (topt['album']['images'][0]['url'] && !topt['preview_url']) {
+                d.style.backgroundImage = `url(${topt['album']['images'][0]['url']})`
+                d.style.backgroundRepeat = 'no-repeat'
+                d.style.backgroundSize = 'cover'
+                d.style.opacity = '.5'
+            } else if (!topt['album']['images'][0]['url'] && topt['preview_url']) {
+                d.style.backgroundColor = 'grey'
+                a.src = topt['preview_url']
+                d.addEventListener('click', function (e) {
+                    click2play(e)
+                })
+            } else {
+                d.style.backgroundColor = 'grey'
                 d.style.opacity = '.5'
             }
             d.appendChild(a)
             d.addEventListener('click', function (e) {
                 deeperTracks(tracks, topt, false, 'trackartist', 'art' + item.id)
-                click2play(e)
             })
             con.appendChild(d)
             blockartist.appendChild(con)
+        }
         }
     } else {
         await request({
@@ -2230,21 +2393,36 @@ async function deep_artist(tracks, item, flag, sib, related, artistandtt) {
             let data = response.data
             let con = document.createElement('div')
             con.className = 'card2'
-
+            if (data.tracks.length > 0){
             for await (const topt of data['tracks']) {
                 let d = document.createElement('div')
                 d.tabIndex = 0
                 d.className = 'con3'
-                d.style.backgroundImage = `url(${topt['album']['images'][0]['url']})`
-                d.style.backgroundRepeat = 'no-repeat'
-                d.style.backgroundSize = 'cover'
                 d.innerText = `${list(topt['artists'])} -  ${topt['name']}`
                 let a = document.createElement('audio')
                 a.type = "audio/mpeg"
                 a.preload = 'none'
-                if (topt['preview_url'])
-                    a.src = `${topt['preview_url']}`
-                else {
+                if (topt['album']['images'][0]['url'] && topt['preview_url']) {
+                    d.style.backgroundImage = `url(${topt['album']['images'][0]['url']})`
+                    d.style.backgroundRepeat = 'no-repeat'
+                    d.style.backgroundSize = 'cover'
+                    a.src = topt['preview_url']
+                    d.addEventListener('click', function (e) {
+                        click2play(e)
+                    })
+                } else if (topt['album']['images'][0]['url'] && !topt['preview_url']) {
+                    d.style.backgroundImage = `url(${topt['album']['images'][0]['url']})`
+                    d.style.backgroundRepeat = 'no-repeat'
+                    d.style.backgroundSize = 'cover'
+                    d.style.opacity = '.5'
+                } else if (!topt['album']['images'][0]['url'] && topt['preview_url']) {
+                    d.style.backgroundColor = 'grey'
+                    a.src = topt['preview_url']
+                    d.addEventListener('click', function (e) {
+                        click2play(e)
+                    })
+                } else {
+                    d.style.backgroundColor = 'grey'
                     d.style.opacity = '.5'
                 }
                 d.appendChild(a)
@@ -2254,6 +2432,7 @@ async function deep_artist(tracks, item, flag, sib, related, artistandtt) {
                 })
                 con.appendChild(d)
                 blockartist.appendChild(con)
+                }
             }
         }).catch((error) => {
 
@@ -2357,20 +2536,31 @@ function deeperartistalbum(item, tracks, block) {
             let d = document.createElement('div')
             d.tabIndex = 0
             d.className = 'con3'
-            d.style.backgroundImage = `url(${albus['images'][0]['url']})`
-            d.style.backgroundRepeat = 'no-repeat'
-            d.style.backgroundSize = 'cover'
             d.innerText = `${list(albus['artists'])} -  ${albus['name']}`
             let a = document.createElement('audio')
             a.type = "audio/mpeg"
             a.preload = 'none'
             await albumtracks(albus['id']).then((response) => {
                 let items = response.data['items']
-                if (items[0].preview_url) {
-                    a.src = items[0].preview_url
-                } else {
-                    d.style.opacity = '.5'
-                }
+                                                    if (items.length >0) {
+
+                    if (albus['images'][0]['url'] && items[0].preview_url) {
+                        d.style.backgroundImage = `url(${albus['images'][0]['url']})`
+                        d.style.backgroundRepeat = 'no-repeat'
+                        d.style.backgroundSize = 'cover'
+                        a.src = items[0].preview_url
+                    } else if (albus['images'][0]['url'] && !items[0].preview_url) {
+                        d.style.backgroundImage = `url(${albus['images'][0]['url']})`
+                        d.style.backgroundRepeat = 'no-repeat'
+                        d.style.backgroundSize = 'cover'
+                        d.style.opacity = '.5'
+                    } else if (!albus['images'][0]['url'] && items[0].preview_url) {
+                        d.style.backgroundColor = 'grey'
+                        a.src = items[0].preview_url
+                    } else {
+                        d.style.backgroundColor = 'grey'
+                        d.style.opacity = '.5'
+                    } }
                 d.addEventListener('click', function (e) {
                     deeperAlbum(tracks, items, albus, 'art' + item.id)
                     click2play(e)
@@ -2403,20 +2593,31 @@ function deeperartistsingle(item, tracks, block) {
             let d = document.createElement('div')
             d.tabIndex = 0
             d.className = 'con3'
-            d.style.backgroundImage = `url(${sing['images'][0]['url']})`
-            d.style.backgroundRepeat = 'no-repeat'
-            d.style.backgroundSize = 'cover'
             d.innerText = `${list(sing['artists'])} -  ${sing['name']}`
             let a = document.createElement('audio')
             a.type = "audio/mpeg"
             a.preload = 'none'
             await albumtracks(sing['id']).then((response) => {
                 let items = response.data['items']
-                if (items[0].preview_url) {
-                    a.src = items[0].preview_url
-                } else {
-                    d.style.opacity = '.5'
-                }
+                                                    if (items.length >0) {
+
+                    if (sing['images'][0]['url'] && items[0].preview_url) {
+                        d.style.backgroundImage = `url(${sing['images'][0]['url']})`
+                        d.style.backgroundRepeat = 'no-repeat'
+                        d.style.backgroundSize = 'cover'
+                        a.src = items[0].preview_url
+                    } else if (sing['images'][0]['url'] && !items[0].preview_url) {
+                        d.style.backgroundImage = `url(${sing['images'][0]['url']})`
+                        d.style.backgroundRepeat = 'no-repeat'
+                        d.style.backgroundSize = 'cover'
+                        d.style.opacity = '.5'
+                    } else if (!sing['images'][0]['url'] && items[0].preview_url) {
+                        d.style.backgroundColor = 'grey'
+                        a.src = items[0].preview_url
+                    } else {
+                        d.style.backgroundColor = 'grey'
+                        d.style.opacity = '.5'
+                    } }
                 d.addEventListener('click', function (e) {
                     deeperAlbum(tracks, items, sing, 'art' + item.id)
                     click2play(e)
@@ -2457,11 +2658,25 @@ function deeperartistsappear(item, tracks, block) {
             a.preload = 'none'
             await albumtracks(appear['id']).then((response) => {
                 let items = response.data['items']
-                if (items[0].preview_url) {
-                    a.src = items[0].preview_url
-                } else {
-                    d.style.opacity = '.5'
-                }
+                                    if (items.length >0) {
+
+                    if (appear['images'][0]['url'] && items[0].preview_url) {
+                        d.style.backgroundImage = `url(${appear['images'][0]['url']})`
+                        d.style.backgroundRepeat = 'no-repeat'
+                        d.style.backgroundSize = 'cover'
+                        a.src = items[0].preview_url
+                    } else if (appear['images'][0]['url'] && !items[0].preview_url) {
+                        d.style.backgroundImage = `url(${appear['images'][0]['url']})`
+                        d.style.backgroundRepeat = 'no-repeat'
+                        d.style.backgroundSize = 'cover'
+                        d.style.opacity = '.5'
+                    } else if (!appear['images'][0]['url'] && items[0].preview_url) {
+                        d.style.backgroundColor = 'grey'
+                        a.src = items[0].preview_url
+                    } else {
+                        d.style.backgroundColor = 'grey'
+                        d.style.opacity = '.5'
+                    } }
                 d.addEventListener('click', function (e) {
                     deeperAlbum(tracks, items, appear, 'art' + item.id)
                     click2play(e)
@@ -2502,11 +2717,24 @@ function deeperrelated(item, tracks, block, ab) {
             await artisttrack(`${ra['id']}`).then((response) => {
                 let data = response.data
                 let tracks = data['tracks']
-                if (tracks[0].preview_url) {
-                    a.src = tracks[0].preview_url
-                } else {
-                    d.style.opacity = '.5'
-                }
+                                if (tracks.length > 0){
+                                    if (ra['images'][0]['url'] && tracks[0].preview_url) {
+                        d.style.backgroundImage = `url(${ra['images'][0]['url']})`
+                        d.style.backgroundRepeat = 'no-repeat'
+                        d.style.backgroundSize = 'cover'
+                        a.src = tracks[0].preview_url
+                    } else if (ra['images'][0]['url'] && !tracks[0].preview_url) {
+                        d.style.backgroundImage = `url(${ra['images'][0]['url']})`
+                        d.style.backgroundRepeat = 'no-repeat'
+                        d.style.backgroundSize = 'cover'
+                        d.style.opacity = '.5'
+                    } else if (!ra['images'][0]['url'] && tracks[0].preview_url) {
+                        d.style.backgroundColor = 'grey'
+                        a.src = tracks[0].preview_url
+                    } else {
+                        d.style.backgroundColor = 'grey'
+                        d.style.opacity = '.5'
+                    }
                 let art = {}
                 art.self = ra
                 art.tt = tracks
@@ -2514,6 +2742,7 @@ function deeperrelated(item, tracks, block, ab) {
                     deep_artist(tracks, ra, false, 'trackartist', ab.id, art)
                     click2play(e)
                 })
+                                }
             })
             d.appendChild(a)
 
@@ -3310,16 +3539,25 @@ async function seedTracks(item, tracks, sib, child) {
             let rd = document.createElement('div')
             rd.tabIndex = 0
             rd.className = 'con3'
-            rd.style.backgroundImage = `url(${rst['album']['images'][0]['url']})`
-            rd.style.backgroundRepeat = 'no-repeat'
-            rd.style.backgroundSize = 'cover'
             rd.innerText = `${list(rst['artists'])} -  ${rst['name']}`
             let ra = document.createElement('audio')
             ra.type = "audio/mpeg"
             ra.preload = 'none'
-            if (rst['preview_url'])
-                ra.src = `${rst['preview_url']}`
-            else {
+            if (rst['album']['images'][0]['url'] && rst['preview_url']) {
+                rd.style.backgroundImage = `url(${rst['album']['images'][0]['url']})`
+                rd.style.backgroundRepeat = 'no-repeat'
+                rd.style.backgroundSize = 'cover'
+                ra.src = rst['preview_url']
+            } else if (rst['album']['images'][0]['url'] && !rst['preview_url']) {
+                rd.style.backgroundImage = `url(${rst['album']['images'][0]['url']})`
+                rd.style.backgroundRepeat = 'no-repeat'
+                rd.style.backgroundSize = 'cover'
+                rd.style.opacity = '.5'
+            } else if (!rst['album']['images'][0]['url'] && rst['preview_url']) {
+                rd.style.backgroundColor = 'grey'
+                ra.src = rst['preview_url']
+            } else {
+                rd.style.backgroundColor = 'grey'
                 rd.style.opacity = '.5'
             }
             rd.appendChild(ra)
@@ -3443,9 +3681,21 @@ async function seedArtists(tracks, item, sib, child) {
             let ra = document.createElement('audio')
             ra.type = "audio/mpeg"
             ra.preload = 'none'
-            if (rst['preview_url'])
-                ra.src = `${rst['preview_url']}`
-            else {
+            if (rst['album']['images'][0]['url'] && rst['preview_url']) {
+                rd.style.backgroundImage = `url(${rst['album']['images'][0]['url']})`
+                rd.style.backgroundRepeat = 'no-repeat'
+                rd.style.backgroundSize = 'cover'
+                ra.src = rst['preview_url']
+            } else if (rst['album']['images'][0]['url'] && !rst['preview_url']) {
+                rd.style.backgroundImage = `url(${rst['album']['images'][0]['url']})`
+                rd.style.backgroundRepeat = 'no-repeat'
+                rd.style.backgroundSize = 'cover'
+                rd.style.opacity = '.5'
+            } else if (!rst['album']['images'][0]['url'] && rst['preview_url']) {
+                rd.style.backgroundColor = 'grey'
+                ra.src = rst['preview_url']
+            } else {
+                rd.style.backgroundColor = 'grey'
                 rd.style.opacity = '.5'
             }
             rd.appendChild(ra)
@@ -3580,7 +3830,7 @@ async function playlistLoad(item, parent, search) {
         plid.appendChild(cover)
         let refresh = document.createElement('button')
         refresh.id = 'refresh_' + item.id
-        refresh.className = 'refresh-end'
+        refresh.className = 'refresh-end btn'
         refresh.setAttribute("onclick", "refr('refresh_" + item.id + "')")
         plid.appendChild(refresh)
         let img = document.createElement('img')
@@ -3602,19 +3852,31 @@ async function playlistLoad(item, parent, search) {
                     let d = document.createElement('div')
                     d.tabIndex = 0
                     d.className = 'con3'
-                    d.style.backgroundImage = `url(${pla['track']['album']['images'][0]['url']})`
-                    d.style.backgroundRepeat = 'no-repeat'
-                    d.style.backgroundSize = 'cover'
                     d.innerText = `${list(pla['track']['artists'])} -  ${pla['track']['name']}`
                     let a = document.createElement('audio')
                     a.type = "audio/mpeg"
                     a.preload = 'none'
-                    if (pla['track']['preview_url']) {
-                        a.src = `${pla['track']['preview_url']}`
+                    if (pla['track']['album']['images'][0]['url'] && pla['track']['preview_url']) {
+                        d.style.backgroundImage = `url(${pla['track']['album']['images'][0]['url']})`
+                        d.style.backgroundRepeat = 'no-repeat'
+                        d.style.backgroundSize = 'cover'
+                        a.src = pla['track']['preview_url']
+                        icontainer.addEventListener('click', function (e) {
+                            parentclick(e)
+                        })
+                    } else if (pla['track']['album']['images'][0]['url'] && !pla['track']['preview_url']) {
+                        d.style.backgroundImage = `url(${pla['track']['album']['images'][0]['url']})`
+                        d.style.backgroundRepeat = 'no-repeat'
+                        d.style.backgroundSize = 'cover'
+                        d.style.opacity = '.5'
+                    } else if (!pla['track']['album']['images'][0]['url'] && pla['track']['preview_url']) {
+                        d.style.backgroundColor = 'grey'
+                        a.src = pla['track']['preview_url']
                         icontainer.addEventListener('click', function (e) {
                             parentclick(e)
                         })
                     } else {
+                        d.style.backgroundColor = 'grey'
                         d.style.opacity = '.5'
                     }
                     let rectrack = document.createElement('div')
@@ -3803,7 +4065,7 @@ async function parsedLoad(id, playlistdiv, child) {
         plid.appendChild(cover)
         let refresh = document.createElement('button')
         refresh.id = 'refresh_' + id
-        refresh.className = 'refresh-end'
+        refresh.className = 'refresh-end btn'
         refresh.setAttribute("onclick", "refr('refresh_" + id + "')")
         plid.appendChild(refresh)
         let img = document.createElement('img')
@@ -3825,19 +4087,31 @@ async function parsedLoad(id, playlistdiv, child) {
                     let d = document.createElement('div')
                     d.tabIndex = 0
                     d.className = 'con3'
-                    d.style.backgroundImage = `url(${pla['track']['album']['images'][0]['url']})`
-                    d.style.backgroundRepeat = 'no-repeat'
-                    d.style.backgroundSize = 'cover'
                     d.innerText = `${list(pla['track']['artists'])} -  ${pla['track']['name']}`
                     let a = document.createElement('audio')
                     a.type = "audio/mpeg"
                     a.preload = 'none'
-                    if (pla['track']['preview_url']) {
-                        a.src = `${pla['track']['preview_url']}`
+                    if (pla['track']['album']['images'][0]['url'] && pla['track']['preview_url']) {
+                        d.style.backgroundImage = `url(${pla['track']['album']['images'][0]['url']})`
+                        d.style.backgroundRepeat = 'no-repeat'
+                        d.style.backgroundSize = 'cover'
+                        a.src = pla['track']['preview_url']
+                        icontainer.addEventListener('click', function (e) {
+                            parentclick(e)
+                        })
+                    } else if (pla['track']['album']['images'][0]['url'] && !pla['track']['preview_url']) {
+                        d.style.backgroundImage = `url(${pla['track']['album']['images'][0]['url']})`
+                        d.style.backgroundRepeat = 'no-repeat'
+                        d.style.backgroundSize = 'cover'
+                        d.style.opacity = '.5'
+                    } else if (!pla['track']['album']['images'][0]['url'] && pla['track']['preview_url']) {
+                        d.style.backgroundColor = 'grey'
+                        a.src = pla['track']['preview_url']
                         icontainer.addEventListener('click', function (e) {
                             parentclick(e)
                         })
                     } else {
+                        d.style.backgroundColor = 'grey'
                         d.style.opacity = '.5'
                     }
                     let rectrack = document.createElement('div')
@@ -3995,7 +4269,7 @@ async function thesoundof(name, tracks, child) {
                         plid.appendChild(cover)
                         let refresh = document.createElement('button')
                         refresh.id = 'refresh_' + finded.id
-                        refresh.className = 'refresh-end'
+                        refresh.className = 'refresh-end btn'
                         refresh.setAttribute("onclick", "refr('refresh_" + finded.id + "')")
                         plid.appendChild(refresh)
                         let img = document.createElement('img')
@@ -4011,16 +4285,25 @@ async function thesoundof(name, tracks, child) {
                             let d = document.createElement('div')
                             d.tabIndex = 0
                             d.className = 'con3'
-                            d.style.backgroundImage = `url(${pla['track']['album']['images'][0]['url']})`
-                            d.style.backgroundRepeat = 'no-repeat'
-                            d.style.backgroundSize = 'cover'
                             d.innerText = `${list(pla['track']['artists'])} -  ${pla['track']['name']}`
                             let a = document.createElement('audio')
                             a.type = "audio/mpeg"
                             a.preload = 'none'
-                            if (pla['track']['preview_url'])
-                                a.src = `${pla['track']['preview_url']}`
-                            else {
+                            if (pla['track']['album']['images'][0]['url'] && pla['track']['preview_url']) {
+                                d.style.backgroundImage = `url(${pla['track']['album']['images'][0]['url']})`
+                                d.style.backgroundRepeat = 'no-repeat'
+                                d.style.backgroundSize = 'cover'
+                                a.src = pla['track']['preview_url']
+                            } else if (pla['track']['album']['images'][0]['url'] && !pla['track']['preview_url']) {
+                                d.style.backgroundImage = `url(${pla['track']['album']['images'][0]['url']})`
+                                d.style.backgroundRepeat = 'no-repeat'
+                                d.style.backgroundSize = 'cover'
+                                d.style.opacity = '.5'
+                            } else if (!pla['track']['album']['images'][0]['url'] && pla['track']['preview_url']) {
+                                d.style.backgroundColor = 'grey'
+                                a.src = pla['track']['preview_url']
+                            } else {
+                                d.style.backgroundColor = 'grey'
                                 d.style.opacity = '.5'
                             }
                             d.appendChild(a)
