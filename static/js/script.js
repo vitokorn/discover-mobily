@@ -37,10 +37,13 @@ function initElement(id) {
         btn.innerText = 'Open is Spotify'
         openinspotify.appendChild(btn)
         dvv.appendChild(openinspotify)
-        let html = await stringToHTML(description)
+        let regex = /\u0027/;
+        let ndescription = description.replace(regex, '')
+        let html = await stringToHTML(ndescription)
         let query = html.querySelectorAll('a')
         let descriptions = document.createElement('div')
-        descriptions.innerHTML = description
+
+        descriptions.innerHTML = ndescription
         descriptions.style.width = '50%'
         descriptions.style.marginLeft = '10px'
         descriptions.style.display = 'flex'
@@ -50,7 +53,7 @@ function initElement(id) {
         console.log(description)
         for await(let q of query) {
             q.id = q.href.replace('spotify:playlist:', '')
-            description.replace(q.href, q.href + 'id=' + q.id)
+            ndescription.replace(q.href, q.href + 'id=' + q.id)
             q.addEventListener('click', function () {
                 parsedLoad(q.id, playlistcont.lastChild, playlistcont.id)
                 let rc = document.querySelectorAll('.item-container > .rectrack')
@@ -2611,7 +2614,6 @@ function parentclick2play(e) {
 
 function parentclick(e) {
     e.stopPropagation()
-    console.log(e.target)
     let target = e.target
     let audios = target.parentElement.lastChild
     for (let i of allaudio) {
@@ -2621,13 +2623,12 @@ function parentclick(e) {
             i.pause()
         }
     }
-    if (typeof audios === 'function') {
-        if (audios.paused === false) {
-            audios.pause()
-        } else {
-            audios.play()
-        }
+    if (audios.paused === false && typeof audios.pause === 'function') {
+        audios.pause()
+    } else if (audios.paused === true && typeof audios.play === 'function') {
+        audios.play()
     }
+
 
 }
 
@@ -3534,10 +3535,12 @@ async function playlistLoad(item, parent, search) {
         btn.innerText = 'Open is Spotify'
         openinspotify.appendChild(btn)
         dvv.appendChild(openinspotify)
-        let html = await stringToHTML(description)
+        let regex = /\u0027/;
+        let ndescription = description.replace(regex, '')
+        let html = await stringToHTML(ndescription)
         let query = html.querySelectorAll('a')
         let descriptions = document.createElement('div')
-        descriptions.innerHTML = description
+        descriptions.innerHTML = ndescription
         descriptions.style.width = '50%'
         descriptions.style.display = 'flex'
         descriptions.style.alignItems = 'center'
@@ -3546,7 +3549,7 @@ async function playlistLoad(item, parent, search) {
 
         for await(let q of query) {
             q.id = q.href.replace('spotify:playlist:', '')
-            description.replace(q.href, q.href + 'id=' + q.id)
+            ndescription.replace(q.href, q.href + 'id=' + q.id)
             q.addEventListener('click', function () {
                 parsedLoad(q.id, playlistdiv, playlistcont.id)
             })
@@ -3755,11 +3758,12 @@ async function parsedLoad(id, playlistdiv, child) {
         btn.innerText = 'Open is Spotify'
         openinspotify.appendChild(btn)
         dvv.appendChild(openinspotify)
-
-        let html = await stringToHTML(description)
+        let regex = /\u0027/;
+        let ndescription = description.replace(regex, '')
+        let html = await stringToHTML(ndescription)
         let query = html.querySelectorAll('a')
         let descriptions = document.createElement('div')
-        descriptions.innerHTML = description
+        descriptions.innerHTML = ndescription
         descriptions.style.width = '50%'
         descriptions.style.display = 'flex'
         descriptions.style.alignItems = 'center'
@@ -3768,7 +3772,7 @@ async function parsedLoad(id, playlistdiv, child) {
 
         for await(let q of query) {
             q.id = q.href.replace('spotify:playlist:', '')
-            description.replace(q.href, q.href + 'id=' + q.id)
+            ndescription.replace(q.href, q.href + 'id=' + q.id)
             q.addEventListener('click', function () {
                 parsedLoad(q.id, playlistdiv, playlistcont.id)
             })
@@ -3946,19 +3950,21 @@ async function thesoundof(name, tracks, child) {
                         btn.innerText = 'Open is Spotify'
                         openinspotify.appendChild(btn)
                         dvv.appendChild(openinspotify)
-                        let html = await stringToHTML(description)
+                        let regex = /\u0027/;
+                        let ndescription = description.replace(regex, '')
+                        let html = await stringToHTML(ndescription)
                         let query = html.querySelectorAll('a')
                         let descriptions = document.createElement('div')
-                        descriptions.innerHTML = description
+                        descriptions.innerHTML = ndescription
                         descriptions.style.width = '50%'
                         descriptions.style.display = 'flex'
                         descriptions.style.alignItems = 'center'
                         descriptions.className = 'description'
                         descriptions.appendChild(dvv)
-                        console.log(description)
+                        console.log(ndescription)
                         for await(let q of query) {
                             q.id = q.href.replace('spotify:playlist:', '')
-                            description.replace(q.href, q.href + 'id=' + q.id)
+                            ndescription.replace(q.href, q.href + 'id=' + q.id)
                             q.addEventListener('click', function () {
                                 parsedLoad(q.id, playlistcont, playlistcont.id)
                             })
