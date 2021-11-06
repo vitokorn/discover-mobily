@@ -35,19 +35,21 @@ function initElement(id) {
         btn.innerText = 'Open is Spotify'
         openinspotify.appendChild(btn)
         dvv.appendChild(openinspotify)
-        let html = await stringToHTML(description)
+        let regex = /\u0027/;
+        let ndescription = description.replace(regex, '')
+        let html = await stringToHTML(ndescription)
         let query = html.querySelectorAll('a')
         let descriptions = document.createElement('div')
-        descriptions.innerHTML = description
+        descriptions.innerHTML = ndescription
         descriptions.style.width = '60%'
         descriptions.style.display = 'flex'
         descriptions.style.alignItems = 'center'
         descriptions.className = 'description'
         descriptions.appendChild(dvv)
-        console.log(description)
+        console.log(ndescription)
         for await(let q of query) {
             q.id = q.href.replace('spotify:playlist:', '')
-            description.replace(q.href, q.href + 'id=' + q.id)
+            ndescription.replace(q.href, q.href + 'id=' + q.id)
             q.addEventListener('click', function () {
                 parsedLoad(q.id, playlistdiv.nextElementSibling, playlistcont.id)
                 for (let i of playlistdiv.nextElementSibling.children) {
@@ -1449,7 +1451,7 @@ async function deeper(pla, tracks, type) {
         recomend.innerText = 'Recommended songs based on this'
         recomend.style.color = '#f037a5'
         recomend.addEventListener('click', async function () {
-            await seedTracks(pla['track'], tracks, 'playlisttrack card2', info.id)
+            seedTracks(pla['track'], tracks, 'playlisttrack', info.id)
         })
         let artistcirle = document.createElement('div')
         for (const ar of pla['track']['artists']) {
@@ -1561,7 +1563,7 @@ async function deeper(pla, tracks, type) {
         recomend.innerText = 'Recommended songs based on this'
         recomend.style.color = '#f037a5'
         recomend.addEventListener('click', async function () {
-            await seedTracks(pla, tracks, 'playlisttrack card2', info.id)
+            seedTracks(pla, tracks, 'playlisttrack', info.id)
         })
         let artistcirle = document.createElement('div')
         for (const ar of pla['artists']) {
@@ -1907,7 +1909,7 @@ async function deep_artist(tracks, item, flag, sib, related, artistandtt) {
                 }
             }
         }
-    } else if (alltop.length !== 0 && alltop[alltop.length - 1].nextElementSibling !== null) {
+    } else if (await alltop.length !== 0 && alltop[alltop.length - 1].nextElementSibling !== null) {
         let par = alltop[alltop.length - 1].nextElementSibling
         while (par != null) {
             par.style.display = 'none'
@@ -2023,7 +2025,9 @@ async function deep_artist(tracks, item, flag, sib, related, artistandtt) {
             dv.addEventListener('mouseleave', function (e) {
                 mouseleave2stop(e)
             })
-
+            dv.addEventListener('click', function (e) {
+                artistswitch(item)
+            })
             artinfo.innerText = data['name']
             let af = document.createElement('div')
             af.innerText = data['followers']['total'] + ' followers'
@@ -2896,7 +2900,7 @@ async function deeperTracks2(tracks, item, d, flag, sib) {
     let midspan = document.createElement('span')
     midspan.style.color = 'rgb(240, 55, 165)'
     midspan.innerText = 'Recommended songs based on this'
-    midspan.onclick = () => seedTracks(item, tracks, 'playlisttrack card2')
+    midspan.onclick = () => seedTracks(item, tracks, 'playlisttrack')
     // midspan.onclick = seedTracks('yourplaylists',d.track,1,'playlisttrack','d'+ d.id)
     middle.appendChild(midspan)
     let dvv = document.createElement('div')
@@ -3077,7 +3081,7 @@ async function seedArtists(tracks, item, sib, child) {
         document.getElementById('sa' + item.id).style.display = 'flex'
         document.getElementById('art' + item.id).children[1].style.display = 'none'
         window.scrollTo({
-            top: (document.getElementById('sa' + item.id)).offsetTop,
+            top: findPos(document.getElementById('sa' + item.id)),
             behavior: 'smooth'
         });
         return
@@ -3193,10 +3197,12 @@ async function playlistLoad(item, parent, search) {
         btn.innerText = 'Open is Spotify'
         openinspotify.appendChild(btn)
         dvv.appendChild(openinspotify)
-        let html = await stringToHTML(description)
+        let regex = /\u0027/;
+        let ndescription = description.replace(regex, '')
+        let html = await stringToHTML(ndescription)
         let query = html.querySelectorAll('a')
         let descriptions = document.createElement('div')
-        descriptions.innerHTML = description
+        descriptions.innerHTML = ndescription
         descriptions.style.width = '60%'
         descriptions.style.display = 'flex'
         descriptions.style.alignItems = 'center'
@@ -3205,7 +3211,7 @@ async function playlistLoad(item, parent, search) {
 
         for await(let q of query) {
             q.id = q.href.replace('spotify:playlist:', '')
-            description.replace(q.href, q.href + 'id=' + q.id)
+            ndescription.replace(q.href, q.href + 'id=' + q.id)
             q.addEventListener('click', function () {
                 parsedLoad(q.id, playlistdiv, playlistcont.id)
             })
@@ -3355,11 +3361,12 @@ async function parsedLoad(id, playlistdiv, child) {
         btn.innerText = 'Open is Spotify'
         openinspotify.appendChild(btn)
         dvv.appendChild(openinspotify)
-
-        let html = await stringToHTML(description)
+        let regex = /\u0027/;
+        let ndescription = description.replace(regex, '')
+        let html = await stringToHTML(ndescription)
         let query = html.querySelectorAll('a')
         let descriptions = document.createElement('div')
-        descriptions.innerHTML = description
+        descriptions.innerHTML = ndescription
         descriptions.style.width = '60%'
         descriptions.style.display = 'flex'
         descriptions.style.alignItems = 'center'
@@ -3368,7 +3375,7 @@ async function parsedLoad(id, playlistdiv, child) {
 
         for await(let q of query) {
             q.id = q.href.replace('spotify:playlist:', '')
-            description.replace(q.href, q.href + 'id=' + q.id)
+            ndescription.replace(q.href, q.href + 'id=' + q.id)
             q.addEventListener('click', function () {
                 parsedLoad(q.id, playlistdiv, playlistcont.id)
             })
@@ -3539,19 +3546,21 @@ async function thesoundof(name, tracks, child) {
                         btn.innerText = 'Open is Spotify'
                         openinspotify.appendChild(btn)
                         dvv.appendChild(openinspotify)
-                        let html = await stringToHTML(description)
+                        let regex = /\u0027/;
+                        let ndescription = description.replace(regex, '')
+                        let html = await stringToHTML(ndescription)
                         let query = html.querySelectorAll('a')
                         let descriptions = document.createElement('div')
-                        descriptions.innerHTML = description
+                        descriptions.innerHTML = ndescription
                         descriptions.style.width = '60%'
                         descriptions.style.display = 'flex'
                         descriptions.style.alignItems = 'center'
                         descriptions.className = 'description'
                         descriptions.appendChild(dvv)
-                        console.log(description)
+                        console.log(ndescription)
                         for await(let q of query) {
                             q.id = q.href.replace('spotify:playlist:', '')
-                            description.replace(q.href, q.href + 'id=' + q.id)
+                            ndescription.replace(q.href, q.href + 'id=' + q.id)
                             q.addEventListener('click', function () {
                                 parsedLoad(q.id, playlistcont, playlistcont.id)
                             })

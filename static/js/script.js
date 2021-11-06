@@ -1177,9 +1177,9 @@ document.getElementById('srch').addEventListener('input', function () {
                             click2play(e)
                         })
                         main.addEventListener('click', function (e) {
-                        parentclick2play(e)
-                        deeperAlbum(searchrt, items, alb, false, true)
-                    })
+                            parentclick2play(e)
+                            deeperAlbum(searchrt, items, alb, false, true)
+                        })
                     })
                     d.appendChild(a)
                     main.appendChild(d)
@@ -1474,12 +1474,12 @@ async function deeper(pla, tracks, type) {
         btn.innerText = 'Open is Spotify'
         openinspotify.appendChild(btn)
         dvv.appendChild(openinspotify)
-        await artname(pla['track']['artists'], trackartist, tracks, 'trackartist')
+        await artname(pla['track']['artists'], trackartist, tracks, 'playlisttrack')
         let recomend = document.createElement('span')
         recomend.innerText = 'Recommended songs based on this'
         recomend.style.color = '#f037a5'
         recomend.addEventListener('click', function () {
-            seedTracks(pla['track'], tracks, 'playlisttrack card2', info.id)
+            seedTracks(pla['track'], tracks, 'playlisttrack', info.id)
         })
         let artistcirle = document.createElement('div')
         for (const ar of pla['track']['artists']) {
@@ -1603,7 +1603,7 @@ async function deeper(pla, tracks, type) {
         recomend.innerText = 'Recommended songs based on this'
         recomend.style.color = '#f037a5'
         recomend.addEventListener('click', function () {
-            seedTracks(pla, tracks, 'playlisttrack card2', info.id)
+            seedTracks(pla, tracks, 'playlisttrack', info.id)
         })
         let artistcirle = document.createElement('div')
         for (const ar of pla['artists']) {
@@ -2097,7 +2097,7 @@ async function deep_artist(tracks, item, flag, sib, related, artistandtt) {
         dv.style.backgroundSize = 'cover'
         dv.addEventListener('click', function (e) {
             click2play(e)
-            artistswitch(item,tracks)
+            artistswitch(item, tracks)
         })
 
         artinfo.innerText = artistandtt.self['name']
@@ -2147,7 +2147,10 @@ async function deep_artist(tracks, item, flag, sib, related, artistandtt) {
             dv.style.backgroundImage = `url(${data['images'][0]['url']})`
             dv.style.backgroundRepeat = 'no-repeat'
             dv.style.backgroundSize = 'cover'
-            dv.onclick = click2play
+            dv.addEventListener('click', function (e) {
+                click2play(e)
+                artistswitch(item, tracks)
+            })
             artinfo.innerText = data['name']
             let af = document.createElement('div')
             af.innerText = data['followers']['total'] + ' followers'
@@ -3148,7 +3151,7 @@ async function deeperTracks2(tracks, item, d, flag, sib) {
     let midspan = document.createElement('span')
     midspan.style.color = 'rgb(240, 55, 165)'
     midspan.innerText = 'Recommended songs based on this'
-    midspan.onclick = () => seedTracks(item, tracks, 'playlisttrack card2')
+    midspan.onclick = () => seedTracks(item, tracks, 'playlisttrack')
     // midspan.onclick = seedTracks('yourplaylists',d.track,1,'playlisttrack','d'+ d.id)
     middle.appendChild(midspan)
     let dvv = document.createElement('div')
@@ -3270,7 +3273,7 @@ async function seedTracks(item, tracks, sib, child) {
         console.log(newarray.reduce((a, b) => a + b, 0) + 50 + 'px')
         tracks.style.height = newarray.reduce((a, b) => a + b, 0) + 50 + 'px'
         window.scrollTo({
-            top: (document.getElementById('st' + item.id)).offsetTop,
+            top: findPos(document.getElementById('st' + item.id)),
             behavior: 'smooth'
         });
         window.addEventListener('resize', async function () {
@@ -3396,7 +3399,7 @@ async function seedArtists(tracks, item, sib, child) {
         }
         tracks.style.height = newarray.reduce((a, b) => a + b, 0) + 50 + 'px'
         window.scrollTo({
-            top: (document.getElementById('sa' + item.id)).offsetTop,
+            top: findPos(document.getElementById('sa' + item.id)),
             behavior: 'smooth'
         });
         window.addEventListener('resize', async function () {
@@ -4174,6 +4177,7 @@ async function artistswitch(item, tracks) {
         tracks.style.height = newarray.reduce((a, b) => a + b, 0) + 50 + 'px'
     })
 }
+
 // let containerWidth = trid.offsetWidth;
 // let itemWidth = document.querySelectorAll(`#t_${id} > div`)[0].offsetWidth;
 // let itemsPerRow = Math.floor(containerWidth / itemWidth);
