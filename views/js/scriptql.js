@@ -6,7 +6,7 @@ function initElement(id) {
         url: 'https://api.spotify.com/v1/playlists/' + id + '?fields=name,id,external_urls,description,images,tracks(items(track(name,preview_url,external_urls,id,artists,album(album_type,artists,id,images,name))))',
         method: 'get',
         headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+            'Authorization': 'Bearer ' + document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1")
         }
     }).then(async (response) => {
         let data = response.data
@@ -92,52 +92,54 @@ function initElement(id) {
         playlistcont.appendChild(trid)
         for await (const pla of playtrack) {
             // console.log('75 ' + pla)
-            let icontainer = document.createElement('div')
-            icontainer.className = 'item-container'
-            let d = document.createElement('div')
-            d.tabIndex = 0
-            d.className = 'con3'
-            d.innerText = `${list(pla['track']['artists'])} -  ${pla['track']['name']}`
-            let a = document.createElement('audio')
-            a.type = "audio/mpeg"
-            a.preload = 'none'
-            if (pla.track.album.images[0].url && pla.track.preview_url) {
-                d.style.backgroundImage = `url(${pla['track']['album']['images'][0]['url']})`
-                d.style.backgroundRepeat = 'no-repeat'
-                d.style.backgroundSize = 'cover'
-                a.src = `${pla['track']['preview_url']}`
-                icontainer.addEventListener('click', function (e) {
-                    parentclick(e)
-                })
-            } else if (pla.track.album.images[0].url && !pla.track.preview_url) {
-                d.style.backgroundImage = `url(${pla['track']['album']['images'][0]['url']})`
-                d.style.backgroundRepeat = 'no-repeat'
-                d.style.backgroundSize = 'cover'
-                d.style.opacity = '.5'
-            } else if (!pla.track.album.images[0].url && pla.track.preview_url) {
-                d.style.backgroundColor = 'grey'
-                a.src = `${pla['track']['preview_url']}`
-                icontainer.addEventListener('click', function (e) {
-                    parentclick(e)
-                })
-            } else {
-                d.style.backgroundColor = 'grey'
-                d.style.opacity = '.5'
-            }
-            let rectrack = document.createElement('div')
-            rectrack.className = 'rectrack'
-            let hcontent = document.createElement('div')
-            hcontent.className = 'hcontent'
-            rectrack.appendChild(hcontent)
-            icontainer.appendChild(d)
-            icontainer.appendChild(rectrack)
-            icontainer.appendChild(a)
+            if (pla['track']){
+                let icontainer = document.createElement('div')
+                icontainer.className = 'item-container'
+                let d = document.createElement('div')
+                d.tabIndex = 0
+                d.className = 'con3'
+                d.innerText = `${list(pla['track']['artists'])} -  ${pla['track']['name']}`
+                let a = document.createElement('audio')
+                a.type = "audio/mpeg"
+                a.preload = 'none'
+                if (pla.track.album.images[0].url && pla.track.preview_url) {
+                    d.style.backgroundImage = `url(${pla['track']['album']['images'][0]['url']})`
+                    d.style.backgroundRepeat = 'no-repeat'
+                    d.style.backgroundSize = 'cover'
+                    a.src = `${pla['track']['preview_url']}`
+                    icontainer.addEventListener('click', function (e) {
+                        parentclick(e)
+                    })
+                } else if (pla.track.album.images[0].url && !pla.track.preview_url) {
+                    d.style.backgroundImage = `url(${pla['track']['album']['images'][0]['url']})`
+                    d.style.backgroundRepeat = 'no-repeat'
+                    d.style.backgroundSize = 'cover'
+                    d.style.opacity = '.5'
+                } else if (!pla.track.album.images[0].url && pla.track.preview_url) {
+                    d.style.backgroundColor = 'grey'
+                    a.src = `${pla['track']['preview_url']}`
+                    icontainer.addEventListener('click', function (e) {
+                        parentclick(e)
+                    })
+                } else {
+                    d.style.backgroundColor = 'grey'
+                    d.style.opacity = '.5'
+                }
+                let rectrack = document.createElement('div')
+                rectrack.className = 'rectrack'
+                let hcontent = document.createElement('div')
+                hcontent.className = 'hcontent'
+                rectrack.appendChild(hcontent)
+                icontainer.appendChild(d)
+                icontainer.appendChild(rectrack)
+                icontainer.appendChild(a)
 
-            await trid.appendChild(icontainer)
-            window.scrollTo({
-                top: findPos(plid),
-                behavior: 'smooth'
-            });
+                await trid.appendChild(icontainer)
+                window.scrollTo({
+                    top: findPos(plid),
+                    behavior: 'smooth'
+                });
+            }
         }
         let rt = document.createElement('div')
         rt.className = 'rectrack'
@@ -146,10 +148,10 @@ function initElement(id) {
     }).catch((error) => {
         if (error.status === 401) {
             request({
-                url: '/spotify/refresh_token/' + localStorage.getItem('username'),
+                url: '/spotify/refresh_token/' + document.cookie.replace(/(?:(?:^|.*;\s*)username\s*\=\s*([^;]*).*$)|^.*$/, "$1"),
                 method: 'get',
                 headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                    'Authorization': 'Bearer ' + document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1")
                 }
             }).then((response) => {
                 initElement(id)
@@ -240,7 +242,7 @@ function topartistst() {
         url: 'https://api.spotify.com/v1/me/top/artists?time_range=short_term',
         method: 'get',
         headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+            'Authorization': 'Bearer ' + document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1")
         }
     }).then(async (response) => {
         let data = response.data
@@ -306,10 +308,10 @@ function topartistst() {
     }).catch((error) => {
         if (error.status === 401) {
             request({
-                url: '/spotify/refresh_token/' + localStorage.getItem('username'),
+                url: '/spotify/refresh_token/' + document.cookie.replace(/(?:(?:^|.*;\s*)username\s*\=\s*([^;]*).*$)|^.*$/, "$1"),
                 method: 'get',
                 headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                    'Authorization': 'Bearer ' + document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1")
                 }
             }).then((response) => {
                 topartistst()
@@ -325,7 +327,7 @@ function topartistst6() {
         url: 'https://api.spotify.com/v1/me/top/artists?time_range=medium_term',
         method: 'get',
         headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+            'Authorization': 'Bearer ' + document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1")
         }
     }).then(async (response) => {
         let data = response.data
@@ -402,7 +404,7 @@ function topartiststall() {
         url: 'https://api.spotify.com/v1/me/top/artists?time_range=long_term',
         method: 'get',
         headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+            'Authorization': 'Bearer ' + document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1")
         }
     }).then(async (response) => {
         let data = response.data
@@ -514,20 +516,20 @@ for (let i of ta) {
 
 async function artisttrack(id) {
     return request({
-        url: 'https://api.spotify.com/v1/artists/' + id + '/top-tracks?market=' + localStorage.getItem('country'),
+        url: 'https://api.spotify.com/v1/artists/' + id + '/top-tracks?market=' + document.cookie.replace(/(?:(?:^|.*;\s*)country\s*\=\s*([^;]*).*$)|^.*$/, "$1"),
         method: 'get',
         headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+            'Authorization': 'Bearer ' + document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1")
         }
     }).then((response) => {
         return response
     }).catch((error) => {
         if (error.status === 401) {
             request({
-                url: '/spotify/refresh_token/' + localStorage.getItem('username'),
+                url: '/spotify/refresh_token/' + document.cookie.replace(/(?:(?:^|.*;\s*)username\s*\=\s*([^;]*).*$)|^.*$/, "$1"),
                 method: 'get',
                 headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                    'Authorization': 'Bearer ' + document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1")
                 }
             }).then((response) => {
 
@@ -542,10 +544,10 @@ async function artisttrack(id) {
 
 function albumstracks(id) {
     return request({
-        url: 'https://api.spotify.com/v1/albums/' + id + '/tracks?market=' + localStorage.getItem('country') + '&limit=10',
+        url: 'https://api.spotify.com/v1/albums/' + id + '/tracks?market=' + document.cookie.replace(/(?:(?:^|.*;\s*)country\s*\=\s*([^;]*).*$)|^.*$/, "$1") + '&limit=10',
         method: 'get',
         headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+            'Authorization': 'Bearer ' + document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1")
         }
     }).then((response) => {
         return response
@@ -613,7 +615,7 @@ function topttracks() {
         url: 'https://api.spotify.com/v1/me/top/tracks?time_range=short_term',
         method: 'get',
         headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+            'Authorization': 'Bearer ' + document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1")
         }
     }).then(async (response) => {
         let data = response.data
@@ -670,10 +672,10 @@ function topttracks() {
         document.getElementById('toptrackat').style.display = 'none'
     }).catch((error) => {
         request({
-            url: '/spotify/refresh_token/' + localStorage.getItem('username'),
+            url: '/spotify/refresh_token/' + document.cookie.replace(/(?:(?:^|.*;\s*)username\s*\=\s*([^;]*).*$)|^.*$/, "$1"),
             method: 'get',
             headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                'Authorization': 'Bearer ' + document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1")
             }
         }).then((response) => {
             topttracks()
@@ -708,7 +710,7 @@ function topttracks6() {
         url: 'https://api.spotify.com/v1/me/top/tracks?time_range=medium_term',
         method: 'get',
         headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+            'Authorization': 'Bearer ' + document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1")
         }
     }).then(async (response) => {
         let data = response.data
@@ -773,7 +775,7 @@ function topttracksall() {
         url: 'https://api.spotify.com/v1/me/top/tracks?time_range=long_term',
         method: 'get',
         headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+            'Authorization': 'Bearer ' + document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1")
         }
     }).then(async (response) => {
         let data = response.data
@@ -858,7 +860,7 @@ function saved_albums() {
         url: 'https://api.spotify.com/v1/me/albums',
         method: 'get',
         headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+            'Authorization': 'Bearer ' + document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1")
         }
     }).then(async (response) => {
         let data = response.data
@@ -1125,7 +1127,7 @@ function sendRequest(offset) {
         url: 'https://api.spotify.com/v1/me/tracks?offset=' + offset + '&limit=50',
         method: 'get',
         headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+            'Authorization': 'Bearer ' + document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1")
         }
     }).then((response) => {
         let data = response.data
@@ -1199,7 +1201,7 @@ function getfollowedartist() {
         url: 'https://api.spotify.com/v1/me/following?type=artist&limit=50',
         method: 'get',
         headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+            'Authorization': 'Bearer ' + document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1")
         }
     }).then(async (response) => {
         let data = response.data
@@ -1284,7 +1286,7 @@ function getnewrelease(offset) {
         url: 'https://api.spotify.com/v1/browse/new-releases?limit=20&offset=' + offset,
         method: 'get',
         headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+            'Authorization': 'Bearer ' + document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1")
         }
     }).then(async (response) => {
         let data = response.data
@@ -1307,7 +1309,7 @@ function newrelease(elem, offset) {
         url: 'https://api.spotify.com/v1/albums?ids=' + elem,
         method: 'get',
         headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+            'Authorization': 'Bearer ' + document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1")
         }
     }).then((response) => {
         let data = response.data
@@ -1437,7 +1439,7 @@ document.getElementById('srch').addEventListener('input', function () {
                 url: 'https://api.spotify.com/v1/search/?q=' + value + '&type=album,artist,playlist,track&limit=5',
                 method: 'get',
                 headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                    'Authorization': 'Bearer ' + document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1")
                 }
             }).then(async (response) => {
                 let searchrt = document.getElementById('searchrt')
@@ -1511,10 +1513,10 @@ document.getElementById('srch').addEventListener('input', function () {
                     a.type = "audio/mpeg"
                     a.preload = 'none'
                     request({
-                        url: `${(art['href'])}` + '/top-tracks?market=' + localStorage.getItem('country'),
+                        url: `${(art['href'])}` + '/top-tracks?market=' + document.cookie.replace(/(?:(?:^|.*;\s*)country\s*\=\s*([^;]*).*$)|^.*$/, "$1"),
                         method: 'get',
                         headers: {
-                            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                            'Authorization': 'Bearer ' + document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1")
                         }
                     }).then((response) => {
                         let data = response.data
@@ -1665,10 +1667,10 @@ document.getElementById('srch').addEventListener('input', function () {
             }).catch((error) => {
                 if (error.status === 401) {
                     request({
-                        url: '/spotify/refresh_token/' + localStorage.getItem('username'),
+                        url: '/spotify/refresh_token/' + document.cookie.replace(/(?:(?:^|.*;\s*)username\s*\=\s*([^;]*).*$)|^.*$/, "$1"),
                         method: 'get',
                         headers: {
-                            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                            'Authorization': 'Bearer ' + document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1")
                         }
                     }).then((response) => {
 
@@ -1688,17 +1690,17 @@ function pltracks(id) {
         url: 'https://api.spotify.com/v1/playlists/' + id + '/tracks?limit=50',
         method: 'get',
         headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+            'Authorization': 'Bearer ' + document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1")
         }
     }).then((response) => {
         return response
     }).catch((error) => {
         if (error.status === 401) {
             request({
-                url: '/spotify/refresh_token/' + localStorage.getItem('username'),
+                url: '/spotify/refresh_token/' + document.cookie.replace(/(?:(?:^|.*;\s*)username\s*\=\s*([^;]*).*$)|^.*$/, "$1"),
                 method: 'get',
                 headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                    'Authorization': 'Bearer ' + document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1")
                 }
             })
         }
@@ -1711,17 +1713,17 @@ function albumtracks(id) {
         url: 'https://api.spotify.com/v1/albums/' + id + '/tracks?market=UA&limit=10',
         method: 'get',
         headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+            'Authorization': 'Bearer ' + document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1")
         }
     }).then((response) => {
         return response
     }).catch((error) => {
         if (error.status === 401) {
             request({
-                url: '/spotify/refresh_token/' + localStorage.getItem('username'),
+                url: '/spotify/refresh_token/' + document.cookie.replace(/(?:(?:^|.*;\s*)username\s*\=\s*([^;]*).*$)|^.*$/, "$1"),
                 method: 'get',
                 headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                    'Authorization': 'Bearer ' + document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1")
                 }
             })
         }
@@ -1877,7 +1879,7 @@ async function deep_artist(tracks, item, flag, sib, related, artistandtt) {
             url: 'https://api.spotify.com/v1/artists/' + item['id'],
             method: 'get',
             headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                'Authorization': 'Bearer ' + document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1")
             }
         }).then(async (response) => {
             let data = response.data
@@ -1971,10 +1973,10 @@ async function deep_artist(tracks, item, flag, sib, related, artistandtt) {
         }
     } else {
         await request({
-            url: 'https://api.spotify.com/v1/artists/' + item['id'] + '/top-tracks?limit=10&market=' + localStorage.getItem('country'),
+            url: 'https://api.spotify.com/v1/artists/' + item['id'] + '/top-tracks?limit=10&market=' + document.cookie.replace(/(?:(?:^|.*;\s*)country\s*\=\s*([^;]*).*$)|^.*$/, "$1"),
             method: 'get',
             headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                'Authorization': 'Bearer ' + document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1")
             }
         }).then(async (response) => {
             let data = response.data
@@ -2044,10 +2046,10 @@ async function deep_artist(tracks, item, flag, sib, related, artistandtt) {
     await deeperrelated(item, tracks, blockartist, ab)
     block.appendChild(blockartist)
     // request({
-    //     url: 'https://api.spotify.com/v1/search?q="this is ' + item['name'] + '"&type=playlist&limit=50&offset=0&market=' + localStorage.getItem('country'),
+    //     url: 'https://api.spotify.com/v1/search?q="this is ' + item['name'] + '"&type=playlist&limit=50&offset=0&market=' + document.cookie.replace(/(?:(?:^|.*;\s*)country\s*\=\s*([^;]*).*$)|^.*$/, "$1"),
     //     method: 'get',
     //     headers: {
-    //         'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+    //         'Authorization': 'Bearer ' + document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1")
     //     }
     // }).then((response) => {
     //     console.log(response.data)
@@ -2106,7 +2108,7 @@ function deeperartistalbum(item, tracks, block) {
         url: 'https://api.spotify.com/v1/artists/' + item['id'] + '/albums?include_groups=album&limit=10',
         method: 'get',
         headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+            'Authorization': 'Bearer ' + document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1")
         }
     }).then(async (response) => {
         let data = response.data
@@ -2167,7 +2169,7 @@ function deeperartistsingle(item, tracks, block) {
         url: 'https://api.spotify.com/v1/artists/' + item['id'] + '/albums?include_groups=single,compilation',
         method: 'get',
         headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+            'Authorization': 'Bearer ' + document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1")
         }
     }).then(async (response) => {
         let data = response.data
@@ -2226,7 +2228,7 @@ function deeperartistsappear(item, tracks, block) {
         url: 'https://api.spotify.com/v1/artists/' + item['id'] + '/albums?include_groups=appears_on',
         method: 'get',
         headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+            'Authorization': 'Bearer ' + document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1")
         }
     }).then(async (response) => {
         let data = response.data
@@ -2289,7 +2291,7 @@ function deeperrelated(item, tracks, block, ab) {
         url: 'https://api.spotify.com/v1/artists/' + item['id'] + '/related-artists',
         method: 'get',
         headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+            'Authorization': 'Bearer ' + document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1")
         }
     }).then(async (response) => {
         let data = response.data
@@ -2368,7 +2370,7 @@ function artist(id) {
         url: 'https://api.spotify.com/v1/artists/' + id,
         method: 'get',
         headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+            'Authorization': 'Bearer ' + document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1")
         }
     }).then((response) => {
         return response
@@ -2522,7 +2524,7 @@ async function playlistLoad(item, parent, search) {
         url: 'https://api.spotify.com/v1/playlists/' + item.id,
         method: 'get',
         headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+            'Authorization': 'Bearer ' + document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1")
         }
     }).then(async (response) => {
         let data = response.data
@@ -2716,10 +2718,10 @@ async function playlistLoad(item, parent, search) {
     }).catch((error) => {
         if (error.status === 401) {
             request({
-                url: '/spotify/refresh_token/' + localStorage.getItem('username'),
+                url: '/spotify/refresh_token/' + document.cookie.replace(/(?:(?:^|.*;\s*)username\s*\=\s*([^;]*).*$)|^.*$/, "$1"),
                 method: 'get',
                 headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                    'Authorization': 'Bearer ' + document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1")
                 }
             }).then((response) => {
                 playlistLoad(item, parent, search)
@@ -2759,7 +2761,7 @@ async function parsedLoad(id, playlistdiv, child) {
         url: 'https://api.spotify.com/v1/playlists/' + id,
         method: 'get',
         headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+            'Authorization': 'Bearer ' + document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1")
         }
     }).then(async (response) => {
         let data = response.data
@@ -2892,10 +2894,10 @@ async function parsedLoad(id, playlistdiv, child) {
     }).catch((error) => {
         if (error.status === 401) {
             request({
-                url: '/spotify/refresh_token/' + localStorage.getItem('username'),
+                url: '/spotify/refresh_token/' + document.cookie.replace(/(?:(?:^|.*;\s*)username\s*\=\s*([^;]*).*$)|^.*$/, "$1"),
                 method: 'get',
                 headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                    'Authorization': 'Bearer ' + document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1")
                 }
             }).then((response) => {
                 parsedLoad(id, playlistdiv, child)
@@ -2916,7 +2918,7 @@ async function thesoundof(name, tracks, child) {
     request({
         url: 'https://api.spotify.com/v1/search/?q=' + newvalue + '&type=playlist&limit=5',
         method: 'get',
-        headers: {'Authorization': 'Bearer ' + localStorage.getItem('access_token')}
+        headers: {'Authorization': 'Bearer ' + document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1")}
     })
         .then(async (response) => {
             let playlists = response.data['playlists']['items']
@@ -2960,7 +2962,7 @@ async function thesoundof(name, tracks, child) {
                 request({
                     url: 'https://api.spotify.com/v1/playlists/' + finded.id,
                     method: 'get',
-                    headers: {'Authorization': 'Bearer ' + localStorage.getItem('access_token')}
+                    headers: {'Authorization': 'Bearer ' + document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1")}
                 })
                     .then(async (response) => {
                         // console.log(response.data['tracks'])
@@ -3040,44 +3042,46 @@ async function thesoundof(name, tracks, child) {
                         playlistcont.appendChild(trid)
                         for await (const pla of playtrack) {
                             // console.log('75 ' + pla)
-                            let d = document.createElement('div')
-                            d.tabIndex = 0
-                            d.className = 'con3'
-                            d.innerText = `${list(pla['track']['artists'])} -  ${pla['track']['name']}`
-                            let a = document.createElement('audio')
-                            a.type = "audio/mpeg"
-                            a.preload = 'none'
-                            if (pla['track']['album']['images'][0]['url'] && pla['track']['preview_url']) {
-                                d.style.backgroundImage = `url(${pla['track']['album']['images'][0]['url']})`
-                                d.style.backgroundRepeat = 'no-repeat'
-                                d.style.backgroundSize = 'cover'
-                                a.src = pla['track']['preview_url']
-                                d.addEventListener('click', function (e) {
-                                    click2play(e)
-                                })
-                            } else if (pla['track']['album']['images'][0]['url'] && !pla['track']['preview_url']) {
-                                d.style.backgroundImage = `url(${pla['track']['album']['images'][0]['url']})`
-                                d.style.backgroundRepeat = 'no-repeat'
-                                d.style.backgroundSize = 'cover'
-                                d.style.opacity = '.5'
-                            } else if (!pla['track']['album']['images'][0]['url'] && pla['track']['preview_url']) {
-                                d.style.backgroundColor = 'grey'
-                                a.src = pla['track']['preview_url']
-                                d.addEventListener('click', function (e) {
-                                    click2play(e)
-                                })
-                            } else {
-                                d.style.backgroundColor = 'grey'
-                                d.style.opacity = '.5'
+                            if (pla['track']){
+                                let d = document.createElement('div')
+                                d.tabIndex = 0
+                                d.className = 'con3'
+                                d.innerText = `${list(pla['track']['artists'])} -  ${pla['track']['name']}`
+                                let a = document.createElement('audio')
+                                a.type = "audio/mpeg"
+                                a.preload = 'none'
+                                if (pla['track']['album']['images'][0]['url'] && pla['track']['preview_url']) {
+                                    d.style.backgroundImage = `url(${pla['track']['album']['images'][0]['url']})`
+                                    d.style.backgroundRepeat = 'no-repeat'
+                                    d.style.backgroundSize = 'cover'
+                                    a.src = pla['track']['preview_url']
+                                    d.addEventListener('click', function (e) {
+                                        click2play(e)
+                                    })
+                                } else if (pla['track']['album']['images'][0]['url'] && !pla['track']['preview_url']) {
+                                    d.style.backgroundImage = `url(${pla['track']['album']['images'][0]['url']})`
+                                    d.style.backgroundRepeat = 'no-repeat'
+                                    d.style.backgroundSize = 'cover'
+                                    d.style.opacity = '.5'
+                                } else if (!pla['track']['album']['images'][0]['url'] && pla['track']['preview_url']) {
+                                    d.style.backgroundColor = 'grey'
+                                    a.src = pla['track']['preview_url']
+                                    d.addEventListener('click', function (e) {
+                                        click2play(e)
+                                    })
+                                } else {
+                                    d.style.backgroundColor = 'grey'
+                                    d.style.opacity = '.5'
+                                }
+                                d.appendChild(a)
+
+
+                                await trid.appendChild(d)
+                                window.scrollTo({
+                                    top: findPos(plid),
+                                    behavior: 'smooth'
+                                });
                             }
-                            d.appendChild(a)
-
-
-                            await trid.appendChild(d)
-                            window.scrollTo({
-                                top: findPos(plid),
-                                behavior: 'smooth'
-                            });
                         }
                         tracks.appendChild(playlistcont)
                     })
@@ -3161,7 +3165,7 @@ function fetchSpotPlaylists(offset) {
     request({
         url: 'https://api.spotify.com/v1/users/spotify/playlists?fields=items(name,id)&limit=50&offset=' + offset,
         method: 'get',
-        headers: {'Authorization': 'Bearer ' + localStorage.getItem('access_token')}
+        headers: {'Authorization': 'Bearer ' + document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1")}
     })
         .then(async (response) => {
             let items = response.data['items']

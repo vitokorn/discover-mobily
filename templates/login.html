@@ -1,9 +1,0 @@
-{% block content %}
-    {% if not session['nickname'] %}
-    <a href="{{ url_for('authclient') }}"><button>Login</button></a>
-    {% elif session['nickname'] %}
-        <p>Welcome, {{ session['nickname'] }}</p>
-        <a href="{{ url_for('logout') }}"><button>Logout</button></a>
-    {% endif %}    <a href="{{ url_for('pl') }}"><button>Playlists</button></a>
-
-{% endblock %}
