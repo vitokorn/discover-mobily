@@ -145,7 +145,7 @@
         document.getElementById('srch').remove()
     } else {
         let sc = document.createElement('script')
-        sc.src = 'js/scriptql.js'
+        sc.src = '../js/scriptql.js'
         document.body.appendChild(sc)
         let nickname = document.cookie.replace(/(?:(?:^|.*;\s*)nickname\s*\=\s*([^;]*).*$)|^.*$/, "$1")
         document.getElementById('content').innerHTML = `<div class="">Hello,` + nickname + `</div>
