@@ -3188,6 +3188,31 @@ function fetchSpotPlaylists(offset) {
         })
 }
 
+function fetchPlaylists(offset) {
+    request({
+        url: 'https://api.spotify.com/v1/me/playlists?fields=items(name,id)&limit=50&offset=' + offset,
+        method: 'get',
+        headers: {'Authorization': 'Bearer ' + document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1")}
+    })
+        .then(async (response) => {
+            let items = response.data['items']
+            let sp = document.getElementById('playlistlist')
+            for await (let item of items) {
+                let divsp = document.createElement('div')
+                divsp.id = item.id
+                divsp.className = 'hr-line-dashed'
+                divsp.innerText = item.name
+                divsp.addEventListener('click',function (){
+                    yourplaylistload(item)
+                })
+                sp.appendChild(divsp)
+            }
+            // if (await response.data['items'].length > 0) {
+            //     this.fetchSpotPlaylists(offset += 50)
+            // }
+        })
+}
+
 let stringToHTML = function (str) {
     let parser = new DOMParser();
     let doc = parser.parseFromString(str, 'text/html');

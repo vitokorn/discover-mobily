@@ -26,14 +26,12 @@
 </header>
 <br>
 <br>
-<button class="accordion">Your Playlists</button>
+<button class="accordion" onclick="fetchPlaylists(0)">Your Playlists</button>
 <div class="panel">
-    <div id="playlistlist" style="justify-content: center" class="pl">
-        {% for p in pl %}
-        <div id="{{ p['id'] }}" class="hr-line-dashed">{{ p['name'] }}</div>
-        {% endfor %}
+    <div id="playlistlist" class="pl">
     </div>
-    <div id="playlist" class="con2"></div>
+    <div id="playlist" class="container-fluid con2"></div>
+    <div class="rectrack"></div>
 </div>
 <button class="accordion" id="ta">Your Top Artists</button>
 <div class="panel">
