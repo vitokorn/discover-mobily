@@ -173,6 +173,34 @@ function list(artists) {
         finalName;
 }
 
+function yourplaylistload(item){
+    let pllist = document.querySelectorAll("#playlistlist > div");
+    console.log(item)
+    if (document.getElementById('p' + item.id)) {
+        if (document.getElementById('p' + item.id).classList.contains("activetab")) {
+
+        } else {
+            document.getElementById('p' + item.id).classList.toggle("activetab");
+        }
+    } else {
+        initElement(item.id)
+    }
+    pllist.forEach(function (ns) {
+        if (item.id === ns.id) {
+            if (document.getElementById('p' + ns.id)) {
+                document.getElementById('p' + ns.id).style.display = 'block'
+            }
+        } else {
+            ns.classList.remove('activetab')
+            if (document.getElementById('p' + ns.id)) {
+                document.getElementById('p' + ns.id).style.display = 'none'
+            }
+        }
+    });
+
+
+}
+
 let pllist = document.querySelectorAll("#playlistlist > div");
 for (let i of pllist) {
     i.addEventListener("click", function () {
